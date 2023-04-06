@@ -8,6 +8,7 @@ import LoginAuth from "./LoginAuth";
 import { useAuth0 } from "@auth0/auth0-react";
 import LogOutAuth from "./LogOutAuth";
 import Profile from "./Profile";
+import { Dropdown } from "react-bootstrap";
 
 library.add(faCartShopping, faUser);
 
@@ -33,14 +34,18 @@ export default function NavBar() {
 
       <div className="Container_RightNavBar">
         {isAuthenticated ?
-
-          <div className="LogContainer">
-            <LogOutAuth />
-            <div className="MyAccount">
+          <Dropdown>
+            <Dropdown.Toggle id="dropdown-basic" className='MyAccount' >
               <Profile />
               <FontAwesomeIcon icon={faUser} />
-            </div>
-          </div>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item style={{ padding: "0" }} ><LogOutAuth /></Dropdown.Item>
+
+            </Dropdown.Menu>
+          </Dropdown>
+
           :
           <LoginAuth />
         }

@@ -1,0 +1,45 @@
+.actions_Ingredientes {
+  min-height: 5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+
+  .actions_Ingredientes_buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .Select_nivelStock {
+    background-color: rgba(119, 119, 119, .25);
+    border-radius: .5rem;
+    margin-left: .5rem;
+    padding: 0 1rem;
+  }
+}
+
+.Container_Ingredientes {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Container_input {
+  padding: 0 .5rem;
+  background-color: white;
+  border-radius: .5rem;
+
+  .busqueda_comida {
+    background-color: transparent;
+    text-align: center;
+    padding: .5rem;
+    outline: none;
+    border: none;
+  }
+
+}

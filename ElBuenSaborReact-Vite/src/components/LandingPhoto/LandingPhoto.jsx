@@ -1,5 +1,5 @@
 import React from "react";
-import "./Landing.scss";
+import "./LandingPhoto.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
