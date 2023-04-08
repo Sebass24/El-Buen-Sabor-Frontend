@@ -4,8 +4,12 @@ import * as Yup from "yup";
 import { validacionIngredientes, ingredientesBase } from './DatosForm';
 import FormIngredientesFields from './FormIngredientesFields';
 import { Form, Formik } from 'formik';
+import { addIngredient } from "../../../../features/foods/IngredientSlice.js"
+import { useDispatch } from 'react-redux';
+
 
 const ModalAddIngrediente = ({ showModal, handleClose, editing, ingrediente }) => {
+  const dispatch = useDispatch()
   return (
     <div>
       <Modal id={"modal"} show={showModal} onHide={handleClose} size={"lg"} backdrop="static"
@@ -22,7 +26,7 @@ const ModalAddIngrediente = ({ showModal, handleClose, editing, ingrediente }) =
             initialValues={editing ? ingrediente : ingredientesBase}
             enableReinitialize={true}
             onSubmit={async (values) => {
-              console.log(values)
+              dispatch(addIngredient(values))
               handleClose()
             }}
           >

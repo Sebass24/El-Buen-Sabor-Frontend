@@ -10,13 +10,13 @@ import LoginAuth from './LoginAuth';
 import { Dropdown } from 'react-bootstrap';
 library.add(faUser);
 
-const AdminBar = () => {
+const AdminBar = ({ title }) => {
   const { isAuthenticated } = useAuth0()
   return (
     <div className="navBar_Container_admin">
-      <div className="Arow_container">
-        <div className="arrowBottom">
-          <div className="imgLogo"></div>
+      <div className="Arow_container_admin">
+        <div className="arrowBottom_admin">
+          <div className="imgLogo_admin"></div>
         </div>
       </div>
       {/* <div className="LogContainer">
@@ -47,7 +47,7 @@ const AdminBar = () => {
           <LoginAuth />
         }
       </div>
-      <h1 className='Title_admin'>Admin</h1>
+      <h1 className='Title_admin'>{title}</h1>
     </div>
   );
 }

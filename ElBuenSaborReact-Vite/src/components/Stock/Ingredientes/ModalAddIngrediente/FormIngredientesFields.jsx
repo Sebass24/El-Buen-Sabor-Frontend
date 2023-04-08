@@ -56,6 +56,7 @@ const FormIngredientesFields = ({ setFieldValue, ingrediente }) => {
         name="UnidadMedida"
         type="text"
         opciones={[
+          { value: '', label: "" },
           { value: 'cm3', label: "Cm3" },
           {
             value: "l",
@@ -70,6 +71,7 @@ const FormIngredientesFields = ({ setFieldValue, ingrediente }) => {
         name="Estado"
         type="text"
         opciones={[
+          { value: '', label: "" },
           { value: 'Baja', label: "Baja" },
           {
             value: "Alta",

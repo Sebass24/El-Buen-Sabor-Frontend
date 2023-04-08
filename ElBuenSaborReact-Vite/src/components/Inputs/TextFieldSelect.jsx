@@ -25,9 +25,10 @@ const TextFieldSelect = ({
         {...props}
         onChange={change}
       >
+
         {opciones.map((opcion, i) => {
           return (
-            <option key={i} value={opcion.value}>
+            <option key={i} value={opcion.value} >
               {opcion.label}
             </option>
           );

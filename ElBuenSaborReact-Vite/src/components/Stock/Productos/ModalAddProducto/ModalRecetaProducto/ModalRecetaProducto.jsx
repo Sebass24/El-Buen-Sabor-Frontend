@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import * as Yup from "yup";
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
+import { Form as FormReact } from 'react-bootstrap';
 import FormRecetaFields from './FormRecetaFields';
-
-const ModalRecetaProducto = ({ showModal, handleClose, editing, producto }) => {
-
+import "./ModalRecetaProducto.scss"
+const ModalRecetaProducto = ({ showModal, handleClose, editing, producto, setProductoNuevo }) => {
+  const [Ingredientes, setIngredientes] = useState([]);
   return (
     <div>
       <Modal id={"modal"} show={showModal} onHide={handleClose} size={"lg"} backdrop="static"
@@ -18,12 +19,15 @@ const ModalRecetaProducto = ({ showModal, handleClose, editing, producto }) => {
         </Modal.Header>
         <Modal.Body>
           <Formik
-            validationSchema={Yup.object({})}
+            validationSchema={Yup.object({
+              Ingrediente: Yup.string().required("*Campo requerido"),
+              Cantidad: Yup.number().required("*Campo requerido"),
+              UMedida: Yup.string().required("*Campo requerido"),
+            })}
             initialValues={{}}
             enableReinitialize={true}
             onSubmit={async (values) => {
-              console.log(values)
-              handleClose()
+              setIngredientes([...Ingredientes, values])
             }}
           >
             {({ handleSubmit, setFieldValue }) =>
@@ -32,17 +36,77 @@ const ModalRecetaProducto = ({ showModal, handleClose, editing, producto }) => {
                 <Form autoComplete="off" className="form-obraAlta">
                   <FormRecetaFields
                     setFieldValue={setFieldValue}
+                    handleSubmit={handleSubmit}
                   />
                 </Form>
-                <div className="d-flex justify-content-end">
-                  <Button variant="success" type="button" onClick={handleSubmit}>
-                    Enviar
-                  </Button>
-                </div>
               </>
             )
             }
           </Formik>
+
+          <div>
+            {Ingredientes.map((ingrediente, index) => (
+              <div key={index} className='Container_Ingredientes_modal'>
+                <span>{ingrediente.Ingrediente}</span>
+                <span>{ingrediente.Cantidad}</span>
+                <span>{ingrediente.UMedida}</span>
+                <i className="fa-solid fa-trash"></i>
+              </div>
+            ))}
+          </div>
+
+          <Formik
+            validationSchema={Yup.object({
+              Receta: Yup.string().required("*Campo requerido"),
+            })}
+            initialValues={{}}
+            enableReinitialize={true}
+            onSubmit={async (values) => {
+              setProductoNuevo({ Ingredientes: Ingredientes, receta: values.Receta })
+              setIngredientes([])
+              handleClose()
+            }}
+          >
+            {({ handleSubmit, setFieldValue }) =>
+            (
+              <>
+                <Form autoComplete="off">
+                  <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      padding: ".3rem 0"
+                    }}>
+                      <label htmlFor={"Descripcion"} style={{ color: "black", fontFamily: "sans-serif", fontSize: "14px", fontWeight: 'bold' }}>
+                        {"Receta"}
+                      </label>
+                    </div>
+                    <FormReact.Control as={"textarea"} name='Receta' onChange={(event) => {
+                      setFieldValue("Receta", event.target.value)
+                    }}
+                    >
+
+                    </FormReact.Control>
+                    <ErrorMessage
+                      component="div"
+                      name={"Descripcion"}
+                      className="error"
+                      style={{ color: "red" }}
+                    />
+                  </div>
+                  <div className='mt-2 d-flex justify-content-end'>
+
+                    <Button variant="warning" type="button" onClick={handleSubmit} style={{ maxHeight: "3rem" }}>
+                      Guardar
+                    </Button>
+                  </div>
+                </Form>
+              </>
+            )
+            }
+          </Formik>
+
         </Modal.Body>
       </Modal>
 

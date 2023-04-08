@@ -6,13 +6,14 @@ import { ProductoBase, validacionProductos } from './DatosFormProducto';
 import FormProductosFields from './FormProductosFields';
 import ModalRecetaProducto from './ModalRecetaProducto/ModalRecetaProducto';
 
-const ModalAddProductos = ({ showModal, handleClose, editing, producto }) => {
+const ModalAddProductos = ({ setShowModal, showModal, handleClose, editing, producto }) => {
 
   const [showModalReceta, setShowModalReceta] = useState(false);
+  const [productoNuevo, setProductoNuevo] = useState({});
   const handleCloseReceta = () => {
+    setShowModal(true)
     setShowModalReceta(false)
   }
-  console.log(showModalReceta)
   return (
     <div>
       <Modal id={"modal"} show={showModal} onHide={handleClose} size={"lg"} backdrop="static"
@@ -28,8 +29,8 @@ const ModalAddProductos = ({ showModal, handleClose, editing, producto }) => {
             validationSchema={Yup.object(validacionProductos)}
             initialValues={editing ? producto : ProductoBase}
             enableReinitialize={true}
-            onSubmit={async (values) => {
-              console.log(values)
+            onSubmit={(values) => {
+              setProductoNuevo({ ...productoNuevo, ...values })
               handleClose()
             }}
           >
@@ -40,6 +41,8 @@ const ModalAddProductos = ({ showModal, handleClose, editing, producto }) => {
                   <FormProductosFields
                     setFieldValue={setFieldValue}
                     setShowModalReceta={setShowModalReceta}
+                    handleclose={handleClose}
+
                   />
                 </Form>
                 <div className="d-flex justify-content-end">
@@ -57,6 +60,7 @@ const ModalAddProductos = ({ showModal, handleClose, editing, producto }) => {
       <ModalRecetaProducto
         showModal={showModalReceta}
         handleClose={handleCloseReceta}
+        setProductoNuevo={setProductoNuevo}
       >
 
       </ModalRecetaProducto>

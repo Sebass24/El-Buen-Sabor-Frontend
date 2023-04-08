@@ -1,0 +1,82 @@
+.Container_Footer {
+  background-color: rgb(43, 43, 43);
+  color: white;
+  height: 6rem;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .Arow_container_Footer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+  }
+
+  .arrowBottom_Footer {
+    cursor: pointer;
+    height: 4rem;
+    width: 5rem;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+
+    .imgLogo_Footer {
+      width: 5rem;
+      height: 4rem;
+      margin-top: .2rem;
+      background-image: url(../../resources/logo-png.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    &::before {
+      position: absolute;
+      display: block;
+      height: 2rem;
+      width: 5rem;
+      top: 4rem;
+      background-color: #fff;
+      position: absolute;
+      clip-path: polygon(50% 100%, 0 0, 100% 0);
+      content: "";
+    }
+  }
+
+  .Container_Foter_contact {
+    margin-left: 3rem;
+  }
+
+  .Container_Foter_contact_items {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+  }
+
+  .PayMethods {
+    margin-right: 3rem;
+
+    .Container_cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 2rem 2rem;
+
+      i {
+        font-size: 2rem;
+
+      }
+
+      img {
+        background-color: white;
+        border-radius: .2rem;
+        width: 2.2rem;
+        height: 1.9rem;
+      }
+    }
+  }
+
+
+}

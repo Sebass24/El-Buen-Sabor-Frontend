@@ -12,6 +12,8 @@ const Productos = () => {
   const handleClose = () => {
     setShowModal(false)
   }
+
+
   return (
     <div className='Container_Ingredientes' >
       <div className='actions_Ingredientes'>
@@ -26,6 +28,7 @@ const Productos = () => {
       <ModalAddProductos
         showModal={showModal}
         handleClose={handleClose}
+        setShowModal={setShowModal}
       >
 
       </ModalAddProductos>

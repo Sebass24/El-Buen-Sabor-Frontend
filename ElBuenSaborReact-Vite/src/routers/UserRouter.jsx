@@ -7,13 +7,12 @@ import { Route, Routes } from 'react-router-dom';
 
 const UserRouter = () => {
   return (
-    <>
-
+    <div>
       <NavBar />
       <Routes>
         <Route path="/" element={<Landing />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

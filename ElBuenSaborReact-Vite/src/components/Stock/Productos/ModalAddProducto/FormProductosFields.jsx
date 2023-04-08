@@ -4,7 +4,7 @@ import TextFieldSelect from '../../../Inputs/TextFieldSelect';
 import "./FormProductosFilds.scss"
 import { Button, Form } from 'react-bootstrap';
 import { ErrorMessage } from 'formik';
-const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta }) => {
+const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta, handleclose }) => {
   return (
     <div className='container_Form_Productos'>
       <TextFieldValue
@@ -56,8 +56,8 @@ const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta })
           </label>
         </div>
         <Button onClick={() => {
-          console.log("onclick")
           setShowModalReceta(true)
+          handleclose()
         }}>Añadir una receta</Button>
 
       </div>
@@ -72,7 +72,9 @@ const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta })
             {"Descripción"}
           </label>
         </div>
-        <Form.Control as={"textarea"} name='Descripcion' >
+        <Form.Control as={"textarea"} name='Descripcion' onChange={(event) => {
+          setFieldValue("Descripcion", event.target.value)
+        }} >
         </Form.Control>
         <ErrorMessage
           component="div"
@@ -87,6 +89,7 @@ const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta })
         name="Estado"
         type="text"
         opciones={[
+          { value: '', label: "" },
           { value: 'Baja', label: "Baja" },
           {
             value: "Alta",
@@ -100,7 +103,7 @@ const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta })
         name="Imagen"
         type="text"
         onChange={(event) => {
-          setFieldValue("TiempoCocina", event.target.value)
+          setFieldValue("Imagen", event.target.value)
         }}
         placeholder="Tiempo de cocina del producto"
       />

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TableHead from "@mui/material/TableHead";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./TableIngredientes.scss";
 
@@ -208,68 +208,7 @@ function CabeceraMejorada(props) {
 
 
 const TableIngredientes = () => {
-  const ingredientesPrueba = [
-    {
-      Nombre: "salsa",
-      Rubro: "Salsas",
-      PrecioCosto: 340,
-      StockMinimo: 2,
-      StockActual: 5,
-      UnidadMedida: "cm3",
-      NivelStock: "Optimo",
-      Estado: "Baja"
-    },
-    {
-      Nombre: "pepino",
-      Rubro: "Verduras",
-      PrecioCosto: 500,
-      StockMinimo: 2,
-      StockActual: 5,
-      UnidadMedida: "cm3",
-      NivelStock: "Optimo",
-      Estado: "Alta"
-    },
-    {
-      Nombre: "tomate",
-      Rubro: "Verduras",
-      PrecioCosto: 500,
-      StockMinimo: 2,
-      StockActual: 5,
-      UnidadMedida: "cm3",
-      NivelStock: "Optimo",
-      Estado: "Alta"
-    },
-    {
-      Nombre: "apio",
-      Rubro: "Verduras",
-      PrecioCosto: 500,
-      StockMinimo: 2,
-      StockActual: 5,
-      UnidadMedida: "cm3",
-      NivelStock: "Optimo",
-      Estado: "Alta"
-    },
-    {
-      Nombre: "perejil",
-      Rubro: "Verduras",
-      PrecioCosto: 500,
-      StockMinimo: 2,
-      StockActual: 5,
-      UnidadMedida: "cm3",
-      NivelStock: "Optimo",
-      Estado: "Baja"
-    },
-    {
-      Nombre: "lechuga",
-      Rubro: "Verduras",
-      PrecioCosto: 500,
-      StockMinimo: 2,
-      StockActual: 5,
-      UnidadMedida: "cm3",
-      NivelStock: "Optimo",
-      Estado: "Alta"
-    }
-  ]
+  const ingredientesPrueba = useSelector(state => state.ingredient)
   const formatoMonedaLocal = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",

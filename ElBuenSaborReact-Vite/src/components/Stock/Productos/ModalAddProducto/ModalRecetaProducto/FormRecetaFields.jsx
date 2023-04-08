@@ -1,56 +1,74 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { ErrorMessage } from 'formik';
 import TextFieldValue from '../../../../Inputs/TextFieldValue';
 import TextFieldSelect from '../../../../Inputs/TextFieldSelect';
-const FormRecetaFields = ({ setFieldValue, ingrediente, setShowModalReceta }) => {
+import "./ModalRecetaProducto.scss";
+import { useSelector } from 'react-redux';
+const FormRecetaFields = ({ setFieldValue, ingrediente, handleSubmit }) => {
+  const ingredientesPrueba = useSelector(state => state.ingredient)
+
+  const [options, setOptions] = useState([]);
+
+  function IngredientesToOptions() {
+    const initialopcions = {
+      value: "", label: "", isDisabled: true,
+      isFixed: true
+    }
+    setOptions([initialopcions, ...ingredientesPrueba.map((option, index) => (
+      { value: option.Nombre, label: option.Nombre }
+    ))])
+
+
+  }
+
+  useEffect(() => {
+    IngredientesToOptions()
+  }, [ingredientesPrueba]);
+
   return (
-    <div className='container_Form_Receta'>
-      <TextFieldValue
-        label="Nombre:"
-        name="Nombre"
-        type="text"
-        onChange={(event) => {
-          setFieldValue("Nombre", event.target.value)
-        }}
-        placeholder="Nombre del Producto"
-      />
-
-      <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          padding: ".3rem 0"
-        }}>
-          <label htmlFor={"Descripcion"} style={{ color: "black", fontFamily: "sans-serif", fontSize: "14px", fontWeight: 'bold' }}>
-            {"Descripción"}
-          </label>
-        </div>
-        <Form.Control as={"textarea"} name='Descripcion' >
-        </Form.Control>
-        <ErrorMessage
-          component="div"
-          name={"Descripcion"}
-          className="error"
-          style={{ color: "red" }}
+    <div className='container_Form'>
+      <div className='container_Form_Receta'>
+        <TextFieldSelect
+          label="Ingrediente:"
+          name="Ingrediente"
+          type="text"
+          defaultValue={options[0]}
+          opciones={options}
+          change={(event) => { setFieldValue("Ingrediente", event.target.value) }}
         />
+
+        <TextFieldValue
+          label="Cantidad:"
+          name="Cantidad"
+          type="number"
+          onChange={(event) => {
+            setFieldValue("Cantidad", event.target.value)
+          }}
+          placeholder="Cantidad"
+        />
+
+
+
+        <TextFieldSelect
+          label="Unidad de medida:"
+          name="UMedida"
+          type="text"
+          opciones={[
+            { value: '', label: "" },
+            { value: 'L', label: "Litro" },
+            {
+              value: "gr",
+              label: "gramo",
+            }
+          ]}
+          change={(event) => { setFieldValue("UMedida", event.target.value) }}
+        />
+
       </div>
-
-      <TextFieldSelect
-        label="Estado:"
-        name="Estado"
-        type="text"
-        opciones={[
-          { value: 'Baja', label: "Baja" },
-          {
-            value: "Alta",
-            label: "Alta",
-          }
-        ]}
-        change={(event) => { setFieldValue("Estado", event.target.value) }}
-      />
-
+      <Button variant="success" type="button" onClick={handleSubmit} style={{ maxHeight: "3rem" }}>
+        Enviar
+      </Button>
     </div>
 
   );
