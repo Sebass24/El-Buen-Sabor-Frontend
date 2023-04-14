@@ -1,18 +1,23 @@
-import React from 'react';
-import TextFieldValue from '../../../Inputs/TextFieldValue';
-import TextFieldSelect from '../../../Inputs/TextFieldSelect';
-import "./FormProductosFilds.scss"
-import { Button, Form } from 'react-bootstrap';
-import { ErrorMessage } from 'formik';
-const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta, handleclose }) => {
+import React from "react";
+import TextFieldValue from "../../../Inputs/TextFieldValue";
+import TextFieldSelect from "../../../Inputs/TextFieldSelect";
+import "./FormProductosFilds.scss";
+import { Button, Form } from "react-bootstrap";
+import { ErrorMessage } from "formik";
+const FormProductosFields = ({
+  setFieldValue,
+  ingrediente,
+  setShowModalReceta,
+  handleclose,
+}) => {
   return (
-    <div className='container_Form_Productos'>
+    <div className="container_Form_Productos">
       <TextFieldValue
         label="Nombre:"
         name="Nombre"
         type="text"
         onChange={(event) => {
-          setFieldValue("Nombre", event.target.value)
+          setFieldValue("Nombre", event.target.value);
         }}
         placeholder="Nombre del Producto"
       />
@@ -21,7 +26,7 @@ const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta, h
         name="Rubro"
         type="text"
         onChange={(event) => {
-          setFieldValue("Rubro", event.target.value)
+          setFieldValue("Rubro", event.target.value);
         }}
         placeholder="Rubro del Producto"
       />
@@ -30,7 +35,7 @@ const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta, h
         name="PrecioVenta"
         type="number"
         onChange={(event) => {
-          setFieldValue("PrecioVenta", event.target.value)
+          setFieldValue("PrecioVenta", event.target.value);
         }}
         placeholder="Precio de costo del Producto"
       />
@@ -39,12 +44,12 @@ const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta, h
         name="TiempoCocina"
         type="number"
         onChange={(event) => {
-          setFieldValue("TiempoCocina", event.target.value)
+          setFieldValue("TiempoCocina", event.target.value);
         }}
         placeholder="Tiempo de cocina del producto"
       />
 
-      <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
+      {/* <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
         <div style={{
           display: "flex",
           justifyContent: "flex-start",
@@ -60,22 +65,38 @@ const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta, h
           handleclose()
         }}>Añadir una receta</Button>
 
-      </div>
-      <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          padding: ".3rem 0"
-        }}>
-          <label htmlFor={"Descripcion"} style={{ color: "black", fontFamily: "sans-serif", fontSize: "14px", fontWeight: 'bold' }}>
+      </div> */}
+      <div
+        className="mt-2"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            padding: ".3rem 0",
+          }}
+        >
+          <label
+            htmlFor={"Descripcion"}
+            style={{
+              color: "black",
+              fontFamily: "sans-serif",
+              fontSize: "14px",
+              fontWeight: "bold",
+            }}
+          >
             {"Descripción"}
           </label>
         </div>
-        <Form.Control as={"textarea"} name='Descripcion' onChange={(event) => {
-          setFieldValue("Descripcion", event.target.value)
-        }} >
-        </Form.Control>
+        <Form.Control
+          as={"textarea"}
+          name="Descripcion"
+          onChange={(event) => {
+            setFieldValue("Descripcion", event.target.value);
+          }}
+        ></Form.Control>
         <ErrorMessage
           component="div"
           name={"Descripcion"}
@@ -89,27 +110,28 @@ const FormProductosFields = ({ setFieldValue, ingrediente, setShowModalReceta, h
         name="Estado"
         type="text"
         opciones={[
-          { value: '', label: "" },
-          { value: 'Baja', label: "Baja" },
+          { value: "", label: "" },
+          { value: "Baja", label: "Baja" },
           {
             value: "Alta",
             label: "Alta",
-          }
+          },
         ]}
-        change={(event) => { setFieldValue("Estado", event.target.value) }}
+        change={(event) => {
+          setFieldValue("Estado", event.target.value);
+        }}
       />
       <TextFieldValue
         label="Imagen:"
         name="Imagen"
         type="text"
         onChange={(event) => {
-          setFieldValue("Imagen", event.target.value)
+          setFieldValue("Imagen", event.target.value);
         }}
         placeholder="Tiempo de cocina del producto"
       />
     </div>
-
   );
-}
+};
 
 export default FormProductosFields;
