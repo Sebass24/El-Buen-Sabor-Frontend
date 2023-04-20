@@ -2,7 +2,7 @@ import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import AdminTab from "../AdminTab/AdminTab";
 import "./AdminPage.scss";
-// import Stock from "../Stock/Stock";
+import Stock from "../Stock/Stock";
 
 const AdminPage = () => {
   return (
@@ -17,8 +17,7 @@ const AdminPage = () => {
           <AdminTab />
         </Tab>
         <Tab eventKey="Stock" title="Stock">
-          <AdminTab />
-          {/* <Stock /> */}
+          <Stock />
         </Tab>
         <Tab eventKey="Rubros" title="Rubros">
           <AdminTab />

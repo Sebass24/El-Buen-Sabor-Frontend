@@ -1,0 +1,19 @@
+.Container_input {
+  padding: 0 .5rem;
+  background-color: white;
+  border-radius: .5rem;
+
+  .busqueda_comida {
+    background-color: transparent;
+    text-align: center;
+    padding: .5rem;
+    outline: none;
+    border: none;
+  }
+
+}
+
+.actions_Ingredientes {
+  justify-content: space-between;
+  width: 95%;
+}
