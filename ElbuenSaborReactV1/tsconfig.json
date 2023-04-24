@@ -2,7 +2,10 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@Models/*": ["types/*"]
+      "@Models/*": ["types/*"],
+      "pages/*": ["pages/*"],
+      "components/*": ["components/*"],
+      "public/*": ["public/*"]
     },
     "target": "ESNext",
     "useDefineForClassFields": true,

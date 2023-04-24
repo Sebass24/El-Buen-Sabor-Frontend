@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TableHead from "@mui/material/TableHead";
 import { Link } from "react-router-dom";
-import "./TableIngredientes.scss";
+import "./TableIngredients.scss";
 import { Ingredient } from "@Models/types";
 
 import {
@@ -199,29 +199,13 @@ function CabeceraMejorada(props: any) {
   );
 }
 
+interface MyProps {
+  Ingredients: Ingredient[]
+}
 
 
-const TableIngredientes = () => {
-  const ingredientesPrueba: Ingredient[] = [{
-    Nombre: "salsa",
-    Rubro: "Salsas",
-    PrecioCosto: 340,
-    StockMinimo: 2,
-    StockActual: 5,
-    UnidadMedida: "cm3",
-    NivelStock: "Optimo",
-    Estado: "Baja"
-  },
-  {
-    Nombre: "pepino",
-    Rubro: "Verduras",
-    PrecioCosto: 500,
-    StockMinimo: 2,
-    StockActual: 5,
-    UnidadMedida: "cm3",
-    NivelStock: "Optimo",
-    Estado: "Alta"
-  },]
+const TableIngredients = ({ Ingredients }: MyProps) => {
+
   const formatoMonedaLocal = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
@@ -247,7 +231,7 @@ const TableIngredientes = () => {
   };
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, ingredientesPrueba.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, Ingredients.length - page * rowsPerPage);
 
   return (
     <div className="container_tabla">
@@ -263,11 +247,11 @@ const TableIngredientes = () => {
               orderBy={orderBy}
               order={order}
               handleRequestSort={handleRequestSort}
-              rowCount={ingredientesPrueba.length}
+              rowCount={Ingredients.length}
             />
 
             <TableBody>
-              {stableSort(ingredientesPrueba, getComparador(order, orderBy), orderBy)
+              {stableSort(Ingredients, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((ingrediente, index) => {
                   if (ingrediente.Estado === "Baja") {
@@ -317,7 +301,7 @@ const TableIngredientes = () => {
                                 type="button"
                                 className="btn btn-sm"
                               >
-                                <i className="bi bi-pencil-square"></i>
+                                <i className="fa-solid fa-pen-to-square"></i>
                               </button>
                             </>
                           }
@@ -371,7 +355,7 @@ const TableIngredientes = () => {
                                 type="button"
                                 className="btn btn-sm"
                               >
-                                <i className="bi bi-pencil-square"></i>
+                                <i className="fa-solid fa-pen-to-square"></i>
                               </button>
                             </>
                           }
@@ -396,7 +380,7 @@ const TableIngredientes = () => {
           }}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={ingredientesPrueba.length}
+          count={Ingredients.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -407,4 +391,4 @@ const TableIngredientes = () => {
     </div>
   );
 };
-export default TableIngredientes;
+export default TableIngredients;

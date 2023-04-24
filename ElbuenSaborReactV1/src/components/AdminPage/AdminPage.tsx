@@ -3,6 +3,8 @@ import { Tab, Tabs } from "react-bootstrap";
 import AdminTab from "../AdminTab/AdminTab";
 import "./AdminPage.scss";
 import Stock from "../Stock/Stock";
+import Categories from "components/Categories/Categories";
+import Users from "components/Users/Users";
 
 const AdminPage = () => {
   return (
@@ -14,13 +16,13 @@ const AdminPage = () => {
         justify
       >
         <Tab eventKey="Usuarios" title="Usuarios">
-          <AdminTab />
+          <Users />
         </Tab>
         <Tab eventKey="Stock" title="Stock">
           <Stock />
         </Tab>
         <Tab eventKey="Rubros" title="Rubros">
-          <AdminTab />
+          <Categories />
         </Tab>
         <Tab eventKey="Estadisticas" title="estadísticas">
           <AdminTab />
