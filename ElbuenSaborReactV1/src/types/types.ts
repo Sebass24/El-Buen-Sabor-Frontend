@@ -42,3 +42,12 @@ export interface Users {
   Location: string;
   State: string;
 }
+
+export interface DeliveryOrder {
+  IdOrder: number;
+  OrderDate: string;
+  Client: string;
+  Adress: string;
+  Location: string;
+  Phone: number;
+}
