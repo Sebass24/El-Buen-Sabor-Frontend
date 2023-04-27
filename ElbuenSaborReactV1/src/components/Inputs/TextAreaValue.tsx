@@ -1,15 +1,11 @@
-import React, { ChangeEvent } from 'react';
-import { ErrorMessage, useField, Field, FieldHookConfig } from "formik";
+import { ErrorMessage, Field } from 'formik';
+import React, { ChangeEvent } from 'react'
 interface props {
   label: string;
-  value?: any;
   name: string;
-  type: string;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
 }
-
-const TextFieldValue = ({ label, value, name, type, onChange, placeholder }: props) => {
+export default function TextAreaValue({ label, name, placeholder }: props) {
   return (
     <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
       <div style={{
@@ -24,10 +20,9 @@ const TextFieldValue = ({ label, value, name, type, onChange, placeholder }: pro
       </div>
       <Field
         className={`form-control  mb-3  input-formulario `}
-        as={"input"}
+        as={"textarea"}
         placeholder={placeholder}
         name={name}
-        type={type}
         autoComplete="off"
       />
       <ErrorMessage
@@ -35,8 +30,6 @@ const TextFieldValue = ({ label, value, name, type, onChange, placeholder }: pro
         name={name}
         className="error"
       />
-    </div>
-  );
+    </div >
+  )
 }
-
-export default TextFieldValue;

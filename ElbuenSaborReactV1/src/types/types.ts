@@ -51,3 +51,10 @@ export interface DeliveryOrder {
   Location: string;
   Phone: number;
 }
+
+export interface OrderIngredient {
+  Ingredient: string;
+  Cuantity: string;
+  UMedida: string;
+}
+

@@ -71,45 +71,30 @@ const ModalAddIngrediente = ({ showModal, handleClose, editing }: props) => {
                       label="Nombre:"
                       name="Nombre"
                       type="text"
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                        Formik.setFieldValue("Nombre", event.target.value)
-                      }}
                       placeholder="Nombre del Ingrediente"
                     />
                     <TextFieldValue
                       label="Rubro:"
                       name="Rubro"
                       type="text"
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                        Formik.setFieldValue("Rubro", event.target.value)
-                      }}
                       placeholder="Rubro del Ingrediente"
                     />
                     <TextFieldValue
                       label="Precio de costo:"
                       name="PrecioCosto"
                       type="number"
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                        Formik.setFieldValue("PrecioCosto", event.target.value)
-                      }}
                       placeholder="Precio de costo del Ingrediente"
                     />
                     <TextFieldValue
                       label="Stock minimo:"
                       name="StockMinimo"
                       type="number"
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                        Formik.setFieldValue("StockMinimo", event.target.value)
-                      }}
                       placeholder="Stock minimo del Ingrediente"
                     />
                     <TextFieldValue
                       label="Stock actual:"
                       name="StockActual"
                       type="number"
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                        Formik.setFieldValue("StockActual", event.target.value)
-                      }}
                       placeholder="Stock actual del Ingrediente"
                     />
 
@@ -125,7 +110,6 @@ const ModalAddIngrediente = ({ showModal, handleClose, editing }: props) => {
                         },
                         { value: "g", label: "gramos" },
                       ]}
-                      change={(event: ChangeEvent<HTMLSelectElement>) => { Formik.setFieldValue("UnidadMedida", event.target.value) }}
                     />
                     <TextFieldSelect
                       label="Estado:"
@@ -138,7 +122,6 @@ const ModalAddIngrediente = ({ showModal, handleClose, editing }: props) => {
                           label: "Alta",
                         }
                       ]}
-                      change={(event: ChangeEvent<HTMLSelectElement>) => { Formik.setFieldValue("Estado", event.target.value) }}
                     />
                   </div>
                   <div className="d-flex justify-content-end">

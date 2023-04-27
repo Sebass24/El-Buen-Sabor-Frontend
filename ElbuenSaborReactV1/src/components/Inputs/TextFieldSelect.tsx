@@ -6,7 +6,7 @@ interface props {
   options: Options[];
   value?: any;
   name: string;
-  change: (event: ChangeEvent<HTMLSelectElement>) => void;
+  change?: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 const TextFieldSelect = ({
   label,
@@ -26,13 +26,11 @@ const TextFieldSelect = ({
           {label}
         </label>
       </div>
-      <select
+      <Field
         className={`form-control  mb-3  input-formulario`}
         name={name}
-
-        onChange={change}
+        as={"select"}
       >
-
         {options.map((opcion, i) => {
           return (
             <option key={i} value={opcion.value} >
@@ -41,7 +39,7 @@ const TextFieldSelect = ({
           );
         })}
 
-      </select>
+      </Field>
       <ErrorMessage
         component="div"
         name={name}
