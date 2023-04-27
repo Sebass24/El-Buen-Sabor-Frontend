@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { Modal, Form as formBostrap, Button as ButtonRB } from "react-bootstrap";
 import * as Yup from "yup";
-import { ErrorMessage, Field, Form, Formik, FormikConfig, FormikValues } from "formik";
+import { ErrorMessage, Field, FieldArray, Form, Formik, FormikConfig, FormikValues } from "formik";
 import { OrderIngredient, Products } from "@Models/types";
 import TextFieldValue from '../../../Inputs/TextFieldValue';
 import TextFieldSelect from '../../../Inputs/TextFieldSelect';
 import "./ModalAddProducts.scss"
-import { Box, Grid, Step, StepLabel, Stepper, Button } from "@mui/material";
+import { Box, Grid, Step, StepLabel, Stepper, Button, Typography } from "@mui/material";
 import TextAreaValue from "components/Inputs/TextAreaValue";
+
+const emptyDonation = {
+  Ingredient: "",
+  Cuantity: "",
+  UMedida: ""
+}
 
 interface Props {
   showModal: boolean;
@@ -38,8 +44,10 @@ const ModalAddProducts = ({
     PrecioVenta: NaN,
     TiempoCocina: NaN,
     Estado: "",
-    Descripcion: ""
+    Descripcion: "",
+    Ingredients: [emptyDonation],
   }
+
   const validationSchemaStep1 = Yup.object({
     Nombre: Yup.string().required("*Campo requerido"),
     Rubro: Yup.string().required("*Campo requerido"),
@@ -142,57 +150,10 @@ const ModalAddProducts = ({
               <FormikStep
                 label="Ingredientes"
                 validationSchema={Yup.object({
-                  Ingrediente: Yup.string().required("*Campo requerido"),
-                  Cantidad: Yup.number().required("*Campo requerido"),
-                  UMedida: Yup.string().required("*Campo requerido"),
+
                 })}
               >
-                <>
-                  <div className="container_Form">
-                    <div className="container_Form_Receta">
-                      <TextFieldSelect
-                        label="Ingrediente:"
-                        name="Ingrediente"
-                        options={[
-                          { value: '', label: "" },
-                          { value: 'Baja', label: "Baja" },
-                          {
-                            value: "Alta",
-                            label: "Alta",
-                          }
-                        ]}
-
-                      />
-
-                      <TextFieldValue
-                        label="Cantidad:"
-                        name="Cantidad"
-                        type="number"
-                        placeholder="Cantidad"
-                      />
-
-                      <TextFieldSelect
-                        label="Unidad de medida:"
-                        name="UMedida"
-                        options={[
-                          { value: "", label: "" },
-                          { value: "L", label: "Litro" },
-                          {
-                            value: "gr",
-                            label: "gramo",
-                          },
-                        ]}
-                      />
-                    </div>
-                    <ButtonRB
-                      variant="success"
-                      type="button"
-                      style={{ maxHeight: "3rem" }}
-                    >
-                      Enviar
-                    </ButtonRB>
-                  </div>
-
+                {/* <>
                   <div>
                     {Ingredientes.map((ingrediente, index) => {
                       return (
@@ -200,17 +161,17 @@ const ModalAddProducts = ({
                           <span>{ingrediente.Ingredient}</span>
                           <span>{ingrediente.Cuantity}</span>
                           <span>{ingrediente.UMedida}</span>
-                          {/* <i
+                           <i
                             className="fa-solid fa-trash"
                             onClick={() => {
                               eliminarIngrediente(ingrediente);
                             }}
-                          ></i> */}
+                          ></i> 
                         </div>
                       );
                     })}
                   </div>
-                </>
+                </> */}
 
               </FormikStep>
 
@@ -239,14 +200,6 @@ const ModalAddProducts = ({
           </div>
         </Modal.Body>
       </Modal>
-
-      {/* <ModalRecetaProducto
-        showModal={showModalReceta}
-        handleClose={handleCloseReceta}
-        showModalAnterior={setShowModal}
-        setProductoNuevo={setProductoNuevo}
-        productoNuevo={productoNuevo}
-      ></ModalRecetaProducto> */}
     </div >
   );
 };
@@ -278,7 +231,7 @@ export function FormikStepper({ children, ...props }: PropsForm) {
   function isLastStep() {
     return step === childrenArray.length - 1;
   }
-
+  console.log(step)
   return (
     <Formik
       {...props}
@@ -293,7 +246,7 @@ export function FormikStepper({ children, ...props }: PropsForm) {
         }
       }}
     >
-      {({ isSubmitting }) => (
+      {({ values, errors, isSubmitting, isValid }) => (
         <Form autoComplete="off">
           <Stepper alternativeLabel activeStep={step}>
             {childrenArray.map((child, index) => (
@@ -303,8 +256,95 @@ export function FormikStepper({ children, ...props }: PropsForm) {
             ))}
           </Stepper>
 
+          {step === 1 ? (
+            <FieldArray name="donations">
+              {({ push, remove }) => (
+
+                <React.Fragment>
+
+                  {values.Ingredients.map((_: any, index: any) => (
+                    <Grid
+                      container
+                      item
+                      key={index}
+                      spacing={2}
+                    >
+
+                      <Grid item>
+
+                        <TextFieldSelect
+                          label="Ingrediente:"
+                          name={`Ingredients.${index}.Ingrediente`}
+                          options={[
+                            { value: '', label: "" },
+                            { value: 'Baja', label: "Baja" },
+                            {
+                              value: "Alta",
+                              label: "Alta",
+                            }
+                          ]}
+
+                        />
+                      </Grid>
+
+                      <Grid item>
+                        <TextFieldValue
+                          label="Cantidad:"
+                          name={`Ingredients.${index}.Cantidad`}
+                          type="number"
+                          placeholder="Cantidad"
+                        />
+                      </Grid>
+
+                      <Grid item>
+                        <TextFieldSelect
+                          label="Unidad de medida:"
+                          name={`Ingredients.${index}.UMedida`}
+                          options={[
+                            { value: "", label: "" },
+                            { value: "L", label: "Litro" },
+                            {
+                              value: "gr",
+                              label: "gramo",
+                            },
+                          ]}
+                        />
+                      </Grid>
+
+                      <Grid item xs={12} sm="auto">
+                        <ButtonRB
+                          variant="success"
+                          disabled={isSubmitting}
+                          onClick={() => remove(index)}
+                        >
+                          Delete
+                        </ButtonRB>
+                      </Grid>
+                    </Grid>
+                  ))}
+                  <Grid item>
+                    {typeof errors.donations === 'string' ? (
+                      <Typography color="error">
+                        {errors.donations}
+                      </Typography>
+                    ) : null}
+                  </Grid>
+
+                  <ButtonRB
+                    disabled={isSubmitting}
+                    variant="success"
+                    style={{ marginBottom: "1rem" }}
+                    onClick={() => push(emptyDonation)}
+                  >
+                    Add Donation
+                  </ButtonRB>
+                </React.Fragment>
+              )}
+            </FieldArray>
+          ) : <></>}
 
           {currentChild}
+
 
 
           <Grid container spacing={2} style={{ marginTop: "1rem" }}>
