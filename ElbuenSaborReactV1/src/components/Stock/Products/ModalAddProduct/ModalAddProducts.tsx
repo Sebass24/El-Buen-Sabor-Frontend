@@ -1,19 +1,39 @@
 import React, { useState } from "react";
-import { Modal, Form as formBostrap, Button as ButtonRB } from "react-bootstrap";
+import {
+  Modal,
+  Form as formBostrap,
+  Button as ButtonRB,
+} from "react-bootstrap";
 import * as Yup from "yup";
-import { ErrorMessage, Field, FieldArray, Form, Formik, FormikConfig, FormikValues } from "formik";
+import {
+  ErrorMessage,
+  Field,
+  FieldArray,
+  Form,
+  Formik,
+  FormikConfig,
+  FormikValues,
+} from "formik";
 import { OrderIngredient, Products } from "@Models/types";
-import TextFieldValue from '../../../Inputs/TextFieldValue';
-import TextFieldSelect from '../../../Inputs/TextFieldSelect';
-import "./ModalAddProducts.scss"
-import { Box, Grid, Step, StepLabel, Stepper, Button, Typography } from "@mui/material";
+import TextFieldValue from "../../../Inputs/TextFieldValue";
+import TextFieldSelect from "../../../Inputs/TextFieldSelect";
+import "./ModalAddProducts.scss";
+import {
+  Box,
+  Grid,
+  Step,
+  StepLabel,
+  Stepper,
+  Button,
+  Typography,
+} from "@mui/material";
 import TextAreaValue from "components/Inputs/TextAreaValue";
 
 const emptyDonation = {
   Ingredient: "",
   Cuantity: "",
-  UMedida: ""
-}
+  UMedida: "",
+};
 
 interface Props {
   showModal: boolean;
@@ -28,14 +48,13 @@ const ModalAddProducts = ({
   editing,
   product,
 }: Props) => {
-
   const [productoNuevo, setProductoNuevo] = useState({});
   const [Ingredientes, setIngredientes] = useState<OrderIngredient[]>([
     {
       Ingredient: "PApa",
       UMedida: "k",
-      Cuantity: "12"
-    }
+      Cuantity: "12",
+    },
   ]);
 
   const initialValues: Products = {
@@ -46,7 +65,7 @@ const ModalAddProducts = ({
     Estado: "",
     Descripcion: "",
     Ingredients: [emptyDonation],
-  }
+  };
 
   const validationSchemaStep1 = Yup.object({
     Nombre: Yup.string().required("*Campo requerido"),
@@ -56,9 +75,6 @@ const ModalAddProducts = ({
     Estado: Yup.string().required("*Campo requerido"),
     Descripcion: Yup.string().required("*Campo requerido"),
   });
-
-
-
 
   return (
     <div>
@@ -82,8 +98,8 @@ const ModalAddProducts = ({
             <FormikStepper
               initialValues={initialValues}
               onSubmit={(values) => {
-                console.log(values)
-                handleClose()
+                console.log(values);
+                handleClose();
               }}
             >
               <FormikStep
@@ -126,14 +142,13 @@ const ModalAddProducts = ({
                     label="Estado:"
                     name="Estado"
                     options={[
-                      { value: '', label: "" },
-                      { value: 'Baja', label: "Baja" },
+                      { value: "", label: "" },
+                      { value: "Baja", label: "Baja" },
                       {
                         value: "Alta",
                         label: "Alta",
-                      }
+                      },
                     ]}
-
                   />
                   <TextAreaValue
                     label="Descripcion"
@@ -143,15 +158,9 @@ const ModalAddProducts = ({
                 </div>
               </FormikStep>
 
-
-
-
-
               <FormikStep
                 label="Ingredientes"
-                validationSchema={Yup.object({
-
-                })}
+                validationSchema={Yup.object({})}
               >
                 {/* <>
                   <div>
@@ -172,9 +181,7 @@ const ModalAddProducts = ({
                     })}
                   </div>
                 </> */}
-
               </FormikStep>
-
 
               <FormikStep
                 label="Descripcion"
@@ -189,28 +196,19 @@ const ModalAddProducts = ({
                     placeholder="Receta"
                   />
                 </>
-
               </FormikStep>
-
-
-
-
             </FormikStepper>
-
           </div>
         </Modal.Body>
       </Modal>
-    </div >
+    </div>
   );
 };
 
 export default ModalAddProducts;
 
-
-
-
 export interface FormikStepProps
-  extends Pick<FormikConfig<FormikValues>, 'children' | 'validationSchema'> {
+  extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {
   label: string;
 }
 
@@ -219,19 +217,20 @@ export function FormikStep({ children }: FormikStepProps) {
 }
 
 interface PropsForm extends FormikConfig<FormikValues> {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
-
 export function FormikStepper({ children, ...props }: PropsForm) {
-  const childrenArray = React.Children.toArray(children) as React.ReactElement<FormikStepProps>[];
+  const childrenArray = React.Children.toArray(
+    children
+  ) as React.ReactElement<FormikStepProps>[];
   const [step, setStep] = useState(0);
   const currentChild = childrenArray[step];
   const [completed, setCompleted] = useState(false);
   function isLastStep() {
     return step === childrenArray.length - 1;
   }
-  console.log(step)
+  console.log(step);
   return (
     <Formik
       {...props}
@@ -250,40 +249,33 @@ export function FormikStepper({ children, ...props }: PropsForm) {
         <Form autoComplete="off">
           <Stepper alternativeLabel activeStep={step}>
             {childrenArray.map((child, index) => (
-              <Step key={child.props.label} completed={step > index || completed}>
+              <Step
+                key={child.props.label}
+                completed={step > index || completed}
+              >
                 <StepLabel>{child.props.label}</StepLabel>
               </Step>
             ))}
           </Stepper>
 
           {step === 1 ? (
-            <FieldArray name="donations">
+            <FieldArray name="Ingredients">
               {({ push, remove }) => (
-
                 <React.Fragment>
-
                   {values.Ingredients.map((_: any, index: any) => (
-                    <Grid
-                      container
-                      item
-                      key={index}
-                      spacing={2}
-                    >
-
+                    <Grid container item key={index} spacing={2}>
                       <Grid item>
-
                         <TextFieldSelect
                           label="Ingrediente:"
                           name={`Ingredients.${index}.Ingrediente`}
                           options={[
-                            { value: '', label: "" },
-                            { value: 'Baja', label: "Baja" },
+                            { value: "", label: "" },
+                            { value: "Baja", label: "Baja" },
                             {
                               value: "Alta",
                               label: "Alta",
-                            }
+                            },
                           ]}
-
                         />
                       </Grid>
 
@@ -311,7 +303,13 @@ export function FormikStepper({ children, ...props }: PropsForm) {
                         />
                       </Grid>
 
-                      <Grid item xs={12} sm="auto">
+                      <Grid
+                        item
+                        xs={12}
+                        sm="auto"
+                        textAlign="center"
+                        justifyContent="center"
+                      >
                         <ButtonRB
                           variant="success"
                           disabled={isSubmitting}
@@ -323,10 +321,8 @@ export function FormikStepper({ children, ...props }: PropsForm) {
                     </Grid>
                   ))}
                   <Grid item>
-                    {typeof errors.donations === 'string' ? (
-                      <Typography color="error">
-                        {errors.donations}
-                      </Typography>
+                    {typeof errors.donations === "string" ? (
+                      <Typography color="error">{errors.donations}</Typography>
                     ) : null}
                   </Grid>
 
@@ -336,16 +332,16 @@ export function FormikStepper({ children, ...props }: PropsForm) {
                     style={{ marginBottom: "1rem" }}
                     onClick={() => push(emptyDonation)}
                   >
-                    Add Donation
+                    Añadir Ingredientes
                   </ButtonRB>
                 </React.Fragment>
               )}
             </FieldArray>
-          ) : <></>}
+          ) : (
+            <></>
+          )}
 
           {currentChild}
-
-
 
           <Grid container spacing={2} style={{ marginTop: "1rem" }}>
             {step > 0 ? (
@@ -367,7 +363,7 @@ export function FormikStepper({ children, ...props }: PropsForm) {
                 color="primary"
                 type="submit"
               >
-                {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
+                {isSubmitting ? "Submitting" : isLastStep() ? "Submit" : "Next"}
               </Button>
             </Grid>
           </Grid>
@@ -376,4 +372,3 @@ export function FormikStepper({ children, ...props }: PropsForm) {
     </Formik>
   );
 }
-

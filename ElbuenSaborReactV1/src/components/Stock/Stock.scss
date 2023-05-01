@@ -6,7 +6,6 @@
 }
 
 .stock_navegator {
-
   .nav-item {
     background-color: transparent;
     --bs-nav-link-color: #737b83;
@@ -14,7 +13,7 @@
     --bs-nav-tabs-link-active-color: black;
     --bs-nav-link-hover-color: black;
     --bs-nav-tabs-border-width: 0;
-    font-size: 2rem;
+    font-size: 1.5rem;
     padding: 1rem 0;
     border-bottom: 1px solid black;
 
@@ -23,7 +22,5 @@
       --bs-nav-link-color: black;
       --bs-nav-link-font-weight: bold;
     }
-
-
   }
 }

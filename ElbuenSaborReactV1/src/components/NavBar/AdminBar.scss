@@ -11,8 +11,6 @@
   .Container_RightNavBar_admin {
     margin: 1rem 2rem 0 0;
 
-
-
     .MyAccount {
       cursor: pointer;
       display: flex;
@@ -37,7 +35,7 @@
       .btn.active,
       .btn.show,
       .btn:first-child:active,
-      :not(.btn-check)+.btn:active {
+      :not(.btn-check) + .btn:active {
         background-color: rgb(253, 253, 253);
       }
     }
@@ -64,7 +62,7 @@
   .imgLogo_admin {
     width: 5rem;
     height: 4rem;
-    margin-top: .2rem;
+    margin-top: 0.2rem;
     background-image: url(../../resources/logo-png.png);
     background-size: contain;
     background-repeat: no-repeat;

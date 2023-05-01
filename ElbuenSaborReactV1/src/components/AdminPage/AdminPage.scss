@@ -1,5 +1,4 @@
 .admin_navegator {
-  margin: 1rem 0;
   position: relative !important;
 
   .nav-item {
@@ -8,11 +7,11 @@
     --bs-nav-tabs-link-active-color: black;
     --bs-nav-link-hover-color: #737b83;
     --bs-nav-tabs-border-width: 0;
-    font-size: 2rem;
-    border-bottom: 0.5rem solid black;
+    font-size: 1.3rem;
+    border-bottom: 0.2rem solid black;
 
     &:hover {
-      border-bottom: 0.5rem solid black;
+      border-bottom: 0.2rem solid black;
     }
 
     .nav-link.active {

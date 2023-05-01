@@ -24,7 +24,7 @@ const AdminPage = () => {
         <Tab eventKey="Rubros" title="Rubros">
           <Categories />
         </Tab>
-        <Tab eventKey="Estadisticas" title="estadísticas">
+        <Tab eventKey="Estadisticas" title="Estadisticas">
           <AdminTab />
         </Tab>
         <Tab eventKey="Facturacion" title="Facturación">
