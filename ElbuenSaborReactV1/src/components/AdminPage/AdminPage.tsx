@@ -1,10 +1,11 @@
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import AdminTab from "../AdminTab/AdminTab";
 import "./AdminPage.scss";
 import Stock from "../Stock/Stock";
 import Categories from "components/Categories/Categories";
 import Users from "components/Users/Users";
+import Billing from "components/BIlling/Billing";
+import Statistics from "components/Statistics/Statistics";
 
 const AdminPage = () => {
   return (
@@ -25,10 +26,10 @@ const AdminPage = () => {
           <Categories />
         </Tab>
         <Tab eventKey="Estadisticas" title="Estadisticas">
-          <AdminTab />
+          <Statistics />
         </Tab>
         <Tab eventKey="Facturacion" title="Facturación">
-          <AdminTab />
+          <Billing />
         </Tab>
       </Tabs>
     </div>

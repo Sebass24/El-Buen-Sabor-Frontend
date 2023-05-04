@@ -31,7 +31,7 @@ import TextAreaValue from "components/Inputs/TextAreaValue";
 
 const emptyDonation = {
   Ingredient: "",
-  Cuantity: "",
+  Cuantity: NaN,
   UMedida: "",
 };
 
@@ -48,14 +48,6 @@ const ModalAddProducts = ({
   editing,
   product,
 }: Props) => {
-  const [productoNuevo, setProductoNuevo] = useState({});
-  const [Ingredientes, setIngredientes] = useState<OrderIngredient[]>([
-    {
-      Ingredient: "PApa",
-      UMedida: "k",
-      Cuantity: "12",
-    },
-  ]);
 
   const initialValues: Products = {
     Nombre: "",
@@ -105,12 +97,12 @@ const ModalAddProducts = ({
               <FormikStep
                 label="Datos del producto"
                 validationSchema={Yup.object({
-                  // Nombre: Yup.string().required("*Campo requerido"),
-                  // Rubro: Yup.string().required("*Campo requerido"),
-                  // PrecioVenta: Yup.number().required("*Campo requerido"),
-                  // TiempoCocina: Yup.number().required("*Campo requerido"),
-                  // Estado: Yup.string().required("*Campo requerido"),
-                  // Descripcion: Yup.string().required("*Campo requerido"),
+                  Nombre: Yup.string().required("*Campo requerido"),
+                  Rubro: Yup.string().required("*Campo requerido"),
+                  PrecioVenta: Yup.number().required("*Campo requerido"),
+                  TiempoCocina: Yup.number().required("*Campo requerido"),
+                  Estado: Yup.string().required("*Campo requerido"),
+                  Descripcion: Yup.string().required("*Campo requerido"),
                 })}
               >
                 <div className="container_Form_Productos">
@@ -120,11 +112,18 @@ const ModalAddProducts = ({
                     placeholder="Nombre"
                     type="text"
                   />
-                  <TextFieldValue
-                    label="Rubro"
+                  <TextFieldSelect
+                    label="Rubro:"
                     name="Rubro"
-                    placeholder="Rubro"
-                    type="text"
+                    options={[
+                      { value: '', label: "" },
+                      { value: 'Baja', label: "Baja" },
+                      {
+                        value: "Alta",
+                        label: "Alta",
+                      }
+                    ]}
+
                   />
                   <TextFieldValue
                     label="PrecioVenta"
@@ -160,27 +159,23 @@ const ModalAddProducts = ({
 
               <FormikStep
                 label="Ingredientes"
-                validationSchema={Yup.object({})}
+                validationSchema={Yup.object({
+                  Ingredients: Yup.array(
+                    Yup.object({
+                      Ingrediente: Yup.string()
+                        .required('Campo Requerido'),
+                      Cantidad: Yup.number()
+                        .required('Campo Requerido'),
+                      UMedida: Yup.string()
+                        .required('Campo Requerido'),
+
+                    })
+                  )
+                    .min(1, 'Tiene que tener al menos un ingrediente')
+
+                })}
               >
-                {/* <>
-                  <div>
-                    {Ingredientes.map((ingrediente, index) => {
-                      return (
-                        <div key={index} className="Container_Ingredientes_modal">
-                          <span>{ingrediente.Ingredient}</span>
-                          <span>{ingrediente.Cuantity}</span>
-                          <span>{ingrediente.UMedida}</span>
-                           <i
-                            className="fa-solid fa-trash"
-                            onClick={() => {
-                              eliminarIngrediente(ingrediente);
-                            }}
-                          ></i> 
-                        </div>
-                      );
-                    })}
-                  </div>
-                </> */}
+
               </FormikStep>
 
               <FormikStep
@@ -230,7 +225,6 @@ export function FormikStepper({ children, ...props }: PropsForm) {
   function isLastStep() {
     return step === childrenArray.length - 1;
   }
-  console.log(step);
   return (
     <Formik
       {...props}
@@ -305,10 +299,7 @@ export function FormikStepper({ children, ...props }: PropsForm) {
 
                       <Grid
                         item
-                        xs={12}
-                        sm="auto"
-                        textAlign="center"
-                        justifyContent="center"
+                        alignSelf={"center"}
                       >
                         <ButtonRB
                           variant="success"
@@ -368,7 +359,8 @@ export function FormikStepper({ children, ...props }: PropsForm) {
             </Grid>
           </Grid>
         </Form>
-      )}
-    </Formik>
+      )
+      }
+    </Formik >
   );
 }

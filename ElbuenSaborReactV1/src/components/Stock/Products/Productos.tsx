@@ -89,6 +89,9 @@ const Productos = () => {
           .includes(serchParam.toLowerCase()) ||
         productVal.Estado.toString()
           .toLowerCase()
+          .includes(serchParam.toLowerCase()) ||
+        productVal.Estado.toString()
+          .toLowerCase()
           .includes(serchParam.toLowerCase())
       )
         return productVal;

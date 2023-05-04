@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import "./CashierPage.scss";
-import CahierTable from './CashierTable/CashierTable';
 import { cashierOrder } from '@Models/types';
+import React, { useState } from 'react'
+import BillingTable from './BillingTable/BillingTable';
 
-const CashierPage = () => {
+export default function Billing() {
+
   const productosPrueba: cashierOrder[] = [
     {
       IdPedido: 123456,
@@ -55,7 +55,6 @@ const CashierPage = () => {
     }
   ]
 
-
   const [order, setOrder] = useState<cashierOrder[]>(productosPrueba);
   const [orderComplete, setOrderComplete] = useState<cashierOrder[]>(productosPrueba);
   const [search, setSearch] = useState("");
@@ -84,6 +83,9 @@ const CashierPage = () => {
           .includes(serchParam.toLowerCase()) ||
         productVal.Pagado.toString()
           .toLowerCase()
+          .includes(serchParam.toLowerCase()) ||
+        productVal.Estado.toString()
+          .toLowerCase()
           .includes(serchParam.toLowerCase())
       )
         return productVal;
@@ -91,11 +93,12 @@ const CashierPage = () => {
     setOrder(serchResult);
   };
 
+
   return (
     <div >
       <div className='Filter_Container'>
         <div>
-          <span>Nivel de stock: </span>
+          <span>Estado: </span>
           <select className='Select_nivelStock'>
             <option>Todos</option>
             <option>Faltante</option>
@@ -109,10 +112,8 @@ const CashierPage = () => {
         </div>
       </div>
       <div className='Container_Cashier_Table'>
-        <CahierTable orders={order} />
+        <BillingTable orders={order} />
       </div>
     </div>
-  );
+  )
 }
-
-export default CashierPage;

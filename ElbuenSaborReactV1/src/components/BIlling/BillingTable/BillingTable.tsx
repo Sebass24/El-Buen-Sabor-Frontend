@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from 'react'
 import TableHead from "@mui/material/TableHead";
 import { Link } from "react-router-dom";
 import { cashierOrder, OrderIngredient } from "@Models/types";
-import "./CashierTable.scss";
+import "./BillingTable.scss";
 
 import {
   createTheme,
@@ -180,7 +180,9 @@ interface myProps {
   orders: cashierOrder[]
 }
 
-const CahierTable = ({ orders }: myProps) => {
+
+
+export default function BillingTable({ orders }: myProps) {
 
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("");
@@ -261,51 +263,21 @@ const CahierTable = ({ orders }: myProps) => {
 
                         }
                       </TableCell>
-                      <TableCell className="tableCell">
-                        <div className="tableCell_Actions">
-                          {order.Estado === "A Confirmar" ?
-                            <Button
-                              className="ACocina"
-                              variant="warning"
-                            >
-                              A Cocina
-                            </Button>
-                            :
-                            order.Estado === "Listo" ?
-                              <Button
-                                className="ACocina"
-                                variant="warning"
-                              >
-                                Delivery
-                              </Button>
-                              : <></>
-                          }
-                          {order.Pagado === "No" ?
-                            <Button
-                              className="Pagado"
-                              variant="Success"
-                            >
-                              Pagar
-                            </Button>
-                            : <></>}
-                          {order.Pagado === "Si" ?
-                            <Button
-                              className="verFactura"
-                              variant="warning"
-                            >
-                              Ver Factura
-                            </Button>
-                            : <></>}
+                      <TableCell className="tableCell" style={{ display: 'flex', justifyContent: "center", alignItems: "center" }}>
+                        <div className="tableCell_Actions_billing">
+                          <Button
+                            className="ACocina"
+                            variant="warning"
+                          >
+                            Ver Factura
+                          </Button>
                           <Button
                             className="Anular"
                             variant="danger"
                           >
                             Anular
                           </Button>
-
                         </div>
-
-
                       </TableCell>
                     </TableRow>
                   );
@@ -335,5 +307,4 @@ const CahierTable = ({ orders }: myProps) => {
       </Paper>
     </div >
   );
-};
-export default CahierTable;
+}

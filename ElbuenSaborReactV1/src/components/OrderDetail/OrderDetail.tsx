@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import "./OrderDetail.scss"
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Button } from 'react-bootstrap';
 
 interface PedidoDetail {
   IdPedido: number;
@@ -106,7 +107,14 @@ const OrderDetail = () => {
         <span className='Descuentos'>Descuentos: ${productosPrueba.Descuentos}</span>
         <span className='Total'>Total: ${subtotal - productosPrueba.Descuentos}</span>
       </div>
-
+      <div className='Button_Back'>
+        <Button
+          variant='warning'
+          onClick={() => (window.history.back())}
+        >
+          volver
+        </Button >
+      </div>
     </>
   );
 }

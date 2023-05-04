@@ -8,6 +8,7 @@ export interface Ingredient {
   NivelStock?: string;
   Estado: string;
 }
+
 export interface cashierOrder {
   IdPedido: number;
   FechaPedido: string;
@@ -16,10 +17,12 @@ export interface cashierOrder {
   Pagado: string;
   Estado: string;
 }
+
 export interface Options {
   value: string;
   label: string;
 }
+
 export interface Products {
   Nombre: string;
   Rubro: string;
@@ -27,8 +30,9 @@ export interface Products {
   TiempoCocina: number;
   Estado: string;
   Descripcion: string;
-  Ingredients: OrderIngredient[]
+  Ingredients?: OrderIngredient[]
 }
+
 export interface Category {
   Name: string;
   FatherCategory?: string;
@@ -55,7 +59,6 @@ export interface DeliveryOrder {
 
 export interface OrderIngredient {
   Ingredient: string;
-  Cuantity: string;
+  Cuantity: Number;
   UMedida: string;
 }
-
