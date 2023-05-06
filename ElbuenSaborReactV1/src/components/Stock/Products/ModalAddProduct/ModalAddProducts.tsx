@@ -48,12 +48,11 @@ const ModalAddProducts = ({
   editing,
   product,
 }: Props) => {
-
   const initialValues: Products = {
     Nombre: "",
     Rubro: "",
-    PrecioVenta: NaN,
-    TiempoCocina: NaN,
+    PrecioVenta: 0,
+    TiempoCocina: 0,
     Estado: "",
     Descripcion: "",
     Ingredients: [emptyDonation],
@@ -62,7 +61,9 @@ const ModalAddProducts = ({
   const validationSchemaStep1 = Yup.object({
     Nombre: Yup.string().required("*Campo requerido"),
     Rubro: Yup.string().required("*Campo requerido"),
-    PrecioVenta: Yup.number().required("*Campo requerido"),
+    PrecioVenta: Yup.number()
+      .required("*Campo requerido")
+      .moreThan(0, "tiene que ser mayor a 0"),
     TiempoCocina: Yup.number().required("*Campo requerido"),
     Estado: Yup.string().required("*Campo requerido"),
     Descripcion: Yup.string().required("*Campo requerido"),
@@ -116,14 +117,13 @@ const ModalAddProducts = ({
                     label="Rubro:"
                     name="Rubro"
                     options={[
-                      { value: '', label: "" },
-                      { value: 'Baja', label: "Baja" },
+                      { value: "", label: "" },
+                      { value: "Baja", label: "Baja" },
                       {
                         value: "Alta",
                         label: "Alta",
-                      }
+                      },
                     ]}
-
                   />
                   <TextFieldValue
                     label="PrecioVenta"
@@ -162,21 +162,13 @@ const ModalAddProducts = ({
                 validationSchema={Yup.object({
                   Ingredients: Yup.array(
                     Yup.object({
-                      Ingrediente: Yup.string()
-                        .required('Campo Requerido'),
-                      Cantidad: Yup.number()
-                        .required('Campo Requerido'),
-                      UMedida: Yup.string()
-                        .required('Campo Requerido'),
-
+                      Ingrediente: Yup.string().required("Campo Requerido"),
+                      Cantidad: Yup.number().required("Campo Requerido"),
+                      UMedida: Yup.string().required("Campo Requerido"),
                     })
-                  )
-                    .min(1, 'Tiene que tener al menos un ingrediente')
-
+                  ).min(1, "Tiene que tener al menos un ingrediente"),
                 })}
-              >
-
-              </FormikStep>
+              ></FormikStep>
 
               <FormikStep
                 label="Descripcion"
@@ -297,10 +289,7 @@ export function FormikStepper({ children, ...props }: PropsForm) {
                         />
                       </Grid>
 
-                      <Grid
-                        item
-                        alignSelf={"center"}
-                      >
+                      <Grid item alignSelf={"center"}>
                         <ButtonRB
                           variant="success"
                           disabled={isSubmitting}
@@ -359,8 +348,7 @@ export function FormikStepper({ children, ...props }: PropsForm) {
             </Grid>
           </Grid>
         </Form>
-      )
-      }
-    </Formik >
+      )}
+    </Formik>
   );
 }

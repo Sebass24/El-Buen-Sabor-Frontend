@@ -18,8 +18,6 @@ import {
   Typography,
 } from "@mui/material";
 
-
-
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
     a = a[orderBy][0].toLowerCase();
@@ -49,7 +47,10 @@ function getComparador(order: string, orderBy: string) {
 }
 
 const stableSort = (array: Ingredient[], comparator: any, orderBy: any) => {
-  const stabilizedThis = array.map((ingrediente: any, index: number) => [ingrediente, index]);
+  const stabilizedThis = array.map((ingrediente: any, index: number) => [
+    ingrediente,
+    index,
+  ]);
   stabilizedThis.sort((a: any, b: any) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -80,9 +81,7 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "Nombre" ? order : "asc"}
             onClick={crearSortHandler("Nombre")}
           >
-            <Typography fontWeight="bold">
-              Ingrediente
-            </Typography>
+            <Typography fontWeight="bold">Ingrediente</Typography>
           </TableSortLabel>
         </TableCell>
 
@@ -96,14 +95,13 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "Rubro" ? order : "asc"}
             onClick={crearSortHandler("Rubro")}
           >
-            <Typography fontWeight="bold">
-              Rubro
-            </Typography>
+            <Typography fontWeight="bold">Rubro</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="PrecioDeCosto"
+          className="tableCell"
+          key="PrecioDeCosto"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -111,14 +109,13 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "PrecioDeCosto" ? order : "asc"}
             onClick={crearSortHandler("PrecioDeCosto")}
           >
-            <Typography fontWeight="bold">
-              Precio De Costo
-            </Typography>
+            <Typography fontWeight="bold">Precio De Costo</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="StockMinimo"
+          className="tableCell"
+          key="StockMinimo"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -126,14 +123,13 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "StockMinimo" ? order : "asc"}
             onClick={crearSortHandler("StockMinimo")}
           >
-            <Typography fontWeight="bold">
-              Stock mínimo
-            </Typography>
+            <Typography fontWeight="bold">Stock mínimo</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="StockActual"
+          className="tableCell"
+          key="StockActual"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -141,14 +137,13 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "StockActual" ? order : "asc"}
             onClick={crearSortHandler("StockActual")}
           >
-            <Typography fontWeight="bold">
-              Stock actual
-            </Typography>
+            <Typography fontWeight="bold">Stock actual</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="UnidadMedida"
+          className="tableCell"
+          key="UnidadMedida"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -156,23 +151,21 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "UnidadMedida" ? order : "asc"}
             onClick={crearSortHandler("UnidadMedida")}
           >
-            <Typography fontWeight="bold">
-              Unidad medida
-            </Typography>
+            <Typography fontWeight="bold">Unidad medida</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="NivelStock"
+          className="tableCell"
+          key="NivelStock"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <Typography fontWeight="bold">
-            Nivel de stock
-          </Typography>
+          <Typography fontWeight="bold">Nivel de stock</Typography>
         </TableCell>
 
-        <TableCell
-          className="tableCell" key="Estado"
+        {/* <TableCell
+          className="tableCell"
+          key="Estado"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -180,19 +173,16 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "Estado" ? order : "asc"}
             onClick={crearSortHandler("Estado")}
           >
-            <Typography fontWeight="bold">
-              Estado
-            </Typography>
+            <Typography fontWeight="bold">Estado</Typography>
           </TableSortLabel>
-        </TableCell>
+        </TableCell> */}
 
         <TableCell
-          className="tableCell" key="Acciones"
+          className="tableCell"
+          key="Acciones"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <Typography fontWeight="bold">
-            Acciones
-          </Typography>
+          <Typography fontWeight="bold">Acciones</Typography>
         </TableCell>
       </TableRow>
     </TableHead>
@@ -200,12 +190,10 @@ function CabeceraMejorada(props: any) {
 }
 
 interface MyProps {
-  Ingredients: Ingredient[]
+  Ingredients: Ingredient[];
 }
 
-
 const TableIngredients = ({ Ingredients }: MyProps) => {
-
   const formatoMonedaLocal = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
@@ -231,7 +219,8 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
   };
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, Ingredients.length - page * rowsPerPage);
+    rowsPerPage -
+    Math.min(rowsPerPage, Ingredients.length - page * rowsPerPage);
 
   return (
     <div className="container_tabla">
@@ -239,8 +228,8 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -254,66 +243,10 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
               {stableSort(Ingredients, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((ingrediente, index) => {
-                  if (ingrediente.Estado === "Baja") {
-                    return (
-                      <TableRow key={index} style={{ backgroundColor: '#F0B1B1' }}>
-                        <TableCell
-                          className="tableCell"
-                        >
-                          {ingrediente.Nombre}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {ingrediente.Rubro}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {formatoMonedaLocal.format(ingrediente?.PrecioCosto)}{" "}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {ingrediente.StockMinimo}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {ingrediente.StockActual}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {ingrediente.UnidadMedida}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {ingrediente.NivelStock}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {ingrediente.Estado}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {
-                            <>
-                              <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                                onClick={() =>
-                                  console.log("eliminar")
-                                }
-                              >
-                                <i className="fa-solid fa-trash"></i>
-                              </button>
-                              <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                              >
-                                <i className="fa-solid fa-pen-to-square"></i>
-                              </button>
-                            </>
-                          }
-                        </TableCell>
-                      </TableRow>
-                    );
-                  } else {
+                  if (ingrediente.Estado !== "Baja") {
                     return (
                       <TableRow key={index}>
-                        <TableCell
-                          className="tableCell"
-                        >
+                        <TableCell className="tableCell">
                           {ingrediente.Nombre}
                         </TableCell>
                         <TableCell className="tableCell">
@@ -334,22 +267,20 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
                         <TableCell className="tableCell">
                           {ingrediente.NivelStock}
                         </TableCell>
-                        <TableCell className="tableCell">
+                        {/* <TableCell className="tableCell">
                           {ingrediente.Estado}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell className="tableCell">
                           {
                             <>
-                              <button
+                              {/* <button
                                 data-title="Eliminar"
                                 type="button"
                                 className="btn btn-sm"
-                                onClick={() =>
-                                  console.log("eliminar")
-                                }
+                                onClick={() => console.log("eliminar")}
                               >
                                 <i className="fa-solid fa-trash"></i>
-                              </button>
+                              </button> */}
                               <button
                                 data-title="Eliminar"
                                 type="button"
@@ -363,7 +294,6 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
                       </TableRow>
                     );
                   }
-
                 })}
             </TableBody>
           </Table>
@@ -386,7 +316,6 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-
       </Paper>
     </div>
   );

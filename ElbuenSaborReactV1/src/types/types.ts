@@ -30,7 +30,7 @@ export interface Products {
   TiempoCocina: number;
   Estado: string;
   Descripcion: string;
-  Ingredients?: OrderIngredient[]
+  Ingredients?: OrderIngredient[];
 }
 
 export interface Category {

@@ -1,5 +1,5 @@
-import React from 'react'
-import "./TableUsers.scss"
+import React from "react";
+import "./TableUsers.scss";
 
 import {
   createTheme,
@@ -46,7 +46,10 @@ function getComparador(order: string, orderBy: string) {
 }
 
 const stableSort = (array: Users[], comparator: any, orderBy: any) => {
-  const stabilizedThis = array.map((product: any, index: number) => [product, index]);
+  const stabilizedThis = array.map((product: any, index: number) => [
+    product,
+    index,
+  ]);
   stabilizedThis.sort((a: any, b: any) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -77,9 +80,7 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "Name" ? order : "asc"}
             onClick={crearSortHandler("Name")}
           >
-            <Typography fontWeight="bold">
-              Nombre rubro
-            </Typography>
+            <Typography fontWeight="bold">Nombre rubro</Typography>
           </TableSortLabel>
         </TableCell>
 
@@ -93,9 +94,7 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "Email" ? order : "asc"}
             onClick={crearSortHandler("Email")}
           >
-            <Typography fontWeight="bold">
-              Email
-            </Typography>
+            <Typography fontWeight="bold">Email</Typography>
           </TableSortLabel>
         </TableCell>
 
@@ -109,9 +108,7 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "Phone" ? order : "asc"}
             onClick={crearSortHandler("Phone")}
           >
-            <Typography fontWeight="bold">
-              Teléfono
-            </Typography>
+            <Typography fontWeight="bold">Teléfono</Typography>
           </TableSortLabel>
         </TableCell>
 
@@ -125,9 +122,7 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "Adress" ? order : "asc"}
             onClick={crearSortHandler("Adress")}
           >
-            <Typography fontWeight="bold">
-              Dirección
-            </Typography>
+            <Typography fontWeight="bold">Dirección</Typography>
           </TableSortLabel>
         </TableCell>
 
@@ -141,14 +136,13 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "Location" ? order : "asc"}
             onClick={crearSortHandler("Location")}
           >
-            <Typography fontWeight="bold">
-              Departamento
-            </Typography>
+            <Typography fontWeight="bold">Departamento</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="State"
+          className="tableCell"
+          key="State"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -156,19 +150,16 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "State" ? order : "asc"}
             onClick={crearSortHandler("State")}
           >
-            <Typography fontWeight="bold">
-              Estado
-            </Typography>
+            <Typography fontWeight="bold">Estado</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="Acciones"
+          className="tableCell"
+          key="Acciones"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <Typography fontWeight="bold">
-            Acciones
-          </Typography>
+          <Typography fontWeight="bold">Acciones</Typography>
         </TableCell>
       </TableRow>
     </TableHead>
@@ -213,8 +204,8 @@ export default function TableUsers({ Users }: myProps) {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -228,12 +219,10 @@ export default function TableUsers({ Users }: myProps) {
               {stableSort(Users, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((user, index) => {
-                  if (user.State === "Baja") {
+                  if (user.State !== "Baja") {
                     return (
-                      <TableRow key={index} style={{ backgroundColor: '#F0B1B1' }}>
-                        <TableCell className="tableCell">
-                          {user.Name}
-                        </TableCell>
+                      <TableRow key={index}>
+                        <TableCell className="tableCell">{user.Name}</TableCell>
                         <TableCell className="tableCell">
                           {user.Email}
                         </TableCell>
@@ -257,9 +246,7 @@ export default function TableUsers({ Users }: myProps) {
                                 data-title="Eliminar"
                                 type="button"
                                 className="btn btn-sm"
-                                onClick={() =>
-                                  console.log("eliminar")
-                                }
+                                onClick={() => console.log("eliminar")}
                               >
                                 <i className="fa-solid fa-trash"></i>
                               </button>
@@ -275,54 +262,7 @@ export default function TableUsers({ Users }: myProps) {
                         </TableCell>
                       </TableRow>
                     );
-                  } else {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell className="tableCell">
-                          {user.Name}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {user.Email}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {user.Phone}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {user.Adress}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {user.Location}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {user.State}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {
-                            <>
-                              <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                                onClick={() =>
-                                  console.log("eliminar")
-                                }
-                              >
-                                <i className="fa-solid fa-trash"></i>
-                              </button>
-                              <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                              >
-                                <i className="fa-solid fa-pen-to-square"></i>
-                              </button>
-                            </>
-                          }
-                        </TableCell>
-                      </TableRow>
-                    );
                   }
-
                 })}
             </TableBody>
           </Table>
@@ -345,7 +285,6 @@ export default function TableUsers({ Users }: myProps) {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-
       </Paper>
     </div>
   );

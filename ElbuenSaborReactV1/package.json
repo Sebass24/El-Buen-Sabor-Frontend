@@ -14,15 +14,18 @@
     "@emotion/styled": "^11.10.6",
     "@mui/material": "^5.12.2",
     "bootstrap": "^5.2.3",
+    "chart.js": "^4.3.0",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.3",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
     "yup": "^1.1.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@types/node": "^18.15.13",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",

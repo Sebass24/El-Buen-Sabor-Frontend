@@ -18,7 +18,6 @@ import {
 } from "@mui/material";
 import { Products } from "@Models/types";
 
-
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
     a = a[orderBy][0].toLowerCase();
@@ -48,7 +47,10 @@ function getComparador(order: string, orderBy: string) {
 }
 
 const stableSort = (array: Products[], comparator: any, orderBy: any) => {
-  const stabilizedThis = array.map((product: any, index: number) => [product, index]);
+  const stabilizedThis = array.map((product: any, index: number) => [
+    product,
+    index,
+  ]);
   stabilizedThis.sort((a: any, b: any) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -79,9 +81,7 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "Nombre" ? order : "asc"}
             onClick={crearSortHandler("Nombre")}
           >
-            <Typography fontWeight="bold">
-              Producto
-            </Typography>
+            <Typography fontWeight="bold">Producto</Typography>
           </TableSortLabel>
         </TableCell>
 
@@ -95,14 +95,13 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "Rubro" ? order : "asc"}
             onClick={crearSortHandler("Rubro")}
           >
-            <Typography fontWeight="bold">
-              Rubro
-            </Typography>
+            <Typography fontWeight="bold">Rubro</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="PrecioDeVenta"
+          className="tableCell"
+          key="PrecioDeVenta"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -110,14 +109,13 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "PrecioDeVenta" ? order : "asc"}
             onClick={crearSortHandler("PrecioDeVenta")}
           >
-            <Typography fontWeight="bold">
-              Precio De Venta
-            </Typography>
+            <Typography fontWeight="bold">Precio De Venta</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="TiempoCocina"
+          className="tableCell"
+          key="TiempoCocina"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -125,14 +123,13 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "TiempoCocina" ? order : "asc"}
             onClick={crearSortHandler("TiempoCocina")}
           >
-            <Typography fontWeight="bold">
-              Tiempo en cocina
-            </Typography>
+            <Typography fontWeight="bold">Tiempo en cocina</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="Estado"
+          className="tableCell"
+          key="Estado"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -140,19 +137,16 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "Estado" ? order : "asc"}
             onClick={crearSortHandler("Estado")}
           >
-            <Typography fontWeight="bold">
-              Estado
-            </Typography>
+            <Typography fontWeight="bold">Estado</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="Acciones"
+          className="tableCell"
+          key="Acciones"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <Typography fontWeight="bold">
-            Acciones
-          </Typography>
+          <Typography fontWeight="bold">Acciones</Typography>
         </TableCell>
       </TableRow>
     </TableHead>
@@ -160,11 +154,10 @@ function CabeceraMejorada(props: any) {
 }
 
 interface MyProps {
-  products: Products[]
+  products: Products[];
 }
 
 const TableProducts = ({ products }: MyProps) => {
-
   const formatoMonedaLocal = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
@@ -198,8 +191,8 @@ const TableProducts = ({ products }: MyProps) => {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -213,57 +206,10 @@ const TableProducts = ({ products }: MyProps) => {
               {stableSort(products, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((product, index) => {
-                  if (product.Estado === "Baja") {
-                    return (
-                      <TableRow key={index} style={{ backgroundColor: '#F0B1B1' }}>
-                        <TableCell
-                          className="tableCell"
-                        >
-                          {product.Nombre}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {product.Rubro}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {formatoMonedaLocal.format(product?.PrecioVenta)}{" "}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {product.TiempoCocina}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {product.Estado}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {
-                            <>
-                              <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                                onClick={() =>
-                                  console.log("eliminar")
-                                }
-                              >
-                                <i className="fa-solid fa-trash"></i>
-                              </button>
-                              <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                              >
-                                <i className="fa-solid fa-pen-to-square"></i>
-                              </button>
-                            </>
-                          }
-                        </TableCell>
-                      </TableRow>
-                    );
-                  } else {
+                  if (product.Estado !== "Baja") {
                     return (
                       <TableRow key={index}>
-                        <TableCell
-                          className="tableCell"
-                        >
+                        <TableCell className="tableCell">
                           {product.Nombre}
                         </TableCell>
                         <TableCell className="tableCell">
@@ -281,16 +227,14 @@ const TableProducts = ({ products }: MyProps) => {
                         <TableCell className="tableCell">
                           {
                             <>
-                              <button
+                              {/* <button
                                 data-title="Eliminar"
                                 type="button"
                                 className="btn btn-sm"
-                                onClick={() =>
-                                  console.log("eliminar")
-                                }
+                                onClick={() => console.log("eliminar")}
                               >
                                 <i className="fa-solid fa-trash"></i>
-                              </button>
+                              </button> */}
                               <button
                                 data-title="Eliminar"
                                 type="button"
@@ -304,7 +248,6 @@ const TableProducts = ({ products }: MyProps) => {
                       </TableRow>
                     );
                   }
-
                 })}
             </TableBody>
           </Table>
@@ -327,7 +270,6 @@ const TableProducts = ({ products }: MyProps) => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-
       </Paper>
     </div>
   );
