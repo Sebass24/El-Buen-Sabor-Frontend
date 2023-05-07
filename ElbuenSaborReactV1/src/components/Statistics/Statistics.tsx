@@ -1,7 +1,8 @@
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import { ChartStatistic } from "./ChartStatistics/ChartStatistic";
-
+import { ChartStatistic } from "./ChartStatistics/ChartStatistics";
+import { ChartStatisticsProducts } from "./ChartStatisticsProducts/ChartStatisticsProducts";
+import { ChartStatisticsMonetary } from "./ChartStatisticsMonetary/ChartStatisticsMonetary";
 export default function Statistics() {
   return (
     <div className="container_Card">
@@ -14,20 +15,15 @@ export default function Statistics() {
         <Tab
           eventKey="RankingProducts"
           title="Ranking Productos"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            margin: "2rem 0rem",
-          }}
+
         >
-          <ChartStatistic></ChartStatistic>
+          <ChartStatisticsProducts></ChartStatisticsProducts>
         </Tab>
         <Tab eventKey="RankingClients" title="Ranking Clientes">
-          {/* <Clients /> */}
+          <ChartStatistic></ChartStatistic>
         </Tab>
         <Tab eventKey="MoneyMovs" title="Movimientos Monetarios">
-          {/* <Empleoyees /> */}
+          <ChartStatisticsMonetary></ChartStatisticsMonetary>
         </Tab>
       </Tabs>
     </div>

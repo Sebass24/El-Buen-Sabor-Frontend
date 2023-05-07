@@ -1,0 +1,50 @@
+.filters_Client {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+
+
+
+}
+
+.filters_Client_chart {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  .OrangeCircle {
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    background-color: #F37E12;
+
+  }
+
+  .yellowCircle {
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    background-color: #FFD600;
+  }
+}
+
+
+.ChangeType {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .2rem;
+  cursor: pointer;
+}
+
+.Select_nivelStock {
+  border-radius: .5rem;
+  margin-left: .5rem;
+  padding: 0 1rem;
+  background-color: #EEEEEE;
+  color: black;
+  border: none;
+}
