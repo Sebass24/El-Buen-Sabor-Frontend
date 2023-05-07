@@ -29,6 +29,7 @@ const TextFieldValue = ({ label, value, name, type, onChange, placeholder }: pro
         name={name}
         type={type}
         autoComplete="off"
+        value={value}
       />
       <ErrorMessage
         component="div"

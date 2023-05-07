@@ -13,53 +13,84 @@ const Productos = () => {
   }
   const productosPrueba: Products[] = [
     {
-      Nombre: "Hamburguesa con queso",
-      Rubro: "hamburguesas",
-      PrecioVenta: 500,
-      TiempoCocina: 45,
-      Estado: "Baja",
-      Descripcion: "capo"
-
-    },
-    {
       Nombre: "Hamburguesa veggi",
-      Rubro: "hamburguesas",
+      Rubro: "Alta",
       PrecioVenta: 500,
       TiempoCocina: 45,
+      Receta: "pepe el carlos vivia muy feliz en su casa de madrid",
       Estado: "Alta",
-      Descripcion: "capo"
-    },
-    {
-      Nombre: "Hamburguesa con queso y jamon",
-      Rubro: "hamburguesas",
-      PrecioVenta: 500,
-      TiempoCocina: 45,
-      Estado: "Baja",
+      Ingredients: [
+        {
+          "Ingredient": "Alta",
+          "Cuantity": 123,
+          "UMedida": "L",
+        },
+        {
+          "Ingredient": "Alta",
+          "Cuantity": 123,
+          "UMedida": "L",
+        },
+        {
+          "Ingredient": "Alta",
+          "Cuantity": 123,
+          "UMedida": "L",
+        }
+      ],
       Descripcion: "capo"
     },
     {
       Nombre: "Hamburguesa veggi y lechuga",
-      Rubro: "hamburguesas",
+      Rubro: "Alta",
       PrecioVenta: 500,
       TiempoCocina: 45,
       Estado: "Alta",
-      Descripcion: "capo"
-    }, {
-      Nombre: "Hamburguesa con queso y panceta",
-      Rubro: "hamburguesas",
-      PrecioVenta: 500,
-      TiempoCocina: 45,
-      Estado: "Baja",
+      Receta: "pepe el carlos vivia muy feliz en su casa de madrid",
+      Ingredients: [
+        {
+          "Ingredient": "Alta",
+          "Cuantity": 123,
+          "UMedida": "L",
+        },
+        {
+          "Ingredient": "Alta",
+          "Cuantity": 123,
+          "UMedida": "L",
+        },
+        {
+          "Ingredient": "Alta",
+          "Cuantity": 123,
+          "UMedida": "L",
+        }
+      ],
       Descripcion: "capo"
     },
     {
       Nombre: "Hamburguesa veggi y tomate",
-      Rubro: "hamburguesas",
+      Rubro: "Alta",
       PrecioVenta: 500,
+      Receta: "pepe el carlos vivia muy feliz en su casa de madrid",
       TiempoCocina: 45,
       Estado: "Alta",
+      Ingredients: [
+        {
+          "Ingredient": "Alta",
+          "Cuantity": 123,
+          "UMedida": "L",
+        },
+        {
+          "Ingredient": "Alta",
+          "Cuantity": 123,
+          "UMedida": "L",
+        },
+        {
+          "Ingredient": "Alta",
+          "Cuantity": 123,
+          "UMedida": "L",
+        }
+      ],
       Descripcion: "capo"
     },
+
   ]
   const [product, setProduct] = useState<Products[]>(productosPrueba);
   const [productComplete, setProductComplete] = useState<Products[]>(productosPrueba);

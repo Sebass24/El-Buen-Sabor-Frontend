@@ -4,8 +4,9 @@ interface props {
   label: string;
   name: string;
   placeholder: string;
+  value?: string;
 }
-export default function TextAreaValue({ label, name, placeholder }: props) {
+export default function TextAreaValue({ label, name, placeholder, value }: props) {
   return (
     <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
       <div style={{
@@ -19,6 +20,7 @@ export default function TextAreaValue({ label, name, placeholder }: props) {
         </label>
       </div>
       <Field
+        value={value}
         className={`form-control  mb-3  input-formulario `}
         as={"textarea"}
         placeholder={placeholder}

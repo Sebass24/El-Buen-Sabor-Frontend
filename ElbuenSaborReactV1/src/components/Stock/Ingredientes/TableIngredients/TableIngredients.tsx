@@ -17,6 +17,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
+import ModalAddIngrediente from "../ModalAddIngrediente/ModalAddIngrediente";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
@@ -202,12 +203,23 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
   const [orderBy, setOrderBy] = React.useState("nombreObra");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [showModal, setShowModal] = React.useState(false);
+  const [ingredientEdit, setIngredientEdit] = React.useState<Ingredient>();
+
 
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === "asc";
     setOrderBy(property);
     setOrder(isAsc ? "desc" : "asc");
   };
+
+  const handleShowModal = (Ingredient: Ingredient) => {
+    setShowModal(true)
+    setIngredientEdit(Ingredient)
+  }
+  const handleClose = () => {
+    setShowModal(false)
+  }
 
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
@@ -228,8 +240,8 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
         <TableContainer>
           <Table
             className="table"
-            // aria-labelledby="tableTitle"
-            // aria-label="enhanced table"
+          // aria-labelledby="tableTitle"
+          // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -285,6 +297,7 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
                                 data-title="Eliminar"
                                 type="button"
                                 className="btn btn-sm"
+                                onClick={() => (handleShowModal(ingrediente))}
                               >
                                 <i className="fa-solid fa-pen-to-square"></i>
                               </button>
@@ -317,6 +330,15 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
+      <ModalAddIngrediente
+        showModal={showModal}
+        handleClose={handleClose}
+        editing={true}
+        ingrediente={ingredientEdit}
+      />
+
+
     </div>
   );
 };

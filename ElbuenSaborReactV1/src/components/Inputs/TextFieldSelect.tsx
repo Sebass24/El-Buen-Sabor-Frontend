@@ -12,7 +12,8 @@ const TextFieldSelect = ({
   label,
   change,
   options,
-  name
+  name,
+  value
 }: props) => {
   return (
     <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
@@ -29,6 +30,7 @@ const TextFieldSelect = ({
       <Field
         className={`form-control  mb-3  input-formulario`}
         name={name}
+        value={value}
         as={"select"}
       >
         {options.map((opcion, i) => {

@@ -9,6 +9,13 @@ export interface Ingredient {
   Estado: string;
 }
 
+export interface IngredientBuy {
+  Ingredient: string;
+  Cuantity: number
+  PriceCost: number;
+}
+
+
 export interface cashierOrder {
   IdPedido: number;
   FechaPedido: string;
@@ -30,6 +37,7 @@ export interface Products {
   TiempoCocina: number;
   Estado: string;
   Descripcion: string;
+  Receta: string;
   Ingredients?: OrderIngredient[];
 }
 
@@ -59,6 +67,6 @@ export interface DeliveryOrder {
 
 export interface OrderIngredient {
   Ingredient: string;
-  Cuantity: Number;
+  Cuantity: number;
   UMedida: string;
 }

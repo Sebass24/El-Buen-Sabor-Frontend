@@ -4,12 +4,18 @@ import { Button } from 'react-bootstrap';
 import TableIngredients from "./TableIngredients/TableIngredients";
 import ModalAddIngrediente from './ModalAddIngrediente/ModalAddIngrediente';
 import { Ingredient } from '@Models/types';
+import ModalBuyIngredient from './ModalBuyIngredient/ModalBuyIngredient';
 
 const Ingredients = () => {
 
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => {
     setShowModal(false)
+  }
+
+  const [showModalBuy, setShowModalBuy] = useState(false);
+  const handleCloseBuy = () => {
+    setShowModalBuy(false)
   }
   const ingredientesPrueba: Ingredient[] = [{
     Nombre: "salsa",
@@ -81,7 +87,7 @@ const Ingredients = () => {
     <div className='Container_Ingredientes' >
       <div className='actions_Ingredientes'>
         <div className='actions_Ingredientes_buttons'>
-          <Button variant="warning" >Registrar Compra</Button>
+          <Button variant="warning" onClick={() => setShowModalBuy(true)} >Registrar Compra</Button>
           <Button variant="success" onClick={() => setShowModal(true)}>Nuevo</Button>
         </div>
         <div>
@@ -104,6 +110,13 @@ const Ingredients = () => {
       <ModalAddIngrediente
         showModal={showModal}
         handleClose={handleClose}
+      />
+
+      <ModalBuyIngredient
+        handleClose={handleCloseBuy}
+        showModal={showModalBuy}
+        handleCloseNew={handleClose}
+        setShowModalNew={setShowModal}
       />
 
     </div>

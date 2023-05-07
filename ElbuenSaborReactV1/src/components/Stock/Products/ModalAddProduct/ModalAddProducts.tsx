@@ -31,7 +31,7 @@ import TextAreaValue from "components/Inputs/TextAreaValue";
 
 const emptyDonation = {
   Ingredient: "",
-  Cuantity: NaN,
+  Cuantity: null as any,
   UMedida: "",
 };
 
@@ -48,27 +48,19 @@ const ModalAddProducts = ({
   editing,
   product,
 }: Props) => {
+
   const initialValues: Products = {
     Nombre: "",
     Rubro: "",
-    PrecioVenta: 0,
-    TiempoCocina: 0,
+    PrecioVenta: null as any,
+    TiempoCocina: null as any,
+    Receta: "",
     Estado: "",
     Descripcion: "",
     Ingredients: [emptyDonation],
   };
 
-  const validationSchemaStep1 = Yup.object({
-    Nombre: Yup.string().required("*Campo requerido"),
-    Rubro: Yup.string().required("*Campo requerido"),
-    PrecioVenta: Yup.number()
-      .required("*Campo requerido")
-      .moreThan(0, "tiene que ser mayor a 0"),
-    TiempoCocina: Yup.number().required("*Campo requerido"),
-    Estado: Yup.string().required("*Campo requerido"),
-    Descripcion: Yup.string().required("*Campo requerido"),
-  });
-
+  console.log(product)
   return (
     <div>
       <Modal
@@ -89,7 +81,7 @@ const ModalAddProducts = ({
         <Modal.Body>
           <div>
             <FormikStepper
-              initialValues={initialValues}
+              initialValues={product ? product : initialValues}
               onSubmit={(values) => {
                 console.log(values);
                 handleClose();
@@ -108,12 +100,14 @@ const ModalAddProducts = ({
               >
                 <div className="container_Form_Productos">
                   <TextFieldValue
+                    value={product?.Nombre}
                     label="Nombre"
                     name="Nombre"
                     placeholder="Nombre"
                     type="text"
                   />
                   <TextFieldSelect
+                    value={product?.Rubro}
                     label="Rubro:"
                     name="Rubro"
                     options={[
@@ -126,18 +120,21 @@ const ModalAddProducts = ({
                     ]}
                   />
                   <TextFieldValue
+                    value={product?.PrecioVenta}
                     label="PrecioVenta"
                     name="PrecioVenta"
                     placeholder="PrecioVenta"
                     type="number"
                   />
                   <TextFieldValue
+                    value={product?.TiempoCocina}
                     label="TiempoCocina"
                     name="TiempoCocina"
                     placeholder="TiempoCocina"
                     type="number"
                   />
                   <TextFieldSelect
+                    value={product?.Estado}
                     label="Estado:"
                     name="Estado"
                     options={[
@@ -150,6 +147,7 @@ const ModalAddProducts = ({
                     ]}
                   />
                   <TextAreaValue
+                    value={product?.Descripcion}
                     label="Descripcion"
                     name="Descripcion"
                     placeholder="Descripcion"
@@ -162,12 +160,13 @@ const ModalAddProducts = ({
                 validationSchema={Yup.object({
                   Ingredients: Yup.array(
                     Yup.object({
-                      Ingrediente: Yup.string().required("Campo Requerido"),
-                      Cantidad: Yup.number().required("Campo Requerido"),
+                      Ingredient: Yup.string().required("Campo Requerido"),
+                      Cuantity: Yup.number().required("Campo Requerido"),
                       UMedida: Yup.string().required("Campo Requerido"),
                     })
                   ).min(1, "Tiene que tener al menos un ingrediente"),
                 })}
+                valuesEdit={product}
               ></FormikStep>
 
               <FormikStep
@@ -178,6 +177,7 @@ const ModalAddProducts = ({
               >
                 <>
                   <TextAreaValue
+                    value={product?.Receta}
                     label="Receta"
                     name="Receta"
                     placeholder="Receta"
@@ -197,17 +197,19 @@ export default ModalAddProducts;
 export interface FormikStepProps
   extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {
   label: string;
+  valuesEdit?: Products
 }
 
-export function FormikStep({ children }: FormikStepProps) {
+export function FormikStep({ children, valuesEdit }: FormikStepProps) {
   return <>{children}</>;
 }
 
 interface PropsForm extends FormikConfig<FormikValues> {
   children: React.ReactNode;
+  valuesEdit?: Products
 }
 
-export function FormikStepper({ children, ...props }: PropsForm) {
+export function FormikStepper({ children, valuesEdit, ...props }: PropsForm) {
   const childrenArray = React.Children.toArray(
     children
   ) as React.ReactElement<FormikStepProps>[];
@@ -248,12 +250,13 @@ export function FormikStepper({ children, ...props }: PropsForm) {
             <FieldArray name="Ingredients">
               {({ push, remove }) => (
                 <React.Fragment>
-                  {values.Ingredients.map((_: any, index: any) => (
+                  {values.Ingredients.map((ingre: any, index: any) => (
                     <Grid container item key={index} spacing={2}>
                       <Grid item>
                         <TextFieldSelect
+                          value={ingre?.Ingredient}
                           label="Ingrediente:"
-                          name={`Ingredients.${index}.Ingrediente`}
+                          name={`Ingredients.${index}.Ingredient`}
                           options={[
                             { value: "", label: "" },
                             { value: "Baja", label: "Baja" },
@@ -267,8 +270,9 @@ export function FormikStepper({ children, ...props }: PropsForm) {
 
                       <Grid item>
                         <TextFieldValue
+                          value={ingre?.Cuantity}
                           label="Cantidad:"
-                          name={`Ingredients.${index}.Cantidad`}
+                          name={`Ingredients.${index}.Cuantity`}
                           type="number"
                           placeholder="Cantidad"
                         />
@@ -276,6 +280,7 @@ export function FormikStepper({ children, ...props }: PropsForm) {
 
                       <Grid item>
                         <TextFieldSelect
+                          value={ingre?.UMedida}
                           label="Unidad de medida:"
                           name={`Ingredients.${index}.UMedida`}
                           options={[

@@ -5,6 +5,7 @@ import { Form, Formik } from 'formik'
 import React, { ChangeEvent } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import * as Yup from "yup"
+import Categories from '../Categories';
 
 
 
@@ -17,11 +18,11 @@ interface Props {
 
 
 
-export default function ModalAddCategories({ showModal, handleClose, editing }: Props) {
+export default function ModalAddCategories({ showModal, handleClose, editing, category }: Props) {
   const initialValues: Category = {
     Name: "",
     State: "",
-    FatherCategory: ""
+    FatherCategory: null as any
   }
   return (
     <div>
@@ -38,10 +39,8 @@ export default function ModalAddCategories({ showModal, handleClose, editing }: 
             validationSchema={Yup.object({
               Name: Yup.string().required("*Campo requerido"),
               State: Yup.string().required("*Campo requerido"),
-              FatherCategory: Yup.string().required("*Campo requerido"),
             })}
-            initialValues={initialValues
-            }
+            initialValues={category ? category : initialValues}
             enableReinitialize={true}
             onSubmit={async (values) => {
               console.log(values)
@@ -55,6 +54,7 @@ export default function ModalAddCategories({ showModal, handleClose, editing }: 
                   <div className='container_Form_Ingredientes'>
 
                     <TextFieldValue
+                      value={category?.Name}
                       label="Nombre:"
                       name="Name"
                       type="text"
@@ -64,6 +64,7 @@ export default function ModalAddCategories({ showModal, handleClose, editing }: 
                       placeholder="Nombre del Rubro"
                     />
                     <TextFieldSelect
+                      value={category?.State}
                       label="Estado:"
                       name="State"
                       options={[
@@ -77,6 +78,7 @@ export default function ModalAddCategories({ showModal, handleClose, editing }: 
                       change={(event: ChangeEvent<HTMLSelectElement>) => { Formik.setFieldValue("State", event.target.value) }}
                     />
                     <TextFieldSelect
+                      value={category?.FatherCategory}
                       label="Rubro padre:"
                       name="FatherCategory"
                       options={[

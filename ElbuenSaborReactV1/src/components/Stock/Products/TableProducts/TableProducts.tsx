@@ -17,6 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Products } from "@Models/types";
+import ModalAddProducts from "../ModalAddProduct/ModalAddProducts";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
@@ -166,6 +167,17 @@ const TableProducts = ({ products }: MyProps) => {
   const [orderBy, setOrderBy] = React.useState("nombreObra");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [showModal, setShowModal] = React.useState(false);
+  const [productEditing, setProductEditing] = React.useState<Products>();
+
+  const handleShowModal = (prod: Products) => {
+    setShowModal(true)
+    setProductEditing(prod)
+  }
+  const handleClose = () => {
+    setShowModal(false)
+  }
+
 
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === "asc";
@@ -191,8 +203,8 @@ const TableProducts = ({ products }: MyProps) => {
         <TableContainer>
           <Table
             className="table"
-            // aria-labelledby="tableTitle"
-            // aria-label="enhanced table"
+          // aria-labelledby="tableTitle"
+          // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -239,6 +251,7 @@ const TableProducts = ({ products }: MyProps) => {
                                 data-title="Eliminar"
                                 type="button"
                                 className="btn btn-sm"
+                                onClick={() => (handleShowModal(product))}
                               >
                                 <i className="fa-solid fa-pen-to-square"></i>
                               </button>
@@ -271,6 +284,17 @@ const TableProducts = ({ products }: MyProps) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
+      <ModalAddProducts
+        handleClose={handleClose}
+        showModal={showModal}
+        editing={true}
+        product={productEditing}
+      />
+
+
+
+
     </div>
   );
 };

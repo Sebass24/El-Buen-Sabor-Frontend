@@ -17,6 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Category } from "@Models/types";
+import ModalAddCategories from "../ModalAddCategories/ModalAddCategories";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
@@ -138,6 +139,16 @@ export default function TableCategories({ categories }: myProps) {
   const [orderBy, setOrderBy] = React.useState("Name");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [showModal, setShowModal] = React.useState(false);
+  const [categoryEditing, setCategoryEditing] = React.useState<Category>();
+
+  const handleShowModal = (prod: Category) => {
+    setShowModal(true)
+    setCategoryEditing(prod)
+  }
+  const handleClose = () => {
+    setShowModal(false)
+  }
 
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === "asc";
@@ -163,8 +174,8 @@ export default function TableCategories({ categories }: myProps) {
         <TableContainer>
           <Table
             className="table"
-            // aria-labelledby="tableTitle"
-            // aria-label="enhanced table"
+          // aria-labelledby="tableTitle"
+          // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -205,6 +216,7 @@ export default function TableCategories({ categories }: myProps) {
                                 data-title="Eliminar"
                                 type="button"
                                 className="btn btn-sm"
+                                onClick={() => (handleShowModal(category))}
                               >
                                 <i className="fa-solid fa-pen-to-square"></i>
                               </button>
@@ -237,6 +249,8 @@ export default function TableCategories({ categories }: myProps) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
+      <ModalAddCategories handleClose={handleClose} showModal={showModal} category={categoryEditing} editing={true} />
     </div>
   );
 }
