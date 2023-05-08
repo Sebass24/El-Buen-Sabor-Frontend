@@ -28,6 +28,7 @@ import {
   Typography,
 } from "@mui/material";
 import TextAreaValue from "components/Inputs/TextAreaValue";
+import { useAppSelector } from "app/Hooks";
 
 const emptyDonation = {
   Ingredient: "",
@@ -48,7 +49,6 @@ const ModalAddProducts = ({
   editing,
   product,
 }: Props) => {
-
   const initialValues: Products = {
     Nombre: "",
     Rubro: "",
@@ -60,7 +60,8 @@ const ModalAddProducts = ({
     Ingredients: [emptyDonation],
   };
 
-  console.log(product)
+  const loading = useAppSelector((state) => state.loading.value);
+  console.log(product);
   return (
     <div>
       <Modal
@@ -71,6 +72,15 @@ const ModalAddProducts = ({
         backdrop="static"
         keyboard={false}
       >
+        {loading ? (
+          <div
+            id="loadingCard"
+            className="loadingCardStyle"
+            style={{ display: "none" }}
+          ></div>
+        ) : (
+          <></>
+        )}
         <Modal.Header closeButton>
           {editing ? (
             <Modal.Title>Editar un Producto:</Modal.Title>
@@ -83,7 +93,9 @@ const ModalAddProducts = ({
             <FormikStepper
               initialValues={product ? product : initialValues}
               onSubmit={(values) => {
-                console.log(values);
+                setTimeout(() => {
+                  console.log(values);
+                }, 3000);
                 handleClose();
               }}
             >
@@ -197,7 +209,7 @@ export default ModalAddProducts;
 export interface FormikStepProps
   extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {
   label: string;
-  valuesEdit?: Products
+  valuesEdit?: Products;
 }
 
 export function FormikStep({ children, valuesEdit }: FormikStepProps) {
@@ -206,7 +218,7 @@ export function FormikStep({ children, valuesEdit }: FormikStepProps) {
 
 interface PropsForm extends FormikConfig<FormikValues> {
   children: React.ReactNode;
-  valuesEdit?: Products
+  valuesEdit?: Products;
 }
 
 export function FormikStepper({ children, valuesEdit, ...props }: PropsForm) {
