@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./NavBar.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "./Logo/Logo";
 import ShoppingCartIcon from "./ShoppingCartIcon/ShoppingCartIcon";
@@ -46,7 +46,6 @@ export default function NavigationBar() {
           </Navbar.Collapse>
         </Container>
         <Logo />
-
         <ShoppingCartIcon />
       </Navbar>
     </>
