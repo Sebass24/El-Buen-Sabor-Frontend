@@ -8,7 +8,6 @@ export default function Landing() {
   return (
     <div className="imageHomePage">
 
-      <h1 className="Titulo">home</h1>
       <div className="Cointainer_Busqueda_Mejores">
         <p className="Mejores_Burguer">Mejores hamburguesas de mendoza</p>
         <div className="Container_input">
