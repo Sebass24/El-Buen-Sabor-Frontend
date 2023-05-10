@@ -77,7 +77,7 @@ $secondaryColor: #EC5800;
 
   .navbar-collapse {
     background-color: $colorNav;
-    top: 7%;
+    top: 45px;
     padding: 8px;
     padding-left: 5%;
     height: 100%;
@@ -96,6 +96,33 @@ $secondaryColor: #EC5800;
     justify-content: center;
     top: 3%;
     left: -15%;
+  }
+
+}
+
+@media (max-width: 450px) {
+
+  .navbar-collapse {
+    background-color: $colorNav;
+    top: 45px;
+    padding: 8px;
+    padding-left: 5%;
+    height: 100%;
+    width: 37%;
+    position: fixed;
+    //z-index: 1;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+  .Container_RightNavBar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 3%;
+    left: -8%;
   }
 
 }
