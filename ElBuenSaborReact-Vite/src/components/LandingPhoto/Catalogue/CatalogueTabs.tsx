@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { Tab, Tabs } from "react-bootstrap"; 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "./Catalogue.scss";
 import { FaPizzaSlice, FaHamburger } from 'react-icons/fa';
 import { GiFrenchFries, GiSodaCan } from 'react-icons/gi';
@@ -16,11 +15,11 @@ const CatalogueTabs = () => {
         <Tabs
             id="catalogue-tabs"
             activeKey={key}
-            onSelect={(k) => setKey(k)}
+            //onSelect={(k) => setKey(k)}
             className="catalogue"
             justify
         >
-            <Tab eventKey={null} title="Categorías" disabled className="categories-tab"></Tab>
+            <Tab eventKey="" title="Categorías" disabled className="categories-tab"></Tab>
             <Tab eventKey="burgers" title={<FaHamburger size={26} />} ></Tab>
             <Tab eventKey="pizzas" title={<FaPizzaSlice size={26}/>}></Tab>
             <Tab eventKey="fries" title={<GiFrenchFries size={26}/>}></Tab>

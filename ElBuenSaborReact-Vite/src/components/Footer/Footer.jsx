@@ -22,7 +22,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <Logo className="footerlogo"/>
+        <Logo />
 
         <div className='PayMethods'>
           <span className='Contactanos'>Métodos de pago</span>

@@ -11,7 +11,7 @@ export default function Landing() {
     <>
       <div className="imageHomePage">
         <div className="search_container">
-          <p className="best_burgers">Mejores hamburguesas de mendoza</p>
+          <p className="best_burgers">Mejores hamburguesas de Mendoza</p>
           <div className="input-container">
             <input type="text" placeholder="Buscar" className="food_search"></input>
             <span className="icon"><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "black" }}></FontAwesomeIcon></span>

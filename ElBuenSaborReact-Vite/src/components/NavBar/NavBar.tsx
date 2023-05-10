@@ -9,8 +9,9 @@ import ShoppingCartIcon from "./ShoppingCartIcon/ShoppingCartIcon";
 import LoginAuth from "./LoginAuth";
 import { useAuth0 } from "@auth0/auth0-react";
 import LogOutAuth from "./LogOutAuth";
-import Profile from "./Profile";
+//import Profile from "./Profile";
 import { Dropdown } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 library.add(faUser);
@@ -24,15 +25,15 @@ export default function NavigationBar() {
           <Navbar.Toggle aria-controls='responsive-navbar-nav'/>
           <Navbar.Collapse id='responsive-navbar-nav'>
             <Nav style={{position: 'relative'}}>
-              <Nav.Link href="/" style={{}}>Contactanos</Nav.Link>
-              <Nav.Link href="/" style={{}}>Catálogo</Nav.Link>
-              <Nav.Link href="/" style={{}}>Sobre nosotros</Nav.Link>
+              <Nav.Link href="/">Contactanos</Nav.Link>
+              <Nav.Link href="/">Catálogo</Nav.Link>
+              <Nav.Link href="/">Sobre nosotros</Nav.Link>
             </Nav>
             <div className="Container_RightNavBar">
               {isAuthenticated ?
                 <Dropdown>
                   <Dropdown.Toggle id="dropdown-basic" className='MyAccount' >
-                    <Profile />
+                    {/* <Profile /> */}
                     <FontAwesomeIcon icon={faUser} />
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
@@ -45,7 +46,7 @@ export default function NavigationBar() {
             </div>
           </Navbar.Collapse>
         </Container>
-        <Logo className="navbarlogo"/>
+        <Logo />
         <ShoppingCartIcon />
       </Navbar>
     </>
