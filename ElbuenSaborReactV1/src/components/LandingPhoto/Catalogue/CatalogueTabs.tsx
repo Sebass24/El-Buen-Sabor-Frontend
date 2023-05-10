@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { Tab, Tabs } from "react-bootstrap"; 
 import "./Catalogue.scss";
@@ -9,13 +8,13 @@ import { MdFastfood } from 'react-icons/md';
 
 
 const CatalogueTabs = () => {
-    const [key, setKey] = useState('burgers');
+    const [key, setKey] = useState<string | null>('burgers');
 
     return (
         <Tabs
             id="catalogue-tabs"
-            activeKey={key}
-            //onSelect={(k) => setKey(k)}
+            activeKey={key ?? "burgers"}
+            onSelect={(k) => setKey(k)}
             className="catalogue"
             justify
         >
