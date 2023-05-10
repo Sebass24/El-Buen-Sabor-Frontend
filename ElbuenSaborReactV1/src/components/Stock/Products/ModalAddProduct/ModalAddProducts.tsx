@@ -28,7 +28,9 @@ import {
   Typography,
 } from "@mui/material";
 import TextAreaValue from "components/Inputs/TextAreaValue";
-import { useAppSelector } from "app/Hooks";
+import { useAppSelector, useAppDispatch } from "@app/Hooks";
+import { startLoading, finishLoading } from "@features/Loading/LoadingSlice";
+import Loading from "components/Loading/Loading";
 
 const emptyDonation = {
   Ingredient: "",
@@ -61,9 +63,14 @@ const ModalAddProducts = ({
   };
 
   const loading = useAppSelector((state) => state.loading.value);
-  console.log(product);
+  const dispatch = useAppDispatch()
   return (
     <div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <></>
+      )}
       <Modal
         id={"modal"}
         show={showModal}
@@ -72,15 +79,7 @@ const ModalAddProducts = ({
         backdrop="static"
         keyboard={false}
       >
-        {loading ? (
-          <div
-            id="loadingCard"
-            className="loadingCardStyle"
-            style={{ display: "none" }}
-          ></div>
-        ) : (
-          <></>
-        )}
+
         <Modal.Header closeButton>
           {editing ? (
             <Modal.Title>Editar un Producto:</Modal.Title>
@@ -93,10 +92,13 @@ const ModalAddProducts = ({
             <FormikStepper
               initialValues={product ? product : initialValues}
               onSubmit={(values) => {
+                dispatch(startLoading())
+
                 setTimeout(() => {
                   console.log(values);
+                  dispatch(finishLoading())
+                  handleClose();
                 }, 3000);
-                handleClose();
               }}
             >
               <FormikStep

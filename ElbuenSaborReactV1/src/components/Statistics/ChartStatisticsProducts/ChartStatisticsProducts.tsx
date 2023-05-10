@@ -118,8 +118,8 @@ export function ChartStatisticsProducts() {
         <div >
           <span>Categorias: </span>
           <select className='Select_nivelStock'>
-            {optionsCategory.map((option) => (
-              <option>{option}</option>
+            {optionsCategory.map((option, index) => (
+              <option key={index}>{option}</option>
             ))}
           </select>
         </div>

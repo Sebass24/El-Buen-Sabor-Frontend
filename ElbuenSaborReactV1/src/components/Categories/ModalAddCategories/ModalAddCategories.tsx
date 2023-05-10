@@ -6,6 +6,9 @@ import React, { ChangeEvent } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import * as Yup from "yup"
 import Categories from '../Categories';
+import { useAppDispatch, useAppSelector } from '@app/Hooks';
+import { finishLoading, startLoading } from '@features/Loading/LoadingSlice';
+import Loading from 'components/Loading/Loading';
 
 
 
@@ -24,8 +27,12 @@ export default function ModalAddCategories({ showModal, handleClose, editing, ca
     State: "",
     FatherCategory: null as any
   }
+
+  const loading = useAppSelector((state) => state.loading.value);
+  const dispatch = useAppDispatch()
   return (
     <div>
+      <Loading />
       <Modal id={"modal"} show={showModal} onHide={handleClose} size={"lg"} backdrop="static"
         keyboard={false} >
         <Modal.Header closeButton>
@@ -43,8 +50,12 @@ export default function ModalAddCategories({ showModal, handleClose, editing, ca
             initialValues={category ? category : initialValues}
             enableReinitialize={true}
             onSubmit={async (values) => {
-              console.log(values)
-              handleClose()
+              dispatch(startLoading())
+              setTimeout(() => {
+                console.log(values);
+                handleClose();
+                dispatch(finishLoading())
+              }, 1000);
             }}
           >
             {(Formik) =>
@@ -105,6 +116,6 @@ export default function ModalAddCategories({ showModal, handleClose, editing, ca
           </Formik>
         </Modal.Body>
       </Modal>
-    </div>
+    </div >
   )
 }
