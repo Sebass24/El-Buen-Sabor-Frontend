@@ -20,13 +20,13 @@ export default function NavigationBar() {
   return (
     <>
       <Navbar collapseOnSelect expand="md" className="navbar-custom">
-        <Container>
-          <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+        <Container className="container-nav">
+          <Navbar.Toggle aria-controls='responsive-navbar-nav'/>
           <Navbar.Collapse id='responsive-navbar-nav'>
-            <Nav>
-              <Nav.Link href="/">Contactanos</Nav.Link>
-              <Nav.Link href="/">Catálogo</Nav.Link>
-              <Nav.Link href="/">Sobre nosotros</Nav.Link>
+            <Nav style={{position: 'relative'}}>
+              <Nav.Link href="/" style={{}}>Contactanos</Nav.Link>
+              <Nav.Link href="/" style={{}}>Catálogo</Nav.Link>
+              <Nav.Link href="/" style={{}}>Sobre nosotros</Nav.Link>
             </Nav>
             <div className="Container_RightNavBar">
               {isAuthenticated ?
