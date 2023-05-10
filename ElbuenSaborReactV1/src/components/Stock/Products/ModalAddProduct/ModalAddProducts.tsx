@@ -114,14 +114,12 @@ const ModalAddProducts = ({
               >
                 <div className="container_Form_Productos">
                   <TextFieldValue
-                    value={product?.Nombre}
                     label="Nombre"
                     name="Nombre"
                     placeholder="Nombre"
                     type="text"
                   />
                   <TextFieldSelect
-                    value={product?.Rubro}
                     label="Rubro:"
                     name="Rubro"
                     options={[
@@ -134,21 +132,18 @@ const ModalAddProducts = ({
                     ]}
                   />
                   <TextFieldValue
-                    value={product?.PrecioVenta}
                     label="PrecioVenta"
                     name="PrecioVenta"
                     placeholder="PrecioVenta"
                     type="number"
                   />
                   <TextFieldValue
-                    value={product?.TiempoCocina}
                     label="TiempoCocina"
                     name="TiempoCocina"
                     placeholder="TiempoCocina"
                     type="number"
                   />
                   <TextFieldSelect
-                    value={product?.Estado}
                     label="Estado:"
                     name="Estado"
                     options={[
@@ -161,7 +156,6 @@ const ModalAddProducts = ({
                     ]}
                   />
                   <TextAreaValue
-                    value={product?.Descripcion}
                     label="Descripcion"
                     name="Descripcion"
                     placeholder="Descripcion"
@@ -191,7 +185,6 @@ const ModalAddProducts = ({
               >
                 <>
                   <TextAreaValue
-                    value={product?.Receta}
                     label="Receta"
                     name="Receta"
                     placeholder="Receta"

@@ -23,6 +23,18 @@ interface props {
 
 const ModalAddIngrediente = ({ showModal, handleClose, editing, ingrediente }: props) => {
 
+
+  const pruebarapida: Ingredient = {
+    Nombre: "pepino",
+    Rubro: "Verduras",
+    PrecioCosto: 500,
+    StockMinimo: 2,
+    StockActual: 5,
+    UnidadMedida: "cm3",
+    NivelStock: "Optimo",
+    Estado: "Alta"
+  }
+
   const initialValues: Ingredient = {
     Nombre: "",
     Rubro: "",
@@ -54,7 +66,7 @@ const ModalAddIngrediente = ({ showModal, handleClose, editing, ingrediente }: p
               UnidadMedida: Yup.string().required("*Campo requerido"),
               Estado: Yup.string().required("*Campo requerido"),
             })}
-            initialValues={ingrediente ? ingrediente : initialValues}
+            initialValues={pruebarapida}
             enableReinitialize={true}
             onSubmit={async (values) => {
               handleClose()
@@ -65,37 +77,31 @@ const ModalAddIngrediente = ({ showModal, handleClose, editing, ingrediente }: p
               <>
                 <Form autoComplete="off" className="form-obraAlta">
                   <div className='container_Form_Ingredientes'>
-
                     <TextFieldValue
-                      value={ingrediente?.Nombre}
                       label="Nombre:"
                       name="Nombre"
                       type="text"
                       placeholder="Nombre del Ingrediente"
                     />
                     <TextFieldValue
-                      value={ingrediente?.Rubro}
                       label="Rubro:"
                       name="Rubro"
                       type="text"
                       placeholder="Rubro del Ingrediente"
                     />
                     <TextFieldValue
-                      value={ingrediente?.PrecioCosto}
                       label="Precio de costo:"
                       name="PrecioCosto"
                       type="number"
                       placeholder="Precio de costo del Ingrediente"
                     />
                     <TextFieldValue
-                      value={ingrediente?.StockMinimo}
                       label="Stock minimo:"
                       name="StockMinimo"
                       type="number"
                       placeholder="Stock minimo del Ingrediente"
                     />
                     <TextFieldValue
-                      value={ingrediente?.StockActual}
                       label="Stock actual:"
                       name="StockActual"
                       type="number"
@@ -103,7 +109,6 @@ const ModalAddIngrediente = ({ showModal, handleClose, editing, ingrediente }: p
                     />
 
                     <TextFieldSelect
-                      value={ingrediente?.UnidadMedida}
                       label="Unidad de medida:"
                       name="UnidadMedida"
                       options={[
@@ -117,7 +122,6 @@ const ModalAddIngrediente = ({ showModal, handleClose, editing, ingrediente }: p
                       ]}
                     />
                     <TextFieldSelect
-                      value={ingrediente?.Estado}
                       label="Estado:"
                       name="Estado"
                       options={[
