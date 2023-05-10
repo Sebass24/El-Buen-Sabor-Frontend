@@ -45,7 +45,7 @@ export default function NavigationBar() {
             </div>
           </Navbar.Collapse>
         </Container>
-        <Logo />
+        <Logo className="navbarlogo"/>
         <ShoppingCartIcon />
       </Navbar>
     </>

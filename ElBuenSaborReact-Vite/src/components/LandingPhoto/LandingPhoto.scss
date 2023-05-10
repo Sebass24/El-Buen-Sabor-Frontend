@@ -1,5 +1,7 @@
+@import url('https://fonts.cdnfonts.com/css/merienda');
+
 .imageHomePage {
-  height: 20rem;
+  height: 15rem;
   background-image: url(../../resources/sliderbg1_2048x.webp);
   background-size: cover;
   background-repeat: no-repeat;
@@ -7,48 +9,64 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 0;
 
-  .Titulo {
-    color: white;
+  .search_container {
     height: 15rem;
     display: flex;
-    justify-content: center;
-    align-items: end;
-    grid-column: 2;
-  }
-
-  .Cointainer_Busqueda_Mejores {
-    height: 20rem;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    padding: 5%;
     flex-direction: column;
     grid-column: 3;
     color: white;
-    gap: 2rem;
-  }
+    gap: .5rem;
 
-  .Mejores_Burguer {
-    font-size: 2rem;
-    width: 50%;
-    text-align: end;
-    font-weight: bold;
-    justify-self: center;
-  }
 
-  .Container_input {
-    padding: 0 .5rem;
-    background-color: white;
-    border-radius: .5rem;
-
-    .busqueda_comida {
-      background-color: transparent;
-      text-align: center;
-      padding: .5rem;
-      outline: none;
-      border: none;
+    p {
+      margin-top: 2rem;
     }
 
+    .best_burgers {
+      font-size: 1.5rem;
+      text-align: right;
+      font-weight: bold;
+      font-family: "Merienda", sans-serif;
+    }
+
+  }
+
+  .input-container {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  input[type="text"] {
+    padding: 0.5rem;
+    background-color: white;
+    color: black;
+    border-radius: 0.5rem;
+    height: 2rem;
+    margin-right: 1rem;
+    padding-right: 2rem;
+  }
+
+  .icon {
+    position: absolute;
+    top: 40%;
+    right: 2rem;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 450px) {
+
+  .input-container {
+    margin-right: 0rem;
+  }
+
+  input[type="text"] {
+    max-width: 10rem;
   }
 
 }

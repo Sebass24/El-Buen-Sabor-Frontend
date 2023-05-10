@@ -8,11 +8,11 @@ export default function Landing() {
   return (
     <div className="imageHomePage">
 
-      <div className="Cointainer_Busqueda_Mejores">
-        <p className="Mejores_Burguer">Mejores hamburguesas de mendoza</p>
-        <div className="Container_input">
-          <input placeholder="Busqueda" className="busqueda_comida"></input>
-          <FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "black" }}></FontAwesomeIcon>
+      <div className="search_container">
+        <p className="best_burgers">Mejores hamburguesas de mendoza</p>
+        <div className="input-container">
+          <input type="text" placeholder="Buscar" className="food_search"></input>
+          <span className="icon"><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "black" }}></FontAwesomeIcon></span>
         </div>
       </div>
 

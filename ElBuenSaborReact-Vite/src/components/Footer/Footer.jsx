@@ -1,5 +1,7 @@
 import React from 'react';
 import "./Footer.scss"
+import Logo from "../NavBar/Logo/Logo"
+
 const Footer = () => {
   return (
     <div>
@@ -20,11 +22,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="Arow_container_Footer">
-          <div className="arrowBottom_Footer">
-            <div className="imgLogo_Footer"></div>
-          </div>
-        </div>
+        <Logo className="footerlogo"/>
 
         <div className='PayMethods'>
           <span className='Contactanos'>Métodos de pago</span>
