@@ -1,17 +1,16 @@
-import React from "react";
-import NavBar from "../components/NavBar/Navbar";
-import Landing from "../components/LandingPhoto/LandingPhoto";
 import { Route, Routes } from "react-router-dom";
+import NavigationBar from "components/NavBar/Navbar";
+import LandingCatalogue from "../screens/LandingCatalogue";
 
 const UserRouter = () => {
-  return (
+  return(
     <div>
-      <NavBar />
+      <NavigationBar />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<LandingCatalogue />} />
       </Routes>
     </div>
   );
-};
+}
 
 export default UserRouter;

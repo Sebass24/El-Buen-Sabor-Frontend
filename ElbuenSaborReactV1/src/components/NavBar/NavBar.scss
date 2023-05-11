@@ -7,77 +7,53 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
 
 $colorNav: white;
+$secondaryColor: #EC5800;
 
-.navBar_Container {
-  position: relative;
-  width: 100%;
-  height: 3rem;
-  background-color: $colorNav;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.navBar_List {
-  display: flex;
-  list-style: none;
-
-  li {
-    font-weight: 700;
-    font-family: "inter", sans-serif;
-    margin: 0rem 1rem;
-  }
-}
-
-/* BOTTOM ARROW */
-.Arow_container {
+.container-nav {
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
+  top: auto;
 }
 
-.arrowBottom {
-  cursor: pointer;
-  height: 7rem;
-  width: 5rem;
-  background-color: $colorNav;
-  display: flex;
-  align-items: center;
+.navbar-custom {
+  height: 45px;
+}
 
-  .imgLogo {
-    width: 5rem;
-    height: 5rem;
-    margin-top: 3rem;
-    background-image: url(../../resources/logo-png.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
+.navbar-nav .nav-link {
+  font-weight: 700;
+  font-family: "inter", sans-serif;
+  transition: 0.2s ease-in-out;
+  color: black;
 
-  &::before {
-    position: absolute;
-    display: block;
-    height: 5rem;
-    width: 5rem;
-    top: 7rem;
-    background-color: $colorNav;
-    position: absolute;
-    clip-path: polygon(50% 50%, 0 0, 100% 0);
-    content: "";
+  &:hover {
+    color: $secondaryColor;
   }
+}
+
+.navbar-nav {
+  position: absolute;
+}
+
+/* .navbar-collapse{
+  transition: none;
+} */
+
+.navbar-toggler {
+  position: absolute;
+  --bs-navbar-toggler-focus-width: none;
+  --bs-navbar-toggler-padding-y: 0.20rem;
+  --bs-navbar-toggler-padding-x: 0.25rem;
+  padding: 0;
+  left: 5%;
 }
 
 .Container_RightNavBar {
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-  margin-right: 2rem;
 
-  .shoppingCart {
-    cursor: pointer;
-  }
+  /*  position: relative;
+  display: flex;
+  justify-content: flex-end;  */
+  position: absolute;
+  display: flex;
+  right: 1%;
 
   .MyAccount {
     cursor: pointer;
@@ -86,15 +62,14 @@ $colorNav: white;
     justify-content: center;
     gap: 1rem;
     font-family: "inter", sans-serif;
-    font-weight: 300;
-    align-items: center;
-    justify-content: center;
+    font-weight: 700;
     color: black;
     background-color: transparent;
-    box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.58);
+    box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.40);
     border-radius: 0.3rem;
     padding: 0.3rem 0.5rem;
     border: none;
+    min-width: 135px;
 
     &:hover {
       color: black;
@@ -105,4 +80,58 @@ $colorNav: white;
       background-color: transparent;
     }
   }
+}
+
+@media (max-width: 767px) {
+
+  .navbar-collapse {
+    background-color: $colorNav;
+    top: 45px;
+    padding: 8px;
+    padding-left: 5%;
+    height: 100%;
+    width: 37%;
+    z-index: 1;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    position: fixed;
+  }
+
+  .Container_RightNavBar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 3%;
+    left: -15%;
+  }
+
+}
+
+@media (max-width: 450px) {
+
+  .navbar-collapse {
+    background-color: $colorNav;
+    top: 45px;
+    padding: 8px;
+    padding-left: 5%;
+    height: 100%;
+    width: 37%;
+    position: fixed;
+    //z-index: 1;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+  }
+
+  .Container_RightNavBar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 3%;
+    left: -8%;
+  }
+
 }

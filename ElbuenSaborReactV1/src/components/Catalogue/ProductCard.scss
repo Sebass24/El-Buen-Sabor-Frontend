@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+
+* {
+    font-family: "inter", sans-serif;
+}
+
+.card {
+    width: 14rem;
+    border-radius: 5%;
+    margin: 1.5rem;
+    margin-top: 0;
+
+    .product-image {
+        width: auto;
+        max-height: 8rem;
+    }
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.short-description {
+    font-size: .8rem;
+}
+
+.label-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 0;
+    padding-top: 10%;
+    padding-bottom: 5%;
+    align-items: center;
+    width: 12rem;    
+
+    .price {
+        grid-column: 1;
+        font-weight: 600;
+    }
+
+    .unavailable {
+        grid-column: 2;
+        text-align: right;
+        font-size: .8rem;
+        color: red;
+    }
+}
+
+@media (max-width: 450px) {
+    .card {
+        width: 9rem;
+        display: flex;
+        margin: 0;
+        margin-bottom: 1rem;
+        margin-right: 1.4rem;
+        
+        .product-image {
+            max-height: 6rem;
+        }
+    }
+
+   .card-title {
+        font-size: .8rem;
+    } 
+
+    .short-description {
+        font-size: .6rem;
+    } 
+
+    .label-container {
+        width: 7rem;
+        .price {
+            font-size: .8rem;
+        }
+        .unavailable {
+            font-size: .65rem;
+        }
+    }
+
+}
