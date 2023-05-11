@@ -8,11 +8,12 @@ export default interface Product extends Base {
     description: string;
     shortDescription: string;
     available: boolean;
-    cookingTime: string;
+    cookingTime?: string;
     productCategory: string;
-    productDetail: ProductDetail[];
+    productDetail?: ProductDetail[];
     price: Price;
-    recipe: Recipe;
+    image: string;
+    recipe?: Recipe;
 }
 
 
