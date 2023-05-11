@@ -30,6 +30,10 @@
     }
 }
 
+.tab-content {
+    transform: translate(-50% 0);
+}
+
 .product-container {
     display: flex;
     flex-wrap: wrap;
@@ -38,15 +42,7 @@
     padding-right: 4%;
     padding-left: 4%;
     margin-top: 1.5rem;
-}
-
-.general-product-container {
-    position: relative;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto; 
+    width: auto;
 }
 
 @media (max-width: 767px) {
@@ -63,6 +59,6 @@
         justify-content: flex-start;
         margin-left: 1rem;
         margin-top: 1rem;
-    } 
-    
+    }
+
 }
