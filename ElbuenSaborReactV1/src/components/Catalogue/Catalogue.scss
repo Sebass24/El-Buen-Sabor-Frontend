@@ -48,3 +48,13 @@
     }
 
 }
+
+@media (max-width: 450px) {
+
+    .product-container {
+        justify-content: flex-start;
+        margin-left: 1rem;
+        margin-top: 1rem;
+    } 
+    
+}

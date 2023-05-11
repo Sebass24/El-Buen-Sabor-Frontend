@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+
+* {
+  font-family: "inter", sans-serif;
+}
+
 .Container_Footer {
   background-color: rgb(43, 43, 43);
   color: white;
@@ -7,56 +13,18 @@
   justify-content: space-between;
   align-items: center;
 
-  .Arow_container_Footer {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-  }
 
-  .arrowBottom_Footer {
-    cursor: pointer;
-    height: 4rem;
-    width: 5rem;
-    background-color: #fff;
-    display: flex;
-    align-items: center;
-
-    .imgLogo_Footer {
-      width: 5rem;
-      height: 4rem;
-      margin-top: 0.2rem;
-      background-image: url(../../resources/logo-png.png);
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-
-    &::before {
-      position: absolute;
-      display: block;
-      height: 2rem;
-      width: 5rem;
-      top: 4rem;
-      background-color: #fff;
-      position: absolute;
-      clip-path: polygon(50% 100%, 0 0, 100% 0);
-      content: "";
-    }
-  }
-
-  .Container_Foter_contact {
+  .Container_Footer_contact {
     margin-left: 3rem;
   }
 
-  .Container_Foter_contact_items {
+  .Container_Footer_contact_items {
     display: flex;
     gap: 0.5rem;
     align-items: center;
   }
 
-  .PayMethods {
+  .PaymentMethods {
     margin-right: 3rem;
 
     .Container_cards {

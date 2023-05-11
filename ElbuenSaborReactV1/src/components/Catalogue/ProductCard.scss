@@ -16,7 +16,6 @@
     }
 }
 
-
 .card-title {
     font-weight: 600;
     font-size: 1.1rem;
@@ -47,4 +46,41 @@
         font-size: .8rem;
         color: red;
     }
+}
+
+@media (max-width: 450px) {
+
+    .card {
+        width: 9rem;
+        display: flex;
+        margin: 0;
+        margin-bottom: 1rem;
+        margin-right: 1.4rem;
+        
+        .product-image {
+            max-height: 6rem;
+        }
+    }
+
+    .card-title {
+        font-size: .8rem;
+    }
+
+    .short-description {
+        font-size: .6rem;
+        text-align: left;
+    }
+
+    .label-container {
+        width: 7rem;
+
+        .price {
+            font-size: .8rem;
+        }
+
+        .unavailable {
+            font-size: .65rem;
+        }
+    }
+
 }

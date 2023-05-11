@@ -13,7 +13,8 @@ $secondaryColor: #EC5800;
 .Arrow_container {
     position: absolute;
     left: 50%;
-    margin-top: 1.5rem;
+    top: 0; 
+    transform: translate(-50%, 0);
 
     .arrowButton {
         cursor: pointer;
@@ -38,7 +39,6 @@ $secondaryColor: #EC5800;
 @media (max-width: 450px) {
     .Arrow_container {
         position: absolute;
-        left: 45%;
     }
 }
 
