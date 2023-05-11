@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+
 import { Container } from "react-bootstrap";
 import Product from "@Models/Product/Product";
-import { getProducts } from "./ProductTrial";
 import ProductCard from "./ProductCard";
 import "./Catalogue.scss";
+import useProducts from "./useProducts";
 
 interface props {
     args: string;
@@ -11,24 +11,34 @@ interface props {
 
 const CategoryProducts = ({ args }: props) => {
 
-    const [products, setProducts] = useState<Product[]>([]);
-    const getProductsList = () => {
-        let data: Product[] = getProducts();
-        setProducts(data);
-    }
-    useEffect(() => {
-        getProductsList();
-    }, []);
-
+    const products = useProducts();
     const filteredProducts: Product[] = products.filter((product) => product.productCategory === args);
 
     return (
-        <Container fluid="md" className="product-container">
-            {filteredProducts.map((product: Product) => (
-                <ProductCard key={product.id} args={product} />
-            ))}
+        <Container fluid="md" className="general-product-container">
+            <Container fluid="md" className="product-container">
+                {filteredProducts.map((product: Product) => (
+                    <ProductCard key={product.id} args={product} />
+                ))}
+            </Container>
         </Container>
     )
 }
 
 export default CategoryProducts;
+
+/* interface Props {
+    args: Product[];
+}
+
+const CategoryProducts = ({args}: Props) => {}
+
+    
+    return (
+        <Container fluid="md" className="product-container">
+            {products.map((product: Product) => (
+                <ProductCard key={product.id} args={product} />
+            ))}
+        </Container>
+    )
+} */

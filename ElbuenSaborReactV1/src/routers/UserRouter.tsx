@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import NavigationBar from "components/NavBar/NavBar";
+import NavigationBar from "components/NavBar/Navbar";
 import LandingCatalogue from "../screens/LandingCatalogue";
 
 const UserRouter = () => {

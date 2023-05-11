@@ -47,10 +47,13 @@ $secondaryColor: #EC5800;
 }
 
 .Container_RightNavBar {
-  
-  position: relative;
+
+  /*  position: relative;
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end;  */
+  position: absolute;
+  display: flex;
+  right: 1%;
 
   .MyAccount {
     cursor: pointer;

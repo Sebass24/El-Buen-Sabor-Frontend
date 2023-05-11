@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "./NavBar.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
@@ -22,9 +21,9 @@ export default function NavigationBar() {
     <>
       <Navbar collapseOnSelect expand="md" className="navbar-custom">
         <Container className="container-nav">
-          <Navbar.Toggle aria-controls='responsive-navbar-nav'/>
+          <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav'>
-            <Nav style={{position: 'relative'}}>
+            <Nav style={{ position: 'relative' }}>
               <Nav.Link href="/">Contactanos</Nav.Link>
               <Nav.Link href="/">Catálogo</Nav.Link>
               <Nav.Link href="/">Sobre nosotros</Nav.Link>
@@ -42,7 +41,7 @@ export default function NavigationBar() {
                 </Dropdown>
                 :
                 <LoginAuth />
-              }
+              }              
             </div>
           </Navbar.Collapse>
         </Container>
