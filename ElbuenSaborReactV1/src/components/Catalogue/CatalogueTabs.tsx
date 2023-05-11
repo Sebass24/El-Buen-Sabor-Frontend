@@ -28,3 +28,5 @@ const CatalogueTabs = () => {
 }
 
 export default CatalogueTabs;
+
+//if search changes, render CategoryProducts with the products filtered by 
