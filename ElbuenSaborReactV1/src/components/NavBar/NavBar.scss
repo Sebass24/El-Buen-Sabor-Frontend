@@ -79,13 +79,7 @@ $secondaryColor: #EC5800;
   }
 }
 
-@media (min-width: 769px) {
-  .navbar-collapse {
-    position: absolute;
-  }
-}
-
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
   .navbar-collapse {
     background-color: $colorNav;
