@@ -15,12 +15,10 @@ const CategoryProducts = ({ args }: props) => {
     const filteredProducts: Product[] = products.filter((product) => product.productCategory === args);
 
     return (
-        <Container fluid="md" className="general-product-container">
-            <Container fluid="md" className="product-container">
-                {filteredProducts.map((product: Product) => (
-                    <ProductCard key={product.id} args={product} />
-                ))}
-            </Container>
+        <Container fluid="md" className="product-container">
+            {filteredProducts.map((product: Product) => (
+                <ProductCard key={product.id} args={product} />
+            ))}
         </Container>
     )
 }
