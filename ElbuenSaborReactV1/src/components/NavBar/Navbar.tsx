@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import "./NavBar.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
@@ -11,12 +12,25 @@ import LogOutAuth from "./LogOutAuth";
 import Profile from "./Profile";
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LoginButton } from "./LoginButton";
 
 
 library.add(faUser);
 
 export default function NavigationBar() {
-  const { isAuthenticated } = useAuth0();
+  //const { isAuthenticated } = useAuth0();
+
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsSmallScreen(window.matchMedia('(max-width: 767px)').matches);
+    window.addEventListener('resize', handleResize);
+
+    setIsSmallScreen(window.matchMedia('(max-width: 767px)').matches);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <>
       <Navbar collapseOnSelect expand="md" className="navbar-custom">
@@ -28,24 +42,11 @@ export default function NavigationBar() {
               <Nav.Link href="/">Catálogo</Nav.Link>
               <Nav.Link href="/">Sobre nosotros</Nav.Link>
             </Nav>
-            <div className="Container_RightNavBar">
-              {isAuthenticated ?
-                <Dropdown>
-                  <Dropdown.Toggle id="dropdown-basic" className='MyAccount' >
-                    <Profile />
-                    <FontAwesomeIcon icon={faUser} />
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item style={{ padding: "0" }} ><LogOutAuth /></Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-                :
-                <LoginAuth />
-              }              
-            </div>
+            {isSmallScreen && <LoginButton />}
           </Navbar.Collapse>
         </Container>
         <Logo />
+        {!isSmallScreen && <LoginButton />}
         <ShoppingCartIcon />
       </Navbar>
     </>
