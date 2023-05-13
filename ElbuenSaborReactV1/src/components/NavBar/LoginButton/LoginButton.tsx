@@ -1,8 +1,8 @@
 
-import LoginAuth from "./LoginAuth";
+import LoginAuth from "../LoginAuth";
 import { useAuth0 } from "@auth0/auth0-react";
-import LogOutAuth from "./LogOutAuth";
-import Profile from "./Profile";
+import LogOutAuth from "../LogOutAuth";
+import Profile from "../Profile";
 import { Dropdown } from "react-bootstrap";
 
 import { library } from "@fortawesome/fontawesome-svg-core";

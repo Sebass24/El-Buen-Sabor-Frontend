@@ -12,7 +12,7 @@ import LogOutAuth from "./LogOutAuth";
 import Profile from "./Profile";
 import { Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { LoginButton } from "./LoginButton";
+import { LoginButton } from "./LoginButton/LoginButton";
 
 
 library.add(faUser);
