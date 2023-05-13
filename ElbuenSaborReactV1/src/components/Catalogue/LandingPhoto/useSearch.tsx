@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useProducts from "../Catalogue/useProducts";
+import useProducts from "../useProducts";
 import Product from "@Models/Product/Product";
 
 export default function useSearch(search: string) {
@@ -10,12 +10,12 @@ export default function useSearch(search: string) {
 
     var searchResult = products.filter((product: Product) => {
         if (
-            product.name.toString().toLowerCase() .includes(search.toLowerCase())
+            product.name.toString().toLowerCase().includes(search.toLowerCase())
         )
             return product;
     });
     setProductsSearch(searchResult);
 
     return productsSearch;
-    
+
 }
