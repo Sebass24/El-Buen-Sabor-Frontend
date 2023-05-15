@@ -32,7 +32,7 @@
     padding-top: 10%;
     padding-bottom: 5%;
     align-items: center;
-    width: 12rem;    
+    width: 12rem;
 
     .price {
         grid-column: 1;
@@ -49,30 +49,39 @@
 
 @media (max-width: 450px) {
     .card {
-        width: 9rem;
-        display: flex;
+        width: 19rem;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
         margin: 0;
         margin-bottom: 1rem;
         margin-right: 1.4rem;
-        
+        align-items: center;
+
         .product-image {
-            max-height: 6rem;
+            max-width: 8rem;
+            grid-column: 1;
+            padding-left: 1rem;
         }
     }
 
-   .card-title {
+    .card-title {
         font-size: .8rem;
-    } 
+        grid-column: 2;
+    }
 
     .short-description {
         font-size: .6rem;
-    } 
+        grid-column: 2;
+    }
 
     .label-container {
-        width: 7rem;
+        width: 9rem;
+        grid-column: 2;
+
         .price {
             font-size: .8rem;
         }
+
         .unavailable {
             font-size: .65rem;
         }
