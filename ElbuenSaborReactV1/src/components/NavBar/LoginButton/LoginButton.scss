@@ -1,0 +1,61 @@
+.Container_RightNavBar {
+
+    /*  position: relative;
+  display: flex;
+  justify-content: flex-end;  */
+    position: absolute;
+    display: flex;
+    right: 6%;
+
+    .MyAccount {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        font-family: "inter", sans-serif;
+        font-weight: 700;
+        color: black;
+        background-color: transparent;
+        box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.40);
+        border-radius: 0.3rem;
+        padding: 0.3rem 0.5rem;
+        border: none;
+        min-width: 135px;
+
+        &:hover {
+            color: black;
+        }
+
+        &:focus {
+            color: black;
+            background-color: transparent;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+
+    .Container_RightNavBar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 3%;
+        left: -15%;
+    }
+
+}
+
+@media (max-width: 450px) {
+
+    .Container_RightNavBar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 3%;
+        left: -8%;
+    }
+
+}

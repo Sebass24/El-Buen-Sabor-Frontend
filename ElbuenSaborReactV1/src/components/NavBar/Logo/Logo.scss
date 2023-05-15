@@ -1,0 +1,45 @@
+$colorNav: white;
+$secondaryColor: #EC5800;
+
+.imgLogo {
+    width: 5rem;
+    height: 5rem;
+    margin-top: 1rem;
+    background-image: url(../../../resources/logo-png.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 2;
+}
+
+.Arrow_container {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 0);
+
+    .arrowButton {
+        cursor: pointer;
+        height: 4rem;
+        width: 5rem;
+        background-color: $colorNav;
+        display: flex;
+        align-items: center;
+
+        &::before {
+            height: 5rem;
+            width: 5rem;
+            top: 4rem;
+            background-color: $colorNav;
+            position: absolute;
+            clip-path: polygon(50% 50%, 0 0, 100% 0);
+            content: "";
+            z-index: 1;
+        }
+    }
+}
+
+@media (max-width: 450px) {
+    .Arrow_container {
+        position: absolute;
+    }
+}

@@ -5,6 +5,7 @@ import LogOutAuth from './LogOutAuth';
 import Profile from './Profile';
 import LoginAuth from './LoginAuth';
 import { Dropdown } from 'react-bootstrap';
+import Logo from './Logo/Logo';
 interface title {
   title: String;
 }
@@ -13,11 +14,12 @@ const AdminBar: React.FC<title> = ({ title }) => {
   const { isAuthenticated } = useAuth0()
   return (
     <div className="navBar_Container_admin">
-      <div className="Arow_container_admin">
+      <Logo />
+      {/* <div className="Arow_container_admin">
         <div className="arrowBottom_admin">
           <div className="imgLogo_admin"></div>
         </div>
-      </div>
+      </div> */}
       {/* <div className="LogContainer">
 
             <LogOutAuth />

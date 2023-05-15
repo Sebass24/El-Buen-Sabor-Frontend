@@ -1,4 +1,3 @@
-
 import React from 'react';
 import NavBar from '../components/NavBar/NavBar';
 import Landing from '../components/LandingPhoto/LandingPhoto';
