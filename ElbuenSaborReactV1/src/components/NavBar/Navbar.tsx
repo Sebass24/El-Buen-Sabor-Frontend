@@ -6,19 +6,12 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "./Logo/Logo";
 import ShoppingCartIcon from "./ShoppingCartIcon/ShoppingCartIcon";
-import LoginAuth from "./LoginAuth";
-import { useAuth0 } from "@auth0/auth0-react";
-import LogOutAuth from "./LogOutAuth";
-import Profile from "./Profile";
-import { Dropdown } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LoginButton } from "./LoginButton/LoginButton";
 
 
 library.add(faUser);
 
 export default function NavigationBar() {
-  //const { isAuthenticated } = useAuth0();
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
