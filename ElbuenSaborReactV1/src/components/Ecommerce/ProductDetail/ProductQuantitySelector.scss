@@ -1,0 +1,33 @@
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid grey;
+    margin-left: -1rem;
+}
+
+.button2 {
+    width: 1.5rem;
+    height: 1.5rem;
+    padding-top: 0;
+    padding-bottom: 1.6rem;
+    border-color: white;
+    border-width: 0px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+span {
+    margin: 0 1rem;
+    font-weight: bold;
+    color: black;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+@media (max-width: 450px) {
+    span {
+        margin: 0 0.8rem;
+    }
+}

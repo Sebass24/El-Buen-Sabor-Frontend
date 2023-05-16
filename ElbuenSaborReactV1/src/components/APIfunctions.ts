@@ -13,3 +13,9 @@ export async function getProducts() {
     const instrumentos = await getData<Product[]>(url);
     return instrumentos;
 }
+
+export async function getProductById(id: number) {
+    const url = `http://localhost:8080/api/product/${id}`;
+    const instrumentos = await getData<Product>(url);
+    return instrumentos;
+}
