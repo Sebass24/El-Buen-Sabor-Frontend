@@ -19,7 +19,6 @@
     color: white;
     gap: .5rem;
 
-
     p {
       margin-top: 2rem;
     }
@@ -60,6 +59,12 @@
 }
 
 @media (max-width: 450px) {
+
+  .search_container {
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 0.5rem;
+  }
 
   .input-container {
     margin-right: 0rem;

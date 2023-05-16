@@ -36,7 +36,7 @@ export default function Landing() {
     <>
       <div className="imageHomePage">
         <div className="search_container">
-          <p className="best_burgers">Mejores hamburguesas de Mendoza</p>
+          <p className="best_burgers">Las mejores hamburguesas de Mendoza</p>
           <form className="input-container">
             <input type="text" placeholder="Buscar" className="food_search" value={search} onChange={handleSearchChange}></input>
             <span className="icon" style={{ cursor: 'pointer' }}><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "black" }} onClick={handleButtonClick}></FontAwesomeIcon></span>
