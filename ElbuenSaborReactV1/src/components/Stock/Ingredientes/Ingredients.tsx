@@ -49,6 +49,7 @@ const Ingredients = () => {
 
   async function getIngredients() {
     const data: Ingredient[] = await getData<Ingredient[]>("/api/ingredient");
+    console.log(data);
     setIngredient(data);
     setIngredientComplete(data);
   }

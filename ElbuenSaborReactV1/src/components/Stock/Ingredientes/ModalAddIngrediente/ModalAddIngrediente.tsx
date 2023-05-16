@@ -1,16 +1,16 @@
-import React, { ChangeEvent } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import React, { ChangeEvent } from "react";
+import { Button, Modal } from "react-bootstrap";
 import * as Yup from "yup";
 // import { validacionIngredientes, ingredientesBase } from './DatosForm';
 // import FormIngredientesFields from './FormIngredientesFields';
-import { Form, Formik } from 'formik';
+import { Form, Formik } from "formik";
 // import { addIngredient } from "../../../../features/foods/IngredientSlice.js"
-import { useDispatch } from 'react-redux';
-import TextFieldValue from '../../../Inputs/TextFieldValue';
-import TextFieldSelect from '../../../Inputs/TextFieldSelect';
-import "./FormIngredientesFields.scss"
-import { FormikHelpers } from 'formik';
-import { Ingredient } from '@Models/types';
+import { useDispatch } from "react-redux";
+import TextFieldValue from "../../../Inputs/TextFieldValue";
+import TextFieldSelect from "../../../Inputs/TextFieldSelect";
+import "./FormIngredientesFields.scss";
+import { FormikHelpers } from "formik";
+import Ingredient from "@Models/Product/Ingredient";
 
 interface props {
   showModal: boolean;
@@ -19,41 +19,38 @@ interface props {
   ingrediente?: Ingredient;
 }
 
-
-
-const ModalAddIngrediente = ({ showModal, handleClose, editing, ingrediente }: props) => {
-
-
-  const pruebarapida: Ingredient = {
-    Nombre: "pepino",
-    Rubro: "Verduras",
-    PrecioCosto: 500,
-    StockMinimo: 2,
-    StockActual: 5,
-    UnidadMedida: "cm3",
-    NivelStock: "Optimo",
-    Estado: "Alta"
-  }
-
+const ModalAddIngrediente = ({
+  showModal,
+  handleClose,
+  editing,
+  ingrediente,
+}: props) => {
   const initialValues: Ingredient = {
-    Nombre: "",
-    Rubro: "",
-    PrecioCosto: NaN,
-    StockMinimo: NaN,
-    StockActual: NaN,
-    UnidadMedida: "",
-    Estado: ""
-  }
+    name: "",
+    ingredientCategory: "",
+    costPrice: NaN,
+    minimumStock: NaN,
+    currentStock: NaN,
+    measurementUnit: "",
+    Estado: "",
+  };
 
   return (
     <div>
-      <Modal id={"modal"} show={showModal} onHide={handleClose} size={"lg"} backdrop="static"
-        keyboard={false} >
+      <Modal
+        id={"modal"}
+        show={showModal}
+        onHide={handleClose}
+        size={"lg"}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
-          {editing ?
-            <Modal.Title>Editar un Ingrediente:</Modal.Title> :
+          {editing ? (
+            <Modal.Title>Editar un Ingrediente:</Modal.Title>
+          ) : (
             <Modal.Title>Añadir un Ingrediente:</Modal.Title>
-          }
+          )}
         </Modal.Header>
         <Modal.Body>
           <Formik
@@ -69,14 +66,13 @@ const ModalAddIngrediente = ({ showModal, handleClose, editing, ingrediente }: p
             initialValues={pruebarapida}
             enableReinitialize={true}
             onSubmit={async (values) => {
-              handleClose()
+              handleClose();
             }}
           >
-            {(Formik) =>
-            (
+            {(Formik) => (
               <>
                 <Form autoComplete="off" className="form-obraAlta">
-                  <div className='container_Form_Ingredientes'>
+                  <div className="container_Form_Ingredientes">
                     <TextFieldValue
                       label="Nombre:"
                       name="Nombre"
@@ -112,8 +108,8 @@ const ModalAddIngrediente = ({ showModal, handleClose, editing, ingrediente }: p
                       label="Unidad de medida:"
                       name="UnidadMedida"
                       options={[
-                        { value: '', label: "" },
-                        { value: 'cm3', label: "Cm3" },
+                        { value: "", label: "" },
+                        { value: "cm3", label: "Cm3" },
                         {
                           value: "l",
                           label: "Litros",
@@ -125,29 +121,28 @@ const ModalAddIngrediente = ({ showModal, handleClose, editing, ingrediente }: p
                       label="Estado:"
                       name="Estado"
                       options={[
-                        { value: '', label: "" },
-                        { value: 'true', label: "Disponible" },
+                        { value: "", label: "" },
+                        { value: "true", label: "Disponible" },
                         {
                           value: "false",
                           label: "No Disponible",
-                        }
+                        },
                       ]}
                     />
                   </div>
                   <div className="d-flex justify-content-end">
-                    <Button variant="success" type="submit" >
+                    <Button variant="success" type="submit">
                       Enviar
                     </Button>
                   </div>
                 </Form>
               </>
-            )
-            }
+            )}
           </Formik>
         </Modal.Body>
       </Modal>
     </div>
   );
-}
+};
 
 export default ModalAddIngrediente;

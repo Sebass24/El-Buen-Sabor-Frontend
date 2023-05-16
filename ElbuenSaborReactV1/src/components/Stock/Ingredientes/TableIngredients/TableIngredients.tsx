@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TableHead from "@mui/material/TableHead";
 import { Link } from "react-router-dom";
 import "./TableIngredients.scss";
-import { Ingredient } from "@Models/types";
+import Ingredient from "@Models/Product/Ingredient";
 
 import {
   createTheme,
@@ -156,13 +156,13 @@ function CabeceraMejorada(props: any) {
           </TableSortLabel>
         </TableCell>
 
-        <TableCell
+        {/* <TableCell
           className="tableCell"
           key="NivelStock"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <Typography fontWeight="bold">Nivel de stock</Typography>
-        </TableCell>
+        </TableCell> */}
 
         {/* <TableCell
           className="tableCell"
@@ -206,7 +206,6 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
   const [showModal, setShowModal] = React.useState(false);
   const [ingredientEdit, setIngredientEdit] = React.useState<Ingredient>();
 
-
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === "asc";
     setOrderBy(property);
@@ -214,12 +213,12 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
   };
 
   const handleShowModal = (Ingredient: Ingredient) => {
-    setShowModal(true)
-    setIngredientEdit(Ingredient)
-  }
+    setShowModal(true);
+    setIngredientEdit(Ingredient);
+  };
   const handleClose = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   const handleChangePage = (event: any, newPage: any) => {
     setPage(newPage);
@@ -240,8 +239,8 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -254,38 +253,41 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
             <TableBody>
               {stableSort(Ingredients, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((ingrediente, index) => {
-                  if (ingrediente.Estado !== "Baja") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell className="tableCell">
-                          {ingrediente.Nombre}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {ingrediente.Rubro}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {formatoMonedaLocal.format(ingrediente?.PrecioCosto)}{" "}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {ingrediente.StockMinimo}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {ingrediente.StockActual}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {ingrediente.UnidadMedida}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {ingrediente.NivelStock}
-                        </TableCell>
-                        {/* <TableCell className="tableCell">
+                .map((ingrediente: Ingredient, index) => {
+                  console.log(ingrediente);
+
+                  return (
+                    <TableRow key={index}>
+                      <TableCell className="tableCell">
+                        {ingrediente.name}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {ingrediente.ingredientCategory.name}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {formatoMonedaLocal.format(
+                          ingrediente?.costPrice?.amount ?? null
+                        )}{" "}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {ingrediente.minimumStock}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {ingrediente.currentStock}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {ingrediente.measurementUnit}
+                      </TableCell>
+                      {/* <TableCell className="tableCell">
+                        {ingrediente.}
+                      </TableCell> */}
+                      {/* <TableCell className="tableCell">
                           {ingrediente.Estado}
                         </TableCell> */}
-                        <TableCell className="tableCell">
-                          {
-                            <>
-                              {/* <button
+                      <TableCell className="tableCell">
+                        {
+                          <>
+                            {/* <button
                                 data-title="Eliminar"
                                 type="button"
                                 className="btn btn-sm"
@@ -293,20 +295,19 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
                               >
                                 <i className="fa-solid fa-trash"></i>
                               </button> */}
-                              <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                                onClick={() => (handleShowModal(ingrediente))}
-                              >
-                                <i className="fa-solid fa-pen-to-square"></i>
-                              </button>
-                            </>
-                          }
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
+                            <button
+                              data-title="Eliminar"
+                              type="button"
+                              className="btn btn-sm"
+                              onClick={() => handleShowModal(ingrediente)}
+                            >
+                              <i className="fa-solid fa-pen-to-square"></i>
+                            </button>
+                          </>
+                        }
+                      </TableCell>
+                    </TableRow>
+                  );
                 })}
             </TableBody>
           </Table>
@@ -337,8 +338,6 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
         editing={true}
         ingrediente={ingredientEdit}
       />
-
-
     </div>
   );
 };
