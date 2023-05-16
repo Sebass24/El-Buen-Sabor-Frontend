@@ -1,7 +1,6 @@
 import Base from "../Base";
 
 export default interface IngredientCategory extends Base {
-    name: string; 
-    subIngredientCategories: IngredientCategory[];  
+    name: string;
     parentCategory: IngredientCategory;
 }

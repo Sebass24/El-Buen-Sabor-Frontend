@@ -1,7 +1,7 @@
 import Base from "../Base";
-import Ingredient from "./Ingredient";
+import Ingredient from "./Ingredient/Ingredient";
 
-export default interface ProductDetail extends Base {
+export default interface productDetails extends Base {
     ingredient: Ingredient;
     quantity: number;
 }

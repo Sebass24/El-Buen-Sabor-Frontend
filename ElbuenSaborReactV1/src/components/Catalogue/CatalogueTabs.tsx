@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Tab, Tabs } from "react-bootstrap"; 
+import { Tab, Tabs } from "react-bootstrap";
 import "./Catalogue.scss";
 import { FaPizzaSlice, FaHamburger } from 'react-icons/fa';
 import { GiFrenchFries, GiSodaCan } from 'react-icons/gi';
@@ -18,11 +18,11 @@ const CatalogueTabs = () => {
             justify
         >
             <Tab eventKey="categories" title="Categorías" disabled className="categories-tab"></Tab>
-            <Tab eventKey="burgers" title={<FaHamburger size={26}/>}><CategoryProducts args={key}/></Tab>
-            <Tab eventKey="pizzas" title={<FaPizzaSlice size={26}/>}><CategoryProducts args={key}/></Tab>
-            <Tab eventKey="fries" title={<GiFrenchFries size={26}/>}><CategoryProducts args={key}/></Tab>
-            <Tab eventKey="drinks" title={<GiSodaCan size={26}/>}><CategoryProducts args={key}/></Tab>
-            <Tab eventKey="combos" title={<MdFastfood size={26}/>}><CategoryProducts args={key}/></Tab>
+            <Tab eventKey="burgers" title={<FaHamburger size={26} />}><CategoryProducts args={key} /></Tab>
+            <Tab eventKey="pizzas" title={<FaPizzaSlice size={26} />}><CategoryProducts args={key} /></Tab>
+            <Tab eventKey="fries" title={<GiFrenchFries size={26} />}><CategoryProducts args={key} /></Tab>
+            <Tab eventKey="drinks" title={<GiSodaCan size={26} />}><CategoryProducts args={key} /></Tab>
+            <Tab eventKey="combos" title={<MdFastfood size={26} />}><CategoryProducts args={key} /></Tab>
         </Tabs>
     )
 }
