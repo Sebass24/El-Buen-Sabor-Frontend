@@ -11,13 +11,13 @@ function ProductCard({ args }: props) {
 
   return (
     <Card className='card'>
-      <Link to="/"><Card.Img variant="top" className="product-image img-fluid mx-auto d-block" src={`../TrialImages/${args.image}`} /></Link>
-      <Card.Body>
+      <Link to="/"><Card.Img variant="top" className="product-image img-fluid mx-auto d-block" src={`../Images/${args.image.path}`} /></Link>
+      <Card.Body className="info-card">
         <Card.Title className="card-title">{args.name}</Card.Title>
         <Card.Text>
           <label className="short-description">{args.shortDescription}</label>
           <span className="label-container">
-            <label className="price">${args.price.amount}</label>
+            <label className="price">${args.sellPrice}</label>
             {args.available ? "" : <label className="unavailable">SIN STOCK</label>}
           </span>
         </Card.Text>

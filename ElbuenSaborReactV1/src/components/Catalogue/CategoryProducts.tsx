@@ -12,7 +12,7 @@ interface props {
 const CategoryProducts = ({ args }: props) => {
 
     const products = useProducts();
-    const filteredProducts: Product[] = products.filter((product) => product.productCategory === args);
+    const filteredProducts: Product[] = products.filter((product) => product.productCategory.description === args);
 
     return (
         <Container fluid="md" className="product-container">

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Product from "@Models/Product/Product";
-import { getProducts } from "./ProductTrial";
+import { getProducts } from "components/APIfunctions";
 
-export default function useProducts(){
+export default function useProducts() {
     const [products, setProducts] = useState<Product[]>([]);
-    const getProductsList = () => {
-        let data: Product[] = getProducts();
+    const getProductsList = async () => {
+        let data: Product[] = await getProducts();
         setProducts(data);
     }
     useEffect(() => {
