@@ -31,3 +31,9 @@ export async function getProductsByName(name: string): Promise<Product[]> {
     const products = await getData<Product[]>(url);
     return products;
 }
+
+export async function getProductsRandom(quantity: number): Promise<Product[]> {
+    const url = `http://localhost:8080/api/product/random/${quantity}`;
+    const products = await getData<Product[]>(url);
+    return products;
+}

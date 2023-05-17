@@ -6,7 +6,6 @@ import { getProductById } from "components/APIfunctions";
 import "./ProductDetail.scss";
 import AddToCartButton from "./AddToCartButton";
 import ProductQuantitySelector from "./ProductQuantitySelector";
-import SuggestedProducts from "../SuggestedProducts/SuggestedProducts";
 
 export default function ProductDetail() {
 
@@ -18,7 +17,7 @@ export default function ProductDetail() {
     }
     useEffect(() => {
         getProduct();
-    }, []);
+    }, [idproduct]);
 
     const [quantity, setQuantity] = useState(1);
     const handleQuantityChange = (value: number) => {
@@ -46,7 +45,6 @@ export default function ProductDetail() {
                     </Card.Body>
                 </Card>
             </div>
-            <SuggestedProducts phrase={"Otras personas lo combinaron con..."} />
         </>
     )
 }

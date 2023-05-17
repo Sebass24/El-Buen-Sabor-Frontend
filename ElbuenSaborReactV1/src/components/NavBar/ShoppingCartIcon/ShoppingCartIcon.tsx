@@ -1,14 +1,15 @@
-import React from 'react'; 
+import React from 'react';
 import "./ShoppingCartIcon.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from 'react-router-dom';
 
 library.add(faCartShopping);
 
 const ShoppingCart = () => {
-    return(
-        <FontAwesomeIcon icon={faCartShopping} className="shoppingCart" />
+    return (
+        <Link to="/cart" className="shoppingCart"><FontAwesomeIcon icon={faCartShopping} className="shoppingCart" /></Link>
     );
 }
 

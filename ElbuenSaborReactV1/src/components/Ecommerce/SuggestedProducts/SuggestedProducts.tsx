@@ -3,24 +3,23 @@ import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import Product from "@Models/Product/Product";
 import ProductCard from "../Catalogue/ProductCard";
-import { getProducts } from "components/APIfunctions";
+import { getProductsRandom } from "components/APIfunctions";
 
 interface SuggestedProductsProps {
     phrase: string;
 }
 
+
 const SuggestedProducts: React.FC<SuggestedProductsProps> = ({ phrase }) => {
 
     const [products, setProducts] = useState<Product[]>([]);
 
+    const fetchData = async () => {
+        let productList: Product[] = await getProductsRandom(4);
+        console.log(productList);
+        setProducts(productList);
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            let productList: Product[] = await getProducts();
-            const shuffledProducts = productList.sort(() => Math.random() - 0.5);
-            const randomProducts = shuffledProducts.slice(0, 4);
-            setProducts(randomProducts);
-        };
-
         fetchData();
     }, []);
 
