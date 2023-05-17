@@ -19,7 +19,7 @@ const ProductQuantitySelector: React.FC<ProductQuantitySelectorProps> = ({ quant
     return (
         <span className="quantity-selector">
             <button className="button2" onClick={handleDecrement}>-</button>
-            <span>{quantity}</span>
+            <span className="quantity">{quantity}</span>
             <button className="button2" onClick={handleIncrement}>+</button>
         </span>
     );
