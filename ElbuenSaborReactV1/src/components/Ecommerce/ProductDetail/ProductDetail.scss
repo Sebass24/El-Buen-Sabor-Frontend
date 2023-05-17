@@ -9,7 +9,7 @@
     display: grid;
     border-radius: 1rem;
     grid-template-columns: 30% 70%;
-    margin: 2rem;
+    margin: 1.5rem;
     align-items: center;
     border-color: white;
 
@@ -55,20 +55,20 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     margin-left: 0;
-    margin-top: 2rem;
+    margin-top: 1rem;
     grid-column: 2;
-    margin-bottom: 2%;
     align-items: center;
     width: 100%;
-    justify-content: center;
 
     .s1 {
         font-weight: 600;
-        justify-self: center;
         flex: 1;
+        text-align: center;
     }
 
-    .s2 {
+    span {
+        display: flex;
+        align-items: center;
         justify-content: center;
     }
 

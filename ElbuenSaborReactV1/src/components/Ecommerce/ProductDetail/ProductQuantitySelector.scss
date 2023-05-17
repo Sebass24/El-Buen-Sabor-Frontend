@@ -1,6 +1,7 @@
 .quantity-selector {
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 5.5rem;
     height: 1.7rem;
     border: 1px solid gray;
@@ -8,7 +9,7 @@
 }
 
 .button2 {
-    width: 1.5rem;
+    width: 3rem;
     height: 1rem;
     padding-top: 0;
     padding-bottom: 1.6rem;
@@ -19,8 +20,7 @@
     font-size: 1rem;
 }
 
-span {
-    margin: 0 1rem;
+.quantity {
     font-weight: bold;
     color: black;
     font-weight: 500;
@@ -28,7 +28,7 @@ span {
 }
 
 @media (max-width: 450px) {
-    span {
+    .quantity {
         margin: 0 0.8rem;
     }
 }

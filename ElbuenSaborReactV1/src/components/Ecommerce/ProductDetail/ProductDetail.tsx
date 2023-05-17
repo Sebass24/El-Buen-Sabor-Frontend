@@ -46,7 +46,7 @@ export default function ProductDetail() {
                     </Card.Body>
                 </Card>
             </div>
-            {/* <SuggestedProducts /> */}
+            <SuggestedProducts phrase={"Otras personas lo combinaron con..."} />
         </>
     )
 }
