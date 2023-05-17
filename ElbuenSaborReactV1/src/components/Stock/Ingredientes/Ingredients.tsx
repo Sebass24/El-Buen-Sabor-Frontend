@@ -3,7 +3,7 @@ import "./Ingredients.scss";
 import { Button } from "react-bootstrap";
 import TableIngredients from "./TableIngredients/TableIngredients";
 import ModalAddIngrediente from "./ModalAddIngrediente/ModalAddIngrediente";
-import { Ingredient } from "@Models/types";
+import Ingredient from "@Models/Product/Ingredient";
 import ModalBuyIngredient from "./ModalBuyIngredient/ModalBuyIngredient";
 import { getData } from "../../GenericFetch/GenericFetch";
 
@@ -66,28 +66,22 @@ const Ingredients = () => {
   const filter = (serchParam: string) => {
     var serchResult = ingredientComplete.filter((ingredientVal: Ingredient) => {
       if (
-        ingredientVal.Nombre.toString()
+        ingredientVal.name.toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase()) ||
-        ingredientVal.Rubro?.toString()
+        ingredientVal.ingredientCategory.name?.toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase()) ||
-        ingredientVal.PrecioCosto?.toString()
+        ingredientVal.costPrice?.toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase()) ||
-        ingredientVal.StockMinimo?.toString()
+        ingredientVal.minimumStock?.toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase()) ||
-        ingredientVal.StockActual?.toString()
+        ingredientVal.currentStock?.toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase()) ||
-        ingredientVal.UnidadMedida?.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        ingredientVal.NivelStock?.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        ingredientVal.Estado.toString()
+        ingredientVal.measurementUnit?.toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase())
       )

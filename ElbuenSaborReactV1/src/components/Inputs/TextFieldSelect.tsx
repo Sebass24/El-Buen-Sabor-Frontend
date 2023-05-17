@@ -4,13 +4,10 @@ import { Options } from "@Models/types";
 interface props {
   label: string;
   options: Options[];
-  value?: any;
   name: string;
-  change?: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 const TextFieldSelect = ({
   label,
-  change,
   options,
   name,
 }: props) => {

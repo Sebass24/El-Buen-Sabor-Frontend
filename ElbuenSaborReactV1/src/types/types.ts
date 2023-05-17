@@ -1,13 +1,15 @@
-export interface Ingredient {
-  Nombre: string;
-  Rubro: string;
-  PrecioCosto: number;
-  StockMinimo: number;
-  StockActual: number;
-  UnidadMedida: string;
-  NivelStock?: string;
-  Estado: string;
-}
+// export interface Ingredient {
+//   Nombre: string;
+//   Rubro: string;
+//   PrecioCosto: number;
+//   StockMinimo: number;
+//   StockActual: number;
+//   UnidadMedida: string;
+//   NivelStock?: string;
+//   Estado: string;
+// }
+
+import Base from "./Base";
 
 export interface IngredientBuy {
   Ingredient: string;
@@ -41,11 +43,7 @@ export interface Products {
   Ingredients?: OrderIngredient[];
 }
 
-export interface Category {
-  Name: string;
-  FatherCategory?: string;
-  State: string;
-}
+
 
 export interface Users {
   Name: string;

@@ -8,7 +8,7 @@ export async function getData<T>(path: string): Promise<T> {
 
 //si el metodo es post, data no tiene que tener id
 //si el metodo es put, data tiene que tener id
-async function postPutData<T>(
+export async function postPutData<T>(
   path: string,
   method: string,
   data: T

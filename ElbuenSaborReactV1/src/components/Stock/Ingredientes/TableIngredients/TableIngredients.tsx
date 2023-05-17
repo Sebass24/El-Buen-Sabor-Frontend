@@ -78,9 +78,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "Nombre"}
-            direction={orderBy === "Nombre" ? order : "asc"}
-            onClick={crearSortHandler("Nombre")}
+            active={orderBy === "name"}
+            direction={orderBy === "name" ? order : "asc"}
+            onClick={crearSortHandler("name")}
           >
             <Typography fontWeight="bold">Ingrediente</Typography>
           </TableSortLabel>
@@ -91,13 +91,7 @@ function CabeceraMejorada(props: any) {
           key="Rubro"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <TableSortLabel
-            active={orderBy === "Rubro"}
-            direction={orderBy === "Rubro" ? order : "asc"}
-            onClick={crearSortHandler("Rubro")}
-          >
-            <Typography fontWeight="bold">Rubro</Typography>
-          </TableSortLabel>
+          <Typography fontWeight="bold">Rubro</Typography>
         </TableCell>
 
         <TableCell
@@ -106,9 +100,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "PrecioDeCosto"}
-            direction={orderBy === "PrecioDeCosto" ? order : "asc"}
-            onClick={crearSortHandler("PrecioDeCosto")}
+            active={orderBy === "currentStock"}
+            direction={orderBy === "currentStock" ? order : "asc"}
+            onClick={crearSortHandler("currentStock")}
           >
             <Typography fontWeight="bold">Precio De Costo</Typography>
           </TableSortLabel>
@@ -120,9 +114,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "StockMinimo"}
-            direction={orderBy === "StockMinimo" ? order : "asc"}
-            onClick={crearSortHandler("StockMinimo")}
+            active={orderBy === "minimumStock"}
+            direction={orderBy === "minimumStock" ? order : "asc"}
+            onClick={crearSortHandler("minimumStock")}
           >
             <Typography fontWeight="bold">Stock mínimo</Typography>
           </TableSortLabel>
@@ -134,9 +128,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "StockActual"}
-            direction={orderBy === "StockActual" ? order : "asc"}
-            onClick={crearSortHandler("StockActual")}
+            active={orderBy === "currentStock"}
+            direction={orderBy === "currentStock" ? order : "asc"}
+            onClick={crearSortHandler("currentStock")}
           >
             <Typography fontWeight="bold">Stock actual</Typography>
           </TableSortLabel>
@@ -147,22 +141,18 @@ function CabeceraMejorada(props: any) {
           key="UnidadMedida"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <TableSortLabel
-            active={orderBy === "UnidadMedida"}
-            direction={orderBy === "UnidadMedida" ? order : "asc"}
-            onClick={crearSortHandler("UnidadMedida")}
-          >
-            <Typography fontWeight="bold">Unidad medida</Typography>
-          </TableSortLabel>
+
+          <Typography fontWeight="bold">Unidad medida</Typography>
+
         </TableCell>
 
-        {/* <TableCell
+        <TableCell
           className="tableCell"
           key="NivelStock"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <Typography fontWeight="bold">Nivel de stock</Typography>
-        </TableCell> */}
+        </TableCell>
 
         {/* <TableCell
           className="tableCell"
@@ -239,8 +229,8 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
         <TableContainer>
           <Table
             className="table"
-            // aria-labelledby="tableTitle"
-            // aria-label="enhanced table"
+          // aria-labelledby="tableTitle"
+          // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -254,8 +244,6 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
               {stableSort(Ingredients, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((ingrediente: Ingredient, index) => {
-                  console.log(ingrediente);
-
                   return (
                     <TableRow key={index}>
                       <TableCell className="tableCell">
@@ -266,7 +254,7 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
                       </TableCell>
                       <TableCell className="tableCell">
                         {formatoMonedaLocal.format(
-                          ingrediente?.costPrice?.amount ?? null
+                          ingrediente?.costPrice
                         )}{" "}
                       </TableCell>
                       <TableCell className="tableCell">
@@ -278,9 +266,12 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
                       <TableCell className="tableCell">
                         {ingrediente.measurementUnit}
                       </TableCell>
-                      {/* <TableCell className="tableCell">
-                        {ingrediente.}
-                      </TableCell> */}
+                      <TableCell className="tableCell">
+                        {
+                          ingrediente.currentStock < ingrediente.minimumStock ?
+                            <p>Faltante</p> : (ingrediente.currentStock > ingrediente.minimumStock % 20 ? <p>Optimo</p> : <p>Pedir</p>)
+                        }
+                      </TableCell>
                       {/* <TableCell className="tableCell">
                           {ingrediente.Estado}
                         </TableCell> */}

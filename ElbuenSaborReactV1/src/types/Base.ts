@@ -1,4 +1,4 @@
-export default interface Base{
-    id: number;
-    deleted?: boolean;
+export default interface Base {
+  id?: number;
+  deleted?: boolean;
 }

@@ -8,5 +8,5 @@ export default interface Ingredient extends Base {
   minimumStock: number;
   currentStock: number;
   measurementUnit: string;
-  costPrice: Price;
+  costPrice: number;
 }

@@ -1,9 +1,9 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import * as Yup from "yup";
 // import { validacionIngredientes, ingredientesBase } from './DatosForm';
 // import FormIngredientesFields from './FormIngredientesFields';
-import { Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 // import { addIngredient } from "../../../../features/foods/IngredientSlice.js"
 import { useDispatch } from "react-redux";
 import TextFieldValue from "../../../Inputs/TextFieldValue";
@@ -11,7 +11,9 @@ import TextFieldSelect from "../../../Inputs/TextFieldSelect";
 import "./FormIngredientesFields.scss";
 import { FormikHelpers } from "formik";
 import Ingredient from "@Models/Product/Ingredient";
-
+import IngredientCategory from "@Models/Product/IngredientCategory"
+import Category from "@Models/Product/Category";
+import { getData, postPutData } from "components/GenericFetch/GenericFetch";
 interface props {
   showModal: boolean;
   handleClose: () => void;
@@ -25,14 +27,46 @@ const ModalAddIngrediente = ({
   editing,
   ingrediente,
 }: props) => {
+
+  const [categorys, setCategorys] = useState<Category[]>([])
+  const [options, setOptions] = useState<any>([])
+
+  async function getCategories() {
+    const data: Category[] = await getData<Category[]>("/api/rubro");
+    setCategorys(data)
+  }
+
+  function categorysToOptions() {
+    const initialopcions = {
+      value: "todos",
+      label: "",
+    };
+    setOptions([
+      initialopcions,
+      ...categorys.map((option, index) => ({
+        value: option.name,
+        label: option.name,
+      })),
+    ]);
+  }
+
+
+  useEffect(() => {
+    getCategories();
+    categorysToOptions()
+  }, [categorys]);
+
+
   const initialValues: Ingredient = {
     name: "",
-    ingredientCategory: "",
-    costPrice: NaN,
-    minimumStock: NaN,
-    currentStock: NaN,
+    ingredientCategory: {
+      id: undefined as any,
+      name: "",
+    },
+    costPrice: null as any,
+    minimumStock: null as any,
+    currentStock: null as any,
     measurementUnit: "",
-    Estado: "",
   };
 
   return (
@@ -55,17 +89,24 @@ const ModalAddIngrediente = ({
         <Modal.Body>
           <Formik
             validationSchema={Yup.object({
-              Nombre: Yup.string().required("*Campo requerido"),
-              Rubro: Yup.string().required("*Campo requerido"),
-              PrecioCosto: Yup.number().required("*Campo requerido"),
-              StockMinimo: Yup.number().required("*Campo requerido"),
-              StockActual: Yup.number().required("*Campo requerido"),
-              UnidadMedida: Yup.string().required("*Campo requerido"),
-              Estado: Yup.string().required("*Campo requerido"),
+              name: Yup.string().required("*Campo requerido"),
+              ingredientCategory: Yup.object().shape({
+                id: Yup.number().required(),
+                name: Yup.string().required().default("todos"),
+              }),
+              costPrice: Yup.number().required("*Campo requerido"),
+              minimumStock: Yup.number().required("*Campo requerido"),
+              currentStock: Yup.number().required("*Campo requerido"),
+              measurementUnit: Yup.string().required("*Campo requerido"),
             })}
-            initialValues={pruebarapida}
+            initialValues={ingrediente ? ingrediente : initialValues}
             enableReinitialize={true}
             onSubmit={async (values) => {
+              if (editing) {
+                postPutData(`/api/ingredient/${ingrediente?.id}`, "put", values)
+              } else {
+                postPutData(`/api/ingredient`, "post", values)
+              }
               handleClose();
             }}
           >
@@ -75,38 +116,93 @@ const ModalAddIngrediente = ({
                   <div className="container_Form_Ingredientes">
                     <TextFieldValue
                       label="Nombre:"
-                      name="Nombre"
+                      name="name"
                       type="text"
                       placeholder="Nombre del Ingrediente"
                     />
-                    <TextFieldValue
+
+                    <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
+                      <div style={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        padding: ".3rem 0"
+                      }}>
+                        <label htmlFor={"ingredientCategory"} style={{ color: "black", fontFamily: "sans-serif", fontSize: "14px", fontWeight: 'bold' }}>
+                          {"Rubro:"}
+                        </label>
+                      </div>
+                      <Field
+                        className={`form-control  mb-3  input-formulario`}
+                        name={"ingredientCategory"}
+                        as={"select"}
+                        onChange={(event: any) => {
+                          let category = categorys.filter((categor) => {
+                            return categor.name === event.target.value
+                          })
+                          if (category.length === 0) {
+                            category = [{ id: 0, name: "todos" }]
+                          }
+                          Formik.setFieldValue("ingredientCategory", category[0]);
+                        }}
+                        value={Formik.values.ingredientCategory.name}
+                      >
+                        {options.map((opcion: any, i: any) => {
+                          return (
+                            <option key={i} value={opcion.value} >
+                              {opcion.label}
+                            </option>
+                          );
+                        })}
+
+                      </Field>
+                      <ErrorMessage
+                        component="div"
+                        name={"ingredientCategory"}
+                        className="error"
+                      />
+                    </div>
+
+
+                    {/* <TextFieldSelect
                       label="Rubro:"
-                      name="Rubro"
-                      type="text"
-                      placeholder="Rubro del Ingrediente"
-                    />
+                      name="ingredientCategory"
+                      options={options}
+                      change={(event: any) => {
+                        let category = categorys.filter((categor) => {
+                          return categor.name === event.target.value
+                        })
+                        if (category.length === 0) {
+                          category = [{ id: 0, name: "todos" }]
+                        }
+                        Formik.setFieldValue("ingredientCategory", category[0]);
+                      }}
+                      value={Formik.values.ingredientCategory.name}
+                    /> */}
+
+
                     <TextFieldValue
                       label="Precio de costo:"
-                      name="PrecioCosto"
+                      name="costPrice"
                       type="number"
                       placeholder="Precio de costo del Ingrediente"
                     />
                     <TextFieldValue
                       label="Stock minimo:"
-                      name="StockMinimo"
+                      name="minimumStock"
                       type="number"
                       placeholder="Stock minimo del Ingrediente"
                     />
                     <TextFieldValue
                       label="Stock actual:"
-                      name="StockActual"
+                      name="currentStock"
                       type="number"
                       placeholder="Stock actual del Ingrediente"
                     />
 
                     <TextFieldSelect
                       label="Unidad de medida:"
-                      name="UnidadMedida"
+                      name="measurementUnit"
                       options={[
                         { value: "", label: "" },
                         { value: "cm3", label: "Cm3" },
@@ -115,18 +211,6 @@ const ModalAddIngrediente = ({
                           label: "Litros",
                         },
                         { value: "g", label: "gramos" },
-                      ]}
-                    />
-                    <TextFieldSelect
-                      label="Estado:"
-                      name="Estado"
-                      options={[
-                        { value: "", label: "" },
-                        { value: "true", label: "Disponible" },
-                        {
-                          value: "false",
-                          label: "No Disponible",
-                        },
                       ]}
                     />
                   </div>
@@ -141,7 +225,7 @@ const ModalAddIngrediente = ({
           </Formik>
         </Modal.Body>
       </Modal>
-    </div>
+    </div >
   );
 };
 
