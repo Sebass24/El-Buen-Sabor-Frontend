@@ -3,11 +3,15 @@ import "./LandingPhoto.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass, faRandom } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import useSearch from "./useSearch";
+import CatalogueTabs from "../CatalogueTabs";
+import { useDispatch } from 'react-redux';
+import { setSearchValue } from 'components/store';
+
 
 library.add(faMagnifyingGlass);
 
 export default function Landing() {
+  const dispatch = useDispatch();
 
   const [search, setSearch] = useState("");
 
@@ -16,21 +20,8 @@ export default function Landing() {
   };
 
   const handleButtonClick = () => {
-    useSearch(search);
+    dispatch(setSearchValue(search));
   };
-
-  /* 
-  const searchFood = (event: any) => {
-    event.preventDefault();
-    const {target} = event; 
-    const searchValue = target.search.value; 
-    target.search.value = ""; 
-    store.dispatch({
-      type:"foodSearch",
-      searchValue
-    })
-  }
-  */
 
   return (
     <>
@@ -41,10 +32,6 @@ export default function Landing() {
             <input type="text" placeholder="Buscar" className="food_search" value={search} onChange={handleSearchChange}></input>
             <span className="icon" style={{ cursor: 'pointer' }}><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "black" }} onClick={handleButtonClick}></FontAwesomeIcon></span>
           </form>
-          {/* <form className="input-container">
-            <input type="text" name="search" placeholder="Buscar" className="food_search"></input>
-            <span className="icon" style={{ cursor: 'pointer' }}><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "black" }} onClick={searchFood}></FontAwesomeIcon></span>
-          </form> */}
         </div>
       </div>
     </>

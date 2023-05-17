@@ -6,6 +6,7 @@ import { getProductById } from "components/APIfunctions";
 import "./ProductDetail.scss";
 import AddToCartButton from "./AddToCartButton";
 import ProductQuantitySelector from "./ProductQuantitySelector";
+import SuggestedProducts from "../SuggestedProducts/SuggestedProducts";
 
 export default function ProductDetail() {
 
@@ -25,24 +26,27 @@ export default function ProductDetail() {
     };
 
     return (
-        <div className="card-container" style={{ display: 'flex', justifyContent: 'center' }}>
-            <Card className='card2'>
-                <Card.Img variant="top" className="product-image2 img-fluid mx-auto d-block" src={`../Images/${product?.image.path}`} />
-                <Card.Body>
-                    <Card.Title className="card-title2">{product?.name}</Card.Title>
-                    <Card.Text>
-                        <label className="description2">{product?.description}</label>
-                        <label className="short-description2">{product?.shortDescription}</label>
-                        <label>Precio: ${product?.sellPrice}</label><br />
-                        {product?.available ? <label className="available">DISPONIBLE</label> : <label className="unavailable2">SIN STOCK</label>}
-                        <span className="label-container2">
-                            <span className="s2"><ProductQuantitySelector quantity={quantity} onChange={handleQuantityChange} /></span>
-                            <label className="s1">${product?.sellPrice! * quantity}</label>
-                            <span className="s3"><AddToCartButton /></span>
-                        </span>
-                    </Card.Text>
-                </Card.Body>
-            </Card>
-        </div>
+        <>
+            <div className="card-container" style={{ display: 'flex', justifyContent: 'center' }}>
+                <Card className='card2'>
+                    <Card.Img variant="top" className="product-image2 img-fluid mx-auto d-block" src={`../Images/${product?.image.path}`} />
+                    <Card.Body>
+                        <Card.Title className="card-title2">{product?.name}</Card.Title>
+                        <Card.Text>
+                            <label className="description2">{product?.description}</label>
+                            <label className="short-description2">{product?.shortDescription}</label><br />
+                            <label>Precio: ${product?.sellPrice}</label><br />
+                            {product?.available ? <label className="available">DISPONIBLE</label> : <label className="unavailable2">SIN STOCK</label>}
+                            <span className="label-container2">
+                                <span className="s2"><ProductQuantitySelector quantity={quantity} onChange={handleQuantityChange} /></span>
+                                <label className="s1">${product?.sellPrice! * quantity}</label>
+                                <span className="s3"><AddToCartButton /></span>
+                            </span>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </div>
+            {/* <SuggestedProducts /> */}
+        </>
     )
 }

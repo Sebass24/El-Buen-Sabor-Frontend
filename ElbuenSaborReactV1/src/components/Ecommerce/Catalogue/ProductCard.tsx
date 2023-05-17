@@ -17,10 +17,10 @@ function ProductCard({ args }: props) {
           <Card.Title className="card-title">{args.name}</Card.Title>
           <Card.Text>
             <label className="short-description">{args.shortDescription}</label>
-            <span className="label-container">
+            <label className="label-container">
               <label className="price">${args.sellPrice}</label>
               {args.available ? "" : <label className="unavailable">SIN STOCK</label>}
-            </span>
+            </label>
           </Card.Text>
         </Card.Body>
       </Card >

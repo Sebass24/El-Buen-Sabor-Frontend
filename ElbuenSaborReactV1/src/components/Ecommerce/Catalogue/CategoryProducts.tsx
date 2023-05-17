@@ -1,37 +1,35 @@
-
+import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import Product from "@Models/Product/Product";
 import ProductCard from "./ProductCard";
 import "./Catalogue.scss";
-import useProducts from "./useProducts";
+import { getProductsByCategory, getProductsByName } from "components/APIfunctions";
 
 interface props {
-    args: string;
+    args: [string, string];
 }
 
 const CategoryProducts = ({ args }: props) => {
+    const value = args[0];
+    const searchBy = args[1];
 
-    const products = useProducts();
-    const filteredProducts: Product[] = products.filter((product) => product.productCategory.description === args);
+    const [products, setProducts] = useState<Product[]>([]);
 
-    return (
-        <Container fluid="md" className="product-container">
-            {filteredProducts.map((product: Product) => (
-                <ProductCard key={product.id} args={product} />
-            ))}
-        </Container>
-    )
-}
+    useEffect(() => {
+        const fetchData = async () => {
+            let productList: Product[] = [];
+            if (searchBy === "name") {
+                productList = await getProductsByName(value);
+                console.log(productList);
+            } else if (searchBy === "category") {
+                productList = await getProductsByCategory(value);
+            }
+            setProducts(productList);
+        };
 
-export default CategoryProducts;
+        fetchData();
+    }, [value, searchBy]);
 
-/* interface Props {
-    args: Product[];
-}
-
-const CategoryProducts = ({args}: Props) => {}
-
-    
     return (
         <Container fluid="md" className="product-container">
             {products.map((product: Product) => (
@@ -39,4 +37,6 @@ const CategoryProducts = ({args}: Props) => {}
             ))}
         </Container>
     )
-} */
+}
+
+export default CategoryProducts;
