@@ -76,6 +76,20 @@
     }
 } */
 
+@media (max-width: 767px) {
+    .card {
+        width: 12rem;
+        border-radius: 5%;
+        margin: 1rem;
+        margin-top: 0;
+    }
+
+    .label-container {
+        width: 10rem;
+        grid-column: 2;
+    }
+}
+
 @media (max-width: 450px) {
     .card {
         width: 19rem;

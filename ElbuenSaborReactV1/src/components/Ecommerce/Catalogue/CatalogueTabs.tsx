@@ -40,7 +40,7 @@ const CatalogueTabs = () => {
                     {search !== "" ?
                         (<CategoryProducts args={[search, "name"]} />) :
                         (<CategoryProducts args={["Hamburguesas", "category"]} />)}
-                    {/* <CategoryProducts args={["Hamburguesas", CATEGORY]}/> */} </Tab>
+                </Tab>
                 <Tab eventKey="Pizza" title={<FaPizzaSlice size={26} />} >
                     <CategoryProducts args={["Pizza", CATEGORY]} /></Tab>
                 <Tab eventKey="Papas fritas" title={<GiFrenchFries size={26} />} >
@@ -50,7 +50,6 @@ const CatalogueTabs = () => {
                 <Tab eventKey="Combos" title={<MdFastfood size={26} />} >
                     <CategoryProducts args={["Combos", CATEGORY]} /></Tab>
             </Tabs >
-            {/* {search !== "" && (<CategoryProducts args={[search, "name"]} />)} */}
         </>
     );
 }
