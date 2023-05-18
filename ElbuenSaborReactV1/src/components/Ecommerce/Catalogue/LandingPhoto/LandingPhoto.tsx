@@ -22,12 +22,17 @@ export default function Landing() {
     dispatch(setSearchValue(search));
   };
 
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(setSearchValue(search));
+  };
+
   return (
     <>
       <div className="imageHomePage">
         <div className="search_container">
           <p className="best_burgers">Las mejores hamburguesas de Mendoza</p>
-          <form className="input-container">
+          <form className="input-container" onSubmit={handleFormSubmit}>
             <input type="text" placeholder="Buscar" className="food_search" value={search} onChange={handleSearchChange}></input>
             <span className="icon" style={{ cursor: 'pointer' }}><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "black" }} onClick={handleButtonClick}></FontAwesomeIcon></span>
           </form>
