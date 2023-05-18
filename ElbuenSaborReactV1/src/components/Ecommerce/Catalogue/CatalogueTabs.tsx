@@ -36,7 +36,7 @@ const CatalogueTabs = () => {
                 justify
             >
                 <Tab eventKey="categories" title="Categorías" disabled className="categories-tab" />
-                <Tab eventKey="Hamburguesas" title={<FaHamburger size={26} />} >
+                <Tab eventKey="Hamburguesas" title={<FaHamburger size={26} style={{ color: activeTab === 'Hamburguesas' && search === '' ? ' #EC5800' : 'black' }} />} >
                     {search !== "" ?
                         (<CategoryProducts args={[search, "name"]} />) :
                         (<CategoryProducts args={["Hamburguesas", "category"]} />)}

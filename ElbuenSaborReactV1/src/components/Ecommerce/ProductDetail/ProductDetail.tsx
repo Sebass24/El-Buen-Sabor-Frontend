@@ -17,6 +17,7 @@ export default function ProductDetail() {
     }
     useEffect(() => {
         getProduct();
+        window.scrollTo(0, 0);
     }, [idproduct]);
 
     const [quantity, setQuantity] = useState(1);

@@ -16,7 +16,6 @@ const SuggestedProducts: React.FC<SuggestedProductsProps> = ({ phrase }) => {
 
     const fetchData = async () => {
         let productList: Product[] = await getProductsRandom(4);
-        console.log(productList);
         setProducts(productList);
     };
     useEffect(() => {
