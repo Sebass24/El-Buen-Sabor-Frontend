@@ -141,9 +141,7 @@ function CabeceraMejorada(props: any) {
           key="UnidadMedida"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-
           <Typography fontWeight="bold">Unidad medida</Typography>
-
         </TableCell>
 
         <TableCell
@@ -229,8 +227,8 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -253,9 +251,7 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
                         {ingrediente.ingredientCategory.name}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {formatoMonedaLocal.format(
-                          ingrediente?.costPrice
-                        )}{" "}
+                        {formatoMonedaLocal.format(ingrediente?.costPrice)}{" "}
                       </TableCell>
                       <TableCell className="tableCell">
                         {ingrediente.minimumStock}
@@ -267,10 +263,14 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
                         {ingrediente.measurementUnit}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {
-                          ingrediente.currentStock < ingrediente.minimumStock ?
-                            <p>Faltante</p> : (ingrediente.currentStock > ingrediente.minimumStock % 20 ? <p>Optimo</p> : <p>Pedir</p>)
-                        }
+                        {ingrediente.currentStock < ingrediente.minimumStock ? (
+                          <p>Faltante</p>
+                        ) : ingrediente.currentStock >
+                          ingrediente.minimumStock % 20 ? (
+                          <p>Optimo</p>
+                        ) : (
+                          <p>Pedir</p>
+                        )}
                       </TableCell>
                       {/* <TableCell className="tableCell">
                           {ingrediente.Estado}
@@ -282,7 +282,7 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
                                 data-title="Eliminar"
                                 type="button"
                                 className="btn btn-sm"
-                                onClick={() => console.log("eliminar")}
+                                onClick={() => }
                               >
                                 <i className="fa-solid fa-trash"></i>
                               </button> */}

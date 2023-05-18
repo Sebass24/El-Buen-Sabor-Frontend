@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   Form as formBostrap,
@@ -14,7 +14,7 @@ import {
   FormikConfig,
   FormikValues,
 } from "formik";
-import { OrderIngredient, Products } from "@Models/types";
+import Products from "@Models/Product/Product";
 import TextFieldValue from "../../../Inputs/TextFieldValue";
 import TextFieldSelect from "../../../Inputs/TextFieldSelect";
 import "./ModalAddProducts.scss";
@@ -31,11 +31,15 @@ import TextAreaValue from "components/Inputs/TextAreaValue";
 import { useAppSelector, useAppDispatch } from "@app/Hooks";
 import { startLoading, finishLoading } from "@features/Loading/LoadingSlice";
 import Loading from "components/Loading/Loading";
+import ProductDetail from "@Models/Product/ProductDetail";
+import Ingredient from "@Models/Product/Ingredient";
+import { getData } from "components/GenericFetch/GenericFetch";
+import TextCheckBox from "components/Inputs/TextCheckBox";
 
-const emptyDonation = {
-  Ingredient: "",
-  Cuantity: null as any,
-  UMedida: "",
+const emptyDonation: ProductDetail = {
+  ingredient: null as any,
+  quantity: null as any,
+  uMeasure: "",
 };
 
 interface Props {
@@ -45,6 +49,11 @@ interface Props {
   product?: Products;
 }
 
+interface Options {
+  value: number;
+  label: string;
+}
+
 const ModalAddProducts = ({
   showModal,
   handleClose,
@@ -52,25 +61,23 @@ const ModalAddProducts = ({
   product,
 }: Props) => {
   const initialValues: Products = {
-    Nombre: "",
-    Rubro: "",
-    PrecioVenta: null as any,
-    TiempoCocina: null as any,
-    Receta: "",
-    Estado: "",
-    Descripcion: "",
-    Ingredients: [emptyDonation],
+    name: "",
+    productCategory: { description: "" },
+    sellPrice: null as any,
+    cookingTime: null as any,
+    recipe: "",
+    description: "",
+    shortDescription: "",
+    available: true,
+    image: "",
+    productDetails: [emptyDonation],
   };
 
   const loading = useAppSelector((state) => state.loading.value);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   return (
     <div>
-      {loading ? (
-        <Loading />
-      ) : (
-        <></>
-      )}
+      {loading ? <Loading /> : <></>}
       <Modal
         id={"modal"}
         show={showModal}
@@ -79,7 +86,6 @@ const ModalAddProducts = ({
         backdrop="static"
         keyboard={false}
       >
-
         <Modal.Header closeButton>
           {editing ? (
             <Modal.Title>Editar un Producto:</Modal.Title>
@@ -92,11 +98,11 @@ const ModalAddProducts = ({
             <FormikStepper
               initialValues={product ? product : initialValues}
               onSubmit={(values) => {
-                dispatch(startLoading())
+                dispatch(startLoading());
 
                 setTimeout(() => {
                   console.log(values);
-                  dispatch(finishLoading())
+                  dispatch(finishLoading());
                   handleClose();
                 }, 3000);
               }}
@@ -104,24 +110,25 @@ const ModalAddProducts = ({
               <FormikStep
                 label="Datos del producto"
                 validationSchema={Yup.object({
-                  Nombre: Yup.string().required("*Campo requerido"),
-                  Rubro: Yup.string().required("*Campo requerido"),
-                  PrecioVenta: Yup.number().required("*Campo requerido"),
-                  TiempoCocina: Yup.number().required("*Campo requerido"),
-                  Estado: Yup.string().required("*Campo requerido"),
-                  Descripcion: Yup.string().required("*Campo requerido"),
+                  name: Yup.string().required("*Campo requerido"),
+                  // productCategory: Yup.string().required("*Campo requerido"),
+                  // sellPrice: Yup.number().required("*Campo requerido"),
+                  // cookingTime: Yup.number().required("*Campo requerido"),
+                  // available: Yup.boolean().required("*Campo requerido"),
+                  // shortDescription: Yup.string().required("*Campo requerido"),
+                  // descripcion: Yup.string().required("*Campo requerido"),
                 })}
               >
                 <div className="container_Form_Productos">
                   <TextFieldValue
                     label="Nombre"
-                    name="Nombre"
+                    name="name"
                     placeholder="Nombre"
                     type="text"
                   />
                   <TextFieldSelect
                     label="Rubro:"
-                    name="Rubro"
+                    name="productCategory"
                     options={[
                       { value: "", label: "" },
                       { value: "Baja", label: "Baja" },
@@ -133,32 +140,31 @@ const ModalAddProducts = ({
                   />
                   <TextFieldValue
                     label="PrecioVenta"
-                    name="PrecioVenta"
+                    name="sellPrice"
                     placeholder="PrecioVenta"
                     type="number"
                   />
                   <TextFieldValue
                     label="TiempoCocina"
-                    name="TiempoCocina"
+                    name="cookingTime"
                     placeholder="TiempoCocina"
                     type="number"
                   />
-                  <TextFieldSelect
-                    label="Estado:"
-                    name="Estado"
-                    options={[
-                      { value: "", label: "" },
-                      { value: "Baja", label: "Baja" },
-                      {
-                        value: "Alta",
-                        label: "Alta",
-                      },
-                    ]}
+                  <TextCheckBox
+                    label="Disponible"
+                    name="available"
+                    placeholder="TiempoCocina"
                   />
+
                   <TextAreaValue
                     label="Descripcion"
-                    name="Descripcion"
+                    name="description"
                     placeholder="Descripcion"
+                  />
+                  <TextAreaValue
+                    label="Descripcion Corta"
+                    name="shortDescription"
+                    placeholder="Descripcion corta"
                   />
                 </div>
               </FormikStep>
@@ -166,27 +172,26 @@ const ModalAddProducts = ({
               <FormikStep
                 label="Ingredientes"
                 validationSchema={Yup.object({
-                  Ingredients: Yup.array(
+                  productDetails: Yup.array(
                     Yup.object({
-                      Ingredient: Yup.string().required("Campo Requerido"),
-                      Cuantity: Yup.number().required("Campo Requerido"),
-                      UMedida: Yup.string().required("Campo Requerido"),
+                      ingredient: Yup.number().required("Campo Requerido"),
+                      quantity: Yup.number().required("Campo Requerido"),
+                      uMeasure: Yup.string().required("Campo Requerido"),
                     })
                   ).min(1, "Tiene que tener al menos un ingrediente"),
                 })}
-                valuesEdit={product}
               ></FormikStep>
 
               <FormikStep
-                label="Descripcion"
+                label="Receta"
                 validationSchema={Yup.object({
-                  Receta: Yup.string().required("*Campo requerido"),
+                  recipe: Yup.string().required("*Campo requerido"),
                 })}
               >
                 <>
                   <TextAreaValue
                     label="Receta"
-                    name="Receta"
+                    name="recipe"
                     placeholder="Receta"
                   />
                 </>
@@ -204,19 +209,23 @@ export default ModalAddProducts;
 export interface FormikStepProps
   extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {
   label: string;
-  valuesEdit?: Products;
+  valuesOptions?: any;
 }
 
-export function FormikStep({ children, valuesEdit }: FormikStepProps) {
+export function FormikStep({ children }: FormikStepProps) {
   return <>{children}</>;
 }
 
 interface PropsForm extends FormikConfig<FormikValues> {
   children: React.ReactNode;
-  valuesEdit?: Products;
+  valuesOptions?: any;
 }
 
-export function FormikStepper({ children, valuesEdit, ...props }: PropsForm) {
+export function FormikStepper({
+  children,
+  valuesOptions,
+  ...props
+}: PropsForm) {
   const childrenArray = React.Children.toArray(
     children
   ) as React.ReactElement<FormikStepProps>[];
@@ -226,6 +235,27 @@ export function FormikStepper({ children, valuesEdit, ...props }: PropsForm) {
   function isLastStep() {
     return step === childrenArray.length - 1;
   }
+
+  const { Ingredients } = useAppSelector((state) => state.ingredients);
+
+  const [optionsIngredients, setOptionsIngredients] = useState<any>([]);
+  function categorysToOptions() {
+    const initialopcions = {
+      value: "",
+      label: "",
+    };
+    setOptionsIngredients([
+      initialopcions,
+      ...Ingredients.map((option, index) => ({
+        value: option.id?.toString(),
+        label: option.name,
+      })),
+    ]);
+  }
+  useEffect(() => {
+    categorysToOptions();
+  }, [Ingredients]);
+
   return (
     <Formik
       {...props}
@@ -240,7 +270,7 @@ export function FormikStepper({ children, valuesEdit, ...props }: PropsForm) {
         }
       }}
     >
-      {({ values, errors, isSubmitting, isValid }) => (
+      {({ values, errors, isSubmitting }) => (
         <Form autoComplete="off">
           <Stepper alternativeLabel activeStep={step}>
             {childrenArray.map((child, index) => (
@@ -254,24 +284,16 @@ export function FormikStepper({ children, valuesEdit, ...props }: PropsForm) {
           </Stepper>
 
           {step === 1 ? (
-            <FieldArray name="Ingredients">
+            <FieldArray name="productDetail">
               {({ push, remove }) => (
                 <React.Fragment>
-                  {values.Ingredients.map((ingre: any, index: any) => (
+                  {values.productDetails.map((ingre: any, index: any) => (
                     <Grid container item key={index} spacing={2}>
                       <Grid item>
                         <TextFieldSelect
-                          value={ingre?.Ingredient}
                           label="Ingrediente:"
-                          name={`Ingredients.${index}.Ingredient`}
-                          options={[
-                            { value: "", label: "" },
-                            { value: "Baja", label: "Baja" },
-                            {
-                              value: "Alta",
-                              label: "Alta",
-                            },
-                          ]}
+                          name={`productDetails.${index}.ingredient`}
+                          options={optionsIngredients}
                         />
                       </Grid>
 
@@ -279,7 +301,7 @@ export function FormikStepper({ children, valuesEdit, ...props }: PropsForm) {
                         <TextFieldValue
                           value={ingre?.Cuantity}
                           label="Cantidad:"
-                          name={`Ingredients.${index}.Cuantity`}
+                          name={`productDetails.${index}.quantity`}
                           type="number"
                           placeholder="Cantidad"
                         />
@@ -287,9 +309,8 @@ export function FormikStepper({ children, valuesEdit, ...props }: PropsForm) {
 
                       <Grid item>
                         <TextFieldSelect
-                          value={ingre?.UMedida}
                           label="Unidad de medida:"
-                          name={`Ingredients.${index}.UMedida`}
+                          name={`productDetails.${index}.uMeasure`}
                           options={[
                             { value: "", label: "" },
                             { value: "L", label: "Litro" },

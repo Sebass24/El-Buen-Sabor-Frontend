@@ -1,8 +1,9 @@
+import IngredientSlice from "../features/Ingredients/IngredientsSlice";
 import LoadingSlice from "../features/Loading/LoadingSlice";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const Store = configureStore({
-  reducer: { loading: LoadingSlice },
+  reducer: { loading: LoadingSlice, ingredients: IngredientSlice },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

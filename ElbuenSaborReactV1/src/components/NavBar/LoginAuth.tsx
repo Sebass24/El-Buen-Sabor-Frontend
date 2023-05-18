@@ -4,6 +4,7 @@ import "./NavBar.scss";
 
 const LoginAuth = () => {
   const { loginWithRedirect } = useAuth0();
+
   return (
     <button onClick={() => loginWithRedirect()} className="MyAccount">
       <span>Log in</span>

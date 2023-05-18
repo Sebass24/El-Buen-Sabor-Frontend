@@ -10,8 +10,8 @@ import "./index.css";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Auth0Provider
-      domain="dev-e6nyf0w5r4ztsond.us.auth0.com"
-      clientId="VEfWrreLSzXGJqCb433UDqlu3bPb8j7Q"
+      domain="dev-a6tntsf5lyicxsfn.us.auth0.com"
+      clientId="FerDxpz8xpwzz97TWa78gCKqr01grp5D"
       authorizationParams={{
         redirect_uri: window.location.origin,
       }}

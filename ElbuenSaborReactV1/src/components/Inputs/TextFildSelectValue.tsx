@@ -1,12 +1,20 @@
 import React, { ChangeEvent } from "react";
-import { ErrorMessage, useField, Field, FieldHookConfig } from "formik";
 import { Options } from "@Models/types";
+import { ErrorMessage, Field } from "formik";
 interface props {
   label: string;
   options: Options[];
   name: string;
+  value: any;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
-const TextFieldSelect = ({ label, options, name }: props) => {
+export default function TextFildSelectValue({
+  label,
+  options,
+  name,
+  onChange,
+  value,
+}: props) {
   return (
     <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
       <div
@@ -33,8 +41,10 @@ const TextFieldSelect = ({ label, options, name }: props) => {
         className={`form-control  mb-3  input-formulario`}
         name={name}
         as={"select"}
+        onChange={onChange}
+        value={value}
       >
-        {options.map((opcion, i) => {
+        {options.map((opcion: any, i: any) => {
           return (
             <option key={i} value={opcion.value}>
               {opcion.label}
@@ -42,9 +52,11 @@ const TextFieldSelect = ({ label, options, name }: props) => {
           );
         })}
       </Field>
-      <ErrorMessage component="div" name={name} className="error" />
+      <ErrorMessage
+        component="div"
+        name={"ingredientCategory"}
+        className="error"
+      />
     </div>
   );
-};
-
-export default TextFieldSelect;
+}

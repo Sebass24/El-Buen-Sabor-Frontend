@@ -6,6 +6,8 @@ import ModalAddIngrediente from "./ModalAddIngrediente/ModalAddIngrediente";
 import Ingredient from "@Models/Product/Ingredient";
 import ModalBuyIngredient from "./ModalBuyIngredient/ModalBuyIngredient";
 import { getData } from "../../GenericFetch/GenericFetch";
+import { useAppDispatch } from "@app/Hooks";
+import { setIngredients } from "@features/Ingredients/IngredientsSlice";
 
 const Ingredients = () => {
   const [showModal, setShowModal] = useState(false);
@@ -46,14 +48,14 @@ const Ingredients = () => {
     []
   );
   const [search, setSearch] = useState("");
+  const dispatch = useAppDispatch();
 
   async function getIngredients() {
     const data: Ingredient[] = await getData<Ingredient[]>("/api/ingredient");
-    console.log(data);
     setIngredient(data);
     setIngredientComplete(data);
+    dispatch(setIngredients(data));
   }
-
   useEffect(() => {
     getIngredients();
   }, []);
@@ -66,22 +68,28 @@ const Ingredients = () => {
   const filter = (serchParam: string) => {
     var serchResult = ingredientComplete.filter((ingredientVal: Ingredient) => {
       if (
-        ingredientVal.name.toString()
+        ingredientVal.name
+          .toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase()) ||
-        ingredientVal.ingredientCategory.name?.toString()
+        ingredientVal.ingredientCategory.name
+          ?.toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase()) ||
-        ingredientVal.costPrice?.toString()
+        ingredientVal.costPrice
+          ?.toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase()) ||
-        ingredientVal.minimumStock?.toString()
+        ingredientVal.minimumStock
+          ?.toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase()) ||
-        ingredientVal.currentStock?.toString()
+        ingredientVal.currentStock
+          ?.toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase()) ||
-        ingredientVal.measurementUnit?.toString()
+        ingredientVal.measurementUnit
+          ?.toString()
           .toLowerCase()
           .includes(serchParam.toLowerCase())
       )

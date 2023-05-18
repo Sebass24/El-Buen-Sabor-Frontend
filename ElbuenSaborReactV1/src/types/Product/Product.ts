@@ -2,25 +2,17 @@ import Base from "../Base";
 import ProductDetail from "./ProductDetail";
 import Price from "./Price";
 import Recipe from "./Recipe";
+import ProductCategory from "./ProductCategory";
 
 export default interface Product extends Base {
-    name: string;
-    description: string;
-    shortDescription: string;
-    available: boolean;
-    cookingTime?: string;
-    productCategory: string;
-    productDetail?: ProductDetail[];
-    price: Price;
-    image: string;
-    recipe?: Recipe;
+  name: string;
+  description: string;
+  shortDescription: string;
+  available: boolean;
+  cookingTime?: number;
+  productCategory: ProductCategory;
+  productDetails?: ProductDetail[];
+  sellPrice: number;
+  image: string;
+  recipe?: string;
 }
-
-
-
-
-
-
-
-
-

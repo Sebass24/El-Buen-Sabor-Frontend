@@ -16,7 +16,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { Products } from "@Models/types";
+import Products from "@Models/Product/Product";
 import ModalAddProducts from "../ModalAddProduct/ModalAddProducts";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
@@ -78,9 +78,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "Nombre"}
-            direction={orderBy === "Nombre" ? order : "asc"}
-            onClick={crearSortHandler("Nombre")}
+            active={orderBy === "name"}
+            direction={orderBy === "name" ? order : "asc"}
+            onClick={crearSortHandler("name")}
           >
             <Typography fontWeight="bold">Producto</Typography>
           </TableSortLabel>
@@ -91,13 +91,7 @@ function CabeceraMejorada(props: any) {
           key="Rubro"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <TableSortLabel
-            active={orderBy === "Rubro"}
-            direction={orderBy === "Rubro" ? order : "asc"}
-            onClick={crearSortHandler("Rubro")}
-          >
-            <Typography fontWeight="bold">Rubro</Typography>
-          </TableSortLabel>
+          <Typography fontWeight="bold">Rubro</Typography>
         </TableCell>
 
         <TableCell
@@ -106,9 +100,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "PrecioDeVenta"}
-            direction={orderBy === "PrecioDeVenta" ? order : "asc"}
-            onClick={crearSortHandler("PrecioDeVenta")}
+            active={orderBy === "sellPrice"}
+            direction={orderBy === "sellPrice" ? order : "asc"}
+            onClick={crearSortHandler("sellPrice")}
           >
             <Typography fontWeight="bold">Precio De Venta</Typography>
           </TableSortLabel>
@@ -120,9 +114,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "TiempoCocina"}
-            direction={orderBy === "TiempoCocina" ? order : "asc"}
-            onClick={crearSortHandler("TiempoCocina")}
+            active={orderBy === "cookingTime"}
+            direction={orderBy === "cookingTime" ? order : "asc"}
+            onClick={crearSortHandler("cookingTime")}
           >
             <Typography fontWeight="bold">Tiempo en cocina</Typography>
           </TableSortLabel>
@@ -134,9 +128,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "Estado"}
-            direction={orderBy === "Estado" ? order : "asc"}
-            onClick={crearSortHandler("Estado")}
+            active={orderBy === "available"}
+            direction={orderBy === "available" ? order : "asc"}
+            onClick={crearSortHandler("available")}
           >
             <Typography fontWeight="bold">Estado</Typography>
           </TableSortLabel>
@@ -171,13 +165,12 @@ const TableProducts = ({ products }: MyProps) => {
   const [productEditing, setProductEditing] = React.useState<Products>();
 
   const handleShowModal = (prod: Products) => {
-    setShowModal(true)
-    setProductEditing(prod)
-  }
+    setShowModal(true);
+    setProductEditing(prod);
+  };
   const handleClose = () => {
-    setShowModal(false)
-  }
-
+    setShowModal(false);
+  };
 
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === "asc";
@@ -203,8 +196,8 @@ const TableProducts = ({ products }: MyProps) => {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -217,50 +210,38 @@ const TableProducts = ({ products }: MyProps) => {
             <TableBody>
               {stableSort(products, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((product, index) => {
-                  if (product.Estado !== "Baja") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell className="tableCell">
-                          {product.Nombre}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {product.Rubro}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {formatoMonedaLocal.format(product?.PrecioVenta)}{" "}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {product.TiempoCocina}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {product.Estado}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {
-                            <>
-                              {/* <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                                onClick={() => console.log("eliminar")}
-                              >
-                                <i className="fa-solid fa-trash"></i>
-                              </button> */}
-                              <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                                onClick={() => (handleShowModal(product))}
-                              >
-                                <i className="fa-solid fa-pen-to-square"></i>
-                              </button>
-                            </>
-                          }
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
+                .map((product: Products, index) => {
+                  return (
+                    <TableRow key={index}>
+                      <TableCell className="tableCell">
+                        {product.name}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {product.productCategory.description}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {formatoMonedaLocal.format(product?.sellPrice)}{" "}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {product.cookingTime}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {product.available ? "Disponible" : "No Disponible"}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {
+                          <button
+                            data-title="Eliminar"
+                            type="button"
+                            className="btn btn-sm"
+                            onClick={() => handleShowModal(product)}
+                          >
+                            <i className="fa-solid fa-pen-to-square"></i>
+                          </button>
+                        }
+                      </TableCell>
+                    </TableRow>
+                  );
                 })}
             </TableBody>
           </Table>
@@ -291,10 +272,6 @@ const TableProducts = ({ products }: MyProps) => {
         editing={true}
         product={productEditing}
       />
-
-
-
-
     </div>
   );
 };

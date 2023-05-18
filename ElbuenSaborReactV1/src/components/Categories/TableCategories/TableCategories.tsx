@@ -143,12 +143,12 @@ export default function TableCategories({ categories }: myProps) {
   const [categoryEditing, setCategoryEditing] = React.useState<Category>();
 
   const handleShowModal = (prod: Category) => {
-    setShowModal(true)
-    setCategoryEditing(prod)
-  }
+    setShowModal(true);
+    setCategoryEditing(prod);
+  };
   const handleClose = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === "asc";
@@ -174,8 +174,8 @@ export default function TableCategories({ categories }: myProps) {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -208,7 +208,7 @@ export default function TableCategories({ categories }: myProps) {
                                 data-title="Eliminar"
                                 type="button"
                                 className="btn btn-sm"
-                                onClick={() => console.log("eliminar")}
+                                onClick={() => }
                               >
                                 <i className="fa-solid fa-trash"></i>
                               </button> */}
@@ -216,7 +216,7 @@ export default function TableCategories({ categories }: myProps) {
                                 data-title="Eliminar"
                                 type="button"
                                 className="btn btn-sm"
-                                onClick={() => (handleShowModal(category))}
+                                onClick={() => handleShowModal(category)}
                               >
                                 <i className="fa-solid fa-pen-to-square"></i>
                               </button>
@@ -250,7 +250,12 @@ export default function TableCategories({ categories }: myProps) {
         />
       </Paper>
 
-      <ModalAddCategories handleClose={handleClose} showModal={showModal} category={categoryEditing} editing={true} />
+      <ModalAddCategories
+        handleClose={handleClose}
+        showModal={showModal}
+        category={categoryEditing}
+        editing={true}
+      />
     </div>
   );
 }
