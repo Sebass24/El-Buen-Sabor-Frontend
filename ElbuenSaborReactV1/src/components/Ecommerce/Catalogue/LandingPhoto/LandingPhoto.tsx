@@ -3,15 +3,14 @@ import "./LandingPhoto.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass, faRandom } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CatalogueTabs from "../CatalogueTabs";
-import { useDispatch } from 'react-redux';
-import { setSearchValue } from 'components/store';
+import { useAppDispatch } from "@app/Hooks";
+import { setSearchValue } from "@features/SearchProduct/Search";
 
 
 library.add(faMagnifyingGlass);
 
 export default function Landing() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [search, setSearch] = useState("");
 

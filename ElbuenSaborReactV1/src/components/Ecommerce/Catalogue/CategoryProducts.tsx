@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import Product from "@Models/Product/Product";
 import ProductCard from "./ProductCard";
 import "./Catalogue.scss";
-import { getProductsByCategory, getProductsByName } from "components/APIfunctions";
+import { getProductsByCategory, getProductsByName, getProducts } from "components/APIfunctions";
 
 interface props {
     args: [string, string];
@@ -20,9 +20,12 @@ const CategoryProducts = ({ args }: props) => {
             let productList: Product[] = [];
             if (searchBy === "name") {
                 productList = await getProductsByName(value);
-                console.log(productList);
             } else if (searchBy === "category") {
-                productList = await getProductsByCategory(value);
+                if (value === "") {
+                    productList = await getProducts();
+                } else {
+                    productList = await getProductsByCategory(value);
+                }
             }
             setProducts(productList);
         };

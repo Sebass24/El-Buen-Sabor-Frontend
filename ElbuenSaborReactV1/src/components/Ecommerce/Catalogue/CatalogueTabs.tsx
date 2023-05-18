@@ -5,33 +5,42 @@ import { FaPizzaSlice, FaHamburger } from 'react-icons/fa';
 import { GiFrenchFries, GiSodaCan } from 'react-icons/gi';
 import { MdFastfood } from 'react-icons/md';
 import CategoryProducts from "./CategoryProducts";
-import { useSelector } from 'react-redux';
-import { AppState } from "components/store";
+import { useAppDispatch, useAppSelector } from "@app/Hooks";
+import { setSearchValue } from '@features/SearchProduct/Search';
 
 const CatalogueTabs = () => {
-
-    const search = useSelector((state: AppState) => state.search);
-    console.log("Search:" + search);
+    const dispatch = useAppDispatch();
+    const { search } = useAppSelector((state) => state.search);
     const CATEGORY = "category";
 
-    const [searchValue, setSearchValue] = useState("");
-    console.log("SearchValue: " + searchValue);
+    const [activeTab, setActiveTab] = useState<string | null>('Hamburguesas');
+
+    const handleTabSelect = (key: string | null) => {
+        setActiveTab(key);
+        dispatch(setSearchValue(""));
+    };
 
     useEffect(() => {
-        setSearchValue(search);
-    }, [search]);
+        if (search !== "") {
+            setActiveTab("Hamburguesas");
+        }
+    }, [search])
 
     return (
         <>
             <Tabs
-                defaultActiveKey="Hamburguesas"
+                activeKey={activeTab!}
+                onSelect={handleTabSelect}
                 id="uncontrolled-tab-example"
                 className="catalogue"
                 justify
             >
-                <Tab eventKey="categories" title="Categorías" disabled className="categories-tab"></Tab>
+                <Tab eventKey="categories" title="Categorías" disabled className="categories-tab" />
                 <Tab eventKey="Hamburguesas" title={<FaHamburger size={26} />} >
-                    <CategoryProducts args={["Hamburguesas", CATEGORY]} /></Tab>
+                    {search !== "" ?
+                        (<CategoryProducts args={[search, "name"]} />) :
+                        (<CategoryProducts args={["Hamburguesas", "category"]} />)}
+                    {/* <CategoryProducts args={["Hamburguesas", CATEGORY]}/> */} </Tab>
                 <Tab eventKey="Pizza" title={<FaPizzaSlice size={26} />} >
                     <CategoryProducts args={["Pizza", CATEGORY]} /></Tab>
                 <Tab eventKey="Papas fritas" title={<GiFrenchFries size={26} />} >
@@ -40,8 +49,8 @@ const CatalogueTabs = () => {
                     <CategoryProducts args={["Bebidas", CATEGORY]} /></Tab>
                 <Tab eventKey="Combos" title={<MdFastfood size={26} />} >
                     <CategoryProducts args={["Combos", CATEGORY]} /></Tab>
-            </Tabs>
-            {searchValue !== "" && <CategoryProducts args={[searchValue, "name"]} />}
+            </Tabs >
+            {/* {search !== "" && (<CategoryProducts args={[search, "name"]} />)} */}
         </>
     );
 }

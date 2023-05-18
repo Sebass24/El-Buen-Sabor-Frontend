@@ -27,7 +27,7 @@ export async function getProductsByCategory(category: string): Promise<Product[]
 }
 
 export async function getProductsByName(name: string): Promise<Product[]> {
-    const url = `http://localhost:8080/api/product/category/${name}`;
+    const url = `http://localhost:8080/api/product/name/${name}`;
     const products = await getData<Product[]>(url);
     return products;
 }
