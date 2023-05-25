@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
-import TableCategories from "../TableCategories/TableCategories";
-import { Category } from "@Models/types";
-import ModalAddCategories from "../ModalAddCategories/ModalAddCategories";
+import CategoryProduct from "@Models/Product/ProductCategory";
+import { getData } from "components/GenericFetch/GenericFetch";
+import TableProductCategories from "./TableProductCategory/TableProductCategories";
+import ModalAddCategoryProduct from "./ModalAddCategoryProduct/ModalAddCategoryProduct";
+import { useAppDispatch, useAppSelector } from "@app/Hooks";
+import { setProductCategory } from "@features/ProductCategory/ProductCategorySlice";
+import { fetchProductCategory } from "@features/ProductCategory/ProductCategoryThunk";
 
 export default function ProductsCategories() {
   const [showModal, setShowModal] = useState(false);
@@ -10,45 +14,33 @@ export default function ProductsCategories() {
     setShowModal(false);
   };
 
-  const prueba: Category[] = [
-    {
-      Name: "Verdura",
-      FatherCategory: "",
-      State: "Alta",
-    },
-    {
-      Name: "zanahoria",
-      FatherCategory: "Verdura",
-      State: "Baja",
-    },
-  ];
-
-  const [category, setCategory] = useState<Category[]>(prueba);
-  const [categoryComplete, setCategoryComplete] = useState<Category[]>(prueba);
+  const dispatch = useAppDispatch()
+  const { ProductCategory } = useAppSelector(state => state.productCategories)
   const [search, setSearch] = useState("");
 
-  const handleChange = (e: any) => {
-    setSearch(e.target.value);
-    filter(e.target.value);
-  };
 
-  const filter = (serchParam: string) => {
-    var serchResult = categoryComplete.filter((category: Category) => {
-      if (
-        category.Name.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        category.FatherCategory?.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        category.State.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase())
-      )
-        return category;
-    });
-    setCategory(serchResult);
-  };
+
+  useEffect(() => {
+    dispatch(fetchProductCategory());
+  }, []);
+
+  // const [categoryComplete, setCategoryComplete] = useState<CategoryProduct[]>([]);
+  // const handleChange = (e: any) => {
+  //   setSearch(e.target.value);
+  //   filter(e.target.value);
+  // };
+
+  // const filter = (serchParam: string) => {
+  //   var serchResult = categoryComplete.filter((category: CategoryProduct) => {
+  //     if (
+  //       category.description.toString()
+  //         .toLowerCase()
+  //         .includes(serchParam.toLowerCase())
+  //     )
+  //       return category;
+  //   });
+  //   setCategory(serchResult);
+  // };
 
   return (
     <div className="Container_Ingredientes">
@@ -62,7 +54,12 @@ export default function ProductsCategories() {
             placeholder="Busqueda"
             className="busqueda_comida"
             value={search}
-            onChange={handleChange}
+            onChange={(e) => { setSearch(e.target.value) }}
+            onKeyUp={(event) => {
+              if (event.key === "Enter") {
+                // handleChange(event);
+              }
+            }}
           ></input>
           <i
             className="fa-solid fa-magnifying-glass"
@@ -71,8 +68,8 @@ export default function ProductsCategories() {
         </div>
       </div>
 
-      <TableCategories categories={category} />
-      <ModalAddCategories handleClose={handleClose} showModal={showModal} />
+      <TableProductCategories categories={ProductCategory} />
+      <ModalAddCategoryProduct handleClose={handleClose} showModal={showModal} />
     </div>
   );
 }

@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import TextFieldValue from '../../../Inputs/TextFieldValue';
 import TextFieldSelect from '../../../Inputs/TextFieldSelect';
 import { FormikHelpers } from 'formik';
-import { IngredientBuy } from '@Models/types';
+import IngredientBuy from '@Models/Product/IngredientBuy';
 
 interface props {
   showModal: boolean;
@@ -17,10 +17,6 @@ interface props {
   setShowModalNew: any;
   handleCloseNew: () => void;
 }
-
-
-
-
 
 export default function ModalBuyIngredient({ showModal, handleClose, handleCloseNew, setShowModalNew }: props) {
 

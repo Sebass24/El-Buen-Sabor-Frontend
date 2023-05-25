@@ -14,6 +14,7 @@ const TextFieldValue = ({
   name,
   type,
   onChange,
+  value,
   placeholder,
 }: props) => {
   return (

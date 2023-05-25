@@ -6,137 +6,53 @@ import TableProducts from "./TableProducts/TableProducts";
 import ModalAddProducts from "./ModalAddProduct/ModalAddProducts";
 import Products from "@Models/Product/Product";
 import { getData } from "components/GenericFetch/GenericFetch";
+import { useAppDispatch, useAppSelector } from "@app/Hooks";
+import { fetchProducts } from "@features/ProductSlice/ProductThunk";
 
 const Productos = () => {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => {
     setShowModal(false);
   };
-  // const productosPrueba: Products[] = [
-  //   {
-  //     Nombre: "Hamburguesa veggi",
-  //     Rubro: "Alta",
-  //     PrecioVenta: 500,
-  //     TiempoCocina: 45,
-  //     Receta: "pepe el carlos vivia muy feliz en su casa de madrid",
-  //     Estado: "Alta",
-  //     Ingredients: [
-  //       {
-  //         "Ingredient": "Alta",
-  //         "Cuantity": 123,
-  //         "UMedida": "L",
-  //       },
-  //       {
-  //         "Ingredient": "Alta",
-  //         "Cuantity": 123,
-  //         "UMedida": "L",
-  //       },
-  //       {
-  //         "Ingredient": "Alta",
-  //         "Cuantity": 123,
-  //         "UMedida": "L",
-  //       }
-  //     ],
-  //     Descripcion: "capo"
-  //   },
-  //   {
-  //     Nombre: "Hamburguesa veggi y lechuga",
-  //     Rubro: "Alta",
-  //     PrecioVenta: 500,
-  //     TiempoCocina: 45,
-  //     Estado: "Alta",
-  //     Receta: "pepe el carlos vivia muy feliz en su casa de madrid",
-  //     Ingredients: [
-  //       {
-  //         "Ingredient": "Alta",
-  //         "Cuantity": 123,
-  //         "UMedida": "L",
-  //       },
-  //       {
-  //         "Ingredient": "Alta",
-  //         "Cuantity": 123,
-  //         "UMedida": "L",
-  //       },
-  //       {
-  //         "Ingredient": "Alta",
-  //         "Cuantity": 123,
-  //         "UMedida": "L",
-  //       }
-  //     ],
-  //     Descripcion: "capo"
-  //   },
-  //   {
-  //     Nombre: "Hamburguesa veggi y tomate",
-  //     Rubro: "Alta",
-  //     PrecioVenta: 500,
-  //     Receta: "pepe el carlos vivia muy feliz en su casa de madrid",
-  //     TiempoCocina: 45,
-  //     Estado: "Alta",
-  //     Ingredients: [
-  //       {
-  //         "Ingredient": "Alta",
-  //         "Cuantity": 123,
-  //         "UMedida": "L",
-  //       },
-  //       {
-  //         "Ingredient": "Alta",
-  //         "Cuantity": 123,
-  //         "UMedida": "L",
-  //       },
-  //       {
-  //         "Ingredient": "Alta",
-  //         "Cuantity": 123,
-  //         "UMedida": "L",
-  //       }
-  //     ],
-  //     Descripcion: "capo"
-  //   },
 
-  // ]
+  const { Products } = useAppSelector(state => state.product)
 
-  const [product, setProduct] = useState<Products[]>([]);
-  const [productComplete, setProductComplete] = useState<Products[]>([]);
   const [search, setSearch] = useState("");
-  console.log(product);
-  async function getProducts() {
-    const data: Products[] = await getData<Products[]>("/api/product");
-    setProduct(data);
-    setProductComplete(data);
-  }
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    getProducts();
+    dispatch(fetchProducts());
   }, []);
 
-  const handleChange = (e: any) => {
-    setSearch(e.target.value);
-    filter(e.target.value);
-  };
+  // const handleChange = (e: any) => {
+  //   setSearch(e.target.value);
+  //   filter(e.target.value);
+  // };
 
-  const filter = (serchParam: string) => {
-    var serchResult = productComplete.filter((productVal: Products) => {
-      if (
-        productVal.name
-          .toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        productVal.productCategory
-          ?.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        productVal.sellPrice
-          .toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        productVal.cookingTime
-          ?.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase())
-      )
-        return productVal;
-    });
-    setProduct(serchResult);
-  };
+  // const filter = (serchParam: string) => {
+  //   var serchResult = Products.filter((productVal: Products) => {
+  //     if (
+  //       productVal.name
+  //         .toString()
+  //         .toLowerCase()
+  //         .includes(serchParam.toLowerCase()) ||
+  //       productVal.productCategory
+  //         ?.toString()
+  //         .toLowerCase()
+  //         .includes(serchParam.toLowerCase()) ||
+  //       productVal.sellPrice
+  //         .toString()
+  //         .toLowerCase()
+  //         .includes(serchParam.toLowerCase()) ||
+  //       productVal.cookingTime
+  //         ?.toString()
+  //         .toLowerCase()
+  //         .includes(serchParam.toLowerCase())
+  //     )
+  //       return productVal;
+  //   });
+  //   setProduct(serchResult);
+  // };
 
   return (
     <div className="Container_Ingredientes">
@@ -149,8 +65,12 @@ const Productos = () => {
           <input
             placeholder="Busqueda"
             className="busqueda_comida"
-            value={search}
-            onChange={handleChange}
+            value={search} onChange={(e) => (setSearch(e.target.value))}
+            onKeyUp={(event) => {
+              if (event.key === "Enter") {
+                // handleChange(event);
+              }
+            }}
           ></input>
           <i
             className="fa-solid fa-magnifying-glass"
@@ -158,7 +78,7 @@ const Productos = () => {
           ></i>
         </div>
       </div>
-      <TableProducts products={product} />
+      <TableProducts products={Products} />
       <ModalAddProducts showModal={showModal} handleClose={handleClose} />
     </div>
   );

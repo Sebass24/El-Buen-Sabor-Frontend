@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TableHead from "@mui/material/TableHead";
 import { Link } from "react-router-dom";
-import "./TableCategories.scss";
+import "./TableProductCategories.scss";
 
 import {
   createTheme,
@@ -16,8 +16,8 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import Category from "@Models/Product/Category";
-import ModalAddCategories from "../ModalAddCategories/ModalAddCategories";
+import CategoryProduct from "@Models/Product/ProductCategory";
+import ModalAddCategoryProduct from "../ModalAddCategoryProduct/ModalAddCategoryProduct";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
@@ -47,7 +47,7 @@ function getComparador(order: string, orderBy: string) {
     : (a: any, b: any) => -comparadorDescendiente(a, b, orderBy);
 }
 
-const stableSort = (array: Category[], comparator: any, orderBy: any) => {
+const stableSort = (array: CategoryProduct[], comparator: any, orderBy: any) => {
   const stabilizedThis = array.map((product: any, index: number) => [
     product,
     index,
@@ -74,25 +74,18 @@ function CabeceraMejorada(props: any) {
       <TableRow>
         <TableCell
           className="tableCell"
-          key="Name"
+          key="description"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "name"}
-            direction={orderBy === "name" ? order : "asc"}
-            onClick={crearSortHandler("name")}
+            active={orderBy === "description"}
+            direction={orderBy === "description" ? order : "asc"}
+            onClick={crearSortHandler("description")}
           >
             <Typography fontWeight="bold">Nombre rubro</Typography>
           </TableSortLabel>
         </TableCell>
 
-        <TableCell
-          className="tableCell"
-          key="FatherCategory"
-          style={{ backgroundColor: "#C6C6C6" }}
-        >
-          <Typography fontWeight="bold">Rubro Padre</Typography>
-        </TableCell>
 
 
         <TableCell
@@ -108,10 +101,10 @@ function CabeceraMejorada(props: any) {
 }
 
 interface myProps {
-  categories: Category[];
+  categories: CategoryProduct[];
 }
 
-export default function TableCategories({ categories }: myProps) {
+export default function TableProductCategories({ categories }: myProps) {
   const formatoMonedaLocal = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
@@ -121,9 +114,9 @@ export default function TableCategories({ categories }: myProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [showModal, setShowModal] = React.useState(false);
-  const [categoryEditing, setCategoryEditing] = React.useState<Category>();
+  const [categoryEditing, setCategoryEditing] = React.useState<CategoryProduct>();
 
-  const handleShowModal = (prod: Category) => {
+  const handleShowModal = (prod: CategoryProduct) => {
     setShowModal(true);
     setCategoryEditing(prod);
   };
@@ -169,15 +162,12 @@ export default function TableCategories({ categories }: myProps) {
             <TableBody>
               {stableSort(categories, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((category: Category, index) => {
+                .map((category: CategoryProduct, index) => {
 
                   return (
                     <TableRow key={index}>
                       <TableCell className="tableCell">
-                        {category.name}
-                      </TableCell>
-                      <TableCell className="tableCell">
-                        {category.parentCategory?.name}
+                        {category.description}
                       </TableCell>
 
                       <TableCell className="tableCell">
@@ -219,9 +209,9 @@ export default function TableCategories({ categories }: myProps) {
         />
       </Paper>
 
-      <ModalAddCategories
-        handleClose={handleClose}
+      <ModalAddCategoryProduct
         showModal={showModal}
+        handleClose={handleClose}
         category={categoryEditing}
         editing={true}
       />

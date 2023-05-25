@@ -14,6 +14,9 @@ import Ingredient from "@Models/Product/Ingredient";
 import IngredientCategory from "@Models/Product/IngredientCategory"
 import Category from "@Models/Product/Category";
 import { getData, postPutData } from "components/GenericFetch/GenericFetch";
+import { useAppSelector, useAppDispatch } from "@app/Hooks";
+import { addIngredient, updateIngredient } from "@features/Ingredients/IngredientsSlice";
+import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
 interface props {
   showModal: boolean;
   handleClose: () => void;
@@ -28,13 +31,10 @@ const ModalAddIngrediente = ({
   ingrediente,
 }: props) => {
 
-  const [categorys, setCategorys] = useState<Category[]>([])
+  const { IngredientsCategories } = useAppSelector(state => state.ingredintsCategories)
   const [options, setOptions] = useState<any>([])
 
-  async function getCategories() {
-    const data: Category[] = await getData<Category[]>("/api/rubro");
-    setCategorys(data)
-  }
+  const dispatch = useAppDispatch()
 
   function categorysToOptions() {
     const initialopcions = {
@@ -43,7 +43,7 @@ const ModalAddIngrediente = ({
     };
     setOptions([
       initialopcions,
-      ...categorys.map((option, index) => ({
+      ...IngredientsCategories.map((option, index) => ({
         value: option.name,
         label: option.name,
       })),
@@ -52,20 +52,19 @@ const ModalAddIngrediente = ({
 
 
   useEffect(() => {
-    getCategories();
     categorysToOptions()
-  }, [categorys]);
+  }, [IngredientsCategories]);
 
 
   const initialValues: Ingredient = {
     name: "",
     ingredientCategory: {
-      id: undefined as any,
+      id: null as any,
       name: "",
     },
-    costPrice: null as any,
-    minimumStock: null as any,
-    currentStock: null as any,
+    costPrice: "",
+    minimumStock: "",
+    currentStock: "",
     measurementUnit: "",
   };
 
@@ -102,10 +101,15 @@ const ModalAddIngrediente = ({
             initialValues={ingrediente ? ingrediente : initialValues}
             enableReinitialize={true}
             onSubmit={async (values) => {
+              console.log(values)
               if (editing) {
-                postPutData(`/api/ingredient/${ingrediente?.id}`, "put", values)
+                dispatch(startLoading())
+                postPutData(`/api/ingredient`, "PUT", values)
+                dispatch(updateIngredient(values))
+                dispatch(finishLoading())
               } else {
-                postPutData(`/api/ingredient`, "post", values)
+                postPutData(`/api/ingredient`, "POST", values)
+                dispatch(addIngredient(values))
               }
               handleClose();
             }}
@@ -137,7 +141,7 @@ const ModalAddIngrediente = ({
                         name={"ingredientCategory"}
                         as={"select"}
                         onChange={(event: any) => {
-                          let category = categorys.filter((categor) => {
+                          let category = IngredientsCategories.filter((categor) => {
                             return categor.name === event.target.value
                           })
                           if (category.length === 0) {
@@ -162,24 +166,6 @@ const ModalAddIngrediente = ({
                         className="error"
                       />
                     </div>
-
-
-                    {/* <TextFieldSelect
-                      label="Rubro:"
-                      name="ingredientCategory"
-                      options={options}
-                      change={(event: any) => {
-                        let category = categorys.filter((categor) => {
-                          return categor.name === event.target.value
-                        })
-                        if (category.length === 0) {
-                          category = [{ id: 0, name: "todos" }]
-                        }
-                        Formik.setFieldValue("ingredientCategory", category[0]);
-                      }}
-                      value={Formik.values.ingredientCategory.name}
-                    /> */}
-
 
                     <TextFieldValue
                       label="Precio de costo:"

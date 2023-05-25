@@ -1,7 +1,6 @@
 import React from 'react'
 import TableHead from "@mui/material/TableHead";
 import { Link } from "react-router-dom";
-import { cashierOrder, OrderIngredient } from "@Models/types";
 import "./BillingTable.scss";
 
 import {
@@ -18,6 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "react-bootstrap";
+import Orders from '@Models/orders/Orders';
 
 
 
@@ -49,7 +49,7 @@ function getComparador(order: string, orderBy: string) {
     : (a: any, b: any) => -comparadorDescendiente(a, b, orderBy);
 }
 
-const stableSort = (array: cashierOrder[], comparator: any, orderBy: any) => {
+const stableSort = (array: Orders[], comparator: any, orderBy: any) => {
   const stabilizedThis = array.map((producto: any, index: number) => [producto, index]);
   stabilizedThis.sort((a: any, b: any) => {
     const order = comparator(a[0], b[0]);
@@ -73,13 +73,13 @@ function CabeceraMejorada(props: any) {
       <TableRow>
         <TableCell
           className="tableCell"
-          key="IdPedido"
+          key="id"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "IdPedido"}
-            direction={orderBy === "IdPedido" ? order : "asc"}
-            onClick={crearSortHandler("IdPedido")}
+            active={orderBy === "id"}
+            direction={orderBy === "id" ? order : "desc"}
+            onClick={crearSortHandler("id")}
           >
             <Typography fontWeight="bold">
               Pedido
@@ -93,9 +93,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "FechaPedido"}
-            direction={orderBy === "FechaPedido" ? order : "asc"}
-            onClick={crearSortHandler("FechaPedido")}
+            active={orderBy === "date"}
+            direction={orderBy === "date" ? order : "asc"}
+            onClick={crearSortHandler("date")}
           >
             <Typography fontWeight="bold">
               Fecha/Hora
@@ -107,30 +107,22 @@ function CabeceraMejorada(props: any) {
           className="tableCell" key="FormaEntrega"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <TableSortLabel
-            active={orderBy === "FormaEntrega"}
-            direction={orderBy === "FormaEntrega" ? order : "asc"}
-            onClick={crearSortHandler("FormaEntrega")}
-          >
-            <Typography fontWeight="bold">
-              Forma de entrega
-            </Typography>
-          </TableSortLabel>
+
+          <Typography fontWeight="bold">
+            Forma de entrega
+          </Typography>
+
         </TableCell>
 
         <TableCell
           className="tableCell" key="FormaPago"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <TableSortLabel
-            active={orderBy === "FormaPago"}
-            direction={orderBy === "FormaPago" ? order : "asc"}
-            onClick={crearSortHandler("FormaPago")}
-          >
-            <Typography fontWeight="bold">
-              Forma de pago
-            </Typography>
-          </TableSortLabel>
+
+          <Typography fontWeight="bold">
+            Forma de pago
+          </Typography>
+
         </TableCell>
 
         <TableCell
@@ -138,9 +130,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "Pagado"}
-            direction={orderBy === "Pagado" ? order : "asc"}
-            onClick={crearSortHandler("Pagado")}
+            active={orderBy === "paid"}
+            direction={orderBy === "paid" ? order : "asc"}
+            onClick={crearSortHandler("paid")}
           >
             <Typography fontWeight="bold">
               Pagado
@@ -177,7 +169,7 @@ function CabeceraMejorada(props: any) {
 }
 
 interface myProps {
-  orders: cashierOrder[]
+  orders: Orders[]
 }
 
 
@@ -207,6 +199,12 @@ export default function BillingTable({ orders }: myProps) {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, orders.length - page * rowsPerPage);
 
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+
   return (
     <div className="container_tabla">
       <Paper className="paper">
@@ -227,32 +225,32 @@ export default function BillingTable({ orders }: myProps) {
             <TableBody>
               {stableSort(orders, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((order: cashierOrder, index: number) => {
+                .map((order: Orders, index: number) => {
                   return (
                     <TableRow key={index} >
                       <TableCell
                         className="tableCell"
                       >
-                        {order.IdPedido}
+                        {order.id}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {order.FechaPedido}
+                        {order.date.toLocaleString("es-AR", options)}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {order.FormaEntrega}
+                        {order.deliveryMethod.description}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {order.FormaPago}
+                        {order.paymentMethod.description}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {order.Pagado}
+                        {order.paid == 1 ? "pagado" : "Falta Pago"}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {order.Estado}
+                        {order.orderStatus.description}
                       </TableCell>
                       <TableCell className="tableCell_Detalle">
                         {
-                          <Link to={`/detail/${order.IdPedido}`}>
+                          <Link to={`/detail/${order.id}`}>
                             <Button
                               className=""
                               variant="warning"

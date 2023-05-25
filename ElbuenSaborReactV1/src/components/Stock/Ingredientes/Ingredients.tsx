@@ -6,8 +6,9 @@ import ModalAddIngrediente from "./ModalAddIngrediente/ModalAddIngrediente";
 import Ingredient from "@Models/Product/Ingredient";
 import ModalBuyIngredient from "./ModalBuyIngredient/ModalBuyIngredient";
 import { getData } from "../../GenericFetch/GenericFetch";
-import { useAppDispatch } from "@app/Hooks";
+import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { setIngredients } from "@features/Ingredients/IngredientsSlice";
+import { fetchIngredients } from "@features/Ingredients/IngredientsThunks";
 
 const Ingredients = () => {
   const [showModal, setShowModal] = useState(false);
@@ -20,83 +21,54 @@ const Ingredients = () => {
     setShowModalBuy(false);
   };
 
-  // const ingredientesPrueba: Ingredient[] = [
-  //   {
-  //     Nombre: "salsa",
-  //     Rubro: "Salsas",
-  //     PrecioCosto: 340,
-  //     StockMinimo: 2,
-  //     StockActual: 5,
-  //     UnidadMedida: "cm3",
-  //     NivelStock: "Optimo",
-  //     Estado: "Baja",
-  //   },
-  //   {
-  //     Nombre: "pepino",
-  //     Rubro: "Verduras",
-  //     PrecioCosto: 500,
-  //     StockMinimo: 2,
-  //     StockActual: 5,
-  //     UnidadMedida: "cm3",
-  //     NivelStock: "Optimo",
-  //     Estado: "Alta",
-  //   },
-  // ];
+  const { Ingredients } = useAppSelector(state => state.ingredients)
 
-  const [ingredient, setIngredient] = useState<Ingredient[]>([]);
-  const [ingredientComplete, setIngredientComplete] = useState<Ingredient[]>(
-    []
-  );
+
   const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
 
-  async function getIngredients() {
-    const data: Ingredient[] = await getData<Ingredient[]>("/api/ingredient");
-    setIngredient(data);
-    setIngredientComplete(data);
-    dispatch(setIngredients(data));
-  }
   useEffect(() => {
-    getIngredients();
+    dispatch(fetchIngredients())
   }, []);
 
-  const handleChange = (e: any) => {
-    setSearch(e.target.value);
-    filter(e.target.value);
-  };
+  // const [ingredientFilter, setIngredientFilter] = useState<Ingredient[]>(Ingredients);
+  // const handleChange = (e: any) => {
+  //   setSearch(e.target.value);
+  //   filter(e.target.value);
+  // };
 
-  const filter = (serchParam: string) => {
-    var serchResult = ingredientComplete.filter((ingredientVal: Ingredient) => {
-      if (
-        ingredientVal.name
-          .toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        ingredientVal.ingredientCategory.name
-          ?.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        ingredientVal.costPrice
-          ?.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        ingredientVal.minimumStock
-          ?.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        ingredientVal.currentStock
-          ?.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        ingredientVal.measurementUnit
-          ?.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase())
-      )
-        return ingredient;
-    });
-    setIngredient(serchResult);
-  };
+  // const filter = (serchParam: string) => {
+  //   var serchResult = Ingredients.filter((ingredientVal: Ingredient) => {
+  //     if (
+  //       ingredientVal.name
+  //         .toString()
+  //         .toLowerCase()
+  //         .includes(serchParam.toLowerCase()) ||
+  //       ingredientVal.ingredientCategory.name
+  //         ?.toString()
+  //         .toLowerCase()
+  //         .includes(serchParam.toLowerCase()) ||
+  //       ingredientVal.costPrice
+  //         ?.toString()
+  //         .toLowerCase()
+  //         .includes(serchParam.toLowerCase()) ||
+  //       ingredientVal.minimumStock
+  //         ?.toString()
+  //         .toLowerCase()
+  //         .includes(serchParam.toLowerCase()) ||
+  //       ingredientVal.currentStock
+  //         ?.toString()
+  //         .toLowerCase()
+  //         .includes(serchParam.toLowerCase()) ||
+  //       ingredientVal.measurementUnit
+  //         ?.toString()
+  //         .toLowerCase()
+  //         .includes(serchParam.toLowerCase())
+  //     )
+  //       return ingredientVal;
+  //   });
+  //   setIngredientFilter(serchResult);
+  // };
 
   return (
     <div className="Container_Ingredientes">
@@ -123,9 +95,10 @@ const Ingredients = () => {
             placeholder="Busqueda"
             className="busqueda_comida"
             value={search}
+            onChange={(e) => (setSearch(e.target.value))}
             onKeyUp={(event) => {
               if (event.key === "Enter") {
-                handleChange(event);
+                // handleChange(event);
               }
             }}
           ></input>
@@ -135,7 +108,7 @@ const Ingredients = () => {
           ></i>
         </div>
       </div>
-      <TableIngredients Ingredients={ingredient} />
+      <TableIngredients Ingredients={Ingredients} />
       <ModalAddIngrediente showModal={showModal} handleClose={handleClose} />
 
       <ModalBuyIngredient

@@ -14,7 +14,7 @@ import {
   FormikConfig,
   FormikValues,
 } from "formik";
-import Products from "@Models/Product/Product";
+import Product from "@Models/Product/Product";
 import TextFieldValue from "../../../Inputs/TextFieldValue";
 import TextFieldSelect from "../../../Inputs/TextFieldSelect";
 import "./ModalAddProducts.scss";
@@ -33,26 +33,37 @@ import { startLoading, finishLoading } from "@features/Loading/LoadingSlice";
 import Loading from "components/Loading/Loading";
 import ProductDetail from "@Models/Product/ProductDetail";
 import Ingredient from "@Models/Product/Ingredient";
-import { getData } from "components/GenericFetch/GenericFetch";
+import { getData, postPutData } from "components/GenericFetch/GenericFetch";
 import TextCheckBox from "components/Inputs/TextCheckBox";
+import TextFildSelectValue from "components/Inputs/TextFildSelectValue";
+import { addProduct, updateProduct } from "@features/ProductSlice/ProductSlice";
+
+
+
+const emptyIngredient: Ingredient =
+{
+  id: 0,
+  name: "",
+  ingredientCategory: { name: "" },
+  minimumStock: null as any,
+  currentStock: null as any,
+  measurementUnit: "",
+  costPrice: null as any,
+};
 
 const emptyDonation: ProductDetail = {
-  ingredient: null as any,
+  ingredient: emptyIngredient,
   quantity: null as any,
-  uMeasure: "",
+  measurementUnit: "",
 };
 
 interface Props {
   showModal: boolean;
   handleClose: () => void;
   editing?: boolean;
-  product?: Products;
+  product?: Product;
 }
 
-interface Options {
-  value: number;
-  label: string;
-}
 
 const ModalAddProducts = ({
   showModal,
@@ -60,20 +71,21 @@ const ModalAddProducts = ({
   editing,
   product,
 }: Props) => {
-  const initialValues: Products = {
+
+  const initialValues: Product = {
     name: "",
     productCategory: { description: "" },
-    sellPrice: null as any,
-    cookingTime: null as any,
-    recipe: "",
+    sellPrice: "",
+    cookingTime: "",
+    recipe: { description: "" },
     description: "",
     shortDescription: "",
     available: true,
-    image: "",
+    image: { name: "", path: "" },
     productDetails: [emptyDonation],
   };
 
-  const loading = useAppSelector((state) => state.loading.value);
+  const loading = useAppSelector((state) => state.loading);
   const dispatch = useAppDispatch();
   return (
     <div>
@@ -98,75 +110,50 @@ const ModalAddProducts = ({
             <FormikStepper
               initialValues={product ? product : initialValues}
               onSubmit={(values) => {
-                dispatch(startLoading());
+                console.log(values);
+                const valuesProduct: Product = {
+                  name: values.name,
+                  description: values.description,
+                  shortDescription: values.shortDescription,
+                  productCategory: values.productCategory,
+                  productDetails: values.productDetails,
+                  available: values.available,
+                  sellPrice: values.sellPrice,
+                  cookingTime: values.cookingTime,
+                  image: { name: "", path: "" },
+                  recipe: values?.recipe
+                }
+                console.log("values", valuesProduct)
+                if (editing) {
+                  dispatch(startLoading())
+                  postPutData(`/api/product`, "PUT", values)
+                  dispatch(updateProduct(valuesProduct))
+                  dispatch(finishLoading())
+                } else {
+                  postPutData(`/api/product`, "POST", values)
+                  dispatch(addProduct(valuesProduct))
+                }
+                handleClose();
 
-                setTimeout(() => {
-                  console.log(values);
-                  dispatch(finishLoading());
-                  handleClose();
-                }, 3000);
               }}
             >
               <FormikStep
                 label="Datos del producto"
                 validationSchema={Yup.object({
                   name: Yup.string().required("*Campo requerido"),
-                  // productCategory: Yup.string().required("*Campo requerido"),
-                  // sellPrice: Yup.number().required("*Campo requerido"),
-                  // cookingTime: Yup.number().required("*Campo requerido"),
-                  // available: Yup.boolean().required("*Campo requerido"),
-                  // shortDescription: Yup.string().required("*Campo requerido"),
-                  // descripcion: Yup.string().required("*Campo requerido"),
+                  productCategory: Yup.object().shape({
+                    id: Yup.number(),
+                    description: Yup.string(),
+                    deleted: Yup.boolean()
+                  }),
+                  sellPrice: Yup.number().required("*Campo requerido"),
+                  cookingTime: Yup.number().required("*Campo requerido"),
+                  available: Yup.boolean().required("*Campo requerido"),
+                  shortDescription: Yup.string().required("*Campo requerido"),
+                  description: Yup.string().required("*Campo requerido"),
                 })}
               >
-                <div className="container_Form_Productos">
-                  <TextFieldValue
-                    label="Nombre"
-                    name="name"
-                    placeholder="Nombre"
-                    type="text"
-                  />
-                  <TextFieldSelect
-                    label="Rubro:"
-                    name="productCategory"
-                    options={[
-                      { value: "", label: "" },
-                      { value: "Baja", label: "Baja" },
-                      {
-                        value: "Alta",
-                        label: "Alta",
-                      },
-                    ]}
-                  />
-                  <TextFieldValue
-                    label="PrecioVenta"
-                    name="sellPrice"
-                    placeholder="PrecioVenta"
-                    type="number"
-                  />
-                  <TextFieldValue
-                    label="TiempoCocina"
-                    name="cookingTime"
-                    placeholder="TiempoCocina"
-                    type="number"
-                  />
-                  <TextCheckBox
-                    label="Disponible"
-                    name="available"
-                    placeholder="TiempoCocina"
-                  />
 
-                  <TextAreaValue
-                    label="Descripcion"
-                    name="description"
-                    placeholder="Descripcion"
-                  />
-                  <TextAreaValue
-                    label="Descripcion Corta"
-                    name="shortDescription"
-                    placeholder="Descripcion corta"
-                  />
-                </div>
               </FormikStep>
 
               <FormikStep
@@ -174,9 +161,19 @@ const ModalAddProducts = ({
                 validationSchema={Yup.object({
                   productDetails: Yup.array(
                     Yup.object({
-                      ingredient: Yup.number().required("Campo Requerido"),
+                      ingredient: Yup.object().shape({
+                        name: Yup.string(),
+                        ingredientCategory: Yup.object().shape({
+                          id: Yup.number().required(),
+                          name: Yup.string().required().default("todos"),
+                        }),
+                        minimumStock: Yup.number(),
+                        currentStock: Yup.number(),
+                        measurementUnit: Yup.string(),
+                        costPrice: Yup.number(),
+                      }),
                       quantity: Yup.number().required("Campo Requerido"),
-                      uMeasure: Yup.string().required("Campo Requerido"),
+                      //measurementUnit: Yup.string().required("Campo Requerido"),
                     })
                   ).min(1, "Tiene que tener al menos un ingrediente"),
                 })}
@@ -184,14 +181,17 @@ const ModalAddProducts = ({
 
               <FormikStep
                 label="Receta"
-                validationSchema={Yup.object({
-                  recipe: Yup.string().required("*Campo requerido"),
-                })}
+                validationSchema={
+                  Yup.object({
+                    // recipe: Yup.object().shape({
+                    //   // description: Yup.string().notRequired(),
+                    // }),
+                  })}
               >
                 <>
                   <TextAreaValue
                     label="Receta"
-                    name="recipe"
+                    name="recipe.description"
                     placeholder="Receta"
                   />
                 </>
@@ -236,6 +236,27 @@ export function FormikStepper({
     return step === childrenArray.length - 1;
   }
 
+  const { ProductCategory } = useAppSelector(state => state.productCategories)
+  const [options, setOptions] = useState<any>([])
+  function categorysProdToOptions() {
+    const initialopcions = {
+      value: "todos",
+      label: "",
+    };
+    setOptions([
+      initialopcions,
+      ...ProductCategory.map((option, index) => ({
+        value: option.id?.toString(),
+        label: option.description,
+      })),
+    ]);
+  }
+
+
+  useEffect(() => {
+    categorysProdToOptions()
+  }, [ProductCategory]);
+
   const { Ingredients } = useAppSelector((state) => state.ingredients);
 
   const [optionsIngredients, setOptionsIngredients] = useState<any>([]);
@@ -270,7 +291,7 @@ export function FormikStepper({
         }
       }}
     >
-      {({ values, errors, isSubmitting }) => (
+      {({ values, errors, isSubmitting, setFieldValue }) => (
         <Form autoComplete="off">
           <Stepper alternativeLabel activeStep={step}>
             {childrenArray.map((child, index) => (
@@ -283,17 +304,85 @@ export function FormikStepper({
             ))}
           </Stepper>
 
+          {step === 0 ? (
+            <div className="container_Form_Productos">
+              <TextFieldValue
+                label="Nombre"
+                name="name"
+                placeholder="Nombre"
+                type="text"
+              />
+              <TextFildSelectValue
+                label="Rubro:"
+                name="productCategory"
+                options={options}
+                value={values.productCategory.id}
+                onChange={(event: any) => {
+                  let prod = ProductCategory.filter((product) => {
+                    return product.id?.toString() == event.target.value
+                  })
+                  if (prod.length === 0) {
+                    prod = [{ description: "" }]
+                  }
+                  setFieldValue(`productCategory`, prod[0]);
+                }}
+              />
+              <TextFieldValue
+                label="PrecioVenta"
+                name="sellPrice"
+                placeholder="PrecioVenta"
+                type="number"
+              />
+              <TextFieldValue
+                label="TiempoCocina"
+                name="cookingTime"
+                placeholder="TiempoCocina"
+                type="number"
+              />
+
+              <TextAreaValue
+                label="Descripcion"
+                name="description"
+                placeholder="Descripcion"
+              />
+              <TextAreaValue
+                label="Descripcion Corta"
+                name="shortDescription"
+                placeholder="Descripcion corta"
+              />
+              <TextCheckBox
+                label="Disponible"
+                name="available"
+                placeholder="TiempoCocina"
+              />
+
+            </div>
+
+          ) : <></>}
+
+
           {step === 1 ? (
-            <FieldArray name="productDetail">
+            <FieldArray name="productDetails">
               {({ push, remove }) => (
                 <React.Fragment>
                   {values.productDetails.map((ingre: any, index: any) => (
                     <Grid container item key={index} spacing={2}>
                       <Grid item>
-                        <TextFieldSelect
+                        <TextFildSelectValue
                           label="Ingrediente:"
                           name={`productDetails.${index}.ingredient`}
                           options={optionsIngredients}
+                          onChange={(event: any) => {
+                            let ingredient = Ingredients.filter((ingre) => {
+                              return ingre.id?.toString() == event.target.value
+                            })
+                            if (ingredient.length === 0) {
+                              ingredient = [emptyIngredient]
+                            }
+                            setFieldValue(`productDetails.${index}.ingredient`, ingredient[0]);
+                          }}
+                          value={values.productDetails[index].ingredient.id.toString()}
+
                         />
                       </Grid>
 
@@ -310,12 +399,12 @@ export function FormikStepper({
                       <Grid item>
                         <TextFieldSelect
                           label="Unidad de medida:"
-                          name={`productDetails.${index}.uMeasure`}
+                          name={`productDetails.${index}.measurementUnit`}
                           options={[
                             { value: "", label: "" },
                             { value: "L", label: "Litro" },
                             {
-                              value: "gr",
+                              value: "g",
                               label: "gramo",
                             },
                           ]}
@@ -353,6 +442,8 @@ export function FormikStepper({
           ) : (
             <></>
           )}
+
+
 
           {currentChild}
 

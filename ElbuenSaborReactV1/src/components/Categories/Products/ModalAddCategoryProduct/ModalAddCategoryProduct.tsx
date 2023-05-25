@@ -1,11 +1,10 @@
-import Category from '@Models/Product/Category';
+import Category from '@Models/Product/ProductCategory';
 import TextFieldSelect from 'components/Inputs/TextFieldSelect';
 import TextFieldValue from 'components/Inputs/TextFieldValue';
 import { Form, Formik } from 'formik'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import * as Yup from "yup"
-import Categories from '../Categories';
 import { useAppDispatch, useAppSelector } from '@app/Hooks';
 import { finishLoading, startLoading } from '@features/Loading/LoadingSlice';
 import Loading from 'components/Loading/Loading';
@@ -22,37 +21,16 @@ interface Props {
 
 
 
-export default function ModalAddCategories({ showModal, handleClose, editing, category }: Props) {
+export default function ModalAddCategoryProduct({ showModal, handleClose, editing, category }: Props) {
   const initialValues: Category = {
-    name: "",
-    parentCategory: { name: "" }
+    description: ""
   }
-  const { IngredientsCategories } = useAppSelector(state => state.ingredintsCategories)
-  const [options, setOptions] = useState<any>([])
 
-  function categorysToOptions() {
-    const initialopcions = {
-      value: "todos",
-      label: "",
-    };
-    setOptions([
-      initialopcions,
-      ...IngredientsCategories.map((option, index) => ({
-        value: option.id?.toString(),
-        label: option.name,
-      })),
-    ]);
-  }
-  useEffect(() => {
-    categorysToOptions()
-  }, [IngredientsCategories]);
-
-  const loading = useAppSelector((state) => state.loading.value);
   const dispatch = useAppDispatch()
   return (
     <div>
-      <Loading />
-      <Modal id={"modal"} show={showModal} onHide={handleClose} size={"lg"} backdrop="static"
+
+      <Modal id={"modal"} show={showModal} onHide={handleClose} backdrop="static"
         keyboard={false} >
         <Modal.Header closeButton>
           {editing ?
@@ -63,7 +41,7 @@ export default function ModalAddCategories({ showModal, handleClose, editing, ca
         <Modal.Body>
           <Formik
             validationSchema={Yup.object({
-              name: Yup.string().required("*Campo requerido"),
+              description: Yup.string().required("*Campo requerido"),
             })}
             initialValues={category ? category : initialValues}
             enableReinitialize={true}
@@ -80,30 +58,16 @@ export default function ModalAddCategories({ showModal, handleClose, editing, ca
             (
               <>
                 <Form autoComplete="off" className="form-obraAlta">
-                  <div className='container_Form_Ingredientes' >
+                  <div >
 
                     <TextFieldValue
                       label="Nombre:"
-                      name="name"
+                      name="description"
                       type="text"
                       placeholder="Nombre del Rubro"
                     />
 
-                    <TextFildSelectValue
-                      value={category?.parentCategory?.id}
-                      label="Rubro padre:"
-                      name="parentCategory"
-                      options={options}
-                      onChange={(event: any) => {
-                        let ingredient = IngredientsCategories.filter((ingre) => {
-                          return ingre.id?.toString() == event.target.value
-                        })
-                        if (ingredient.length === 0) {
-                          ingredient = [{ name: "" }]
-                        }
-                        Formik.setFieldValue(`parentCategory`, ingredient[0]);
-                      }}
-                    />
+
 
                   </div>
                   <div className="d-flex justify-content-end">

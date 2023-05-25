@@ -5,8 +5,8 @@ import Price from "./Price";
 export default interface Ingredient extends Base {
   name: string;
   ingredientCategory: IngredientCategory;
-  minimumStock: number;
-  currentStock: number;
+  minimumStock: number | "";
+  currentStock: number | "";
   measurementUnit: string;
-  costPrice: number;
+  costPrice: number | "";
 }
