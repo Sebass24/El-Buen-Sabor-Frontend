@@ -10,6 +10,9 @@ import { useAppDispatch, useAppSelector } from '@app/Hooks';
 import { finishLoading, startLoading } from '@features/Loading/LoadingSlice';
 import Loading from 'components/Loading/Loading';
 import TextFildSelectValue from 'components/Inputs/TextFildSelectValue';
+import { postPutData } from 'components/GenericFetch/GenericFetch';
+import { addIngredientCategory, updateIngredientCategory } from '@features/IngredientCategory/IngredientCategorySlice';
+import IngredientCategory from '@Models/Product/IngredientCategory';
 
 
 
@@ -25,7 +28,7 @@ interface Props {
 export default function ModalAddCategories({ showModal, handleClose, editing, category }: Props) {
   const initialValues: Category = {
     name: "",
-    parentCategory: { name: "" }
+    parentCategory: undefined
   }
   const { IngredientsCategories } = useAppSelector(state => state.ingredintsCategories)
   const [options, setOptions] = useState<any>([])
@@ -68,12 +71,23 @@ export default function ModalAddCategories({ showModal, handleClose, editing, ca
             initialValues={category ? category : initialValues}
             enableReinitialize={true}
             onSubmit={async (values) => {
-              dispatch(startLoading())
-              setTimeout(() => {
-                console.log(values);
-                handleClose();
+              if (editing) {
+                dispatch(startLoading())
+                postPutData(`/api/rubro`, "PUT", values).then(
+                  () => {
+                    dispatch(updateIngredientCategory(values))
+                  }
+                )
                 dispatch(finishLoading())
-              }, 1000);
+              } else {
+                postPutData(`/api/rubro`, "POST", values).then(
+                  () => {
+                    dispatch(addIngredientCategory(values))
+                  }
+                )
+              }
+              console.log(values);
+              handleClose();
             }}
           >
             {(Formik) =>
@@ -90,18 +104,18 @@ export default function ModalAddCategories({ showModal, handleClose, editing, ca
                     />
 
                     <TextFildSelectValue
-                      value={category?.parentCategory?.id}
+                      value={Formik.values.parentCategory?.id}
                       label="Rubro padre:"
                       name="parentCategory"
                       options={options}
                       onChange={(event: any) => {
-                        let ingredient = IngredientsCategories.filter((ingre) => {
+                        let ingredient: IngredientCategory[] | null = IngredientsCategories.filter((ingre) => {
                           return ingre.id?.toString() == event.target.value
                         })
                         if (ingredient.length === 0) {
-                          ingredient = [{ name: "" }]
+                          ingredient = null
                         }
-                        Formik.setFieldValue(`parentCategory`, ingredient[0]);
+                        Formik.setFieldValue(`parentCategory`, ingredient == null ? ingredient : ingredient[0]);
                       }}
                     />
 

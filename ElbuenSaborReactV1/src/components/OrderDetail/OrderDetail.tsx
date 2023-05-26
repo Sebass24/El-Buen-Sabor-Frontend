@@ -6,24 +6,6 @@ import { Button } from 'react-bootstrap';
 import Orders from '@Models/orders/Orders';
 import { getData } from 'components/GenericFetch/GenericFetch';
 
-interface PedidoDetail {
-  IdPedido: number;
-  FechaPedido: string;
-  NombreApellido: string;
-  Telefono: string;
-  Direccion: string;
-  Departamento: string;
-  FormaEntrega: string;
-  HoraEstimada: string;
-  Descuentos: number;
-  productos: Producto[];
-}
-
-interface Producto {
-  Nombre: string;
-  cantidad: number,
-  Precio: number,
-}
 
 const OrderDetail = () => {
   const { IdPedido } = useParams();

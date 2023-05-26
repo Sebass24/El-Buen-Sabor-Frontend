@@ -19,6 +19,13 @@ export const IngredientCategorySlice = createSlice({
     setIngredientsCategories: (state, action: PayloadAction<Ingredientcategory[]>) => {
       state.IngredientsCategories = action.payload;
     },
+    addIngredientCategory: (state, action: PayloadAction<Ingredientcategory>) => {
+      state.IngredientsCategories.push(action.payload)
+    },
+    updateIngredientCategory: (state, action: PayloadAction<Ingredientcategory>) => {
+      const index = state.IngredientsCategories.findIndex(ing => ing.id == action.payload.id)
+      state.IngredientsCategories[index] = action.payload
+    }
   },
   extraReducers(builder) {
     builder.addCase(fetchIngredientCategory.fulfilled, (state, action) => {
@@ -27,6 +34,6 @@ export const IngredientCategorySlice = createSlice({
   },
 });
 
-export const { setIngredientsCategories } = IngredientCategorySlice.actions;
+export const { setIngredientsCategories, addIngredientCategory, updateIngredientCategory } = IngredientCategorySlice.actions;
 
 export default IngredientCategorySlice.reducer;

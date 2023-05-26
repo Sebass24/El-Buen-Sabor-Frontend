@@ -176,8 +176,8 @@ interface myProps {
 
 export default function BillingTable({ orders }: myProps) {
 
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("");
+  const [order, setOrder] = React.useState("desc");
+  const [orderBy, setOrderBy] = React.useState("id");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -204,6 +204,7 @@ export default function BillingTable({ orders }: myProps) {
     month: "2-digit",
     day: "2-digit",
   };
+
 
   return (
     <div className="container_tabla">
@@ -234,7 +235,7 @@ export default function BillingTable({ orders }: myProps) {
                         {order.id}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {order.date.toLocaleString("es-AR", options)}
+                        {order.date.toString().substring(0, 10) + " " + order.date.toString().substring(11, 19)}
                       </TableCell>
                       <TableCell className="tableCell">
                         {order.deliveryMethod.description}
@@ -243,7 +244,7 @@ export default function BillingTable({ orders }: myProps) {
                         {order.paymentMethod.description}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {order.paid == 1 ? "pagado" : "Falta Pago"}
+                        {order.paid == true ? "pagado" : "Falta Pago"}
                       </TableCell>
                       <TableCell className="tableCell">
                         {order.orderStatus.description}

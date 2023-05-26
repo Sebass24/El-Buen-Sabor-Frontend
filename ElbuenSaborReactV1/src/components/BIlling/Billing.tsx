@@ -6,59 +6,6 @@ import { getData } from 'components/GenericFetch/GenericFetch';
 
 export default function Billing() {
 
-  // const productosPrueba: cashierOrder[] = [
-  //   {
-  //     IdPedido: 123456,
-  //     FechaPedido: "12/03/23/ 12:30",
-  //     FormaEntrega: "Delivery",
-  //     FormaPago: "Efectivo",
-  //     Pagado: "No",
-  //     Estado: "A Confirmar"
-  //   },
-  //   {
-  //     IdPedido: 123456,
-  //     FechaPedido: "12/03/23/ 12:30",
-  //     FormaEntrega: "Delivery",
-  //     FormaPago: "Efectivo",
-  //     Pagado: "Si",
-  //     Estado: "Delivery"
-  //   },
-  //   {
-  //     IdPedido: 123456,
-  //     FechaPedido: "12/03/23/ 12:30",
-  //     FormaEntrega: "Delivery",
-  //     FormaPago: "Efectivo",
-  //     Pagado: "Si",
-  //     Estado: "Listo"
-  //   },
-  //   {
-  //     IdPedido: 1,
-  //     FechaPedido: "12/03/23/ 12:30",
-  //     FormaEntrega: "Delivery",
-  //     FormaPago: "Efectivo",
-  //     Pagado: "No",
-  //     Estado: "A Confirmar"
-  //   },
-  //   {
-  //     IdPedido: 123456999,
-  //     FechaPedido: "12/03/23/ 12:30",
-  //     FormaEntrega: "Delivery",
-  //     FormaPago: "Efectivo",
-  //     Pagado: "Si",
-  //     Estado: "Delivery"
-  //   },
-  //   {
-  //     IdPedido: 123456,
-  //     FechaPedido: "12/03/23/ 12:30",
-  //     FormaEntrega: "Delivery",
-  //     FormaPago: "Efectivo",
-  //     Pagado: "Si",
-  //     Estado: "Listo"
-  //   }
-  // ]
-
-
-
   const [order, setOrder] = useState<Orders[]>([]);
   async function getOrders() {
     const data: Orders[] = await getData<Orders[]>("/api/order");

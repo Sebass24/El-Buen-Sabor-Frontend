@@ -6,7 +6,6 @@ const Cashier = () => {
   return (
     <div>
       <AdminBar title={"Cajero"} />
-
       <CashierPage />
     </div>
   );

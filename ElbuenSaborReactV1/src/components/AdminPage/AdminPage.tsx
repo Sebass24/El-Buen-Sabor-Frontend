@@ -1,7 +1,7 @@
 import React from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import "./AdminPage.scss";
-import Stock from "../Stock/Stock";
+import Stock from "../../components/Stock/Stock";
 import Categories from "components/Categories/Categories";
 import Users from "components/Users/Users";
 import Billing from "components/BIlling/Billing";

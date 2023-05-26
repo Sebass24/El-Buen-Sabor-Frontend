@@ -3,6 +3,6 @@ import Ingredient from "./Ingredient/Ingredient";
 
 export default interface productDetails extends Base {
   ingredient: Ingredient;
-  quantity: number;
+  quantity: number | "";
   measurementUnit: string;
 }

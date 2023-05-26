@@ -5,6 +5,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import ProductCategorySlice from "@features/ProductCategory/ProductCategorySlice";
 import ProductSlice from "@features/ProductSlice/ProductSlice";
 import UserSlice from "@features/User/UserSlice";
+import OrderSlice from "@features/Orders/OrderSlice";
 
 export const Store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const Store = configureStore({
     ingredintsCategories: IngredientCategorySlice,
     productCategories: ProductCategorySlice,
     product: ProductSlice,
-    users: UserSlice
+    users: UserSlice,
+    Order: OrderSlice
   },
 });
 

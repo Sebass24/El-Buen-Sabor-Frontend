@@ -10,6 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import "./ChartStatistics.scss"
+import { Button } from "react-bootstrap";
 
 ChartJS.register(
   CategoryScale,
@@ -116,6 +117,7 @@ export function ChartStatistic() {
   };
 
 
+
   return (
     <div className="container">
       <div className="filters_Client">
@@ -163,6 +165,9 @@ export function ChartStatistic() {
         </div>
 
         <Bar options={options} data={data} />
+      </div>
+      <div className="d-flex justify-content-end">
+
       </div>
     </div>
   );
