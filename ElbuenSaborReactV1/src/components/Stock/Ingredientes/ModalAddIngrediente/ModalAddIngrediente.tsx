@@ -11,7 +11,6 @@ import TextFieldSelect from "../../../Inputs/TextFieldSelect";
 import "./FormIngredientesFields.scss";
 import { FormikHelpers } from "formik";
 import Ingredient from "@Models/Product/Ingredient";
-import IngredientCategory from "@Models/Product/IngredientCategory"
 import Category from "@Models/Product/Category";
 import { getData, postPutData } from "components/GenericFetch/GenericFetch";
 import { useAppSelector, useAppDispatch } from "@app/Hooks";

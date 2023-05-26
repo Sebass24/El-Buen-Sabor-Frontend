@@ -1,5 +1,5 @@
 import Base from "../Base";
-import Ingredient from "./Ingredient/Ingredient";
+import Ingredient from "./Ingredient";
 
 export default interface productDetails extends Base {
   ingredient: Ingredient;
