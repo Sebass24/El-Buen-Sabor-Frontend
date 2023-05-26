@@ -4,5 +4,6 @@ import Order from "./Order";
 
 export default interface OrderDetail extends Base {
     product: Product;
+    quantity: number;
     order: Order;
 }
