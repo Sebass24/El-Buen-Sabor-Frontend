@@ -1,6 +1,5 @@
 import Base from "../Base";
-import IngredientCategory from "./IngredientCategory";
-import Price from "./Price";
+import IngredientCategory from "./Ingredient/IngredientCategory";
 
 export default interface Ingredient extends Base {
   name: string;

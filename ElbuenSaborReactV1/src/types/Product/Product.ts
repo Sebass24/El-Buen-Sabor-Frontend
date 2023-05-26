@@ -1,5 +1,5 @@
 import Base from "../Base";
-import ProductDetails from "./ProductDetail";
+import ProductDetail from "./ProductDetail";
 import Recipe from "./Recipe";
 import ProductCategory from "./ProductCategory";
 import Image from "./Image";

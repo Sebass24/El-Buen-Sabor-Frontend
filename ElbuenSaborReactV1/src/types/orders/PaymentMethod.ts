@@ -1,5 +1,5 @@
 import Base from "@Models/Base";
 
-export default interface paymentMethod extends Base {
-  description: string;
+export default interface PaymentMethod extends Base {
+    description: string;
 }
