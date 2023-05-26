@@ -10,9 +10,12 @@
     margin: 1.5rem;
     margin-top: 0;
 
+
     .product-image {
         width: auto;
         max-height: 8rem;
+        border-radius: 7%;
+        margin: 0.5rem;
     }
 }
 
@@ -44,6 +47,46 @@
         text-align: right;
         font-size: .8rem;
         color: red;
+    }
+}
+
+/* @media (min-width: 451px) {
+    .card {
+        grid-template-rows: 9rem 4rem 8rem 2rem;
+        height: 25rem;
+        display: grid;
+
+        .product-image {
+            grid-row: 1;
+        }
+    }
+
+    .card-title {
+        height: 4rem;
+        grid-row: 2;
+    }
+
+    .short-description {
+        height: 7rem;
+        grid-row: 3;
+    }
+
+    .label-container {
+        grid-row: 4;
+    }
+} */
+
+@media (max-width: 767px) {
+    .card {
+        width: 12rem;
+        border-radius: 5%;
+        margin: 1rem;
+        margin-top: 0;
+    }
+
+    .label-container {
+        width: 10rem;
+        grid-column: 2;
     }
 }
 

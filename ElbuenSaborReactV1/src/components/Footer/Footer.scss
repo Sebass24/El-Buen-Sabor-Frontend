@@ -54,6 +54,7 @@ label {
   .Container_Footer {
     height: auto;
   }
+
   .Container_Footer_contact,
   .PaymentMethods {
     margin-top: 3rem;
@@ -65,9 +66,11 @@ label {
     flex-wrap: wrap;
     justify-content: flex-start;
   }
+
   .Container_Footer_contact {
     margin-top: 7rem;
   }
+
   .PaymentMethods {
     margin-top: 1rem;
     margin-left: 2rem;

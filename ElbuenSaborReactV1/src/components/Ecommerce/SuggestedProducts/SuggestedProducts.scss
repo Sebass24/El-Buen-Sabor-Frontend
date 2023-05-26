@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+
+* {
+    font-family: "inter", sans-serif;
+}
+
+.suggestions-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.straight-line {
+    width: 90%;
+}
+
+.suggestion-title {
+    font-weight: 600;
+    font-size: 1.3rem;
+    grid-column: 2;
+    text-align: left;
+    padding-right: 9%;
+    padding-left: 9%;
+}
+
+.suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 75rem;
+    margin-top: 1.5rem;
+    width: auto;
+}
+
+@media (max-width: 767px) {}
+
+@media (max-width: 450px) {
+
+    .suggestions {
+        justify-content: center;
+        margin-left: 1rem;
+        margin-top: 1rem;
+    }
+
+    .suggestion-title {
+        font-size: 1rem;
+    }
+
+}

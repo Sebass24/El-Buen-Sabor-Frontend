@@ -1,5 +1,5 @@
-import CatalogueTabs from "components/Catalogue/CatalogueTabs";
-import Landing from "components/Catalogue/LandingPhoto/LandingPhoto";
+import Landing from "components/Ecommerce/Catalogue/LandingPhoto/LandingPhoto";
+import CatalogueTabs from "components/Ecommerce/Catalogue/CatalogueTabs";
 
 const LandingCatalogue = () => {
     return (

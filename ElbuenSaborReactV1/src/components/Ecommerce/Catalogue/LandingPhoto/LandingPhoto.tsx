@@ -3,11 +3,14 @@ import "./LandingPhoto.scss";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass, faRandom } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import useSearch from "./useSearch";
+import { useAppDispatch } from "@app/Hooks";
+import { setSearchValue } from "@features/SearchProduct/Search";
+
 
 library.add(faMagnifyingGlass);
 
 export default function Landing() {
+  const dispatch = useAppDispatch();
 
   const [search, setSearch] = useState("");
 
@@ -16,35 +19,23 @@ export default function Landing() {
   };
 
   const handleButtonClick = () => {
-    useSearch(search);
+    dispatch(setSearchValue(search));
   };
 
-  /* 
-  const searchFood = (event: any) => {
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const {target} = event; 
-    const searchValue = target.search.value; 
-    target.search.value = ""; 
-    store.dispatch({
-      type:"foodSearch",
-      searchValue
-    })
-  }
-  */
+    dispatch(setSearchValue(search));
+  };
 
   return (
     <>
       <div className="imageHomePage">
         <div className="search_container">
-          <p className="best_burgers">Mejores hamburguesas de Mendoza</p>
-          <form className="input-container">
+          <p className="best_burgers">Las mejores hamburguesas de Mendoza</p>
+          <form className="input-container" onSubmit={handleFormSubmit}>
             <input type="text" placeholder="Buscar" className="food_search" value={search} onChange={handleSearchChange}></input>
             <span className="icon" style={{ cursor: 'pointer' }}><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "black" }} onClick={handleButtonClick}></FontAwesomeIcon></span>
           </form>
-          {/* <form className="input-container">
-            <input type="text" name="search" placeholder="Buscar" className="food_search"></input>
-            <span className="icon" style={{ cursor: 'pointer' }}><FontAwesomeIcon icon={faMagnifyingGlass} style={{ color: "black" }} onClick={searchFood}></FontAwesomeIcon></span>
-          </form> */}
         </div>
       </div>
     </>

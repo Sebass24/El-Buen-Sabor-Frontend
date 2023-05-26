@@ -4,9 +4,9 @@ import Logo from "components/NavBar/Logo/Logo";
 const Footer = () => {
   return (
     <div className="Container_Footer">
-      
+
       <div className="Container_Footer_contact">
-        <span><label>Contactanos</label></span>
+        <span><label style={{ color: "white" }}>Contactanos</label></span>
         <div className="Container_Footer_contact_items">
           <i className="fa-solid fa-location-dot"></i>
           <label>Mendoza-Argentina</label>
