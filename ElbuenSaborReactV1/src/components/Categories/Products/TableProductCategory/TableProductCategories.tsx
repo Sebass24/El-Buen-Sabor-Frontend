@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TableHead from "@mui/material/TableHead";
 import { Link } from "react-router-dom";
-import "./TableProducts.scss";
+import "./TableProductCategories.scss";
 
 import {
   createTheme,
@@ -16,8 +16,8 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import Products from "@Models/Product/Product";
-import ModalAddProducts from "../ModalAddProduct/ModalAddProducts";
+import CategoryProduct from "@Models/Product/ProductCategory";
+import ModalAddCategoryProduct from "../ModalAddCategoryProduct/ModalAddCategoryProduct";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
@@ -47,7 +47,7 @@ function getComparador(order: string, orderBy: string) {
     : (a: any, b: any) => -comparadorDescendiente(a, b, orderBy);
 }
 
-const stableSort = (array: Products[], comparator: any, orderBy: any) => {
+const stableSort = (array: CategoryProduct[], comparator: any, orderBy: any) => {
   const stabilizedThis = array.map((product: any, index: number) => [
     product,
     index,
@@ -74,67 +74,19 @@ function CabeceraMejorada(props: any) {
       <TableRow>
         <TableCell
           className="tableCell"
-          key="Nombre"
+          key="description"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "name"}
-            direction={orderBy === "name" ? order : "asc"}
-            onClick={crearSortHandler("name")}
+            active={orderBy === "description"}
+            direction={orderBy === "description" ? order : "asc"}
+            onClick={crearSortHandler("description")}
           >
-            <Typography fontWeight="bold">Producto</Typography>
+            <Typography fontWeight="bold">Nombre rubro</Typography>
           </TableSortLabel>
         </TableCell>
 
-        <TableCell
-          className="tableCell"
-          key="Rubro"
-          style={{ backgroundColor: "#C6C6C6" }}
-        >
-          <Typography fontWeight="bold">Rubro</Typography>
-        </TableCell>
 
-        <TableCell
-          className="tableCell"
-          key="PrecioDeVenta"
-          style={{ backgroundColor: "#C6C6C6" }}
-        >
-          <TableSortLabel
-            active={orderBy === "sellPrice"}
-            direction={orderBy === "sellPrice" ? order : "asc"}
-            onClick={crearSortHandler("sellPrice")}
-          >
-            <Typography fontWeight="bold">Precio De Venta</Typography>
-          </TableSortLabel>
-        </TableCell>
-
-        <TableCell
-          className="tableCell"
-          key="TiempoCocina"
-          style={{ backgroundColor: "#C6C6C6" }}
-        >
-          <TableSortLabel
-            active={orderBy === "cookingTime"}
-            direction={orderBy === "cookingTime" ? order : "asc"}
-            onClick={crearSortHandler("cookingTime")}
-          >
-            <Typography fontWeight="bold">Tiempo en cocina</Typography>
-          </TableSortLabel>
-        </TableCell>
-
-        <TableCell
-          className="tableCell"
-          key="Estado"
-          style={{ backgroundColor: "#C6C6C6" }}
-        >
-          <TableSortLabel
-            active={orderBy === "available"}
-            direction={orderBy === "available" ? order : "asc"}
-            onClick={crearSortHandler("available")}
-          >
-            <Typography fontWeight="bold">Estado</Typography>
-          </TableSortLabel>
-        </TableCell>
 
         <TableCell
           className="tableCell"
@@ -148,25 +100,25 @@ function CabeceraMejorada(props: any) {
   );
 }
 
-interface MyProps {
-  products: Products[];
+interface myProps {
+  categories: CategoryProduct[];
 }
 
-const TableProducts = ({ products }: MyProps) => {
+export default function TableProductCategories({ categories }: myProps) {
   const formatoMonedaLocal = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
   });
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("nombreObra");
+  const [orderBy, setOrderBy] = React.useState("Name");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [showModal, setShowModal] = React.useState(false);
-  const [productEditing, setProductEditing] = React.useState<Products>();
+  const [categoryEditing, setCategoryEditing] = React.useState<CategoryProduct>();
 
-  const handleShowModal = (prod: Products) => {
+  const handleShowModal = (prod: CategoryProduct) => {
     setShowModal(true);
-    setProductEditing(prod);
+    setCategoryEditing(prod);
   };
   const handleClose = () => {
     setShowModal(false);
@@ -188,7 +140,7 @@ const TableProducts = ({ products }: MyProps) => {
   };
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, products.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, categories.length - page * rowsPerPage);
 
   return (
     <div className="container_tabla">
@@ -196,45 +148,35 @@ const TableProducts = ({ products }: MyProps) => {
         <TableContainer>
           <Table
             className="table"
-            // aria-labelledby="tableTitle"
-            // aria-label="enhanced table"
+          // aria-labelledby="tableTitle"
+          // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
               orderBy={orderBy}
               order={order}
               handleRequestSort={handleRequestSort}
-              rowCount={products.length}
+              rowCount={categories.length}
             />
 
             <TableBody>
-              {stableSort(products, getComparador(order, orderBy), orderBy)
+              {stableSort(categories, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((product: Products, index) => {
+                .map((category: CategoryProduct, index) => {
+
                   return (
                     <TableRow key={index}>
                       <TableCell className="tableCell">
-                        {product.name}
+                        {category.description}
                       </TableCell>
-                      <TableCell className="tableCell">
-                        {product.productCategory.description}
-                      </TableCell>
-                      <TableCell className="tableCell">
-                        {formatoMonedaLocal.format(product?.sellPrice)}{" "}
-                      </TableCell>
-                      <TableCell className="tableCell">
-                        {product.cookingTime}
-                      </TableCell>
-                      <TableCell className="tableCell">
-                        {product.available ? "Disponible" : "No Disponible"}
-                      </TableCell>
+
                       <TableCell className="tableCell">
                         {
                           <button
                             data-title="Eliminar"
                             type="button"
                             className="btn btn-sm"
-                            onClick={() => handleShowModal(product)}
+                            onClick={() => handleShowModal(category)}
                           >
                             <i className="fa-solid fa-pen-to-square"></i>
                           </button>
@@ -242,6 +184,7 @@ const TableProducts = ({ products }: MyProps) => {
                       </TableCell>
                     </TableRow>
                   );
+
                 })}
             </TableBody>
           </Table>
@@ -258,7 +201,7 @@ const TableProducts = ({ products }: MyProps) => {
           }}
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={products.length}
+          count={categories.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -266,13 +209,12 @@ const TableProducts = ({ products }: MyProps) => {
         />
       </Paper>
 
-      <ModalAddProducts
-        handleClose={handleClose}
+      <ModalAddCategoryProduct
         showModal={showModal}
+        handleClose={handleClose}
+        category={categoryEditing}
         editing={true}
-        product={productEditing}
       />
     </div>
   );
-};
-export default TableProducts;
+}

@@ -1,20 +1,5 @@
-export interface Ingredient {
-  Nombre: string;
-  Rubro: string;
-  PrecioCosto: number;
-  StockMinimo: number;
-  StockActual: number;
-  UnidadMedida: string;
-  NivelStock?: string;
-  Estado: string;
-}
 
-export interface IngredientBuy {
-  Ingredient: string;
-  Cuantity: number
-  PriceCost: number;
-}
-
+import Base from "./Base";
 
 export interface cashierOrder {
   IdPedido: number;
@@ -23,28 +8,6 @@ export interface cashierOrder {
   FormaPago: string;
   Pagado: string;
   Estado: string;
-}
-
-export interface Options {
-  value: string;
-  label: string;
-}
-
-export interface Products {
-  Nombre: string;
-  Rubro: string;
-  PrecioVenta: number;
-  TiempoCocina: number;
-  Estado: string;
-  Descripcion: string;
-  Receta: string;
-  Ingredients?: OrderIngredient[];
-}
-
-export interface Category {
-  Name: string;
-  FatherCategory?: string;
-  State: string;
 }
 
 export interface Users {
@@ -63,10 +26,4 @@ export interface DeliveryOrder {
   Adress: string;
   Location: string;
   Phone: number;
-}
-
-export interface OrderIngredient {
-  Ingredient: string;
-  Cuantity: number;
-  UMedida: string;
 }

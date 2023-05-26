@@ -16,7 +16,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { Category } from "@Models/types";
+import Category from "@Models/Product/Category";
 import ModalAddCategories from "../ModalAddCategories/ModalAddCategories";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
@@ -78,9 +78,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "Name"}
-            direction={orderBy === "Name" ? order : "asc"}
-            onClick={crearSortHandler("Name")}
+            active={orderBy === "name"}
+            direction={orderBy === "name" ? order : "asc"}
+            onClick={crearSortHandler("name")}
           >
             <Typography fontWeight="bold">Nombre rubro</Typography>
           </TableSortLabel>
@@ -91,28 +91,9 @@ function CabeceraMejorada(props: any) {
           key="FatherCategory"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <TableSortLabel
-            active={orderBy === "FatherCategory"}
-            direction={orderBy === "FatherCategory" ? order : "asc"}
-            onClick={crearSortHandler("FatherCategory")}
-          >
-            <Typography fontWeight="bold">Rubro Padre</Typography>
-          </TableSortLabel>
+          <Typography fontWeight="bold">Rubro Padre</Typography>
         </TableCell>
 
-        <TableCell
-          className="tableCell"
-          key="State"
-          style={{ backgroundColor: "#C6C6C6" }}
-        >
-          <TableSortLabel
-            active={orderBy === "State"}
-            direction={orderBy === "State" ? order : "asc"}
-            onClick={crearSortHandler("State")}
-          >
-            <Typography fontWeight="bold">Estado</Typography>
-          </TableSortLabel>
-        </TableCell>
 
         <TableCell
           className="tableCell"
@@ -143,12 +124,12 @@ export default function TableCategories({ categories }: myProps) {
   const [categoryEditing, setCategoryEditing] = React.useState<Category>();
 
   const handleShowModal = (prod: Category) => {
-    setShowModal(true)
-    setCategoryEditing(prod)
-  }
+    setShowModal(true);
+    setCategoryEditing(prod);
+  };
   const handleClose = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === "asc";
@@ -188,44 +169,32 @@ export default function TableCategories({ categories }: myProps) {
             <TableBody>
               {stableSort(categories, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((category, index) => {
-                  if (category.State !== "Baja") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell className="tableCell">
-                          {category.Name}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {category.FatherCategory}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {category.State}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {
-                            <>
-                              {/* <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                                onClick={() => console.log("eliminar")}
-                              >
-                                <i className="fa-solid fa-trash"></i>
-                              </button> */}
-                              <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                                onClick={() => (handleShowModal(category))}
-                              >
-                                <i className="fa-solid fa-pen-to-square"></i>
-                              </button>
-                            </>
-                          }
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
+                .map((category: Category, index) => {
+
+                  return (
+                    <TableRow key={index}>
+                      <TableCell className="tableCell">
+                        {category.name}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {category.parentCategory?.name}
+                      </TableCell>
+
+                      <TableCell className="tableCell">
+                        {
+                          <button
+                            data-title="Eliminar"
+                            type="button"
+                            className="btn btn-sm"
+                            onClick={() => handleShowModal(category)}
+                          >
+                            <i className="fa-solid fa-pen-to-square"></i>
+                          </button>
+                        }
+                      </TableCell>
+                    </TableRow>
+                  );
+
                 })}
             </TableBody>
           </Table>
@@ -250,7 +219,12 @@ export default function TableCategories({ categories }: myProps) {
         />
       </Paper>
 
-      <ModalAddCategories handleClose={handleClose} showModal={showModal} category={categoryEditing} editing={true} />
+      <ModalAddCategories
+        handleClose={handleClose}
+        showModal={showModal}
+        category={categoryEditing}
+        editing={true}
+      />
     </div>
   );
 }

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import "./OrderDetail.scss"
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Button } from 'react-bootstrap';
+import Orders from '@Models/orders/Orders';
+import { getData } from 'components/GenericFetch/GenericFetch';
 
 interface PedidoDetail {
   IdPedido: number;
@@ -26,50 +28,31 @@ interface Producto {
 const OrderDetail = () => {
   const { IdPedido } = useParams();
   var subtotal = 0
-  const productosPrueba: PedidoDetail =
-  {
-    IdPedido: 123456,
-    FechaPedido: "12/03/23/ 12:30",
-    NombreApellido: "Franco Gonzalez",
-    Telefono: "2616172242",
-    Direccion: "calle falsa 1234",
-    Departamento: "Guaymallen",
-    FormaEntrega: "Delivery",
-    HoraEstimada: "22:00 - 22:20",
-    Descuentos: 1000,
-    productos: [
-      {
-        Nombre: "pizza",
-        cantidad: 2,
-        Precio: 250,
-      },
-      {
-        Nombre: "hamburguesa",
-        cantidad: 3,
-        Precio: 500,
-      },
-      {
-        Nombre: "agua",
-        cantidad: 5,
-        Precio: 120,
-      },
-    ]
+  const [Order, setOrder] = useState<Orders>()
+
+  async function getOrderByID() {
+    const data: Orders = await getData<Orders>(`/api/order/${IdPedido}`)
+    setOrder(data)
   }
+
+  useEffect(() => {
+    getOrderByID()
+  }, [])
   return (
     <>
 
       <div className='Container_OrderDetail'>
-        <h2 className='title'> Pedido: {productosPrueba.IdPedido}</h2>
+        <h2 className='title'> Pedido: {Order?.id}</h2>
         <div className='Order_Data'>
-          <li>Fecha: {productosPrueba.IdPedido}</li>
-          <li>Estado: {productosPrueba.FechaPedido}</li>
-          <li>Nombre y Apellido: {productosPrueba.IdPedido}</li>
-          <li>Télefono: {productosPrueba.IdPedido}</li>
-          <li>Dirección: {productosPrueba.IdPedido}</li>
-          <li>Departamento: {productosPrueba.IdPedido}</li>
-          <li>Forma de Entrega: {productosPrueba.IdPedido}</li>
-          <li>Forma de Pago: {productosPrueba.IdPedido}</li>
-          <li>Hora Estimada: {productosPrueba.IdPedido}</li>
+          <li>Fecha: {Order?.date?.toLocaleString()}</li>
+          <li>Estado: {Order?.orderStatus.description}</li>
+          <li>Nombre y Apellido: {Order?.user.name + " " + Order?.user.lastName}</li>
+          {/* <li>Télefono: {Order?.user.}</li>
+          <li>Dirección: {Order.IdPedido}</li> */}
+          {/* <li>Departamento: {Order.user.}</li> */}
+          <li>Forma de Entrega: {Order?.deliveryMethod.description}</li>
+          <li>Forma de Pago: {Order?.paymentMethod.description}</li>
+          <li>Hora Estimada: {Order?.estimatedTime.toLocaleString()}</li>
         </div>
       </div>
 
@@ -85,18 +68,18 @@ const OrderDetail = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {productosPrueba.productos.map((row, index) => {
-              subtotal += (row.Precio * row.cantidad)
+            {Order?.orderDetails.map((row, index) => {
+              subtotal += (row.product.sellPrice * row.quantity)
               return (
                 <TableRow
                   className='table_row'
                   key={index}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell >{row.Nombre}</TableCell>
-                  <TableCell >{row.cantidad}</TableCell>
-                  <TableCell >${row.Precio}</TableCell>
-                  <TableCell >${row.Precio * row.cantidad}</TableCell>
+                  <TableCell >{row.product.name}</TableCell>
+                  <TableCell >{row.quantity}</TableCell>
+                  <TableCell >${row.product.sellPrice}</TableCell>
+                  <TableCell >${row.product.sellPrice * row.quantity}</TableCell>
                 </TableRow>
               )
 
@@ -104,8 +87,8 @@ const OrderDetail = () => {
           </TableBody>
         </Table>
         <span className='SubTotal_order'>Sub Total: ${subtotal}</span>
-        <span className='Descuentos'>Descuentos: ${productosPrueba.Descuentos}</span>
-        <span className='Total'>Total: ${subtotal - productosPrueba.Descuentos}</span>
+        <span className='Descuentos'>Descuentos: ${Order?.discount}</span>
+        <span className='Total'>Total: ${subtotal - (Order?.discount ?? 0)}</span>
       </div>
       <div className='Button_Back'>
         <Button

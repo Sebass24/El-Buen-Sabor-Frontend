@@ -1,7 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../app/Store";
-
 // Define a type for the Loading state
 interface LoadingState {
   value: boolean;
