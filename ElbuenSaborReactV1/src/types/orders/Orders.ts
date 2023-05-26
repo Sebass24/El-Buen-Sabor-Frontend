@@ -11,7 +11,7 @@ export default interface Orders extends Base {
   orderStatus: OrderStatus
   estimatedTime: Date
   paymentMethod: paymentMethod
-  paid: number
+  paid: boolean
   user: User
   orderDetails: OrderDetail[]
   total: number

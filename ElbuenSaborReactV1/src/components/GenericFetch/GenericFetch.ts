@@ -7,7 +7,7 @@ export async function getData<T>(path: string): Promise<T> {
       "Authorization": `Bearer ${token}`
     }
   }
-  const response = await fetch(`http://localhost:8080${path}`);
+  const response = await fetch(`http://localhost:8080${path}`, options);
   if (!response.ok) {
     throw Error(response.statusText);
   }
@@ -21,12 +21,14 @@ export async function postPutData<T>(
   method: string,
   data: T
 ): Promise<T> {
+  const token = sessionStorage.getItem("token")
   const response = await fetch(`http://localhost:8080${path}`, {
     method: method.toUpperCase(),
     credentials: 'include',
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
     },
     body: JSON.stringify(data),
   });

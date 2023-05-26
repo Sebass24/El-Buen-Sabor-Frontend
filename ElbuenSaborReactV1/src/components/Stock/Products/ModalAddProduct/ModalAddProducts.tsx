@@ -45,15 +45,15 @@ const emptyIngredient: Ingredient =
   id: 0,
   name: "",
   ingredientCategory: { name: "" },
-  minimumStock: null as any,
-  currentStock: null as any,
+  minimumStock: "",
+  currentStock: "",
   measurementUnit: "",
-  costPrice: null as any,
+  costPrice: "",
 };
 
 const emptyDonation: ProductDetail = {
   ingredient: emptyIngredient,
-  quantity: null as any,
+  quantity: "",
   measurementUnit: "",
 };
 
@@ -126,12 +126,18 @@ const ModalAddProducts = ({
                 console.log("values", valuesProduct)
                 if (editing) {
                   dispatch(startLoading())
-                  postPutData(`/api/product`, "PUT", values)
-                  dispatch(updateProduct(valuesProduct))
+                  postPutData(`/api/product`, "PUT", values).then(
+                    () => {
+                      dispatch(updateProduct(valuesProduct))
+                    }
+                  )
                   dispatch(finishLoading())
                 } else {
-                  postPutData(`/api/product`, "POST", values)
-                  dispatch(addProduct(valuesProduct))
+                  postPutData(`/api/product`, "POST", values).then(
+                    () => {
+                      dispatch(addProduct(valuesProduct))
+                    }
+                  )
                 }
                 handleClose();
 
@@ -162,18 +168,18 @@ const ModalAddProducts = ({
                   productDetails: Yup.array(
                     Yup.object({
                       ingredient: Yup.object().shape({
-                        name: Yup.string(),
+                        name: Yup.string().required("Campo Requerido"),
                         ingredientCategory: Yup.object().shape({
                           id: Yup.number().required(),
-                          name: Yup.string().required().default("todos"),
+                          name: Yup.string().required("Campo Requerido"),
                         }),
                         minimumStock: Yup.number(),
                         currentStock: Yup.number(),
                         measurementUnit: Yup.string(),
                         costPrice: Yup.number(),
-                      }),
+                      }).required("Campo Requerido"),
                       quantity: Yup.number().required("Campo Requerido"),
-                      //measurementUnit: Yup.string().required("Campo Requerido"),
+                      measurementUnit: Yup.string().required("Campo Requerido"),
                     })
                   ).min(1, "Tiene que tener al menos un ingrediente"),
                 })}
@@ -238,6 +244,7 @@ export function FormikStepper({
 
   const { ProductCategory } = useAppSelector(state => state.productCategories)
   const [options, setOptions] = useState<any>([])
+
   function categorysProdToOptions() {
     const initialopcions = {
       value: "todos",
@@ -273,9 +280,39 @@ export function FormikStepper({
       })),
     ]);
   }
+
   useEffect(() => {
     categorysToOptions();
   }, [Ingredients]);
+
+  const [mesureUnit, setMesureUnit] = useState<string[]>([""])
+  const [optionsMesureUnit, setOptionsMesureUnit] = useState<any>([]);
+
+  function unitsToOptions() {
+    console.log(mesureUnit)
+    const initialopcions = {
+      value: "",
+      label: "",
+    };
+    setOptionsMesureUnit([
+      initialopcions,
+      ...mesureUnit.map((option, index) => ({
+        value: option,
+        label: option
+      })),
+    ]);
+  }
+
+
+  async function getMesureUnit() {
+    const data: string[] = await getData<string[]>("/api/enum/units")
+    setMesureUnit(data)
+    unitsToOptions()
+  }
+
+  useEffect(() => {
+    getMesureUnit()
+  }, [Ingredients])
 
   return (
     <Formik
@@ -400,14 +437,7 @@ export function FormikStepper({
                         <TextFieldSelect
                           label="Unidad de medida:"
                           name={`productDetails.${index}.measurementUnit`}
-                          options={[
-                            { value: "", label: "" },
-                            { value: "L", label: "Litro" },
-                            {
-                              value: "g",
-                              label: "gramo",
-                            },
-                          ]}
+                          options={optionsMesureUnit}
                         />
                       </Grid>
 

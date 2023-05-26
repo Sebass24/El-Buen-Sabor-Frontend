@@ -104,12 +104,18 @@ const ModalAddIngrediente = ({
               console.log(values)
               if (editing) {
                 dispatch(startLoading())
-                postPutData(`/api/ingredient`, "PUT", values)
-                dispatch(updateIngredient(values))
+                postPutData(`/api/ingredient`, "PUT", values).then(
+                  () => {
+                    dispatch(updateIngredient(values))
+                  }
+                )
                 dispatch(finishLoading())
               } else {
-                postPutData(`/api/ingredient`, "POST", values)
-                dispatch(addIngredient(values))
+                postPutData(`/api/ingredient`, "POST", values).then(
+                  () => {
+                    dispatch(addIngredient(values))
+                  }
+                )
               }
               handleClose();
             }}

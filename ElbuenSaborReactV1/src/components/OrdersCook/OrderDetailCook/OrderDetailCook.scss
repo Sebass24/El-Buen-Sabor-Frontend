@@ -1,0 +1,74 @@
+.title-Order-Cook {
+  width: 95%;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 2px solid black;
+}
+
+.Button_Back_Cook {
+  margin: 2rem 8rem 1rem 8rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ACocina {
+  grid-column: 1;
+  border: #F37E12;
+  background-color: #F37E12;
+  color: #fff;
+
+  &:hover {
+    background-color: #F37E12;
+    color: black;
+  }
+}
+
+.Products_Container {
+  display: flex;
+  justify-content: space-around;
+  width: 85%;
+  padding: 1rem 0rem;
+  margin: 1rem 0rem 0rem 0rem;
+  border-bottom: 1px solid grey;
+}
+
+.Products_Container_data {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  width: 85%;
+  padding: 1rem 0rem;
+  border-bottom: 1px solid grey;
+
+
+  & span {
+    display: flex;
+    justify-self: center;
+    align-self: center;
+  }
+}
+
+.OrderDetail_container {
+  display: grid;
+  grid-template-columns: .3fr 1fr;
+  margin-top: 1rem;
+
+  & .OrderDetail_recipe_container {
+    padding: 0rem 2rem;
+
+    & p {
+      margin-top: 1rem;
+    }
+  }
+
+  & .OrderDetail_ingredient_container {
+    padding: 0rem 2rem;
+    border-right: 1px solid grey;
+
+    & .OrderDetail_ingredient_container_units {
+      display: flex;
+      justify-content: space-between;
+      margin-top: .5rem;
+    }
+  }
+}

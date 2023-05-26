@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from '@app/Hooks';
 import { finishLoading, startLoading } from '@features/Loading/LoadingSlice';
 import Loading from 'components/Loading/Loading';
 import TextFildSelectValue from 'components/Inputs/TextFildSelectValue';
+import { postPutData } from 'components/GenericFetch/GenericFetch';
+import { addProductCategory, updateProductCategory } from '@features/ProductCategory/ProductCategorySlice';
 
 
 
@@ -46,12 +48,23 @@ export default function ModalAddCategoryProduct({ showModal, handleClose, editin
             initialValues={category ? category : initialValues}
             enableReinitialize={true}
             onSubmit={async (values) => {
-              dispatch(startLoading())
-              setTimeout(() => {
-                console.log(values);
-                handleClose();
+              if (editing) {
+                dispatch(startLoading())
+                postPutData(`/api/category`, "PUT", values).then(
+                  () => {
+                    dispatch(updateProductCategory(values))
+                  }
+                )
                 dispatch(finishLoading())
-              }, 1000);
+              } else {
+                postPutData(`/api/category`, "POST", values).then(
+                  () => {
+                    dispatch(addProductCategory(values))
+                  }
+                )
+              }
+              console.log(values);
+              handleClose();
             }}
           >
             {(Formik) =>

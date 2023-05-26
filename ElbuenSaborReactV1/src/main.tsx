@@ -6,6 +6,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
+import Loading from "components/Loading/Loading";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -14,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       clientId="smzKUEQwvdCTTg9RGvmKj9REsGRfweuK"
       authorizationParams={{
         redirect_uri: window.location.origin,
-        audience: "https://dev-a6tntsf5lyicxsfn.us.auth0.com/api/v2/",
+        audience: "https://buensaborapi",
       }}
     >
       <App />
