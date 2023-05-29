@@ -5,17 +5,15 @@ import OrderStatus from "./OrderStatus";
 import PaymentMethod from "./PaymentMethod";
 import OrderDetail from "./OrderDetail";
 
-
 export default interface Order extends Base {
-  deliveryMethod: DeliveryMethod;
+  deliveryMethod: DeliveryMethod | string;
   date: Date;
-  orderStatus: OrderStatus;
+  orderStatus: OrderStatus | string;
   estimatedTime: Date;
-  paymentMethod: PaymentMethod;
+  paymentMethod: PaymentMethod | string;
   paid: boolean;
-  user: User;
+  user: User | number;
   orderDetails: OrderDetail;
   total: number;
   discount: number;
 }
-

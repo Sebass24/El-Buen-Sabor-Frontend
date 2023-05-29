@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import Product from "@Models/Product/Product";
 import ProductCard from "./ProductCard";
 import "./Catalogue.scss";
-import { getProductsByCategory, getProductsByName, getProducts } from "components/APIfunctions";
+import { getProductsByName, getProducts, getProductsByCategory } from "../../../services/products";
 
 interface props {
     args: [string, string];

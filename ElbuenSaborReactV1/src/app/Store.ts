@@ -1,6 +1,5 @@
 import IngredientCategorySlice from "@features/IngredientCategory/IngredientCategorySlice";
 import IngredientSlice from "../features/Ingredients/IngredientsSlice";
-import Search from "@features/SearchProduct/Search";
 import LoadingSlice from "../features/Loading/LoadingSlice";
 import searchSlice from "../features/SearchProduct/Search";
 import { configureStore } from "@reduxjs/toolkit";
@@ -8,7 +7,7 @@ import ProductCategorySlice from "@features/ProductCategory/ProductCategorySlice
 import ProductSlice from "@features/ProductSlice/ProductSlice";
 import UserSlice from "@features/User/UserSlice";
 import OrderSlice from "@features/Orders/OrderSlice";
-import cartSlice from "@features/ShoppingCart/Cart";
+import cartProductsSlice from "@features/ShoppingCart/CartProducts";
 
 export const Store = configureStore({
   reducer: {
@@ -20,7 +19,7 @@ export const Store = configureStore({
     users: UserSlice,
     Order: OrderSlice,
     search: searchSlice,
-    cart: cartSlice
+    cartProducts: cartProductsSlice
   },
 });
 
