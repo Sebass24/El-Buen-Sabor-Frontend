@@ -123,7 +123,10 @@ export default function OrderDetailCook() {
         <Button
           className="ACocina"
           variant='warning'
-          onClick={() => (handleChangeState(Order, { id: 4, deleted: false, description: "Listo" }))}
+          onClick={() => {
+            handleChangeState(Order, { id: 4, deleted: false, description: "Listo" })
+            history.back()
+          }}
         >
           Listo
         </Button >

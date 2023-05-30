@@ -238,6 +238,7 @@ export default function OrderCookTable({ orders }: myProps) {
                           <Button
                             className="ACocina"
                             variant="warning"
+                            onClick={() => { }}
                           >
                             Listo
                           </Button>

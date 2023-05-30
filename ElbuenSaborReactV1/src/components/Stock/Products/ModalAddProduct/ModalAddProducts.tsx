@@ -37,6 +37,7 @@ import { getData, postPutData } from "components/GenericFetch/GenericFetch";
 import TextCheckBox from "components/Inputs/TextCheckBox";
 import TextFildSelectValue from "components/Inputs/TextFildSelectValue";
 import { addProduct, updateProduct } from "@features/ProductSlice/ProductSlice";
+import { MyDropzone } from "components/Inputs/DropFileInput";
 
 
 
@@ -85,6 +86,12 @@ const ModalAddProducts = ({
     productDetails: [emptyDonation],
   };
 
+  const [img, setImg] = useState<any>()
+
+  useEffect(() => {
+    setImg({})
+  }, [showModal])
+
   const loading = useAppSelector((state) => state.loading);
   const dispatch = useAppDispatch();
   return (
@@ -108,10 +115,12 @@ const ModalAddProducts = ({
         <Modal.Body>
           <div>
             <FormikStepper
+              setImg={setImg}
               initialValues={product ? product : initialValues}
               onSubmit={(values) => {
                 console.log(values);
                 const valuesProduct: Product = {
+                  id: product?.id,
                   name: values.name,
                   description: values.description,
                   shortDescription: values.shortDescription,
@@ -120,7 +129,7 @@ const ModalAddProducts = ({
                   available: values.available,
                   sellPrice: values.sellPrice,
                   cookingTime: values.cookingTime,
-                  image: { name: "", path: "" },
+                  image: undefined,
                   recipe: values?.recipe
                 }
                 console.log("values", valuesProduct)
@@ -215,7 +224,6 @@ export default ModalAddProducts;
 export interface FormikStepProps
   extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {
   label: string;
-  valuesOptions?: any;
 }
 
 export function FormikStep({ children }: FormikStepProps) {
@@ -224,12 +232,12 @@ export function FormikStep({ children }: FormikStepProps) {
 
 interface PropsForm extends FormikConfig<FormikValues> {
   children: React.ReactNode;
-  valuesOptions?: any;
+  setImg: React.Dispatch<any>
 }
 
 export function FormikStepper({
   children,
-  valuesOptions,
+  setImg,
   ...props
 }: PropsForm) {
   const childrenArray = React.Children.toArray(
@@ -285,34 +293,30 @@ export function FormikStepper({
     categorysToOptions();
   }, [Ingredients]);
 
-  const [mesureUnit, setMesureUnit] = useState<string[]>([""])
-  const [optionsMesureUnit, setOptionsMesureUnit] = useState<any>([]);
 
-  function unitsToOptions() {
-    console.log(mesureUnit)
+  const [optionsMesureUnit, setOptionsMesureUnit] = useState<any>([""]);
+
+
+  async function getMesureUnit() {
+    const data: string[] = await getData<string[]>("/api/enum/units")
     const initialopcions = {
       value: "",
       label: "",
     };
     setOptionsMesureUnit([
       initialopcions,
-      ...mesureUnit.map((option, index) => ({
+      ...data.map((option, index) => ({
         value: option,
         label: option
       })),
     ]);
   }
 
-
-  async function getMesureUnit() {
-    const data: string[] = await getData<string[]>("/api/enum/units")
-    setMesureUnit(data)
-    unitsToOptions()
-  }
-
   useEffect(() => {
     getMesureUnit()
   }, [Ingredients])
+
+
 
   return (
     <Formik
@@ -388,9 +392,12 @@ export function FormikStepper({
                 placeholder="Descripcion corta"
               />
               <TextCheckBox
-                label="Disponible"
+                label="No Disponible"
                 name="available"
                 placeholder="TiempoCocina"
+              />
+              <MyDropzone
+                setImg={setImg}
               />
 
             </div>

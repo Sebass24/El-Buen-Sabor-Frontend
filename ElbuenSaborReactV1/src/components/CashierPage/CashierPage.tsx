@@ -15,7 +15,6 @@ const CashierPage = () => {
 
   async function getOrders() {
     dispatch(fetchOrders())
-    console.log("pepe")
   }
 
   useEffect(() => {
@@ -26,7 +25,6 @@ const CashierPage = () => {
   const [search, setSearch] = useState("");
 
 
-  setInterval(getOrders, 60000)
 
   // const handleChange = (e: any) => {
   //   setSearch(e.target.value);

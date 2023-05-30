@@ -7,7 +7,6 @@ export default function OrderCook() {
 
   const [order, setOrder] = useState<Orders[]>([]);
   async function getOrders() {
-    console.log("pepe2")
     const data: Orders[] = await getData<Orders[]>("/api/order/byStatus/En cocina");
     setOrder(data)
   }

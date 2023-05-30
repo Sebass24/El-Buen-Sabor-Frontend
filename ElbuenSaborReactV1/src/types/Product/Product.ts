@@ -13,6 +13,6 @@ export default interface Product extends Base {
   productCategory: ProductCategory;
   productDetails?: ProductDetail[];
   sellPrice: number | "";
-  image: Image;
+  image?: Image;
   recipe?: Recipe;
 }

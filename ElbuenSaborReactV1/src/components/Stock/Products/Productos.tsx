@@ -8,26 +8,32 @@ import Products from "@Models/Product/Product";
 import { getData } from "components/GenericFetch/GenericFetch";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { fetchProducts } from "@features/ProductSlice/ProductThunk";
+import { setProducts } from "@features/ProductSlice/ProductSlice";
+import Product from "@Models/Product/Product";
 
 const Productos = () => {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => {
     setShowModal(false);
   };
-
   const { Products } = useAppSelector(state => state.product)
-
-  const [search, setSearch] = useState("");
   const dispatch = useAppDispatch()
+
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
 
-  // const handleChange = (e: any) => {
-  //   setSearch(e.target.value);
-  //   filter(e.target.value);
-  // };
+  async function getProductsSearch(name: string) {
+    if (name !== "") {
+      const data: Product[] = await getData<Product[]>(`/api/product/name/${name}`);
+      dispatch(setProducts(data))
+    } else {
+      dispatch(fetchProducts())
+    }
+  }
+
 
   // const filter = (serchParam: string) => {
   //   var serchResult = Products.filter((productVal: Products) => {
@@ -64,11 +70,16 @@ const Productos = () => {
         <div className="Container_input">
           <input
             placeholder="Busqueda"
+            onChange={(event) => {
+              setSearch(event.target.value)
+              if (event.target.value === "") {
+                dispatch(fetchProducts())
+              }
+            }}
             className="busqueda_comida"
-            value={search} onChange={(e) => (setSearch(e.target.value))}
             onKeyUp={(event) => {
               if (event.key === "Enter") {
-                // handleChange(event);
+                getProductsSearch(search)
               }
             }}
           ></input>
