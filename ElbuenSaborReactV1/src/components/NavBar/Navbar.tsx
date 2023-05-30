@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "./Logo/Logo";
 import ShoppingCartIcon from "./ShoppingCartIcon/ShoppingCartIcon";
 import { LoginButton } from "./LoginButton/LoginButton";
+import { Link } from "react-router-dom";
 
 
 library.add(faUser);
@@ -31,9 +32,9 @@ export default function NavigationBar() {
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav'>
             <Nav style={{ position: 'relative' }}>
-              <Nav.Link href="/">Contactanos</Nav.Link>
-              <Nav.Link href="/">Catálogo</Nav.Link>
-              <Nav.Link href="/">Sobre nosotros</Nav.Link>
+              <Link to="/" className="link"><span className="nav-link">Contactanos</span></Link>
+              <Link to="/" className="link"><span className="nav-link">Catálogo</span></Link>
+              <Link to="/" className="link"><span className="nav-link">Sobre nosotros</span></Link>
             </Nav>
             {isSmallScreen && <LoginButton />}
           </Navbar.Collapse>

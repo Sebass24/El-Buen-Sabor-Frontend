@@ -1,9 +1,9 @@
 import Base from "@Models/Base";
-import DeliveryMethod from "./DeliveryMethod";
-import OrderStatus from "./OrderStatus";
-import paymentMethod from "./PaymentMethod";
 import User from "@Models/user/User";
-import OrderDetail from "./OrderDetail";
+import DeliveryMethod from "@Models/Orders/DeliveryMethod";
+import OrderStatus from "@Models/Orders/OrderStatus";
+import paymentMethod from "@Models/Orders/PaymentMethod";
+import OrderDetail from "@Models/Orders/OrderDetail";
 
 export default interface Orders extends Base {
   deliveryMethod: DeliveryMethod

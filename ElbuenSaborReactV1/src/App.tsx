@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Provider } from "react-redux";
 import IndexRouter from "./routers/IndexRouter";
 // import { store } from "./App/store";

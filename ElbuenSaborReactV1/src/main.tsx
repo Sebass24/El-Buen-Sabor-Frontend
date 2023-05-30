@@ -6,7 +6,6 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
-import Loading from "components/Loading/Loading";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

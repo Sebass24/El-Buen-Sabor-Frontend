@@ -5,13 +5,14 @@ import { useState, useEffect } from "react";
 import "./ProductDetail.scss";
 import ProductQuantitySelector from "./ProductQuantitySelector";
 import { getProductById } from "../../../services/products";
-import { useAppDispatch } from "@app/Hooks";
-import OrderDetail from "@Models/orders/OrderDetail";
-import { addProduct } from "@features/ShoppingCart/CartProducts";
+import { useAppDispatch, useAppSelector } from "@app/Hooks";
+import OrderDetail from "@Models/Orders/OrderDetail";
+import { addProduct, setTotalPrice } from "@features/ShoppingCart/CartProducts";
 import { openRestaurant } from "./WorkingSchedule";
 
 export default function ProductDetail() {
     const dispatch = useAppDispatch();
+    const { orderDetails } = useAppSelector(state => state.cartProducts.order);
 
     const { idproduct } = useParams();
     const [product, setProduct] = useState<Product>();
@@ -51,8 +52,9 @@ export default function ProductDetail() {
     const handleAddToCart = (p: Product, quantity: number) => {
         //if (openRestaurant(new Date())) {
         if (openRestaurant(today)) {
-            const order: OrderDetail = { product: p, quantity };
-            dispatch(addProduct(order));
+            const newOrder: OrderDetail = { product: p, quantity };
+            dispatch(addProduct(newOrder));
+            dispatch(setTotalPrice(orderDetails));
         } else {
             handleModal();
         }
