@@ -8,6 +8,7 @@ import ProductSlice from "@features/ProductSlice/ProductSlice";
 import UserSlice from "@features/User/UserSlice";
 import OrderSlice from "@features/Orders/OrderSlice";
 import cartProductsSlice from "@features/ShoppingCart/CartProducts";
+import { loadState } from "./BrowserStorage";
 
 export const Store = configureStore({
   reducer: {
@@ -20,6 +21,9 @@ export const Store = configureStore({
     Order: OrderSlice,
     search: searchSlice,
     cartProducts: cartProductsSlice
+  },
+  preloadedState: {
+    cartProducts: loadState().cartProducts  // Only include the cartProducts slice
   },
 });
 
