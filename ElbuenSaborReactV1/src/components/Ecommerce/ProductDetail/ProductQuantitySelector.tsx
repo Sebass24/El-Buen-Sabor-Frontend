@@ -3,10 +3,9 @@ import "./ProductQuantitySelector.scss";
 interface ProductQuantitySelectorProps {
     quantity: number;
     onChange: (value: number) => void;
-    disabled: boolean;
 }
 
-const ProductQuantitySelector: React.FC<ProductQuantitySelectorProps> = ({ quantity, onChange, disabled }) => {
+const ProductQuantitySelector: React.FC<ProductQuantitySelectorProps> = ({ quantity, onChange }) => {
     const handleDecrement = () => {
         if (quantity > 1) {
             onChange(quantity - 1);
@@ -19,9 +18,9 @@ const ProductQuantitySelector: React.FC<ProductQuantitySelectorProps> = ({ quant
 
     return (
         <span className="quantity-selector">
-            <button className="button2" onClick={handleDecrement} disabled={disabled}>-</button>
+            <button className="button2" onClick={handleDecrement}>-</button>
             <span className="quantity">{quantity}</span>
-            <button className="button2" onClick={handleIncrement} disabled={disabled}>+</button>
+            <button className="button2" onClick={handleIncrement}>+</button>
         </span>
     );
 };

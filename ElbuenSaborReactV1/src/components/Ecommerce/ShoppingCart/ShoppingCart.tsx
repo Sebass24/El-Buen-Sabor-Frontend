@@ -1,4 +1,4 @@
-import { Button, Row } from "react-bootstrap";
+import { Button, Container, Row } from "react-bootstrap";
 import "./ShoppingCart.scss";
 import { useAppSelector } from "@app/Hooks";
 import ShoppingCartProductDetail from "./ShoppingCartProductDetail";
@@ -71,12 +71,14 @@ export default function ShoppingCart() {
                         </>
                         :
                         <>
-                            <OrderTotalPrice />
-                            <Button
-                                className={"btn-cart"}
-                                onClick={handleOrderLogin}>
-                                Continuar
-                            </Button>
+                            <Container>
+                                <OrderTotalPrice />
+                                <Button
+                                    className={"btn-cart"}
+                                    onClick={handleOrderLogin}>
+                                    Continuar
+                                </Button>
+                            </Container>
                         </>}
                 </div>
             </div>

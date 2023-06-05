@@ -13,7 +13,7 @@ export async function saveState(state: any) {
     try {
         const serializedState = JSON.stringify(state);
         localStorage.setItem(KEY, serializedState);
-    } catch (e) {
-        // Ignore
+    } catch (error) {
+        throw Error("Couldn't save state.");
     }
 }

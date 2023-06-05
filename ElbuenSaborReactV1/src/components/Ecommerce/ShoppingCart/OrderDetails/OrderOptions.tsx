@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { setDeliveryMethod, setPaymentMethod } from "@features/ShoppingCart/CartProducts";
-import { useState, useEffect, ChangeEvent } from "react";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ChangeEvent } from "react";
+import { Form } from "react-bootstrap";
 import DeliveryInfo from "./DeliveryInfo";
 import OrderTotalPrice from "./OrderTotalPrice";
+import "./OrderOptions.scss";
 
 interface FormValues {
     telefono: string;
@@ -37,67 +38,57 @@ export default function OrderOptions() {
     };
 
     return (
-        <div>
+        <div className="order-options">
             <OrderTotalPrice />
             <hr className="straight-line" />
-            <span>
-                <span>Seleccionar</span>
-                <label>
-                    <input
-                        type="radio"
-                        value="Retiro en el local"
-                        checked={order.deliveryMethod === 'Retiro en el local'}
-                        onChange={handleDeliveryMethodChange}
-                    />
-                    Retiro en el local
-                </label>
-                <label>
-                    <input
-                        type="radio"
-                        value="Envío a domicilio"
-                        checked={order.deliveryMethod === 'Envío a domicilio'}
-                        onChange={handleDeliveryMethodChange}
-                    />
-                    Envío a domicilio
-                </label>
-            </span><br />
+            <div className="delivery-options">
+                <label>Seleccionar:</label>
+                <Form.Check
+                    type="radio"
+                    label="Retiro en el local"
+                    value="Retiro en el local"
+                    checked={order.deliveryMethod === 'Retiro en el local'}
+                    onChange={handleDeliveryMethodChange}
+                />
+                <Form.Check
+                    type="radio"
+                    label="Envío a domicilio"
+                    value="Envío a domicilio"
+                    checked={order.deliveryMethod === 'Envío a domicilio'}
+                    onChange={handleDeliveryMethodChange}
+                />
+            </div>
             {order.deliveryMethod === "Envío a domicilio" ?
                 <DeliveryInfo />
                 : ("")}
             <hr className="straight-line" />
             {order.deliveryMethod === "Retiro en el local" ?
                 (<span>
-                    <span>Forma de pago:</span><br />
-                    <label>
-                        <input
-                            type="radio"
-                            value="Efectivo"
-                            checked={order.paymentMethod === 'Efectivo'}
-                            onChange={handlePaymentMethodChange}
-                        />
-                        Efectivo
-                    </label><br />
-                    <label>
-                        <input
-                            type="radio"
-                            value="Mercado Pago"
-                            checked={order.paymentMethod === 'Mercado Pago'}
-                            onChange={handlePaymentMethodChange}
-                        />
-                        Mercado Pago
-                    </label>
+                    <label>Forma de pago:</label><br />
+                    <Form.Check
+                        type="radio"
+                        label="Efectivo"
+                        value="Efectivo"
+                        checked={order.paymentMethod === 'Efectivo'}
+                        onChange={handlePaymentMethodChange}
+                    />
+                    <Form.Check
+                        type="radio"
+                        label="Mercado Pago"
+                        value="Mercado Pago"
+                        checked={order.paymentMethod === 'Mercado Pago'}
+                        onChange={handlePaymentMethodChange}
+                    />
                 </span>)
                 : (<span>
-                    <span>Forma de pago:</span><br />
-                    <label>
-                        <input
-                            type="radio"
-                            value="Mercado Pago"
-                            checked={order.paymentMethod === 'Mercado Pago'}
-                            onChange={handlePaymentMethodChange}
-                        />
-                        Mercado Pago
-                    </label>
+                    <label>Forma de pago:</label>
+                    <Form.Check
+                        type="radio"
+                        label="Mercado Pago"
+                        value="Mercado Pago"
+                        checked={order.paymentMethod === 'Mercado Pago'}
+                        onChange={handlePaymentMethodChange}
+                    />
                 </span>)}
         </div>
     )

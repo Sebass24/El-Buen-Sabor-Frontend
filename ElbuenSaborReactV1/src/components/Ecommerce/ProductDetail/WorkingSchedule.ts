@@ -1,9 +1,8 @@
 import { isWeekend, isWithinInterval, parse } from 'date-fns';
 
+//pruebas de fechas y horarios
 // Obtener el día de la semana actual
 const date = new Date();
-
-//pruebas de fechas y horarios
 // Establecer el día de la semana en sábado
 date.setDate(date.getDate() + (6 - date.getDay()));
 // Establecer la hora en 21:00

@@ -2,6 +2,7 @@ import Address from '@Models/Users/Address';
 import Phone from '@Models/Users/Phone';
 import { Form, Col } from "react-bootstrap";
 import { ChangeEvent } from "react";
+import "./DeliveryInfo.scss";
 
 export default function DeliveryInfo() {
     //fetch de direcciones y telefonos del usuario
@@ -19,12 +20,12 @@ export default function DeliveryInfo() {
     }
 
     return (
-        <div>
+        <div className="delivery-options">
             <Form>
                 <Form.Group as={Col} controlId="address">
                     <Form.Label>Dirección:</Form.Label>
                     <Form.Control as="select" onChange={(e) => { handleAddressChange }}>
-                        <option value="">Choose an option</option>
+                        <option value="">Elegir</option>
                         {addresses.map((option) => (
                             <option key={option.id} value={option.id}>
                                 {option.street} {option.number} {option.location.name}
@@ -36,7 +37,7 @@ export default function DeliveryInfo() {
                 <Form.Group as={Col} controlId="phone">
                     <Form.Label>Teléfono:</Form.Label>
                     <Form.Control as="select" onChange={(e) => { handlePhoneChange }}>
-                        <option value="">Choose an option</option>
+                        <option value="">Elegir</option>
                         {phones.map((option) => (
                             <option key={option.id} value={option.id}>
                                 {option.number}
@@ -45,6 +46,7 @@ export default function DeliveryInfo() {
                     </Form.Control>
                     {/* nuevo telefono */}
                 </Form.Group>
+
             </Form>
         </div>
     )

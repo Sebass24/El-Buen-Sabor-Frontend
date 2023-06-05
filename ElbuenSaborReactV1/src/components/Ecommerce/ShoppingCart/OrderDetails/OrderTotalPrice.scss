@@ -5,26 +5,17 @@
     font-family: "inter", sans-serif;
 }
 
-.order-options {
+.order-total-price-info {
     display: flex;
     flex-direction: column;
     width: 100%;
 
     label {
-        font-size: 0.9rem;
+        font-size: .9rem;
     }
 
-    .delivery-options {
+    .separator {
         display: flex;
-        flex-direction: column;
-    }
-
-    .form-check-input:checked {
-        background-color: #A60202;
-        border-color: #A60202;
-    }
-
-    .straight-line {
-        width: 100%;
+        justify-content: space-between;
     }
 }

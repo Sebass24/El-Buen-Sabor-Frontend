@@ -47,14 +47,14 @@ $button-color: #FFE145;
         }
 
         .order-options-container {
-            padding: 1rem;
+            padding: 2rem;
             width: 30%;
-            height: auto;
+            height: fit-content;
             border: 1px solid rgb(196, 196, 196);
             border-radius: .5rem;
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: flex-start;
         }
     }
 

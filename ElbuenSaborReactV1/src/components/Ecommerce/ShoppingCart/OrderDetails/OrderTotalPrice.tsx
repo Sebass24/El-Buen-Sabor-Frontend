@@ -1,5 +1,6 @@
 import { useAppSelector } from "@app/Hooks";
 import { useState, useEffect } from "react";
+import "./OrderTotalPrice.scss";
 
 export default function OrderTotalPrice() {
 
@@ -16,18 +17,23 @@ export default function OrderTotalPrice() {
     }, [order]);
 
     return (
-        <div>
-            <span>{totalProducts} artículos</span>
-            <span>${order.total}</span><br />
-            <span>Descuento</span>
-            <span>{order.discount === 0 ?
-                ("---") :
-                `$${order.discount}`}
-            </span><br />
-            <span>Total</span>
-            <span>{order.discount === 0 ?
-                `$${order.total}` :
-                `$${order.total - order.discount}`}</span><br />
+        <div className="order-total-price-info">
+            <div className="separator">
+                <label className="total-products">{totalProducts} artículos</label>
+                <label>${order.total}</label>
+            </div>
+            <div className="separator">
+                <label>Descuento</label>
+                <label>{order.discount === 0 ?
+                    ("---") :
+                    `$${order.discount}`}
+                </label></div>
+            <div className="separator">
+                <label><strong>Total:</strong></label>
+                <label><strong>{order.discount === 0 ?
+                    `$${order.total}` :
+                    `$${order.total - order.discount}`}</strong></label>
+            </div>
         </div>
     )
 }
