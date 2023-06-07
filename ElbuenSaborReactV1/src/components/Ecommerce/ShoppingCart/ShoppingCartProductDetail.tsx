@@ -26,12 +26,12 @@ export default function ShoppingCartProductDetail({ order, enabled }: props) {
     const handleModifyProduct = (newQuantity: number) => {
         const updatedOrder: OrderDetail = { ...order, quantity: newQuantity };
         dispatch(modifyProductQuantity(updatedOrder));
-        dispatch(setTotalPrice(orderDetails));
+        dispatch(setTotalPrice());
     };
 
     const handleDeleteProduct = (id: number) => {
         dispatch(deleteProduct(id));
-        dispatch(setTotalPrice(orderDetails));
+        dispatch(setTotalPrice());
     };
 
     return (
@@ -44,7 +44,7 @@ export default function ShoppingCartProductDetail({ order, enabled }: props) {
                     <label className="cart-product-price">${order.product.sellPrice}</label>
                 </div>
                 <div className="cart-quantity-container">
-                    <span className="quantity-cart-container quantity-selector-cart quantity-cart"><ProductQuantitySelector quantity={cartQuantity} onChange={handleQuantityChange} disabled={enabled} /></span>
+                    <span className="quantity-cart-container quantity-selector-cart quantity-cart"><ProductQuantitySelector quantity={cartQuantity} onChange={handleQuantityChange} /></span>
                     <span className="amount-cart">${order.product.sellPrice! as number * cartQuantity}</span>
                     <span className="delete-button">
                         <button className="button2" onClick={(e) => { handleDeleteProduct(order.product.id as number) }} disabled={enabled}>x</button>

@@ -1,4 +1,4 @@
-import { useAuth0 } from '@auth0/auth0-react';
+import { User, useAuth0 } from '@auth0/auth0-react';
 import React from 'react';
 import "./AdminBar.scss";
 import LogOutAuth from './LogOutAuth';
@@ -12,22 +12,10 @@ interface title {
 
 const AdminBar: React.FC<title> = ({ title }) => {
   const { isAuthenticated } = useAuth0()
+
   return (
     <div className="navBar_Container_admin">
       <Logo />
-      {/* <div className="Arow_container_admin">
-        <div className="arrowBottom_admin">
-          <div className="imgLogo_admin"></div>
-        </div>
-      </div> */}
-      {/* <div className="LogContainer">
-
-            <LogOutAuth />
-            <div className="MyAccount">
-              <Profile />
-              <FontAwesomeIcon icon={faUser} />
-            </div>
-          </div> */}
       <div className="Container_RightNavBar_admin">
         {isAuthenticated ?
           <Dropdown>

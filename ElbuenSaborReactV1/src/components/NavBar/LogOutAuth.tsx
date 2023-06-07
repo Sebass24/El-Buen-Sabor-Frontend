@@ -15,7 +15,7 @@ const LogOutAuth = () => {
         logout({ logoutParams: { returnTo: window.location.origin } })
       }
     >
-      Log Out
+      Cerrar sesión
     </span>
   );
 };

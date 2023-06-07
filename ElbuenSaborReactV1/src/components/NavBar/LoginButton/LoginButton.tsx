@@ -15,6 +15,7 @@ library.add(faUser);
 
 export const LoginButton = () => {
     const { isAuthenticated } = useAuth0();
+
     return (
         <div className="Container_RightNavBar">
             {isAuthenticated ?

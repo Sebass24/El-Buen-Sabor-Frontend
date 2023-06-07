@@ -1,4 +1,4 @@
-import Base from "@Models/Base";
+/* import Base from "@Models/Base";
 import Role from "./Role";
 
 export default interface User extends Base {
@@ -8,4 +8,4 @@ export default interface User extends Base {
   password: string;
   role: Role
 
-}
+} */

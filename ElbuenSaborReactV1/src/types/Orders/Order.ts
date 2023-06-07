@@ -14,7 +14,7 @@ export default interface Order extends Base {
   estimatedTime: Date;
   paymentMethod: PaymentMethod | string;
   paid: boolean;
-  user: User | number;
+  user: User | string;
   orderDetails: OrderDetail[];
   total: number;
   discount: number;
