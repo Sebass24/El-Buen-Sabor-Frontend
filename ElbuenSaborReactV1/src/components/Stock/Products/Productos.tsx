@@ -34,32 +34,6 @@ const Productos = () => {
     }
   }
 
-
-  // const filter = (serchParam: string) => {
-  //   var serchResult = Products.filter((productVal: Products) => {
-  //     if (
-  //       productVal.name
-  //         .toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       productVal.productCategory
-  //         ?.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       productVal.sellPrice
-  //         .toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       productVal.cookingTime
-  //         ?.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase())
-  //     )
-  //       return productVal;
-  //   });
-  //   setProduct(serchResult);
-  // };
-
   return (
     <div className="Container_Ingredientes">
       <div className="actions_Ingredientes">
@@ -85,7 +59,10 @@ const Productos = () => {
           ></input>
           <i
             className="fa-solid fa-magnifying-glass"
-            style={{ color: "black" }}
+            onClick={() => {
+              getProductsSearch(search)
+            }}
+            style={{ color: "black", cursor: "pointer" }}
           ></i>
         </div>
       </div>

@@ -11,73 +11,66 @@ export default function Billing() {
     const data: Orders[] = await getData<Orders[]>("/api/order");
     setOrder(data)
   }
+  const [estado, setEstado] = useState("")
+
+  async function getOrdersSearch(id: number) {
+    if (id || estado !== "") {
+      const data: Orders[] = await getData<Orders[]>(`/api/order/byStatusAndID?status=${estado}&id=${isNaN(id) ? 0 : id}`);
+      setOrder(data)
+    } else {
+      getOrders()
+    }
+  }
+  useEffect(() => {
+    getOrdersSearch(search)
+  }, [estado]);
 
   useEffect(() => {
     getOrders()
   }, [])
 
-  const [search, setSearch] = useState("");
-
-
-  // const [orderComplete, setOrderComplete] = useState<cashierOrder[]>(productosPrueba);
-  // const handleChange = (e: any) => {
-  //   setSearch(e.target.value);
-  //   filter(e.target.value);
-  // };
-
-
-  // const filter = (serchParam: string) => {
-  //   var serchResult = orderComplete.filter((productVal: cashierOrder) => {
-  //     if (
-  //       productVal.IdPedido.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       productVal.FechaPedido?.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       productVal.FormaEntrega.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       productVal.FormaPago.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       productVal.Pagado.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       productVal.Estado.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase())
-  //     )
-  //       return productVal;
-  //   });
-  //   setOrder(serchResult);
-  // };
-
+  const [search, setSearch] = useState<number>("" as any);
 
   return (
     <div >
       <div className='Filter_Container'>
         <div>
           <span>Estado: </span>
-          <select className='Select_nivelStock'>
-            <option>Todos</option>
-            <option>Faltante</option>
-            <option>Optimo</option>
-            <option>Pedir</option>
+          <select className="Select_nivelStock" value={estado} onChange={(e) => { setEstado(e.target.value) }}>
+            <option value={""}>Todos</option>
+            <option value={"A Confirmar"}>A Confirmar</option>
+            <option value={"En Cocina"}>En Cocina</option>
+            <option value={"En Delivery"}>En Delivery</option>
+            <option value={"Listo"}>Listo</option>
+            <option value={"Entregado"}>Entregado</option>
+            <option value={"Cancelado"}>Cancelado</option>
           </select>
         </div>
         <div className="Container_input">
           <input
-            placeholder="Busqueda"
+            placeholder="Busqueda por id"
+            onChange={(event) => {
+              setSearch(parseInt(event.target.value))
+              if (event.target.value === "") {
+                getOrdersSearch(search)
+              }
+            }}
+            type='number'
             className="busqueda_comida"
-            value={search}
-            onChange={(e) => { setSearch(e.target.value) }}
             onKeyUp={(event) => {
               if (event.key === "Enter") {
-                // handleChange(event);
+                getOrdersSearch(search)
               }
-            }}></input>
-          <i className="fa-solid fa-magnifying-glass" style={{ color: "black" }}></i>
+            }}
+          ></input>
+          <i
+            className="fa-solid fa-magnifying-glass"
+            onClick={() => {
+              getOrdersSearch(search)
+            }}
+            style={{ color: "black", cursor: "pointer" }}
+          ></i>
+
         </div>
       </div>
       <div className='Container_Cashier_Table'>

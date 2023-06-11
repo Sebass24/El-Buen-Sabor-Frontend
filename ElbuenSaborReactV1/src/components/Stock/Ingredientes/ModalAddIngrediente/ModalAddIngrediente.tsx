@@ -132,11 +132,13 @@ const ModalAddIngrediente = ({
                 )
                 dispatch(finishLoading())
               } else {
+                dispatch(startLoading())
                 postPutData(`/api/ingredient`, "POST", values).then(
                   () => {
                     dispatch(addIngredient(values))
                   }
                 )
+                dispatch(finishLoading())
               }
               handleClose();
             }}

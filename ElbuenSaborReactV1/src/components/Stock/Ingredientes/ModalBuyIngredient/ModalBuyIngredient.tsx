@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import * as Yup from "yup";
 // import { validacionIngredientes, ingredientesBase } from './DatosForm';
@@ -10,6 +10,13 @@ import TextFieldValue from '../../../Inputs/TextFieldValue';
 import TextFieldSelect from '../../../Inputs/TextFieldSelect';
 import { FormikHelpers } from 'formik';
 import IngredientBuy from '@Models/Product/IngredientBuy';
+import { useAppDispatch, useAppSelector } from '@app/Hooks';
+import TextFildSelectValue from 'components/Inputs/TextFildSelectValue';
+import Ingredient from '@Models/Product/Ingredient';
+import { postPutData } from 'components/GenericFetch/GenericFetch';
+import { addIngredient, updateIngredient } from '@features/Ingredients/IngredientsSlice';
+import { current } from '@reduxjs/toolkit';
+import { finishLoading, startLoading } from '@features/Loading/LoadingSlice';
 
 interface props {
   showModal: boolean;
@@ -17,11 +24,42 @@ interface props {
   setShowModalNew: any;
   handleCloseNew: () => void;
 }
-
+const emptyIngredient: Ingredient =
+{
+  id: 0,
+  name: "",
+  ingredientCategory: { name: "" },
+  minimumStock: "",
+  currentStock: "",
+  measurementUnit: "",
+  costPrice: "",
+};
 export default function ModalBuyIngredient({ showModal, handleClose, handleCloseNew, setShowModalNew }: props) {
 
+  const dispatch = useAppDispatch()
+  const { Ingredients } = useAppSelector((state) => state.ingredients);
+
+  const [optionsIngredients, setOptionsIngredients] = useState<any>([]);
+  function categorysToOptions() {
+    const initialopcions = {
+      value: "",
+      label: "",
+    };
+    setOptionsIngredients([
+      initialopcions,
+      ...Ingredients.map((option, index) => ({
+        value: option.id?.toString(),
+        label: option.name,
+      })),
+    ]);
+  }
+
+  useEffect(() => {
+    categorysToOptions();
+  }, [Ingredients]);
+
   const initialValues: IngredientBuy = {
-    Ingredient: "",
+    ingredient: emptyIngredient,
     Cuantity: null as any,
     PriceCost: null as any
   }
@@ -40,13 +78,36 @@ export default function ModalBuyIngredient({ showModal, handleClose, handleClose
         <Modal.Body>
           <Formik
             validationSchema={Yup.object({
-              Ingredient: Yup.string().required("*Campo requerido"),
+              ingredient: Yup.object().shape({
+                name: Yup.string().required("Campo Requerido"),
+                ingredientCategory: Yup.object().shape({
+                  id: Yup.number().required(),
+                  name: Yup.string().required("Campo Requerido"),
+                }),
+                minimumStock: Yup.number(),
+                currentStock: Yup.number(),
+                measurementUnit: Yup.string(),
+                costPrice: Yup.number(),
+              }).required("Campo Requerido"),
               Cuantity: Yup.number().required("*Campo requerido"),
               PriceCost: Yup.number().required("*Campo requerido"),
             })}
             initialValues={initialValues}
             enableReinitialize={true}
             onSubmit={async (values) => {
+
+              const ingredienteEdit: Ingredient = {
+                ...values.ingredient, currentStock: values.Cuantity + values.ingredient.currentStock,
+                costPrice: values.PriceCost
+              }
+
+              dispatch(startLoading())
+              postPutData(`/api/ingredient`, "PUT", ingredienteEdit).then(
+                () => {
+                  dispatch(updateIngredient(ingredienteEdit))
+                }
+              )
+              dispatch(finishLoading())
               handleClose()
             }}
           >
@@ -55,18 +116,21 @@ export default function ModalBuyIngredient({ showModal, handleClose, handleClose
               <>
                 <Form autoComplete="off" className="form-obraAlta">
                   <div >
-                    <TextFieldSelect
+                    <TextFildSelectValue
                       label="Ingrediente:"
-                      name="Ingredient"
-                      options={[
-                        { value: '', label: "" },
-                        { value: '1', label: "papa" },
-                        {
-                          value: "2",
-                          label: "cebolla",
-                        },
-                        { value: "10", label: "queso" },
-                      ]}
+                      name={`ingredient`}
+                      options={optionsIngredients}
+                      onChange={(event: any) => {
+                        let ingredient = Ingredients.filter((ingre) => {
+                          return ingre.id?.toString() == event.target.value
+                        })
+                        if (ingredient.length === 0) {
+                          ingredient = [emptyIngredient]
+                        }
+                        Formik.setFieldValue(`ingredient`, ingredient[0]);
+                      }}
+                      value={Formik.values.ingredient.id?.toString()}
+
                     />
                     <TextFieldValue
                       label="Cantidad:"

@@ -13,7 +13,7 @@ function ProductCard({ args }: props) {
     <>
       <Card className='card'>
         <Link to={`/productDetail/${args.id}`}>
-          <Card.Img variant="top" className="product-image img-fluid mx-auto d-block" src={`../Images/${args.image.path}`} />
+          <Card.Img variant="top" className="product-image img-fluid mx-auto d-block" src={`../Images/${args.image?.path}`} />
         </Link>
         <Card.Body>
           <Card.Title className="card-title">{args.name}</Card.Title>

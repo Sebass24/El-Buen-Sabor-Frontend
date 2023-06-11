@@ -18,6 +18,11 @@ import {
 } from "@mui/material";
 import { Button } from "react-bootstrap";
 import Orders from '@Models/orders/Orders';
+import OrderStatus from '@Models/orders/OrderStatus';
+import { finishLoading, startLoading } from '@features/Loading/LoadingSlice';
+import { useAppDispatch } from '@app/Hooks';
+import { postPutData } from 'components/GenericFetch/GenericFetch';
+import { updateOrder } from '@features/Orders/OrderSlice';
 
 
 
@@ -204,7 +209,17 @@ export default function BillingTable({ orders }: myProps) {
     month: "2-digit",
     day: "2-digit",
   };
-
+  const dispatch = useAppDispatch()
+  function handleChangeState(order: Orders, status: OrderStatus) {
+    const neworder = { ...order, "orderStatus": status }
+    dispatch(startLoading())
+    postPutData(`/api/order`, "PUT", neworder).then(
+      () => {
+        dispatch(updateOrder(neworder))
+      }
+    )
+    dispatch(finishLoading())
+  }
 
   return (
     <div className="container_tabla">
@@ -270,12 +285,24 @@ export default function BillingTable({ orders }: myProps) {
                           >
                             Ver Factura
                           </Button>
-                          <Button
-                            className="Anular"
-                            variant="danger"
-                          >
-                            Anular
-                          </Button>
+                          {
+                            order.orderStatus.description !== "Cancelado" ?
+                              <Button
+                                className="Anular"
+                                variant="danger"
+                                onClick={() => (handleChangeState(order, { id: 6, deleted: false, description: "Cancelado" }))}
+                              >
+                                Anular
+                              </Button>
+
+                              : <Button
+                                className="Anular"
+                                variant="warning"
+                                onClick={() => (handleChangeState(order, { id: 6, deleted: false, description: "Cancelado" }))}
+                              >
+                                Ver Nota
+                              </Button>
+                          }
                         </div>
                       </TableCell>
                     </TableRow>

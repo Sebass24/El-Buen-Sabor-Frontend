@@ -194,6 +194,10 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
   const [showModal, setShowModal] = React.useState(false);
   const [ingredientEdit, setIngredientEdit] = React.useState<Ingredient>();
 
+  useEffect(() => {
+    setPage(0)
+  }, [Ingredients])
+
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === "asc";
     setOrderBy(property);
@@ -227,8 +231,8 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
         <TableContainer>
           <Table
             className="table"
-            // aria-labelledby="tableTitle"
-            // aria-label="enhanced table"
+          // aria-labelledby="tableTitle"
+          // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -263,14 +267,16 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
                         {ingrediente.measurementUnit}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {ingrediente.currentStock < ingrediente.minimumStock ? (
-                          <p>Faltante</p>
-                        ) : ingrediente.currentStock >
-                          ingrediente.minimumStock % 20 ? (
-                          <p>Optimo</p>
-                        ) : (
-                          <p>Pedir</p>
-                        )}
+                        {
+
+                          ingrediente.currentStock < ingrediente.minimumStock ? (
+                            <p>Faltante</p>
+                          ) : ingrediente.currentStock >
+                            ingrediente.minimumStock * 1.2 ? (
+                            <p>Optimo</p>
+                          ) : (
+                            <p>Pedir</p>
+                          )}
                       </TableCell>
                       {/* <TableCell className="tableCell">
                           {ingrediente.Estado}

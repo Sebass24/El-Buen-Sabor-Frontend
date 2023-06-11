@@ -11,6 +11,9 @@ import {
 import { Bar } from "react-chartjs-2";
 import "./ChartStatistics.scss"
 import { Button } from "react-bootstrap";
+import { getData } from "components/GenericFetch/GenericFetch";
+import User from "@Models/user/User";
+import NotResult from "components/404/NotResult";
 
 ChartJS.register(
   CategoryScale,
@@ -36,40 +39,6 @@ export const options = {
   },
 };
 
-interface data {
-  name: string;
-  orders: number;
-  totalAmount: number;
-}
-
-const prueba: data[] = [
-  {
-    name: "franco",
-    orders: 10,
-    totalAmount: 10,
-  },
-  {
-    name: "Seba",
-    orders: 9,
-    totalAmount: 110,
-  },
-  {
-    name: "Emi",
-    orders: 8,
-    totalAmount: 45,
-  },
-  {
-    name: "Lucio",
-    orders: 8,
-    totalAmount: 250,
-  },
-  {
-    name: "giani",
-    orders: 7,
-    totalAmount: 232,
-  },
-];
-
 
 
 export function ChartStatistic() {
@@ -80,34 +49,59 @@ export function ChartStatistic() {
   const [labels, setLabels] = useState<string[]>([])
   const [totalAmount, setTotalAmount] = useState<number[]>([])
   const [orders, setOrders] = useState<number[]>([])
+  const [dateStart, setDateStart] = useState("")
+  const [dateEnd, setDateEnd] = useState("")
+  const [orderBy, setOrderBy] = useState("price")
+  const [Users, setUsers] = useState([])
+  const [top, setTop] = useState(5)
+
+  async function getOrders() {
+    const data = await getData<[]>(`/api/user/getTop5UsersActual?limit=${top}&orderBy=${orderBy}`);
+    setUsers(data)
+  }
+
+  async function getOrdersWithData() {
+    if (dateEnd && dateStart) {
+      const data = await getData<[]>(`/api/user/getTopUsersByOrderDateRange?startDate=${dateStart}&endDate=${dateEnd}&limit=${top}&orderBy=${orderBy}`);
+      setUsers(data)
+    } else {
+      getOrders()
+    }
+  }
 
   useEffect(() => {
-    const Amount = prueba.map((pr) => {
-      return pr.totalAmount
+    const Amount = Users.map((pr) => {
+      return pr[2]
     })
     setTotalAmount(Amount)
 
-    const order = prueba.map((pr) => {
-      return pr.orders
+    const order = Users.map((pr) => {
+      return pr[1]
     })
     setOrders(order)
 
-    const label = prueba.map((pr) => {
-      return pr.name
+    const label = Users.map((pr) => {
+      const user: User = pr[0]
+      return user.name
     })
     setLabels(label)
 
-  }, [prueba])
+  }, [Users])
+
+
+  useEffect(() => {
+    if (dateEnd && dateStart) {
+      getOrdersWithData()
+    } else {
+      getOrders()
+    }
+  }, [RankingOrder])
+
 
 
   const data = {
-    labels,
+    labels: labels,
     datasets: [
-      {
-        label: RankingOrder ? "ordenes" : "Total de pagos",
-        data: RankingOrder ? orders : totalAmount,
-        backgroundColor: RankingOrder ? "#FFD600" : "#F37E12",
-      },
       {
         label: RankingOrder ? "Total de pagos" : "Ordenes",
         data: RankingOrder ? totalAmount : orders,
@@ -117,27 +111,27 @@ export function ChartStatistic() {
   };
 
 
-
   return (
     <div className="container">
       <div className="filters_Client">
         <div >
           <span>Mostrar: </span>
-          <select className='Select_nivelStock'>
-            <option>Top 5</option>
-            <option>Top 10</option>
-            <option>Top 15</option>
+          <select className="Select_nivelStock" value={top} onChange={(e) => { setTop(parseInt(e.target.value)) }}>
+            <option value={5}>Top 5</option>
+            <option value={10}>Top 10</option>
+            <option value={15}>Top 15</option>
+
           </select>
         </div>
         <div>
           <span>Desde: </span>
-          <input type="date" className='Select_nivelStock' />
+          <input type="Date" className='Select_nivelStock' onChange={(e) => (setDateStart(e.target.value.replace(/-/g, '/')))} />
         </div>
         <div>
           <span>Hasta: </span>
-          <input type="date" className='Select_nivelStock' />
+          <input type="Date" className='Select_nivelStock' onChange={(e) => (setDateEnd(e.target.value.replace(/-/g, '/')))} />
         </div>
-
+        <Button variant="success" onClick={getOrdersWithData}>Buscar</Button>
       </div>
 
       <div style={{
@@ -152,19 +146,25 @@ export function ChartStatistic() {
           </span>
           <div className="ChangeType">
             <div className="OrangeCircle"></div>
-            <span onClick={() => (setRankingOrder(false))}  >
+            <span onClick={() => {
+              setRankingOrder(true)
+              setOrderBy("price")
+            }}  >
               Monto Final
             </span>
           </div>
           <div className="ChangeType">
             <div className="yellowCircle"></div>
-            <span onClick={() => (setRankingOrder(true))} >
+            <span onClick={() => {
+              setRankingOrder(false)
+              setOrderBy("orders")
+            }} >
               Cantidad de Pedidos
             </span>
           </div>
         </div>
+        {Users.length !== 0 ? <Bar options={options} data={data} /> : <NotResult />}
 
-        <Bar options={options} data={data} />
       </div>
       <div className="d-flex justify-content-end">
 
