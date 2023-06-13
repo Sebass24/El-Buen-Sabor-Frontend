@@ -6,7 +6,9 @@ interface props {
   name: string;
   type: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  placeholder: string;
+  placeholder?: string;
+  disabled?: boolean;
+  defaultValue?: string;
 }
 
 const TextFieldValue = ({
