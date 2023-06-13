@@ -44,7 +44,8 @@
 }
 
 .quantity-cart-container {
-    display: flex;
+    display: grid;
+    grid-template-columns: 70% 30%;
     justify-content: space-between;
     padding: 1rem;
 
@@ -69,6 +70,16 @@
 .delete-button .button2 {
     width: 1.5rem;
     font-weight: 400;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5.5rem;
+    height: 1.7rem;
+    border: 1px solid gray;
+    border-radius: 4rem;
 }
 
 @media (max-width: 640px) {

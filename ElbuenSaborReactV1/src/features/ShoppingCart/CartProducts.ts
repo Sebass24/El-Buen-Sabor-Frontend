@@ -19,7 +19,7 @@ const initialCartState: cartOrderSlice = {
         id: null as any,
         deleted: false,
         deliveryMethod: "",
-        date: null as any,
+        date: "",
         orderStatus: "A confirmar",
         estimatedTime: null as any,
         paymentMethod: "",
@@ -94,7 +94,7 @@ export const cartOrderSlice = createSlice({
         setCartUser: (state, action: PayloadAction<User>) => {
             state.order.user = action.payload;
         },
-        setCartDate: (state, action: PayloadAction<Date>) => {
+        setCartDate: (state, action: PayloadAction<string>) => {
             state.order.date = action.payload;
         }
     },

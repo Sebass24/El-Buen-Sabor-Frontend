@@ -1,18 +1,17 @@
 import ProductQuantitySelector from "../ProductDetail/ProductQuantitySelector";
 import { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@app/Hooks";
+import { useAppDispatch } from "@app/Hooks";
 import { deleteProduct, modifyProductQuantity, setTotalPrice } from "@features/ShoppingCart/CartProducts";
 import OrderDetail from "@Models/Orders/OrderDetail";
 import "./ShoppingCartProductDetail.scss";
 
 interface props {
     order: OrderDetail
-    enabled: boolean
+    reviewMode: boolean
 }
 
-export default function ShoppingCartProductDetail({ order, enabled }: props) {
+export default function ShoppingCartProductDetail({ order, reviewMode }: props) {
     const dispatch = useAppDispatch();
-    const { orderDetails } = useAppSelector(state => state.cartProducts.order);
     const [cartQuantity, setCartQuantity] = useState(order.quantity);
 
     useEffect(() => {
@@ -43,13 +42,28 @@ export default function ShoppingCartProductDetail({ order, enabled }: props) {
                     <label className="cart-product-description">{order.product.shortDescription}</label><br />
                     <label className="cart-product-price">${order.product.sellPrice}</label>
                 </div>
-                <div className="cart-quantity-container">
-                    <span className="quantity-cart-container quantity-selector-cart quantity-cart"><ProductQuantitySelector quantity={cartQuantity} onChange={handleQuantityChange} /></span>
-                    <span className="amount-cart">${order.product.sellPrice! as number * cartQuantity}</span>
-                    <span className="delete-button">
-                        <button className="button2" onClick={(e) => { handleDeleteProduct(order.product.id as number) }} disabled={enabled}>x</button>
-                    </span>
-                </div>
+                {reviewMode ?
+                    <>
+                        <div className="cart-quantity-container">
+                            <span className="quantity-cart-container quantity-selector-cart quantity-cart">
+                                <span className="quantity-selector">
+                                    <span className="quantity">{order.quantity}</span>
+                                </span>
+                            </span>
+                            <span className="amount-cart">${order.product.sellPrice! as number * cartQuantity}</span>
+                        </div>
+                    </> :
+                    <>
+                        <div className="cart-quantity-container">
+                            <span className="quantity-cart-container quantity-selector-cart quantity-cart"><ProductQuantitySelector quantity={cartQuantity} onChange={handleQuantityChange} /></span>
+                            <span className="amount-cart">${order.product.sellPrice! as number * cartQuantity}</span>
+                            <span className="delete-button">
+                                <button className="button2" onClick={(e) => { handleDeleteProduct(order.product.id as number) }}>x</button>
+                            </span>
+                        </div>
+                    </>
+                }
+
             </div>
         </>
     )

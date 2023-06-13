@@ -31,10 +31,10 @@ export default function NewClientModal() {
         }
     }, [isAuthenticated, userStoredInDB])
 
-    const saveUserData = async (values: FormikValues) => {
+    const saveUserData = (values: FormikValues) => {
         const name = values.name;
         const lastName = values.lastName;
-        await dispatch(setUserData({
+        dispatch(setUserData({
             auth0Id: userAuth0?.sub,
             name: name,
             lastName: lastName,

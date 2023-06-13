@@ -9,10 +9,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 import OrderOptions from "./OrderDetails/OrderOptions";
 import OrderTotalPrice from "./OrderDetails/OrderTotalPrice";
 import OrderOptionsReview from "./OrderDetails/OrderOptionsReview";
+import { postNewOrder } from "../../../services/users";
+import { setCartDate } from "@features/ShoppingCart/CartProducts";
 
 export default function ShoppingCart() {
 
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const { order } = useAppSelector(state => state.cartProducts);
     const [showReview, setShowReview] = useState(false);
@@ -30,6 +33,17 @@ export default function ShoppingCart() {
         }
     }
 
+    const postOrder = async () => {
+        const today = new Date();
+        dispatch(setCartDate(today.toISOString()));
+        try {
+            const newOrder = await postNewOrder(order);
+            console.log(newOrder);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className="cart-container" >
             <Row><label className="page-name">CARRITO DE COMPRAS</label></Row>
@@ -40,7 +54,8 @@ export default function ShoppingCart() {
                             <ShoppingCartProductDetail
                                 key={index}
                                 order={orderDetail}
-                                enabled={showReview} //this should send a boolean value to disable the buttons when the order is being reviewed
+                                //set the shopping cart product detail in reviewmode to disable product quantity edition
+                                reviewMode={showReview}
                             />
                         ))
 
@@ -54,7 +69,10 @@ export default function ShoppingCart() {
                             {showReview ?
                                 <>
                                     <OrderOptionsReview />
-                                    <Button className="confirm-button">Confirmar pedido</Button>
+                                    <Button className="confirm-button"
+                                        onClick={postOrder}>
+                                        Confirmar pedido
+                                    </Button>
                                 </>
                                 : <>
                                     <OrderOptions />

@@ -9,7 +9,7 @@ import Address from "@Models/Users/Address";
 
 export default interface Order extends Base {
   deliveryMethod: DeliveryMethod | string;
-  date: Date;
+  date: Date | string;
   orderStatus: OrderStatus | string;
   estimatedTime: Date;
   paymentMethod: PaymentMethod | string;
