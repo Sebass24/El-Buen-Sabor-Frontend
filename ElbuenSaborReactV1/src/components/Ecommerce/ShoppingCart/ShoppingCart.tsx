@@ -4,13 +4,11 @@ import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import ShoppingCartProductDetail from "./ShoppingCartProductDetail";
 import OrderDetail from '@Models/Orders/OrderDetail';
 import { useState } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import OrderOptions from "./OrderDetails/OrderOptions";
 import OrderTotalPrice from "./OrderDetails/OrderTotalPrice";
-import { setCartDate } from "@features/ShoppingCart/CartProducts";
-import { postNewOrder } from "services/users";
-import OrderOptionsReview from "./OrderDetails/OrderReview";
+import OrderOptionsReview from "./OrderDetails/OrderOptionsReview";
 
 export default function ShoppingCart() {
 
@@ -31,9 +29,6 @@ export default function ShoppingCart() {
             loginWithRedirect();
         }
     }
-
-    //useEffect con un dispatch del user al order?
-    //cuando cambie el valor de isAuthenticated, que haga el dispatch
 
     return (
         <div className="cart-container" >
