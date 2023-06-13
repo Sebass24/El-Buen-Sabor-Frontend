@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
-import { setUserToken, resetUserData, setUserData, setStoredInDB, setUserAuth0Data } from "@features/User/UserSlice";
+import { setUserToken, resetUserData, setUserData, setStoredInDB, setUserAuth0Data, setUserRole } from "@features/User/UserSlice";
 import { setCartUser } from "@features/ShoppingCart/CartProducts";
 import User from "@Models/Users/User";
 import { getUserData } from "../../services/users";
@@ -22,9 +22,15 @@ const Profile = () => {
     if (user && isAuthenticated) {
       const dbuser: User = await getUserData(user.sub!);
       if (dbuser && dbuser.name !== undefined) {
-        dispatch(setCartUser(dbuser));
         dispatch(setUserData(dbuser));
         dispatch(setStoredInDB(true));
+        if (dbuser.role?.id === undefined) {
+          dispatch(setUserRole({
+            id: 2,
+            description: "Cliente",
+          }))
+        }
+        dispatch(setCartUser(dbuser));
       } else {
         dispatch(setCartUser(null as any));
         dispatch(resetUserData());

@@ -65,26 +65,22 @@ export const UserSlice = createSlice({
       state.user.name = name as string;
       state.user.lastName = lastName as string;
       state.user.userEmail = userEmail as string;
-      console.log(state.user);
     },
     resetUserData: (state) => {
-      state.user.id = 0;
-      state.user.addresses = null as any;
-      state.user.auth0Id = "";
-      state.user.lastName = "";
-      state.user.name = "";
-      state.user.phones = null as any;
-      state.user.userEmail = "";
+      state.user = initialState.user;
     },
     setStoredInDB: (state, action: PayloadAction<boolean>) => {
       state.userStoredInDB = action.payload;
     },
     setUserId: (state, action: PayloadAction<number>) => {
       state.user.id = action.payload;
+    },
+    setUserRole: (state, action: PayloadAction<Role>) => {
+      state.user.role = action.payload;
     }
   },
 });
 
-export const { setUserToken, setUserAuth0Data, resetUserData, setUserData, setStoredInDB, setUserId } = UserSlice.actions;
+export const { setUserToken, setUserAuth0Data, resetUserData, setUserData, setStoredInDB, setUserId, setUserRole } = UserSlice.actions;
 
 export default UserSlice.reducer;

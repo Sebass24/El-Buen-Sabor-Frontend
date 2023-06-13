@@ -2,6 +2,7 @@ import Address from "@Models/Users/Address";
 import { getData, postPutData } from "../components/GenericFetch/GenericFetch";
 import Phone from "@Models/Users/Phone";
 import User from "@Models/Users/User";
+import Order from "@Models/Orders/Order";
 
 export async function getAddressesByUserId(id: number) {
     const url = `/api/user/addresses/${id}`;
@@ -26,4 +27,11 @@ export async function postNewUser(newUser: User) {
     const method = 'POST';
     const user = await postPutData(url, method, newUser);
     return user;
+}
+
+export async function postNewOrder(newOrder: Order) {
+    const url = "/api/order";
+    const method = 'POST';
+    const order = await postPutData(url, method, newOrder);
+    return order;
 }

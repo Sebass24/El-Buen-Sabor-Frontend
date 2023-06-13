@@ -1,14 +1,16 @@
 import { Button, Container, Row } from "react-bootstrap";
 import "./ShoppingCart.scss";
-import { useAppSelector } from "@app/Hooks";
+import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import ShoppingCartProductDetail from "./ShoppingCartProductDetail";
 import OrderDetail from '@Models/Orders/OrderDetail';
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import OrderOptionsReview from "./OrderDetails/OrderOptionsReview";
 import OrderOptions from "./OrderDetails/OrderOptions";
 import OrderTotalPrice from "./OrderDetails/OrderTotalPrice";
+import { setCartDate } from "@features/ShoppingCart/CartProducts";
+import { postNewOrder } from "services/users";
+import OrderOptionsReview from "./OrderDetails/OrderReview";
 
 export default function ShoppingCart() {
 
@@ -19,10 +21,9 @@ export default function ShoppingCart() {
     const { isAuthenticated } = useAuth0();
     const { loginWithRedirect } = useAuth0();
 
-    const handleOrderReview = () => {
+    const handleOrderReview = async () => {
         setShowReview(!showReview);
         window.scrollTo(0, 0);
-        //dispatch del resto de los datos de la orden
     }
 
     const handleOrderLogin = () => {
@@ -83,7 +84,7 @@ export default function ShoppingCart() {
                 </div>
             </div>
             <div className="button-container-1">
-                <Button className="btn-cart" >Continuar comprando</Button>
+                <Button className="btn-cart" onClick={() => (navigate("/"))}>Continuar comprando</Button>
                 {showReview && <Button className="btn-cart" onClick={handleOrderReview}>Volver</Button>}
             </div>
         </div>

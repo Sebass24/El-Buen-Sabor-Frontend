@@ -7,6 +7,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface cartOrderSlice {
     order: Order;
 }
+
 interface addressPhone {
     address: Address;
     phone: string;
@@ -92,11 +93,14 @@ export const cartOrderSlice = createSlice({
         },
         setCartUser: (state, action: PayloadAction<User>) => {
             state.order.user = action.payload;
+        },
+        setCartDate: (state, action: PayloadAction<Date>) => {
+            state.order.date = action.payload;
         }
     },
 });
 
-export const { addProduct, deleteProduct, modifyProductQuantity, setDeliveryMethod, setPaymentMethod, setAddressPhone, setTotalPrice, setCartUser } = cartOrderSlice.actions;
+export const { addProduct, deleteProduct, modifyProductQuantity, setDeliveryMethod, setPaymentMethod, setAddressPhone, setTotalPrice, setCartUser, setCartDate } = cartOrderSlice.actions;
 
 export default cartOrderSlice.reducer;
 
