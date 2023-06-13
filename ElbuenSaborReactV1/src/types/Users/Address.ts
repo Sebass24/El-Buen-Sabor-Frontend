@@ -4,5 +4,5 @@ import Location from "./Location";
 export default interface Address extends Base {
     number: string;
     street: string;
-    location: string;
+    location: Location | string;
 }

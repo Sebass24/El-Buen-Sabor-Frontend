@@ -22,6 +22,7 @@ export async function postPutData<T>(
   data: T
 ): Promise<T> {
   const token = sessionStorage.getItem("token")
+  console.log(JSON.stringify(data));
   const response = await fetch(`http://localhost:8080${path}`, {
     method: method.toUpperCase(),
     credentials: 'include',

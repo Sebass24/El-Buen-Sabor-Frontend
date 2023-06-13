@@ -1,36 +1,37 @@
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useAppDispatch } from "@app/Hooks";
-import { setUserToken, resetUserData, setUserData, setStoredInDB } from "@features/User/UserSlice";
+import { useAppDispatch, useAppSelector } from "@app/Hooks";
+import { setUserToken, resetUserData, setUserData, setStoredInDB, setUserAuth0Data } from "@features/User/UserSlice";
 import { setCartUser } from "@features/ShoppingCart/CartProducts";
 import User from "@Models/Users/User";
 import { getUserData } from "../../services/users";
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+  const { user: currentUser } = useAppSelector(state => state.users);
 
   const dispatch = useAppDispatch();
 
-  const [token, setToken] = useState("")
-
   async function getToken() {
     const token = await getAccessTokenSilently()
-    setToken(token)
     sessionStorage.setItem("token", token);
+    dispatch(setUserToken(token));
   }
 
   async function getUser() {
     if (user && isAuthenticated) {
+      console.log(user.sub);
       const dbuser: User = await getUserData(user.sub!);
-      if (dbuser) {
+      console.log(dbuser);
+      if (dbuser && dbuser.name !== undefined) {
         dispatch(setCartUser(user.sub!));
         dispatch(setUserData(dbuser));
         dispatch(setStoredInDB(true));
+      } else {
+        dispatch(setCartUser(""));
+        dispatch(resetUserData());
+        dispatch(setStoredInDB(false));
       }
-    } else {
-      dispatch(setCartUser(""));
-      dispatch(resetUserData());
-      dispatch(setStoredInDB(false));
     }
   }
 
@@ -39,14 +40,13 @@ const Profile = () => {
     getUser();
   }, [])
 
-  dispatch(setUserToken(token));
-
   if (isLoading) {
     return <div>Loading ...</div>;
   }
   return isAuthenticated ? (
     <div>
-      <span>{`${user?.given_name} ${user?.family_name}`} </span>
+      <span>{currentUser.name ? ` ${currentUser.name}` : "-"}</span>
+      <span>{currentUser.lastName ? ` ${currentUser.lastName}` : "-"}</span>
     </div>
   ) : (
     <></>

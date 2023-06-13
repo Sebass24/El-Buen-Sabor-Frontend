@@ -23,6 +23,8 @@
     "chart.js": "^4.3.0",
     "date-fns": "^2.30.0",
     "formik": "^2.2.9",
+    "formik-material-ui": "^4.0.0-alpha.2",
+    "formik-mui": "^4.0.0-alpha.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.3",
     "react-chartjs-2": "^5.2.0",

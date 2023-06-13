@@ -1,15 +1,14 @@
 import Base from "@Models/Base";
-/* import Address from "./Address";
-import Phone from "./Phone"; */
+import Address from "./Address";
+import Phone from "./Phone";
 import Role from "./Role";
 
 export default interface User extends Base {
-    auth0Id: string;
-    lastName: string;
-    name: string;
-    password: string;
-    userEmail: string;
-    /* addresses: Address[] | null;
-    phones: Phone[] | null; */
-    role: Role | number;
+    auth0Id?: string;
+    lastName?: string;
+    name?: string;
+    userEmail?: string;
+    addresses?: Address[] | null;
+    phones?: Phone[] | null;
+    role?: Role;
 }

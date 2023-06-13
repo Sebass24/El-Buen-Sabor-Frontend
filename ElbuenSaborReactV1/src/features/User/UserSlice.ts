@@ -1,5 +1,6 @@
 import Address from "@Models/Users/Address";
 import Phone from "@Models/Users/Phone";
+import Role from "@Models/Users/Role";
 import User from "@Models/Users/User";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
@@ -8,12 +9,14 @@ interface LoadingState {
   token: string,
   userStoredInDB: boolean,
   user: {
+    id: number,
     auth0Id: string;
     lastName: string;
     name: string;
     userEmail: string;
     addresses: Address[];
     phones: Phone[];
+    role: Role;
   }
 }
 
@@ -29,12 +32,14 @@ const initialState: LoadingState = {
   token: "",
   userStoredInDB: false,
   user: {
+    id: 0,
     auth0Id: "",
     lastName: "",
     name: "",
     userEmail: "",
     addresses: null as any,
-    phones: null as any
+    phones: null as any,
+    role: null as any
   }
 };
 
@@ -54,13 +59,16 @@ export const UserSlice = createSlice({
       state.user.userEmail = email;
     },
     setUserData: (state, action: PayloadAction<User>) => {
-      const { name, lastName, userEmail, auth0Id } = action.payload;
-      state.user.auth0Id = auth0Id;
-      state.user.name = name;
-      state.user.lastName = lastName;
-      state.user.userEmail = userEmail;
+      const { id, name, lastName, userEmail, auth0Id } = action.payload;
+      state.user.id = id as number;
+      state.user.auth0Id = auth0Id as string;
+      state.user.name = name as string;
+      state.user.lastName = lastName as string;
+      state.user.userEmail = userEmail as string;
+      console.log(state.user);
     },
     resetUserData: (state) => {
+      state.user.id = 0;
       state.user.addresses = null as any;
       state.user.auth0Id = "";
       state.user.lastName = "";
@@ -70,10 +78,13 @@ export const UserSlice = createSlice({
     },
     setStoredInDB: (state, action: PayloadAction<boolean>) => {
       state.userStoredInDB = action.payload;
+    },
+    setUserId: (state, action: PayloadAction<number>) => {
+      state.user.id = action.payload;
     }
   },
 });
 
-export const { setUserToken, setUserAuth0Data, resetUserData, setUserData, setStoredInDB } = UserSlice.actions;
+export const { setUserToken, setUserAuth0Data, resetUserData, setUserData, setStoredInDB, setUserId } = UserSlice.actions;
 
 export default UserSlice.reducer;

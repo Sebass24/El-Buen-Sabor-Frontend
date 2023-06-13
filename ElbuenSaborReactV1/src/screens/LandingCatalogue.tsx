@@ -1,11 +1,9 @@
-import Landing from "components/Ecommerce/Catalogue/LandingPhoto/LandingPhoto";
-import CatalogueTabs from "components/Ecommerce/Catalogue/CatalogueTabs";
+import Catalogue from "components/Ecommerce/Catalogue/Catalogue";
 
 const LandingCatalogue = () => {
     return (
         <div>
-            <Landing />
-            <CatalogueTabs />
+            <Catalogue />
         </div>
     );
 }

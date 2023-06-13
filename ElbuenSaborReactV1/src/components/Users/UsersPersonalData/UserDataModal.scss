@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+
+* {
+    font-family: "inter", sans-serif;
+}
+
+.complete-data {
+    .modal-dialog {
+        max-width: 70%;
+    }
+}
+
+.modal-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.form-group {
+    padding: 0.3rem 0px;
+
+    .form-label {
+        font-family: sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+    }
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-yellow {
+    background-color: #FFE145;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-color: #FFE145;
+    --bs-btn-hover-bg: #FFE145;
+    --bs-btn-hover-border-color: #FFE145;
+    --bs-btn-active-bg: #FFE145;
+    --bs-btn-active-border-color: #FFE145;
+    --bs-btn-hover-color: black;
+    color: black;
+    height: 2.2rem;
+    margin-top: 1rem;
+}
+
+.btn.disabled {
+    background-color: gray;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-color: gray;
+    --bs-btn-hover-bg: gray;
+    --bs-btn-hover-border-color: gray;
+    height: 2.2rem;
+    width: auto;
+    margin-top: 1rem;
+}

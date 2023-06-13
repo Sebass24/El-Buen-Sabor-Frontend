@@ -23,6 +23,7 @@ export const Store = configureStore({
     cartProducts: cartProductsSlice
   },
   preloadedState: {
+
     cartProducts: loadState().cartProducts  // Only include the cartProducts slice
   },
 });
