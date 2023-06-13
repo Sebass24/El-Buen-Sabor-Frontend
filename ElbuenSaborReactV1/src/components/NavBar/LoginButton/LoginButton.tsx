@@ -26,6 +26,7 @@ export const LoginButton = () => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item style={{ padding: "0" }} ><LogOutAuth /></Dropdown.Item>
+                        {/* <Dropdown.Item style={{ padding: "0", }} ><PersonalDataModal /></Dropdown.Item> */}
                     </Dropdown.Menu>
                 </Dropdown>
                 :

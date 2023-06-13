@@ -29,7 +29,7 @@ export default function NewClientModal() {
         } else if (userStoredInDB) {
             handleCloseModal();
         }
-    }, [isAuthenticated, userStoredInDB]/* [userStoredInDB] */)
+    }, [isAuthenticated, userStoredInDB])
 
     const saveUserData = async (values: FormikValues) => {
         const name = values.name;
@@ -62,8 +62,8 @@ export default function NewClientModal() {
 
     const formik = useFormik({
         initialValues: {
-            lastName: user && user.lastName ? user.lastName : (userAuth0?.family_name || ''),
-            name: user && user.name ? user.name : (userAuth0?.given_name || ''),
+            lastName: user.lastName !== "" ? user.lastName : (userAuth0?.family_name || ''),
+            name: user.name !== "" ? user.name : (userAuth0?.given_name || ''),
             email: userAuth0?.email,
         },
         validationSchema: Yup.object().shape({
@@ -94,7 +94,7 @@ export default function NewClientModal() {
                                 name="name"
                                 type="text"
                                 onChange={formik.handleChange}
-                                defaultValue={formik.values.name}
+                                defaultValue={formik.initialValues.name}
                             />
                             {formik.touched.name && formik.errors.name ? (
                                 <div>{formik.errors.name}</div>
@@ -107,7 +107,7 @@ export default function NewClientModal() {
                                 name="lastName"
                                 type="text"
                                 onChange={formik.handleChange}
-                                defaultValue={formik.values.lastName}
+                                defaultValue={formik.initialValues.lastName}
                             />
                             {formik.touched.lastName && formik.errors.lastName ? (
                                 <div>{formik.errors.lastName}</div>

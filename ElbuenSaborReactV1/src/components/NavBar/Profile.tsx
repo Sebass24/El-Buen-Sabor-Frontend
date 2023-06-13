@@ -20,15 +20,13 @@ const Profile = () => {
 
   async function getUser() {
     if (user && isAuthenticated) {
-      console.log(user.sub);
       const dbuser: User = await getUserData(user.sub!);
-      console.log(dbuser);
       if (dbuser && dbuser.name !== undefined) {
-        dispatch(setCartUser(user.sub!));
+        dispatch(setCartUser(dbuser));
         dispatch(setUserData(dbuser));
         dispatch(setStoredInDB(true));
       } else {
-        dispatch(setCartUser(""));
+        dispatch(setCartUser(null as any));
         dispatch(resetUserData());
         dispatch(setStoredInDB(false));
       }

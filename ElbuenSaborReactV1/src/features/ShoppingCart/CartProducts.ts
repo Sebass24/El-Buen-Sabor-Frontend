@@ -1,6 +1,7 @@
 import Order from '@Models/Orders/Order';
 import OrderDetail from '@Models/Orders/OrderDetail';
 import Address from '@Models/Users/Address';
+import User from '@Models/Users/User';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface cartOrderSlice {
@@ -89,7 +90,7 @@ export const cartOrderSlice = createSlice({
         setTotalPrice: (state) => {
             state.order.total = state.order.orderDetails.reduce((total, item) => total + (item.product.sellPrice as number * item.quantity), 0);
         },
-        setCartUser: (state, action: PayloadAction<string>) => {
+        setCartUser: (state, action: PayloadAction<User>) => {
             state.order.user = action.payload;
         }
     },
