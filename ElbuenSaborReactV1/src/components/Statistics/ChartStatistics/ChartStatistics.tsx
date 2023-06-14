@@ -12,8 +12,9 @@ import { Bar } from "react-chartjs-2";
 import "./ChartStatistics.scss"
 import { Button } from "react-bootstrap";
 import { getData } from "components/GenericFetch/GenericFetch";
-import User from "@Models/user/User";
+import User from "@Models/Users/User";
 import NotResult from "components/404/NotResult";
+import exportFromJSON from 'export-from-json';
 
 ChartJS.register(
   CategoryScale,
@@ -55,6 +56,8 @@ export function ChartStatistic() {
   const [Users, setUsers] = useState([])
   const [top, setTop] = useState(5)
 
+
+
   async function getOrders() {
     const data = await getData<[]>(`/api/user/getTop5UsersActual?limit=${top}&orderBy=${orderBy}`);
     setUsers(data)
@@ -86,6 +89,7 @@ export function ChartStatistic() {
     })
     setLabels(label)
 
+
   }, [Users])
 
 
@@ -97,8 +101,6 @@ export function ChartStatistic() {
     }
   }, [RankingOrder])
 
-
-
   const data = {
     labels: labels,
     datasets: [
@@ -109,6 +111,23 @@ export function ChartStatistic() {
       },
     ],
   };
+
+
+
+  const exportToExcel = () => {
+    var arrayData = []
+    for (var i = 0; i < labels.length; i++) {
+      const data = {
+        label: labels[i],
+        order: orders[i],
+        totalAmount: totalAmount[i]
+      }
+      arrayData.push(data)
+    }
+
+    exportFromJSON({ data: arrayData, exportType: "xls", fileName: "client-Data" });
+  };
+
 
 
   return (
@@ -167,7 +186,7 @@ export function ChartStatistic() {
 
       </div>
       <div className="d-flex justify-content-end">
-
+        <Button variant="primary" onClick={exportToExcel} style={{ margin: "1rem" }}>export data</Button>
       </div>
     </div>
   );

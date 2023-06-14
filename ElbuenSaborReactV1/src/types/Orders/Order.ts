@@ -1,10 +1,9 @@
 import Base from "@Models/Base";
 import User from "@Models/Users/User";
-import DeliveryMethod from "./DeliveryMethod";
-import OrderStatus from "./OrderStatus";
-import PaymentMethod from "./PaymentMethod";
-import OrderDetail from "./OrderDetail";
-
+import DeliveryMethod from "@Models/orders/DeliveryMethod";
+import OrderStatus from "@Models/orders/OrderStatus";
+import PaymentMethod from "@Models/orders/PaymentMethod";
+import OrderDetail from "@Models/orders/OrderDetail";
 
 export default interface Order extends Base {
   deliveryMethod: DeliveryMethod;
@@ -14,7 +13,7 @@ export default interface Order extends Base {
   paymentMethod: PaymentMethod;
   paid: boolean;
   user: User;
-  orderDetails: OrderDetail;
+  orderDetails: OrderDetail[];
   total: number;
   discount: number;
 }

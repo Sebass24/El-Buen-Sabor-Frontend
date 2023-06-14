@@ -1,24 +1,35 @@
-import { cashierOrder } from '@Models/types';
 import React, { useState, useEffect } from 'react'
 import BillingTable from './BillingTable/BillingTable';
-import Orders from '@Models/orders/Orders';
 import { getData } from 'components/GenericFetch/GenericFetch';
+import Orders from '../../types/orders/Order';
+import { useAppDispatch, useAppSelector } from '@app/Hooks';
+import { fetchOrders } from '@features/Orders/OrderThunks';
+import { setOrders, updateOrder } from '@features/Orders/OrderSlice';
 
 export default function Billing() {
+  const dispatch = useAppDispatch()
+  const { orders } = useAppSelector(state => state.Order)
 
-  const [order, setOrder] = useState<Orders[]>([]);
+  // const [order, setOrder] = useState<cashierOrder[]>();
+  // const [orderComplete, setOrderComplete] = useState<cashierOrder[]>();
+
   async function getOrders() {
-    const data: Orders[] = await getData<Orders[]>("/api/order");
-    setOrder(data)
+    dispatch(fetchOrders())
   }
+
+  useEffect(() => {
+    getOrders()
+  }, [])
+
+  const [search, setSearch] = useState<number>(NaN as any);
   const [estado, setEstado] = useState("")
 
   async function getOrdersSearch(id: number) {
     if (id || estado !== "") {
       const data: Orders[] = await getData<Orders[]>(`/api/order/byStatusAndID?status=${estado}&id=${isNaN(id) ? 0 : id}`);
-      setOrder(data)
+      dispatch(setOrders(data))
     } else {
-      getOrders()
+      dispatch(fetchOrders())
     }
   }
   useEffect(() => {
@@ -29,7 +40,6 @@ export default function Billing() {
     getOrders()
   }, [])
 
-  const [search, setSearch] = useState<number>("" as any);
 
   return (
     <div >
@@ -74,7 +84,7 @@ export default function Billing() {
         </div>
       </div>
       <div className='Container_Cashier_Table'>
-        <BillingTable orders={order} />
+        <BillingTable orders={orders} />
       </div>
     </div>
   )

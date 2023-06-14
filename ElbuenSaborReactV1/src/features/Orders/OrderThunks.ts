@@ -1,4 +1,4 @@
-import Orders from "@Models/orders/Orders";
+import Orders from "@Models/orders/Order";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getData } from "components/GenericFetch/GenericFetch";
 

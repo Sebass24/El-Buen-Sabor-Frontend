@@ -17,12 +17,13 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "react-bootstrap";
-import Orders from '@Models/orders/Orders';
 import OrderStatus from '@Models/orders/OrderStatus';
 import { finishLoading, startLoading } from '@features/Loading/LoadingSlice';
 import { useAppDispatch } from '@app/Hooks';
 import { postPutData } from 'components/GenericFetch/GenericFetch';
 import { updateOrder } from '@features/Orders/OrderSlice';
+import Order from '../../../types/orders/Order';
+
 
 
 
@@ -54,7 +55,7 @@ function getComparador(order: string, orderBy: string) {
     : (a: any, b: any) => -comparadorDescendiente(a, b, orderBy);
 }
 
-const stableSort = (array: Orders[], comparator: any, orderBy: any) => {
+const stableSort = (array: Order[], comparator: any, orderBy: any) => {
   const stabilizedThis = array.map((producto: any, index: number) => [producto, index]);
   stabilizedThis.sort((a: any, b: any) => {
     const order = comparator(a[0], b[0]);
@@ -174,7 +175,7 @@ function CabeceraMejorada(props: any) {
 }
 
 interface myProps {
-  orders: Orders[]
+  orders: Order[]
 }
 
 
@@ -210,7 +211,7 @@ export default function BillingTable({ orders }: myProps) {
     day: "2-digit",
   };
   const dispatch = useAppDispatch()
-  function handleChangeState(order: Orders, status: OrderStatus) {
+  function handleChangeState(order: Order, status: OrderStatus) {
     const neworder = { ...order, "orderStatus": status }
     dispatch(startLoading())
     postPutData(`/api/order`, "PUT", neworder).then(
@@ -241,7 +242,7 @@ export default function BillingTable({ orders }: myProps) {
             <TableBody>
               {stableSort(orders, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((order: Orders, index: number) => {
+                .map((order: Order, index: number) => {
                   return (
                     <TableRow key={index} >
                       <TableCell

@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import Orders from "@Models/orders/Orders";
+import Order from "@Models/orders/Order";
 import { fetchOrders } from "./OrderThunks";
 // Define a type for the Loading state
 interface LoadingState {
-  orders: Orders[];
+  orders: Order[];
 }
 
 // Define the initial state using that type
@@ -17,13 +17,13 @@ export const OrderSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setOrders: (state, action: PayloadAction<Orders[]>) => {
+    setOrders: (state, action: PayloadAction<Order[]>) => {
       state.orders = action.payload;
     },
-    addOrder: (state, action: PayloadAction<Orders>) => {
+    addOrder: (state, action: PayloadAction<Order>) => {
       state.orders.push(action.payload)
     },
-    updateOrder: (state, action: PayloadAction<Orders>) => {
+    updateOrder: (state, action: PayloadAction<Order>) => {
       const index = state.orders.findIndex(ing => ing.id == action.payload.id)
       state.orders[index] = action.payload
     }

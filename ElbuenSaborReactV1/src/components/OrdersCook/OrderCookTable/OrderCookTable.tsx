@@ -1,4 +1,4 @@
-import Orders from '@Models/orders/Orders'
+import Orders from '@Models/orders/Order'
 import React from 'react'
 import TableHead from "@mui/material/TableHead";
 import {

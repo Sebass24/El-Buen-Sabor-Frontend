@@ -41,6 +41,7 @@ const Ingredients = () => {
       dispatch(fetchIngredients())
     }
   }
+
   useEffect(() => {
     getIngredientsSearch(search)
   }, [estado]);

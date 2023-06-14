@@ -36,8 +36,8 @@ export default function ModalAddCategoryProduct({ showModal, handleClose, editin
         keyboard={false} >
         <Modal.Header closeButton>
           {editing ?
-            <Modal.Title>Editar un Ingrediente:</Modal.Title> :
-            <Modal.Title>Añadir un Ingrediente:</Modal.Title>
+            <Modal.Title>Editar una categoria de producto:</Modal.Title> :
+            <Modal.Title> Añadir un categoria de producto:</Modal.Title>
           }
         </Modal.Header>
         <Modal.Body>

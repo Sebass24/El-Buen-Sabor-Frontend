@@ -15,7 +15,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { Users } from "@Models/types";
+import Users from "@Models/Users/User";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
@@ -76,23 +76,37 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "Name"}
-            direction={orderBy === "Name" ? order : "asc"}
-            onClick={crearSortHandler("Name")}
+            active={orderBy === "name"}
+            direction={orderBy === "name" ? order : "asc"}
+            onClick={crearSortHandler("name")}
           >
-            <Typography fontWeight="bold">Nombre rubro</Typography>
+            <Typography fontWeight="bold">Nombre</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
           className="tableCell"
-          key="Email"
+          key="lastName"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "Email"}
-            direction={orderBy === "Email" ? order : "asc"}
-            onClick={crearSortHandler("Email")}
+            active={orderBy === "lastName"}
+            direction={orderBy === "lastName" ? order : "asc"}
+            onClick={crearSortHandler("lastName")}
+          >
+            <Typography fontWeight="bold">Nombre</Typography>
+          </TableSortLabel>
+        </TableCell>
+
+        <TableCell
+          className="tableCell"
+          key="userEmail"
+          style={{ backgroundColor: "#C6C6C6" }}
+        >
+          <TableSortLabel
+            active={orderBy === "userEmail"}
+            direction={orderBy === "userEmail" ? order : "asc"}
+            onClick={crearSortHandler("userEmail")}
           >
             <Typography fontWeight="bold">Email</Typography>
           </TableSortLabel>
@@ -100,58 +114,12 @@ function CabeceraMejorada(props: any) {
 
         <TableCell
           className="tableCell"
-          key="Phone"
+          key="Rol"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <TableSortLabel
-            active={orderBy === "Phone"}
-            direction={orderBy === "Phone" ? order : "asc"}
-            onClick={crearSortHandler("Phone")}
-          >
-            <Typography fontWeight="bold">Teléfono</Typography>
-          </TableSortLabel>
-        </TableCell>
 
-        <TableCell
-          className="tableCell"
-          key="Adress"
-          style={{ backgroundColor: "#C6C6C6" }}
-        >
-          <TableSortLabel
-            active={orderBy === "Adress"}
-            direction={orderBy === "Adress" ? order : "asc"}
-            onClick={crearSortHandler("Adress")}
-          >
-            <Typography fontWeight="bold">Dirección</Typography>
-          </TableSortLabel>
-        </TableCell>
+          <Typography fontWeight="bold">Rol</Typography>
 
-        <TableCell
-          className="tableCell"
-          key="Location"
-          style={{ backgroundColor: "#C6C6C6" }}
-        >
-          <TableSortLabel
-            active={orderBy === "Location"}
-            direction={orderBy === "Location" ? order : "asc"}
-            onClick={crearSortHandler("Location")}
-          >
-            <Typography fontWeight="bold">Departamento</Typography>
-          </TableSortLabel>
-        </TableCell>
-
-        <TableCell
-          className="tableCell"
-          key="State"
-          style={{ backgroundColor: "#C6C6C6" }}
-        >
-          <TableSortLabel
-            active={orderBy === "State"}
-            direction={orderBy === "State" ? order : "asc"}
-            onClick={crearSortHandler("State")}
-          >
-            <Typography fontWeight="bold">Estado</Typography>
-          </TableSortLabel>
         </TableCell>
 
         <TableCell
@@ -162,7 +130,7 @@ function CabeceraMejorada(props: any) {
           <Typography fontWeight="bold">Acciones</Typography>
         </TableCell>
       </TableRow>
-    </TableHead>
+    </TableHead >
   );
 }
 
@@ -204,8 +172,8 @@ export default function TableUsers({ Users }: myProps) {
         <TableContainer>
           <Table
             className="table"
-            // aria-labelledby="tableTitle"
-            // aria-label="enhanced table"
+          // aria-labelledby="tableTitle"
+          // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -218,51 +186,32 @@ export default function TableUsers({ Users }: myProps) {
             <TableBody>
               {stableSort(Users, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((user, index) => {
-                  if (user.State !== "Baja") {
-                    return (
-                      <TableRow key={index}>
-                        <TableCell className="tableCell">{user.Name}</TableCell>
-                        <TableCell className="tableCell">
-                          {user.Email}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {user.Phone}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {user.Adress}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {user.Location}
-                        </TableCell>
-                        <TableCell className="tableCell">
-                          {user.State}
-                        </TableCell>
+                .map((user: Users, index) => {
 
-                        <TableCell className="tableCell">
-                          {
-                            <>
-                              <button
-                                data-title="Eliminar"
-                                type="button"
-                                className="btn btn-sm"
-                                onClick={() => console.log("eliminar")}
-                              >
-                                <i className="fa-solid fa-trash"></i>
-                              </button>
-                              <button
-                                data-title="Editar"
-                                type="button"
-                                className="btn btn-sm"
-                              >
-                                <i className="fa-solid fa-pen-to-square"></i>
-                              </button>
-                            </>
-                          }
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
+                  return (
+                    <TableRow key={index}>
+                      <TableCell className="tableCell">{user.name}</TableCell>
+                      <TableCell className="tableCell">{user.lastName}</TableCell>
+                      <TableCell className="tableCell">
+                        {user.userEmail}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {user.role.description}
+                      </TableCell>
+                      <TableCell className="tableCell">
+                        {
+                          <button
+                            data-title="Editar"
+                            type="button"
+                            className="btn btn-sm"
+                          >
+                            <i className="fa-solid fa-pen-to-square"></i>
+                          </button>
+                        }
+                      </TableCell>
+                    </TableRow>
+                  );
+
                 })}
             </TableBody>
           </Table>

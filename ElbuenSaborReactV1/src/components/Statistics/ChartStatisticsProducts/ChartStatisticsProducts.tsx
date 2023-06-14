@@ -13,9 +13,9 @@ import "./ChartStatisticsProducts.scss"
 import { getData } from "components/GenericFetch/GenericFetch";
 import Product from "@Models/Product/Product";
 import { useAppSelector } from "@app/Hooks";
-import Category from "@Models/Product/Category";
-import NotFound from "components/404/NotFound";
 import NotResult from "components/404/NotResult";
+import exportFromJSON from 'export-from-json';
+import { Button } from "react-bootstrap";
 
 ChartJS.register(
   CategoryScale,
@@ -49,7 +49,7 @@ export function ChartStatisticsProducts() {
   // if RankingOrder is true, show the orders firs
   const [labels, setLabels] = useState<string[]>([])
   const [orders, setOrders] = useState<number[]>([])
-  const [category, setCategory] = useState("")
+  const [category, setCategory] = useState("Pizza")
   const [Products, setProducts] = useState([])
   const [dateStart, setDateStart] = useState("")
   const [dateEnd, setDateEnd] = useState("")
@@ -66,8 +66,6 @@ export function ChartStatisticsProducts() {
     })
     setLabels(label)
   }, [Products])
-
-
 
   useEffect(() => {
     getOrders()
@@ -87,7 +85,6 @@ export function ChartStatisticsProducts() {
       setProducts(data)
 
     } else if (category != "") {
-      console.log(category)
       const data = await getData<[]>(`/api/product/topProducts/${category}`);
       setProducts(data)
 
@@ -104,7 +101,18 @@ export function ChartStatisticsProducts() {
       },
     ],
   };
+  const exportToExcel = () => {
+    var arrayData = []
+    for (var i = 0; i < labels.length; i++) {
+      const data = {
+        label: labels[i],
+        orders: orders[i]
+      }
+      arrayData.push(data)
+    }
 
+    exportFromJSON({ data: arrayData, exportType: "xls", fileName: "client-Data" });
+  };
 
 
   return (
@@ -142,6 +150,9 @@ export function ChartStatisticsProducts() {
           </span>
         </div>
         {Products.length !== 0 ? <Bar options={options} data={data} /> : <NotResult />}
+        <div className="d-flex justify-content-end" style={{ margin: "1rem" }}>
+          <Button variant="primary" onClick={exportToExcel}>export data</Button>
+        </div>
       </div>
     </div>
   );

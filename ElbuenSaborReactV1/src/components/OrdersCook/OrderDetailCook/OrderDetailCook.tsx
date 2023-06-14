@@ -1,4 +1,4 @@
-import Orders from '@Models/orders/Orders';
+import Orders from '@Models/orders/Order';
 import { getData, postPutData } from 'components/GenericFetch/GenericFetch';
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';

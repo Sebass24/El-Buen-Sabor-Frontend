@@ -12,6 +12,8 @@ import {
 import { Line } from "react-chartjs-2";
 import "./ChartStatisticsMonetary.scss"
 import { getData } from "components/GenericFetch/GenericFetch";
+import exportFromJSON from 'export-from-json';
+import { Button } from "react-bootstrap";
 
 ChartJS.register(
   CategoryScale,
@@ -31,48 +33,6 @@ export const options = {
     },
   },
 };
-
-// interface data {
-//   name: string;
-//   revenues: number;
-//   costs: number;
-//   profits: number;
-// }
-
-// const prueba: data[] = [
-//   {
-//     name: "franco",
-//     revenues: 100,
-//     costs: 90,
-//     profits: 10,
-//   },
-//   {
-//     name: "Seba",
-//     revenues: 900,
-//     costs: 110,
-//     profits: 790,
-//   },
-//   {
-//     name: "Emi",
-//     revenues: 800,
-//     costs: 450,
-//     profits: 350,
-//   },
-//   {
-//     name: "Lucio",
-//     revenues: 800,
-//     costs: 250,
-//     profits: 550,
-//   },
-//   {
-//     name: "giani",
-//     revenues: 700,
-//     costs: 232,
-//     profits: 468,
-//   },
-// ];
-
-
 
 export function ChartStatisticsMonetary() {
 
@@ -144,6 +104,21 @@ export function ChartStatisticsMonetary() {
     ],
   };
 
+  const exportToExcel = () => {
+    var arrayData = []
+    for (var i = 0; i < labels.length; i++) {
+      const data = {
+        label: labels[i],
+        costs: costs[i],
+        revenues: revenues[i],
+        profit: profits[i]
+      }
+      arrayData.push(data)
+    }
+
+    exportFromJSON({ data: arrayData, exportType: "xls", fileName: "client-Data" });
+  };
+
 
   return (
     <div className="container">
@@ -159,6 +134,9 @@ export function ChartStatisticsMonetary() {
 
       </div>
       <Line options={options} data={data} style={{ marginTop: "1rem" }} />
+      <div className="d-flex justify-content-end">
+        <Button variant="primary" onClick={exportToExcel} style={{ margin: "1rem" }}>export data</Button>
+      </div>
     </div>
   );
 

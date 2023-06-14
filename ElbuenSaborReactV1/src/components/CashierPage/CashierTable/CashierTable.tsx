@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "react-bootstrap";
-import Orders from "@Models/orders/Orders";
+import Orders from "@Models/orders/Order";
 import { useAppDispatch } from "@app/Hooks";
 import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
 import OrderStatus from "@Models/orders/OrderStatus";
