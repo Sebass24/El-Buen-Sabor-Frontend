@@ -8,16 +8,16 @@ import Phone from "@Models/Users/Phone";
 import Address from "@Models/Users/Address";
 
 export default interface Order extends Base {
-  deliveryMethod: DeliveryMethod | string;
+  deliveryMethod: DeliveryMethod;
   date: Date | string;
   orderStatus: OrderStatus | string;
   estimatedTime: Date;
-  paymentMethod: PaymentMethod | string;
+  paymentMethod: PaymentMethod;
   paid: boolean;
   user: User;
   orderDetails: OrderDetail[];
   total: number;
   discount: number;
-  address: Address;
+  address: Address | string;
   phone: Phone | string;
 }

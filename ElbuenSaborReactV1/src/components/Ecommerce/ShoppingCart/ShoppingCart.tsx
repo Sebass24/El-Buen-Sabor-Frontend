@@ -76,7 +76,7 @@ export default function ShoppingCart() {
                                 </>
                                 : <>
                                     <OrderOptions />
-                                    <Button className={order.paymentMethod !== "" ? "btn-cart" : "disabled"}
+                                    <Button className={order.paymentMethod.id !== 0 ? "btn-cart" : "disabled"}
                                         onClick={handleOrderReview}>
                                         Continuar
                                     </Button>

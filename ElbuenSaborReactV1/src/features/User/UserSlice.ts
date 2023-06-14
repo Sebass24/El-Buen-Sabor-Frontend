@@ -14,17 +14,8 @@ interface LoadingState {
     lastName: string;
     name: string;
     userEmail: string;
-    addresses: Address[];
-    phones: Phone[];
     role: Role;
   }
-}
-
-interface Auth0Data {
-  auth0Id: string,
-  lastName: string,
-  name: string,
-  email: string
 }
 
 // Define the initial state using that type
@@ -37,8 +28,6 @@ const initialState: LoadingState = {
     lastName: "",
     name: "",
     userEmail: "",
-    addresses: null as any,
-    phones: null as any,
     role: null as any
   }
 };

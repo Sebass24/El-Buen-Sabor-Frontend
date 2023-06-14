@@ -35,3 +35,10 @@ export async function postNewOrder(newOrder: Order) {
     const order = await postPutData(url, method, newOrder);
     return order;
 }
+
+export async function postNewAddress(newAddress: Address) {
+    const url = "/api/address";
+    const method = 'POST';
+    const address = await postPutData(url, method, newAddress);
+    return address;
+}

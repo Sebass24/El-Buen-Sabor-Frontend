@@ -1,6 +1,7 @@
+import DeliveryMethod from '@Models/Orders/DeliveryMethod';
 import Order from '@Models/Orders/Order';
 import OrderDetail from '@Models/Orders/OrderDetail';
-import Address from '@Models/Users/Address';
+import PaymentMethod from '@Models/Orders/PaymentMethod';
 import User from '@Models/Users/User';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -9,7 +10,7 @@ export interface cartOrderSlice {
 }
 
 interface addressPhone {
-    address: Address;
+    address: string;
     phone: string;
 }
 
@@ -18,17 +19,17 @@ const initialCartState: cartOrderSlice = {
     order: {
         id: null as any,
         deleted: false,
-        deliveryMethod: "",
+        deliveryMethod: null as any,
         date: "",
-        orderStatus: "A confirmar",
+        orderStatus: null as any,
         estimatedTime: null as any,
-        paymentMethod: "",
+        paymentMethod: null as any,
         paid: false,
         user: null as any,
         orderDetails: [],
         total: 0,
         discount: 0,
-        address: null as any,
+        address: "",
         phone: ""
     }
 };
@@ -71,16 +72,16 @@ export const cartOrderSlice = createSlice({
             }
             return state;
         },
-        setDeliveryMethod: (state, action: PayloadAction<string>) => {
+        setDeliveryMethod: (state, action: PayloadAction<DeliveryMethod>) => {
             state.order.deliveryMethod = action.payload;
-            state.order.paymentMethod = "";
-            if (state.order.deliveryMethod === "Retiro en el local") {
+            state.order.paymentMethod = { id: 0, description: "" };
+            if (state.order.deliveryMethod.id === 2) {
                 state.order.discount = state.order.total * 0.1;
-            } else if (state.order.deliveryMethod === "Envío a domicilio") {
+            } else if (state.order.deliveryMethod.id === 1) {
                 state.order.discount = 0;
             }
         },
-        setPaymentMethod: (state, action: PayloadAction<string>) => {
+        setPaymentMethod: (state, action: PayloadAction<PaymentMethod>) => {
             state.order.paymentMethod = action.payload;
         },
         setAddressPhone: (state, action: PayloadAction<addressPhone>) => {
@@ -93,6 +94,7 @@ export const cartOrderSlice = createSlice({
         },
         setCartUser: (state, action: PayloadAction<User>) => {
             state.order.user = action.payload;
+            state.order.orderStatus = { id: 1, description: "A confirmar" };
         },
         setCartDate: (state, action: PayloadAction<string>) => {
             state.order.date = action.payload;

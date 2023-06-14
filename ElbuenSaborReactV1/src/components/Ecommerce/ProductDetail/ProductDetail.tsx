@@ -8,7 +8,7 @@ import { getProductById } from "../../../services/products";
 import { useAppDispatch } from "@app/Hooks";
 import OrderDetail from "@Models/Orders/OrderDetail";
 import { addProduct, setTotalPrice } from "@features/ShoppingCart/CartProducts";
-import { openRestaurant } from "./WorkingSchedule";
+import { openRestaurant } from "../WorkingHours/WorkingSchedule";
 import { Alert } from "@mui/material";
 
 export default function ProductDetail() {

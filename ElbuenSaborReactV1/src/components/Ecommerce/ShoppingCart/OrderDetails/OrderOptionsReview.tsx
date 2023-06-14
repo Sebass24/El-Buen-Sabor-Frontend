@@ -11,11 +11,11 @@ export default function OrderOptionsReview() {
             <OrderTotalPrice />
             <div className="order-total-price-info">
                 <div className="separator">
-                    <label className="total-products"><strong>{order.deliveryMethod as string}</strong></label>
+                    <label className="total-products"><strong>{order.deliveryMethod.description}</strong></label>
                 </div>
                 <div className="separator">
                     <label>Forma de pago:</label>
-                    <label><strong>{order.paymentMethod as string}</strong></label>
+                    <label><strong>{order.paymentMethod.description}</strong></label>
                 </div>
             </div>
         </>
