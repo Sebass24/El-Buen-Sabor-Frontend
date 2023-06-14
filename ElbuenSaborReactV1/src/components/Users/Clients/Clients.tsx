@@ -3,20 +3,24 @@ import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import TableUsers from '../TableUsers/TableUsers';
 import { getData } from 'components/GenericFetch/GenericFetch';
+import { useAppDispatch, useAppSelector } from '@app/Hooks';
+import { fetchClients } from '@features/Clients/ClientThunk';
+import { setClients } from '@features/Clients/ClientSlice';
 
 export default function Clients() {
 
-  const [users, setUsers] = useState<Users[]>([]);
+  const { Clients } = useAppSelector(state => state.clients)
+  const dispatch = useAppDispatch()
   const [usersComplete, setUsersComplete] = useState<Users[]>([]);
   const [search, setSearch] = useState("");
 
   async function getUser() {
     const data = await getData<Users[]>(`/api/user/Clients${search != "" ? `?name=${search}` : ""}`)
-    setUsers(data)
+    dispatch(setClients(data))
   }
 
   useEffect(() => {
-    getUser()
+    dispatch(fetchClients())
   }, [])
 
   return (
@@ -50,7 +54,7 @@ export default function Clients() {
 
 
       <TableUsers
-        Users={users}
+        Users={Clients}
       />
 
 

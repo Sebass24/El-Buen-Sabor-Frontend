@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import TableUsers from '../TableUsers/TableUsers';
 import { getData } from 'components/GenericFetch/GenericFetch';
+import { useAppDispatch, useAppSelector } from '@app/Hooks';
+import { fetchEmpleoyees } from '@features/Empleoyees/EmpleoyeesThunk';
+import { setEmpleoyees } from '@features/Empleoyees/empleoyeeSlice';
 
 export default function Empleoyees() {
 
-  const [users, setUsers] = useState<Users[]>([]);
-  const [usersComplete, setUsersComplete] = useState<Users[]>([]);
+  const { Empleoyees } = useAppSelector(state => state.empleoyees)
+  const dispatch = useAppDispatch()
   const [search, setSearch] = useState("");
   const [estado, setEstado] = useState("")
   async function getUser() {
@@ -17,12 +20,16 @@ export default function Empleoyees() {
     console.log(`/api/user/Empleoyees${estado != '' && search != '' ? `?rol=${estado}&name=${search}` :
       (estado != '' && search == '' ? `?rol=${estado}` :
         (estado == '' && search != '' ? `?&name=${search}` : ""))}`)
-    setUsers(data)
+    dispatch(setEmpleoyees(data))
   }
 
   useEffect(() => {
     getUser()
   }, [estado])
+
+  useEffect(() => {
+    dispatch(fetchEmpleoyees())
+  }, [])
 
   return (
     <div className='Container_Ingredientes' >
@@ -68,7 +75,7 @@ export default function Empleoyees() {
       </div>
 
       <TableUsers
-        Users={users}
+        Users={Empleoyees}
       />
 
 
