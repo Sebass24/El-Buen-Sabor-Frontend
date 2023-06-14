@@ -2,11 +2,12 @@ import { Button, Modal } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { useState, useEffect } from "react";
 import "./UserDataModal.scss";
-import { Formik, Form, Field, FormikValues, useFormik } from 'formik';
+import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { useAuth0 } from "@auth0/auth0-react";
 import { postNewUser } from "../../../services/users";
 import { setStoredInDB, setUserData, setUserId } from "@features/User/UserSlice";
+import TextFieldValue from "components/Inputs/TextFieldValue";
 
 export default function NewClientModal() {
 
@@ -60,131 +61,70 @@ export default function NewClientModal() {
         }
     }, [user])
 
-    const formik = useFormik({
-        initialValues: {
-            lastName: user.lastName !== "" ? user.lastName : (userAuth0?.family_name || ''),
-            name: user.name !== "" ? user.name : (userAuth0?.given_name || ''),
-            email: userAuth0?.email,
-        },
-        validationSchema: Yup.object().shape({
-            lastName: Yup.string().required('El apellido es obligatorio'),
-            name: Yup.string().required('El nombre es obligatorio'),
-        }),
-        onSubmit: values => {
-            saveUserData(values);
-        },
-    });
-
     const closeSession = () => {
         logout({ logoutParams: { returnTo: window.location.origin } })
     }
 
+    const initialValues: any = {
+        lastName: user.lastName !== "" ? user.lastName : (userAuth0?.family_name || ''),
+        name: user.name !== "" ? user.name : (userAuth0?.given_name || ''),
+        email: userAuth0?.email
+    }
+
     return (
         <div>
-            <Modal className="complete-data" show={showModal} onHide={handleCloseModal}>
+            <Modal className="complete-data" show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
                 <Modal.Header>
                     <Modal.Title>Completar datos personales</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <form onSubmit={formik.handleSubmit}>
-                        <div>
-                            <label htmlFor="name">Nombre:</label>
-                            <input
-                                id="name"
-                                name="name"
-                                type="text"
-                                onChange={formik.handleChange}
-                                defaultValue={formik.initialValues.name}
-                            />
-                            {formik.touched.name && formik.errors.name ? (
-                                <div>{formik.errors.name}</div>
-                            ) : null}
-                        </div>
-                        <div>
-                            <label htmlFor="lastName">Apellido:</label>
-                            <input
-                                id="lastName"
-                                name="lastName"
-                                type="text"
-                                onChange={formik.handleChange}
-                                defaultValue={formik.initialValues.lastName}
-                            />
-                            {formik.touched.lastName && formik.errors.lastName ? (
-                                <div>{formik.errors.lastName}</div>
-                            ) : null}
-                        </div>
-                        <div><label htmlFor="email">Email:</label>
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                onChange={formik.handleChange}
-                                value={userAuth0?.email}
-                                disabled
-                            />
-                            {formik.touched.email && formik.errors.email ? (
-                                <div>{formik.errors.email}</div>
-                            ) : null}
-                        </div>
-                        {/* <Formik
-                        initialValues={initialValuesNewClient}
-                        onSubmit={saveUserData}
-                        validationSchema={validationSchema}
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={Yup.object().shape({
+                            lastName: Yup.string().required('El apellido es obligatorio'),
+                            name: Yup.string().required('El nombre es obligatorio'),
+                        })}
+                        onSubmit={(values) => { saveUserData(values) }}
                     >
-                        <Form className="form-user-personal-data">
-                            <div className="form-group">
-                                <label htmlFor="name" className="form-label">
-                                    Nombre:
-                                </label>
-                                <Field
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    placeholder={user.name}
-                                    className="form-control"
-                                    component="input"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="lastName" className="form-label">
-                                    Apellido:
-                                </label>
-                                <Field
-                                    type="text"
-                                    name="lastName"
-                                    id="lastName"
-                                    placeholder={user.lastName}
-                                    className="form-control"
-                                    component="input"
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="userEmail" className="form-label">
-                                    Email:
-                                </label>
-                                <Field
-                                    type="text"
-                                    name="userEmail"
-                                    id="userEmail"
-                                    placeholder={userAuth0?.email}
-                                    disabled
-                                    className="form-control"
-                                    component="input"
-                                />
-                            </div> */}
-                        <Modal.Footer>
-                            <Button type="submit" className="btn-yellow">
-                                Guardar
-                            </Button>
-                            <Button type="button" className="btn-yellow" onClick={closeSession as any}>
-                                Cerrar
-                            </Button>
-                        </Modal.Footer>
-                    </form>
-                    {/* </Form>
-                    </Formik> */}
+                        {(Formik) =>
+                        (
+                            <>
+                                <Form className="form-user-personal-data">
+                                    <div className="form-group">
+                                        <TextFieldValue
+                                            label="Nombre:"
+                                            name="name"
+                                            type="text"
+                                            defaultValue={initialValues.name}
+                                        />
+                                        <TextFieldValue
+                                            label="Apellido:"
+                                            name="lastName"
+                                            type="text"
+                                            defaultValue={initialValues.lastName}
+                                        />
+                                        <TextFieldValue
+                                            label="Email:"
+                                            name="email"
+                                            type="email"
+                                            defaultValue={initialValues.email}
+                                            disabled={true}
+                                        />
+                                    </div>
+                                    <Modal.Footer>
+                                        <Button type="submit" className="btn-yellow">
+                                            Guardar
+                                        </Button>
+                                        <Button type="button" className="btn-yellow" onClick={closeSession as any}>
+                                            Cerrar
+                                        </Button>
+                                    </Modal.Footer>
+                                </Form>
+                            </>
+                        )
+                        }
+                    </Formik>
                 </Modal.Body>
-
             </Modal>
         </div >
     );

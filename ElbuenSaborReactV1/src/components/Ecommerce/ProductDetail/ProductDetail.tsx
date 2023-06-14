@@ -5,20 +5,21 @@ import { useState, useEffect } from "react";
 import "./ProductDetail.scss";
 import ProductQuantitySelector from "./ProductQuantitySelector";
 import { getProductById } from "../../../services/products";
-import { useAppDispatch, useAppSelector } from "@app/Hooks";
+import { useAppDispatch } from "@app/Hooks";
 import OrderDetail from "@Models/Orders/OrderDetail";
 import { addProduct, setTotalPrice } from "@features/ShoppingCart/CartProducts";
 import { openRestaurant } from "./WorkingSchedule";
+import { Alert } from "@mui/material";
 
 export default function ProductDetail() {
     const dispatch = useAppDispatch();
-    const { orderDetails } = useAppSelector(state => state.cartProducts.order);
 
     const { idproduct } = useParams();
     const [product, setProduct] = useState<Product | null>(null);
     const [quantity, setQuantity] = useState(1);
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [showMessage, setShowMessage] = useState(false);
 
     const getProduct = async () => {
         let p: Product = await getProductById(parseInt(idproduct!));
@@ -36,13 +37,20 @@ export default function ProductDetail() {
     };
 
     const handleModal = () => setShow(!show);
+    const handleMessage = () => {
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 4000);
+    };
 
     const handleAddToCart = (p: Product, quantity: number) => {
         //if (openRestaurant(new Date())) {                 //this will set the current date to do the logic
         if (openRestaurant(today)) {                        //setted date for trials
             const newOrder: OrderDetail = { product: p, quantity };
             dispatch(addProduct(newOrder));
-            dispatch(setTotalPrice(orderDetails));
+            dispatch(setTotalPrice());
+            handleMessage();
         } else {
             handleModal();
         }
@@ -68,7 +76,7 @@ export default function ProductDetail() {
     } else {
         return (
             <>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div className="product-detail-container">
                     <Card className='card2'>
                         <Card.Img variant="top" className="product-image2 img-fluid mx-auto d-block" src={`../Images/${product?.image.path}`} />
                         <Card.Body>
@@ -94,6 +102,11 @@ export default function ProductDetail() {
                         </Card.Body>
                     </Card>
                 </div>
+                {showMessage ?
+                    <div className="alert-container">
+                        <Alert onClose={() => { setShowMessage(false) }}>Producto agregado al carrito</Alert>
+                    </div>
+                    : ""}
                 <Modal show={show} onHide={handleModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Local cerrado</Modal.Title>

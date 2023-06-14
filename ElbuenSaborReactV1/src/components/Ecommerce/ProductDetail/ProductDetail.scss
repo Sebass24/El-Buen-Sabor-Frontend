@@ -102,6 +102,24 @@
     height: 2.2rem;
 }
 
+.product-detail-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.alert-container {
+    position: fixed;
+    top: 3rem;
+    margin-left: 1rem;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
 @media (max-width: 450px) {
     .add-to-cart-button {
         width: 8.5rem;

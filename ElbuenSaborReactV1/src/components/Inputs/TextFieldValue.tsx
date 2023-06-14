@@ -18,6 +18,8 @@ const TextFieldValue = ({
   onChange,
   value,
   placeholder,
+  disabled,
+  defaultValue
 }: props) => {
   return (
     <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
@@ -48,6 +50,7 @@ const TextFieldValue = ({
         name={name}
         type={type}
         autoComplete="off"
+        disabled={disabled}
       />
       <ErrorMessage component="div" name={name} className="error" />
     </div>

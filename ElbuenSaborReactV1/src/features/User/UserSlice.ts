@@ -51,13 +51,6 @@ export const UserSlice = createSlice({
     setUserToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
     },
-    setUserAuth0Data: (state, action: PayloadAction<Auth0Data>) => {
-      const { name, lastName, email, auth0Id } = action.payload;
-      state.user.auth0Id = auth0Id;
-      state.user.name = name;
-      state.user.lastName = lastName;
-      state.user.userEmail = email;
-    },
     setUserData: (state, action: PayloadAction<User>) => {
       const { id, name, lastName, userEmail, auth0Id } = action.payload;
       state.user.id = id as number;
@@ -68,6 +61,7 @@ export const UserSlice = createSlice({
     },
     resetUserData: (state) => {
       state.user = initialState.user;
+      state.userStoredInDB = false;
     },
     setStoredInDB: (state, action: PayloadAction<boolean>) => {
       state.userStoredInDB = action.payload;
@@ -81,6 +75,6 @@ export const UserSlice = createSlice({
   },
 });
 
-export const { setUserToken, setUserAuth0Data, resetUserData, setUserData, setStoredInDB, setUserId, setUserRole } = UserSlice.actions;
+export const { setUserToken, resetUserData, setUserData, setStoredInDB, setUserId, setUserRole } = UserSlice.actions;
 
 export default UserSlice.reducer;

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
-import { setUserToken, resetUserData, setUserData, setStoredInDB, setUserAuth0Data, setUserRole } from "@features/User/UserSlice";
+import { setUserToken, resetUserData, setUserData, setStoredInDB, setUserRole } from "@features/User/UserSlice";
 import { setCartUser } from "@features/ShoppingCart/CartProducts";
 import User from "@Models/Users/User";
 import { getUserData } from "../../services/users";
@@ -34,7 +34,6 @@ const Profile = () => {
       } else {
         dispatch(setCartUser(null as any));
         dispatch(resetUserData());
-        dispatch(setStoredInDB(false));
       }
     }
   }

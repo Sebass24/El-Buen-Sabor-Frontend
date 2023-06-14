@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAppDispatch } from "@app/Hooks";
 import { setCartUser } from "@features/ShoppingCart/CartProducts";
-import { resetUserData, setStoredInDB } from "@features/User/UserSlice";
+import { resetUserData } from "@features/User/UserSlice";
 const LogOutAuth = () => {
   const { logout } = useAuth0();
 
@@ -9,9 +9,10 @@ const LogOutAuth = () => {
 
   const handleLogOut = () => {
     logout({ logoutParams: { returnTo: window.location.origin } });
-    dispatch(setCartUser(""));
-    dispatch(resetUserData());
-    dispatch(setStoredInDB(false));
+    dispatch(setCartUser(null as any));
+    setTimeout(() => {
+      dispatch(resetUserData());
+    }, 4000);
   };
 
   return (
