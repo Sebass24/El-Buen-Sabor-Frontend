@@ -6,13 +6,17 @@ import { getData } from 'components/GenericFetch/GenericFetch';
 import { useAppDispatch, useAppSelector } from '@app/Hooks';
 import { fetchClients } from '@features/Clients/ClientThunk';
 import { setClients } from '@features/Clients/ClientSlice';
+import { ModalAddUserAdmin } from '../ModalAddUserAdmin/ModalAddUserAdmin';
 
 export default function Clients() {
 
   const { Clients } = useAppSelector(state => state.clients)
   const dispatch = useAppDispatch()
-  const [usersComplete, setUsersComplete] = useState<Users[]>([]);
   const [search, setSearch] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => {
+    setShowModal(false);
+  };
 
   async function getUser() {
     const data = await getData<Users[]>(`/api/user/Clients${search != "" ? `?name=${search}` : ""}`)
@@ -26,7 +30,7 @@ export default function Clients() {
   return (
     <div className='Container_Ingredientes' >
       <div className='actions_Ingredientes'>
-        <Button variant="success">Nuevo</Button>
+        <Button variant="success" onClick={() => (setShowModal(true))}>Nuevo</Button>
 
         <div className="Container_input">
           <input
@@ -57,7 +61,11 @@ export default function Clients() {
         Users={Clients}
       />
 
-
+      <ModalAddUserAdmin
+        showModal={showModal}
+        handleClose={handleClose}
+        Client={true}
+      />
     </div>
   )
 }

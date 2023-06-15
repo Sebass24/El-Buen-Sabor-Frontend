@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./TableUsers.scss";
 
 import {
@@ -16,6 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import Users from "@Models/Users/User";
+import { ModalAddUserAdmin } from "../ModalAddUserAdmin/ModalAddUserAdmin";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
@@ -139,6 +140,12 @@ interface myProps {
 }
 
 export default function TableUsers({ Users }: myProps) {
+  const [showModal, setShowModal] = useState(false);
+  const [UserEdit, setUserEdit] = useState<Users | undefined>(undefined)
+  const handleClose = () => {
+    setShowModal(false);
+    setUserEdit(undefined)
+  };
   const formatoMonedaLocal = new Intl.NumberFormat("es-AR", {
     style: "currency",
     currency: "ARS",
@@ -196,7 +203,7 @@ export default function TableUsers({ Users }: myProps) {
                         {user.userEmail}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {user.role.description}
+                        {user.role?.description}
                       </TableCell>
                       <TableCell className="tableCell">
                         {
@@ -205,7 +212,7 @@ export default function TableUsers({ Users }: myProps) {
                             type="button"
                             className="btn btn-sm"
                           >
-                            <i className="fa-solid fa-pen-to-square"></i>
+                            <i className="fa-solid fa-pen-to-square" onClick={() => { setUserEdit(user); setShowModal(true) }}></i>
                           </button>
                         }
                       </TableCell>
@@ -235,6 +242,12 @@ export default function TableUsers({ Users }: myProps) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <ModalAddUserAdmin
+        showModal={showModal}
+        handleClose={handleClose}
+        editing={true}
+        user={UserEdit}
+      />
     </div>
   );
 }

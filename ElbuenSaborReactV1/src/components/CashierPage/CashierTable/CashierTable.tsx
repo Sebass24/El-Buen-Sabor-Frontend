@@ -25,8 +25,6 @@ import { postPutData } from "components/GenericFetch/GenericFetch";
 import { updateOrder } from "@features/Orders/OrderSlice";
 import { fetchOrders } from "@features/Orders/OrderThunks";
 
-
-
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
     a = a[orderBy][0].toLowerCase();
@@ -56,7 +54,10 @@ function getComparador(order: string, orderBy: string) {
 }
 
 const stableSort = (array: Orders[], comparator: any, orderBy: any) => {
-  const stabilizedThis = array.map((producto: any, index: number) => [producto, index]);
+  const stabilizedThis = array.map((producto: any, index: number) => [
+    producto,
+    index,
+  ]);
   stabilizedThis.sort((a: any, b: any) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -87,9 +88,7 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "id" ? order : "desc"}
             onClick={crearSortHandler("id")}
           >
-            <Typography fontWeight="bold">
-              Pedido
-            </Typography>
+            <Typography fontWeight="bold">Pedido</Typography>
           </TableSortLabel>
         </TableCell>
 
@@ -103,36 +102,29 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "date" ? order : "asc"}
             onClick={crearSortHandler("date")}
           >
-            <Typography fontWeight="bold">
-              Fecha/Hora
-            </Typography>
+            <Typography fontWeight="bold">Fecha/Hora</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="FormaEntrega"
+          className="tableCell"
+          key="FormaEntrega"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-
-          <Typography fontWeight="bold">
-            Forma de entrega
-          </Typography>
-
+          <Typography fontWeight="bold">Forma de entrega</Typography>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="FormaPago"
+          className="tableCell"
+          key="FormaPago"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-
-          <Typography fontWeight="bold">
-            Forma de pago
-          </Typography>
-
+          <Typography fontWeight="bold">Forma de pago</Typography>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="Pagado"
+          className="tableCell"
+          key="Pagado"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -140,34 +132,29 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "paid" ? order : "asc"}
             onClick={crearSortHandler("paid")}
           >
-            <Typography fontWeight="bold">
-              Pagado
-            </Typography>
+            <Typography fontWeight="bold">Pagado</Typography>
           </TableSortLabel>
         </TableCell>
         <TableCell
-          className="tableCell" key="Estado"
+          className="tableCell"
+          key="Estado"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <Typography fontWeight="bold">
-            Estado
-          </Typography>
+          <Typography fontWeight="bold">Estado</Typography>
         </TableCell>
         <TableCell
-          className="tableCell" key="Detalle"
+          className="tableCell"
+          key="Detalle"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <Typography fontWeight="bold">
-            Detalle
-          </Typography>
+          <Typography fontWeight="bold">Detalle</Typography>
         </TableCell>
         <TableCell
-          className="tableCell" key="Acciones"
+          className="tableCell"
+          key="Acciones"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <Typography fontWeight="bold">
-            Acciones
-          </Typography>
+          <Typography fontWeight="bold">Acciones</Typography>
         </TableCell>
       </TableRow>
     </TableHead>
@@ -175,11 +162,10 @@ function CabeceraMejorada(props: any) {
 }
 
 interface myProps {
-  orders: Orders[]
+  orders: Orders[];
 }
 
 const CahierTable = ({ orders }: myProps) => {
-
   const [order, setOrder] = React.useState("desc");
   const [orderBy, setOrderBy] = React.useState("id");
   const [page, setPage] = React.useState(0);
@@ -200,34 +186,32 @@ const CahierTable = ({ orders }: myProps) => {
     setPage(0);
   };
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, orders.length - page * rowsPerPage);
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, orders.length - page * rowsPerPage);
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   function handleChangeState(order: Orders, status: OrderStatus) {
-    const neworder = { ...order, "orderStatus": status }
-    dispatch(startLoading())
-    postPutData(`/api/order/changeStatus/${order.id}/${status.id}`, "PUT", {}).then(
-      () => {
-        dispatch(updateOrder(neworder))
-      }
-    )
-    dispatch(finishLoading())
+    const neworder = { ...order, orderStatus: status };
+    dispatch(startLoading());
+    postPutData(
+      `/api/order/changeStatus/${order.id}/${status.id}`,
+      "PUT",
+      {}
+    ).then(() => {
+      dispatch(updateOrder(neworder));
+    });
+    dispatch(finishLoading());
   }
 
   function handleChangePaid(order: Orders, paid: boolean) {
-    const neworder = { ...order, "paid": paid }
-    dispatch(startLoading())
-    postPutData(`/api/order`, "PUT", neworder).then(
-      () => {
-        dispatch(updateOrder(neworder))
-      }
-    )
-    dispatch(finishLoading())
+    const neworder = { ...order, paid: paid };
+    dispatch(startLoading());
+    postPutData(`/api/order/paiOrder/${order.id}`, "PUT", {}).then(() => {
+      dispatch(updateOrder(neworder));
+    });
+    dispatch(finishLoading());
   }
-
-
-
 
   return (
     <div className="container_tabla">
@@ -235,8 +219,8 @@ const CahierTable = ({ orders }: myProps) => {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -250,16 +234,13 @@ const CahierTable = ({ orders }: myProps) => {
               {stableSort(orders, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((order: Orders, index: number) => {
-
                   return (
-                    <TableRow key={index} >
-                      <TableCell
-                        className="tableCell"
-                      >
-                        {order.id}
-                      </TableCell>
+                    <TableRow key={index}>
+                      <TableCell className="tableCell">{order.id}</TableCell>
                       <TableCell className="tableCell">
-                        {order.date.toString().substring(0, 10) + " " + order.date.toString().substring(11, 19)}
+                        {order.date.toString().substring(0, 10) +
+                          " " +
+                          order.date.toString().substring(11, 19)}
                       </TableCell>
                       <TableCell className="tableCell">
                         {order.deliveryMethod.description}
@@ -276,84 +257,121 @@ const CahierTable = ({ orders }: myProps) => {
                       <TableCell className="tableCell_Detalle">
                         {
                           <Link to={`/detail/${order?.id}`}>
-                            <Button
-                              className=""
-                              variant="warning"
-                            >
+                            <Button className="" variant="warning">
                               Ver detalle
                             </Button>
                           </Link>
-
                         }
                       </TableCell>
                       <TableCell className="tableCell">
                         <div className="tableCell_Actions">
-                          {order.orderStatus.description === "A confirmar" && order.paid === true ?
+                          {order.orderStatus.description === "A confirmar" &&
+                          order.paid === true ? (
                             <Button
                               className="ACocina"
                               variant="warning"
-                              onClick={() => (handleChangeState(order, { id: 2, deleted: false, description: "En cocina" }))}
+                              onClick={() =>
+                                handleChangeState(order, {
+                                  id: 2,
+                                  deleted: false,
+                                  description: "En cocina",
+                                })
+                              }
                             >
                               A Cocina
                             </Button>
-                            :
-                            order.orderStatus.description === "Listo" && order.deliveryMethod.description === "Envío a domicilio" && order.paid === true ?
-                              <Button
-                                className="ACocina"
-                                variant="warning"
-                                onClick={() => (handleChangeState(order, { id: 3, deleted: false, description: "En delivery" }))}
-                              >
-                                Delivery
-                              </Button>
-                              : order.orderStatus.description === "Listo" && order.deliveryMethod.description === "Retiro en el local" && order.paid === true ?
-                                <Button
-                                  className="ACocina"
-                                  variant="warning"
-                                  onClick={() => (handleChangeState(order, { id: 5, deleted: false, description: "Entregado" }))}
-                                >
-                                  Entregar
-                                </Button>
-                                : <></>
-                          }
-                          {order.paid === false ?
+                          ) : order.orderStatus.description === "Listo" &&
+                            order.deliveryMethod.description ===
+                              "Envío a domicilio" &&
+                            order.paid === true ? (
+                            <Button
+                              className="ACocina"
+                              variant="warning"
+                              onClick={() =>
+                                handleChangeState(order, {
+                                  id: 3,
+                                  deleted: false,
+                                  description: "En delivery",
+                                })
+                              }
+                            >
+                              Delivery
+                            </Button>
+                          ) : order.orderStatus.description === "Listo" &&
+                            order.deliveryMethod.description ===
+                              "Retiro en el local" &&
+                            order.paid === true ? (
+                            <Button
+                              className="ACocina"
+                              variant="warning"
+                              onClick={() =>
+                                handleChangeState(order, {
+                                  id: 5,
+                                  deleted: false,
+                                  description: "Entregado",
+                                })
+                              }
+                            >
+                              Entregar
+                            </Button>
+                          ) : (
+                            <></>
+                          )}
+                          {order.paid === false ? (
                             <Button
                               className="Pagado"
                               variant="Success"
-                              onClick={() => (handleChangePaid(order, true))}
+                              onClick={() => handleChangePaid(order, true)}
                             >
                               Pagar
                             </Button>
-                            : <></>}
-                          {order.paid === true ?
+                          ) : (
+                            <></>
+                          )}
+                          {order.paid === true ? (
                             <Button
                               className="verFactura"
                               variant="warning"
+                              href={`${
+                                import.meta.env.VITE_BILL_DOWNLOAD
+                              }/api/bill/download-bill/${order.id}`}
+                              target="_blank"
                             >
                               Ver Factura
                             </Button>
-                            : <></>}
-                          {
-                            order.orderStatus.description !== "Cancelado" ?
-                              <Button
-                                className="Anular"
-                                variant="danger"
-                                onClick={() => (handleChangeState(order, { id: 6, deleted: false, description: "Cancelado" }))}
-                              >
-                                Anular
-                              </Button>
-
-                              : <Button
-                                className="Anular"
-                                variant="warning"
-                                onClick={() => (handleChangeState(order, { id: 6, deleted: false, description: "Cancelado" }))}
-                              >
-                                Ver Nota
-                              </Button>
-                          }
-
+                          ) : (
+                            <></>
+                          )}
+                          {order.orderStatus.description !== "Cancelado" ? (
+                            <Button
+                              className="Anular"
+                              variant="danger"
+                              onClick={() =>
+                                handleChangeState(order, {
+                                  id: 6,
+                                  deleted: false,
+                                  description: "Cancelado",
+                                })
+                              }
+                            >
+                              Anular
+                            </Button>
+                          ) : (
+                            <Button
+                              className="Anular"
+                              variant="warning"
+                              onClick={() =>
+                                handleChangeState(order, {
+                                  id: 6,
+                                  deleted: false,
+                                  description: "Cancelado",
+                                })
+                              }
+                            >
+                              Ver Nota
+                            </Button>
+                          )}
                         </div>
-
-
                       </TableCell>
                     </TableRow>
                   );
@@ -379,9 +397,8 @@ const CahierTable = ({ orders }: myProps) => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-
       </Paper>
-    </div >
+    </div>
   );
 };
 export default CahierTable;
