@@ -1,8 +1,8 @@
 import { Button, Modal } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { useState, useEffect } from "react";
-import { Formik, Form, FormikValues } from 'formik';
-import * as Yup from 'yup';
+import { Formik, Form, FormikValues } from "formik";
+import * as Yup from "yup";
 import TextFieldValue from "components/Inputs/TextFieldValue";
 import User from "@Models/Users/User";
 import Role from "@Models/Users/Role";
@@ -27,26 +27,24 @@ export const ModalAddUserAdmin = ({
   Client,
   user,
 }: props) => {
-
-
   const initialValues: User = {
     lastName: "",
     name: "",
     userEmail: "",
     role: {
-      description: ""
-    }
-  }
+      description: "",
+    },
+  };
 
   const [options, setOptions] = useState<any>([""]);
-  const [Role, setRole] = useState<Role[]>([])
-  const dispatch = useAppDispatch()
+  const [Role, setRole] = useState<Role[]>([]);
+  const dispatch = useAppDispatch();
   async function getMesureUnit() {
-    const data: Role[] = await getData<Role[]>("/api/role")
+    const data: Role[] = await getData<Role[]>("/api/role");
     const datasinCliente = data.filter((option) => {
-      return option.description != "Cliente"
-    })
-    setRole(datasinCliente)
+      return option.description != "Cliente";
+    });
+    setRole(datasinCliente);
   }
 
   async function RolesToOption() {
@@ -58,27 +56,32 @@ export const ModalAddUserAdmin = ({
       initialopcions,
       ...Role.map((option, index) => {
         if (option.description != "Cliente") {
-          return ({
+          return {
             value: option.description,
-            label: option.description
-          })
+            label: option.description,
+          };
         }
       }),
     ]);
   }
 
   useEffect(() => {
-    getMesureUnit()
-  }, [])
+    getMesureUnit();
+  }, []);
 
   useEffect(() => {
-    RolesToOption()
-  }, [Role])
-
+    RolesToOption();
+  }, [Role]);
 
   return (
     <div>
-      <Modal show={showModal} onHide={handleClose} size="lg" backdrop="static" keyboard={false}>
+      <Modal
+        show={showModal}
+        onHide={handleClose}
+        size="lg"
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Completar datos personales</Modal.Title>
         </Modal.Header>
@@ -86,9 +89,9 @@ export const ModalAddUserAdmin = ({
           <Formik
             initialValues={user ? user : initialValues}
             validationSchema={Yup.object().shape({
-              lastName: Yup.string().required('El apellido es obligatorio'),
-              name: Yup.string().required('El nombre es obligatorio'),
-              userEmail: Yup.string().required('El email es obligatorio'),
+              lastName: Yup.string().required("El apellido es obligatorio"),
+              name: Yup.string().required("El nombre es obligatorio"),
+              userEmail: Yup.string().required("El email es obligatorio"),
               role: Yup.object().shape({
                 description: Yup.string().required("Campo Requerido"),
               }),
@@ -96,46 +99,43 @@ export const ModalAddUserAdmin = ({
             onSubmit={(values) => {
               if (Client) {
                 values = {
-                  ...values, role: {
+                  ...values,
+                  role: {
                     id: 2,
                     deleted: false,
                     description: "Cliente",
-                    auth0RoleId: "rol_9v33EypxD9HIWrXj"
-                  }
-                }
+                    auth0RoleId: "rol_9v33EypxD9HIWrXj",
+                  },
+                };
               }
-
+              console.log(values);
               if (editing) {
-                dispatch(startLoading())
-                postPutData(`/api/user`, "PUT", values).then(
-                  () => {
-                    if (Client) {
-                      dispatch(updateClient(values))
-                    } else {
-                      dispatch(updateClient(values))
-                    }
+                dispatch(startLoading());
+                postPutData(`/api/user`, "PUT", values).then(() => {
+                  if (Client) {
+                    dispatch(updateClient(values));
+                  } else {
+                    dispatch(updateClient(values));
                   }
-                )
-                dispatch(finishLoading())
+                });
+                dispatch(finishLoading());
               } else {
-                dispatch(startLoading())
+                dispatch(startLoading());
                 postPutData(`/api/user/createEmployee`, "POST", values).then(
                   () => {
                     if (Client) {
-                      dispatch(addClient(values))
+                      dispatch(addClient(values));
                     } else {
-                      dispatch(addEmpleoyee(values))
+                      dispatch(addEmpleoyee(values));
                     }
                   }
-                )
-                dispatch(finishLoading())
+                );
+                dispatch(finishLoading());
               }
               handleClose();
-
             }}
           >
-            {(Formik) =>
-            (
+            {(Formik) => (
               <>
                 <Form className="form-user-personal-data">
                   <div className="form-group">
@@ -157,41 +157,46 @@ export const ModalAddUserAdmin = ({
                       type="email"
                       defaultValue={initialValues.userEmail}
                     />
-                    {
-                      Client ? <></> :
-                        <TextFildSelectValue
-                          label="Rol:"
-                          name="role"
-                          options={options}
-                          value={Formik.values.role?.description}
-                          onChange={(event: any) => {
-                            let rol = Role.filter((role) => {
-                              return role.description == event.target.value
-                            })
-                            if (rol.length === 0) {
-                              rol = [{ description: "" }]
-                            }
-                            Formik.setFieldValue("role", rol[0]);
-                          }}
-                        />
-                    }
+                    {Client ? (
+                      <></>
+                    ) : (
+                      <TextFildSelectValue
+                        label="Rol:"
+                        name="role"
+                        options={options}
+                        value={Formik.values.role?.description}
+                        onChange={(event: any) => {
+                          let rol = Role.filter((role) => {
+                            return role.description == event.target.value;
+                          });
+                          if (rol.length === 0) {
+                            rol = [{ description: "" }];
+                          }
+                          Formik.setFieldValue("role", rol[0]);
+                        }}
+                      />
+                    )}
                   </div>
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Button type="button" variant="danger" onClick={handleClose}>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <Button
+                      type="button"
+                      variant="danger"
+                      onClick={handleClose}
+                    >
                       Cerrar
                     </Button>
                     <Button type="submit" variant="success">
                       Guardar
                     </Button>
                   </div>
-
                 </Form>
               </>
-            )
-            }
+            )}
           </Formik>
         </Modal.Body>
       </Modal>
-    </div >
+    </div>
   );
-}
+};
