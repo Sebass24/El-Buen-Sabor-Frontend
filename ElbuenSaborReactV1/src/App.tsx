@@ -12,11 +12,12 @@ Store.subscribe(
   // we use debounce to save the state once each 800ms
   // for better performances in case multiple changes occur in a short time
   debounce(() => {
-    saveState(Store.getState());
+    saveState("redux", Store.getState());
   }, 800)
 );
 
-saveState(Store.getState());
+saveState("redux", Store.getState());
+saveState("cartProducts", Store.getState().cartProducts);
 
 function App() {
   return (

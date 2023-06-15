@@ -29,7 +29,7 @@ export const Store = configureStore({
     cartProducts: cartProductsSlice
   },
   preloadedState: {
-    cartProducts: loadState()?.cartProducts || []  // Only include the cartProducts slice
+    cart: loadState("redux")?.cartSlice || []  // Only include the cartProducts slice
   },
 });
 
