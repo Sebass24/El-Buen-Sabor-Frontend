@@ -10,9 +10,6 @@ export default function Billing() {
   const dispatch = useAppDispatch()
   const { orders } = useAppSelector(state => state.Order)
 
-  // const [order, setOrder] = useState<cashierOrder[]>();
-  // const [orderComplete, setOrderComplete] = useState<cashierOrder[]>();
-
   async function getOrders() {
     dispatch(fetchOrders())
   }

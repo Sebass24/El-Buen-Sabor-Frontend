@@ -207,7 +207,7 @@ const CahierTable = ({ orders }: myProps) => {
   function handleChangeState(order: Orders, status: OrderStatus) {
     const neworder = { ...order, "orderStatus": status }
     dispatch(startLoading())
-    postPutData(`/api/order`, "PUT", neworder).then(
+    postPutData(`/api/order/changeStatus/${order.id}/${status.id}`, "PUT", {}).then(
       () => {
         dispatch(updateOrder(neworder))
       }
