@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "./CashierPage.scss";
 import CahierTable from './CashierTable/CashierTable';
-import { cashierOrder } from '@Models/types';
 import { useAppDispatch, useAppSelector } from '@app/Hooks';
 import { fetchOrders } from '@features/Orders/OrderThunks';
 
@@ -15,7 +14,6 @@ const CashierPage = () => {
 
   async function getOrders() {
     dispatch(fetchOrders())
-    console.log("pepe")
   }
 
   useEffect(() => {
@@ -26,7 +24,6 @@ const CashierPage = () => {
   const [search, setSearch] = useState("");
 
 
-  setInterval(getOrders, 60000)
 
   // const handleChange = (e: any) => {
   //   setSearch(e.target.value);

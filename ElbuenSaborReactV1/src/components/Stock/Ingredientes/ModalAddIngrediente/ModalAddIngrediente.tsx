@@ -5,11 +5,9 @@ import * as Yup from "yup";
 // import FormIngredientesFields from './FormIngredientesFields';
 import { ErrorMessage, Field, Form, Formik } from "formik";
 // import { addIngredient } from "../../../../features/foods/IngredientSlice.js"
-import { useDispatch } from "react-redux";
 import TextFieldValue from "../../../Inputs/TextFieldValue";
 import TextFieldSelect from "../../../Inputs/TextFieldSelect";
 import "./FormIngredientesFields.scss";
-import { FormikHelpers } from "formik";
 import Ingredient from "@Models/Product/Ingredient";
 import Category from "@Models/Product/Category";
 import { getData, postPutData } from "components/GenericFetch/GenericFetch";
@@ -53,6 +51,30 @@ const ModalAddIngrediente = ({
   useEffect(() => {
     categorysToOptions()
   }, [IngredientsCategories]);
+
+
+  const [optionsMesureUnit, setOptionsMesureUnit] = useState<any>([""]);
+
+
+  async function getMesureUnit() {
+    const data: string[] = await getData<string[]>("/api/enum/units")
+    const initialopcions = {
+      value: "",
+      label: "",
+    };
+    setOptionsMesureUnit([
+      initialopcions,
+      ...data.map((option, index) => ({
+        value: option,
+        label: option
+      })),
+    ]);
+  }
+
+  useEffect(() => {
+    getMesureUnit()
+  }, [])
+
 
 
   const initialValues: Ingredient = {
@@ -110,11 +132,13 @@ const ModalAddIngrediente = ({
                 )
                 dispatch(finishLoading())
               } else {
+                dispatch(startLoading())
                 postPutData(`/api/ingredient`, "POST", values).then(
                   () => {
                     dispatch(addIngredient(values))
                   }
                 )
+                dispatch(finishLoading())
               }
               handleClose();
             }}
@@ -194,15 +218,7 @@ const ModalAddIngrediente = ({
                     <TextFieldSelect
                       label="Unidad de medida:"
                       name="measurementUnit"
-                      options={[
-                        { value: "", label: "" },
-                        { value: "cm3", label: "Cm3" },
-                        {
-                          value: "l",
-                          label: "Litros",
-                        },
-                        { value: "g", label: "gramos" },
-                      ]}
+                      options={optionsMesureUnit}
                     />
                   </div>
                   <div className="d-flex justify-content-end">

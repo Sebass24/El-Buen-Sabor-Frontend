@@ -7,6 +7,7 @@ import ModalAddCategoryProduct from "./ModalAddCategoryProduct/ModalAddCategoryP
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { setProductCategory } from "@features/ProductCategory/ProductCategorySlice";
 import { fetchProductCategory } from "@features/ProductCategory/ProductCategoryThunk";
+import ProductCategory from "@Models/Product/ProductCategory";
 
 export default function ProductsCategories() {
   const [showModal, setShowModal] = useState(false);
@@ -19,28 +20,21 @@ export default function ProductsCategories() {
   const [search, setSearch] = useState("");
 
 
+  async function getProductCategorySearch(name: string) {
+    if (name !== "") {
+      const data: ProductCategory[] = await getData<ProductCategory[]>(`/api/category/name/${name}`);
+      dispatch(setProductCategory(data))
+    } else {
+      dispatch(fetchProductCategory())
+    }
+  }
+
 
   useEffect(() => {
     dispatch(fetchProductCategory());
   }, []);
 
-  // const [categoryComplete, setCategoryComplete] = useState<CategoryProduct[]>([]);
-  // const handleChange = (e: any) => {
-  //   setSearch(e.target.value);
-  //   filter(e.target.value);
-  // };
 
-  // const filter = (serchParam: string) => {
-  //   var serchResult = categoryComplete.filter((category: CategoryProduct) => {
-  //     if (
-  //       category.description.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase())
-  //     )
-  //       return category;
-  //   });
-  //   setCategory(serchResult);
-  // };
 
   return (
     <div className="Container_Ingredientes">
@@ -52,18 +46,25 @@ export default function ProductsCategories() {
         <div className="Container_input">
           <input
             placeholder="Busqueda"
+            onChange={(event) => {
+              setSearch(event.target.value)
+              if (event.target.value === "") {
+                dispatch(fetchProductCategory())
+              }
+            }}
             className="busqueda_comida"
-            value={search}
-            onChange={(e) => { setSearch(e.target.value) }}
             onKeyUp={(event) => {
               if (event.key === "Enter") {
-                // handleChange(event);
+                getProductCategorySearch(search)
               }
             }}
           ></input>
           <i
             className="fa-solid fa-magnifying-glass"
-            style={{ color: "black" }}
+            onClick={() => {
+              getProductCategorySearch(search)
+            }}
+            style={{ color: "black", cursor: "pointer" }}
           ></i>
         </div>
       </div>

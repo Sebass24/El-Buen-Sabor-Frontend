@@ -1,4 +1,4 @@
-import Orders from '@Models/orders/Orders';
+import Orders from '@Models/orders/Order';
 import { getData, postPutData } from 'components/GenericFetch/GenericFetch';
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
@@ -39,7 +39,7 @@ export default function OrderDetailCook() {
   function handleChangeState(order: Orders, status: OrderStatus) {
     const neworder = { ...order, "orderStatus": status }
     dispatch(startLoading())
-    postPutData(`/api/order`, "PUT", neworder).then(
+    postPutData(`/api/order/changeStatus/${order.id}/${status.id}`, "PUT", {}).then(
       () => {
         dispatch(updateOrder(neworder))
       }
@@ -123,7 +123,10 @@ export default function OrderDetailCook() {
         <Button
           className="ACocina"
           variant='warning'
-          onClick={() => (handleChangeState(Order, { id: 4, deleted: false, description: "Listo" }))}
+          onClick={() => {
+            handleChangeState(Order, { id: 4, deleted: false, description: "Listo" })
+            history.back()
+          }}
         >
           Listo
         </Button >

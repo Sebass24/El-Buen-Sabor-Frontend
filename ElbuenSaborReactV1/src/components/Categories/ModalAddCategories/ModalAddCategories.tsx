@@ -12,7 +12,7 @@ import Loading from 'components/Loading/Loading';
 import TextFildSelectValue from 'components/Inputs/TextFildSelectValue';
 import { postPutData } from 'components/GenericFetch/GenericFetch';
 import { addIngredientCategory, updateIngredientCategory } from '@features/IngredientCategory/IngredientCategorySlice';
-import IngredientCategory from '@Models/Product/IngredientCategory';
+import IngredientCategory from '@Models/Product/Ingredient/IngredientCategory';
 
 
 

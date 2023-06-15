@@ -10,6 +10,12 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import "./ChartStatisticsProducts.scss"
+import { getData } from "components/GenericFetch/GenericFetch";
+import Product from "@Models/Product/Product";
+import { useAppSelector } from "@app/Hooks";
+import NotResult from "components/404/NotResult";
+import exportFromJSON from 'export-from-json';
+import { Button } from "react-bootstrap";
 
 ChartJS.register(
   CategoryScale,
@@ -35,80 +41,77 @@ export const options = {
   },
 };
 
-interface data {
-  name: string;
-  orders: number;
-  totalAmount: number;
-}
-
-const prueba: data[] = [
-  {
-    name: "franco",
-    orders: 10,
-    totalAmount: 10,
-  },
-  {
-    name: "Seba",
-    orders: 9,
-    totalAmount: 110,
-  },
-  {
-    name: "Emi",
-    orders: 8,
-    totalAmount: 45,
-  },
-  {
-    name: "Lucio",
-    orders: 8,
-    totalAmount: 250,
-  },
-  {
-    name: "giani",
-    orders: 7,
-    totalAmount: 232,
-  },
-];
-
 
 
 export function ChartStatisticsProducts() {
 
-
-  const [RankingOrder, setRankingOrder] = useState<boolean>(true)
-  // if RankingOrder is true, show the orders first
-  const [optionsCategory, setoptionsCategory] = useState<string[]>(["verdura", "carne", "bebidas"])
+  const { ProductCategory } = useAppSelector(state => state.productCategories)
+  // if RankingOrder is true, show the orders firs
   const [labels, setLabels] = useState<string[]>([])
-  const [totalAmount, setTotalAmount] = useState<number[]>([])
   const [orders, setOrders] = useState<number[]>([])
+  const [category, setCategory] = useState("Pizza")
+  const [Products, setProducts] = useState([])
+  const [dateStart, setDateStart] = useState("")
+  const [dateEnd, setDateEnd] = useState("")
 
   useEffect(() => {
-    const Amount = prueba.map((pr) => {
-      return pr.totalAmount
-    })
-    setTotalAmount(Amount)
-
-    const order = prueba.map((pr) => {
-      return pr.orders
+    const order = Products.map((pr) => {
+      return pr[1]
     })
     setOrders(order)
 
-    const label = prueba.map((pr) => {
-      return pr.name
+    const label = Products.map((pr) => {
+      const prod: Product = pr[0]
+      return prod.name
     })
     setLabels(label)
+  }, [Products])
 
-  }, [prueba])
+  useEffect(() => {
+    getOrders()
+  }, [dateStart, dateEnd, category])
 
+  async function getOrders() {
+    if (dateStart != "" && dateEnd != "") {
+      const data = await getData<[]>(`/api/product/topProducts/${category}?startDate=${dateStart}&endDate=${dateEnd}`);
+      setProducts(data)
+
+    } else if (dateStart != "" && dateEnd == "") {
+      const data = await getData<[]>(`/api/product/topProducts/${category}?startDate=${dateStart}`);
+      setProducts(data)
+
+    } else if (dateStart == "" && dateEnd != "") {
+      const data = await getData<[]>(`/api/product/topProducts/${category}?endDate=${dateEnd}`);
+      setProducts(data)
+
+    } else if (category != "") {
+      const data = await getData<[]>(`/api/product/topProducts/${category}`);
+      setProducts(data)
+
+    }
+  }
 
   const data = {
     labels,
     datasets: [
       {
-        label: RankingOrder ? "ordenes" : "Total de pagos",
+        label: "ordenes",
         data: orders,
         backgroundColor: "#F37E12",
       },
     ],
+  };
+  const exportToExcel = () => {
+    var arrayData = []
+    for (var i = 0; i < labels.length; i++) {
+      const data = {
+        label: labels[i],
+        orders: orders[i]
+      }
+      arrayData.push(data)
+    }
+
+    exportFromJSON({ data: arrayData, exportType: "xls", fileName: "client-Data" });
   };
 
 
@@ -117,19 +120,20 @@ export function ChartStatisticsProducts() {
       <div className="filters_Client">
         <div >
           <span>Categorias: </span>
-          <select className='Select_nivelStock'>
-            {optionsCategory.map((option, index) => (
-              <option key={index}>{option}</option>
-            ))}
+          <select className='Select_nivelStock' value={category} onChange={(e) => (setCategory(e.target.value))}>
+            {ProductCategory.map((option, index) => {
+              return <option key={index}>{option.description}</option>
+            }
+            )}
           </select>
         </div>
         <div>
           <span>Desde: </span>
-          <input type="date" className='Select_nivelStock' />
+          <input type="Date" className='Select_nivelStock' onChange={(e) => (setDateStart(e.target.value))} />
         </div>
         <div>
           <span>Hasta: </span>
-          <input type="date" className='Select_nivelStock' />
+          <input type="Date" className='Select_nivelStock' onChange={(e) => (setDateEnd(e.target.value))} />
         </div>
 
       </div>
@@ -144,12 +148,11 @@ export function ChartStatisticsProducts() {
           <span>
             Clientes
           </span>
-          <span>
-            Cantidad
-          </span>
         </div>
-
-        <Bar options={options} data={data} />
+        {Products.length !== 0 ? <Bar options={options} data={data} /> : <NotResult />}
+        <div className="d-flex justify-content-end" style={{ margin: "1rem" }}>
+          <Button variant="primary" onClick={exportToExcel}>export data</Button>
+        </div>
       </div>
     </div>
   );

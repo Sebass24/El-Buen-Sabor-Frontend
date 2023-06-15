@@ -11,6 +11,9 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import "./ChartStatisticsMonetary.scss"
+import { getData } from "components/GenericFetch/GenericFetch";
+import exportFromJSON from 'export-from-json';
+import { Button } from "react-bootstrap";
 
 ChartJS.register(
   CategoryScale,
@@ -31,48 +34,6 @@ export const options = {
   },
 };
 
-interface data {
-  name: string;
-  revenues: number;
-  costs: number;
-  profits: number;
-}
-
-const prueba: data[] = [
-  {
-    name: "franco",
-    revenues: 100,
-    costs: 90,
-    profits: 10,
-  },
-  {
-    name: "Seba",
-    revenues: 900,
-    costs: 110,
-    profits: 790,
-  },
-  {
-    name: "Emi",
-    revenues: 800,
-    costs: 450,
-    profits: 350,
-  },
-  {
-    name: "Lucio",
-    revenues: 800,
-    costs: 250,
-    profits: 550,
-  },
-  {
-    name: "giani",
-    revenues: 700,
-    costs: 232,
-    profits: 468,
-  },
-];
-
-
-
 export function ChartStatisticsMonetary() {
 
 
@@ -82,29 +43,41 @@ export function ChartStatisticsMonetary() {
   const [revenues, setRevenues] = useState<number[]>([])
   const [costs, setCosts] = useState<number[]>([])
   const [profits, setProfits] = useState<number[]>([])
+  const [dateStart, setDateStart] = useState("")
+  const [dateEnd, setDateEnd] = useState("")
 
-  useEffect(() => {
-    const revenue = prueba.map((pr) => {
-      return pr.revenues
+  async function getDataBilling() {
+
+    const costs = await getData<[]>(`/api/bill/GetBillingStatisticsCosts${dateStart != "" && dateEnd != "" ? `?startDate=${dateStart}&endDate=${dateEnd}` : ""}${dateStart != "" && dateEnd == "" ? `?startDate=${dateStart}` : ""}${dateStart == "" && dateEnd != "" ? `endDate=${dateEnd}` : ""}`);
+
+    const revenues = await getData<[]>(`/api/bill/GetBillingStatisticsRevenue${dateStart != "" && dateEnd != "" ? `?startDate=${dateStart}&endDate=${dateEnd}` : ""}${dateStart != "" && dateEnd == "" ? `?startDate=${dateStart}` : ""}${dateStart == "" && dateEnd != "" ? `endDate=${dateEnd}` : ""}`);
+
+
+    const revenue = revenues.map((pr) => {
+      return pr[1]
     })
     setRevenues(revenue)
 
-    const cost = prueba.map((pr) => {
-      return pr.costs
+    const cost = costs.map((pr) => {
+      return pr[1]
     })
     setCosts(cost)
 
-    const profit = prueba.map((pr) => {
-      return pr.profits
+    const profit = revenues.map((pr, index) => {
+      return pr[1] - cost[index] ? cost[index] : 0
     })
     setProfits(profit)
 
-    const label = prueba.map((pr) => {
-      return pr.name
+
+    const label = revenues.map((pr) => {
+      return pr[0]
     })
     setLabels(label)
+  }
 
-  }, [prueba])
+  useEffect(() => {
+    getDataBilling()
+  }, [dateStart, dateEnd])
 
 
   const data = {
@@ -131,22 +104,39 @@ export function ChartStatisticsMonetary() {
     ],
   };
 
+  const exportToExcel = () => {
+    var arrayData = []
+    for (var i = 0; i < labels.length; i++) {
+      const data = {
+        label: labels[i],
+        costs: costs[i],
+        revenues: revenues[i],
+        profit: profits[i]
+      }
+      arrayData.push(data)
+    }
+
+    exportFromJSON({ data: arrayData, exportType: "xls", fileName: "client-Data" });
+  };
+
 
   return (
     <div className="container">
       <div className="filters_Client">
         <div>
           <span>Desde: </span>
-          <input type="date" className='Select_nivelStock' />
+          <input type="Date" className='Select_nivelStock' onChange={(e) => (setDateStart(e.target.value))} />
         </div>
         <div>
           <span>Hasta: </span>
-          <input type="date" className='Select_nivelStock' />
+          <input type="Date" className='Select_nivelStock' onChange={(e) => (setDateEnd(e.target.value))} />
         </div>
 
       </div>
-
       <Line options={options} data={data} style={{ marginTop: "1rem" }} />
+      <div className="d-flex justify-content-end">
+        <Button variant="primary" onClick={exportToExcel} style={{ margin: "1rem" }}>export data</Button>
+      </div>
     </div>
   );
 

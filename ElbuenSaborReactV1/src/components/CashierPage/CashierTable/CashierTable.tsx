@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "react-bootstrap";
-import Orders from "@Models/orders/Orders";
+import Orders from "@Models/orders/Order";
 import { useAppDispatch } from "@app/Hooks";
 import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
 import OrderStatus from "@Models/orders/OrderStatus";
@@ -207,7 +207,7 @@ const CahierTable = ({ orders }: myProps) => {
   function handleChangeState(order: Orders, status: OrderStatus) {
     const neworder = { ...order, "orderStatus": status }
     dispatch(startLoading())
-    postPutData(`/api/order`, "PUT", neworder).then(
+    postPutData(`/api/order/changeStatus/${order.id}/${status.id}`, "PUT", {}).then(
       () => {
         dispatch(updateOrder(neworder))
       }

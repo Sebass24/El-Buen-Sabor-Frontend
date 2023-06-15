@@ -1,85 +1,81 @@
-import { Users } from '@Models/types';
-import React, { useState } from 'react'
+import Users from '@Models/Users/User';
+import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import TableUsers from '../TableUsers/TableUsers';
+import { getData } from 'components/GenericFetch/GenericFetch';
+import { useAppDispatch, useAppSelector } from '@app/Hooks';
+import { fetchEmpleoyees } from '@features/Empleoyees/EmpleoyeesThunk';
+import { setEmpleoyees } from '@features/Empleoyees/empleoyeeSlice';
 
 export default function Empleoyees() {
-  const [showModal, setShowModal] = useState(false);
-  const handleClose = () => {
-    setShowModal(false)
+
+  const { Empleoyees } = useAppSelector(state => state.empleoyees)
+  const dispatch = useAppDispatch()
+  const [search, setSearch] = useState("");
+  const [estado, setEstado] = useState("")
+  async function getUser() {
+    const data = await getData<Users[]>(`/api/user/Empleoyees${estado != '' && search != '' ? `?rol=${estado}&name=${search}` :
+      (estado != '' && search == '' ? `?rol=${estado}` :
+        (estado == '' && search != '' ? `?&name=${search}` : ""))}`)
+    console.log(`/api/user/Empleoyees${estado != '' && search != '' ? `?rol=${estado}&name=${search}` :
+      (estado != '' && search == '' ? `?rol=${estado}` :
+        (estado == '' && search != '' ? `?&name=${search}` : ""))}`)
+    dispatch(setEmpleoyees(data))
   }
 
-  const prueba: Users[] = [
-    {
-      Name: "Franco",
-      Email: "Franco.gonzalez@gmail.com",
-      Adress: "Hypolito 78 ",
-      Location: "Godoy Cruz",
-      Phone: 2615484321,
-      State: "Alta"
-    },
-    {
-      Name: "Seba",
-      Email: "seba254@gmail.com",
-      Adress: "luzuriaga 500 ",
-      Location: "5ta seccion",
-      Phone: 6541843515,
-      State: "Baja"
-    },
-  ]
+  useEffect(() => {
+    getUser()
+  }, [estado])
 
-
-  const [users, setUsers] = useState<Users[]>(prueba);
-  const [usersComplete, setUsersComplete] = useState<Users[]>(prueba);
-  const [search, setSearch] = useState("");
-
-
-  const handleChange = (e: any) => {
-    setSearch(e.target.value);
-    filter(e.target.value);
-  };
-
-
-  const filter = (serchParam: string) => {
-    var serchResult = usersComplete.filter((user: Users) => {
-      if (
-        user.Name.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        user.Email.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        user.Phone.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        user.Location.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        user.Adress.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase()) ||
-        user.State.toString()
-          .toLowerCase()
-          .includes(serchParam.toLowerCase())
-      )
-        return user;
-    });
-    setUsers(serchResult);
-  };
+  useEffect(() => {
+    dispatch(fetchEmpleoyees())
+  }, [])
 
   return (
     <div className='Container_Ingredientes' >
-      <div className='actions_Ingredientes'>
-        <Button variant="success" onClick={() => setShowModal(true)}>Nuevo</Button>
+      <div className="actions_Ingredientes">
+        <div className="actions_Ingredientes_buttons">
 
+          <Button variant="success">
+            Nuevo
+          </Button>
+        </div>
+        <div>
+          <span>Rol: </span>
+          <select className="Select_nivelStock" value={estado} onChange={(e) => { setEstado(e.target.value) }}>
+            <option value={""}>Todos</option>
+            <option value={"Administrador"}>Administrador</option>
+            <option value={"Cocinero"}>Cocinero</option>
+            <option value={"Cajero"}>Cajero</option>
+            <option value={"Delivery"}>Delivery</option>
+          </select>
+        </div>
         <div className="Container_input">
-          <input placeholder="Busqueda" className="busqueda_comida" value={search} onChange={handleChange}></input>
-          <i className="fa-solid fa-magnifying-glass" style={{ color: "black" }}></i>
+          <input
+            placeholder="Busqueda"
+            className="busqueda_comida"
+            value={search}
+            onChange={async (e) => {
+              setSearch(e.target.value)
+            }}
+            onKeyUp={(event) => {
+              if (event.key === "Enter") {
+                getUser()
+              }
+            }}
+          ></input>
+          <i
+            className="fa-solid fa-magnifying-glass"
+            onClick={() => {
+              getUser()
+            }}
+            style={{ color: "black", cursor: "pointer" }}
+          ></i>
         </div>
       </div>
 
       <TableUsers
-        Users={users}
+        Users={Empleoyees}
       />
 
 

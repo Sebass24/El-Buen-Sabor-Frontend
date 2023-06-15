@@ -1,4 +1,4 @@
-import Orders from '@Models/orders/Orders';
+import Orders from '@Models/orders/Order';
 import { getData } from 'components/GenericFetch/GenericFetch';
 import React, { useEffect, useState } from 'react'
 import OrderCookTable from './OrderCookTable/OrderCookTable';
@@ -7,7 +7,6 @@ export default function OrderCook() {
 
   const [order, setOrder] = useState<Orders[]>([]);
   async function getOrders() {
-    console.log("pepe2")
     const data: Orders[] = await getData<Orders[]>("/api/order/byStatus/En cocina");
     setOrder(data)
   }

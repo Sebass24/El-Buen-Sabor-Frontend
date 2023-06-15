@@ -9,10 +9,10 @@ interface props {
 export default function TextCheckBox({ label, name, placeholder }: props) {
   return (
     <div
-      className="mt-2"
       style={{
         display: "flex",
         alignItems: "center",
+        justifyContent: "center"
       }}
     >
       <div
@@ -24,23 +24,12 @@ export default function TextCheckBox({ label, name, placeholder }: props) {
           padding: ".3rem 0",
         }}
       >
-        <label
-          htmlFor={name}
-          style={{
-            color: "black",
-            fontFamily: "sans-serif",
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
-        >
-          {label}
-        </label>
-        <Field
-          placeholder={placeholder}
-          type="checkbox"
-          name={name}
-          autoComplete="off"
-        />
+        <div className="switch-button">
+          <Field className="switch-button-checkbox" type="checkbox" placeholder={placeholder} name={name}
+            autoComplete="off"></Field>
+          <label className="switch-button-label" ><span className="switch-button-label-span">{label}</span></label>
+        </div>
+
       </div>
       <ErrorMessage component="div" name={name} className="error" />
     </div>

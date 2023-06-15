@@ -1,4 +1,4 @@
-import Orders from '@Models/orders/Orders'
+import Orders from '@Models/orders/Order'
 import React from 'react'
 import TableHead from "@mui/material/TableHead";
 import {
@@ -238,6 +238,7 @@ export default function OrderCookTable({ orders }: myProps) {
                           <Button
                             className="ACocina"
                             variant="warning"
+                            onClick={() => { }}
                           >
                             Listo
                           </Button>

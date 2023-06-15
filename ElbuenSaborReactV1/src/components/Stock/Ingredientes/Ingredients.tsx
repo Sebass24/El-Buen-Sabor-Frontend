@@ -15,6 +15,7 @@ const Ingredients = () => {
   const handleClose = () => {
     setShowModal(false);
   };
+  const [estado, setEstado] = useState("")
 
   const [showModalBuy, setShowModalBuy] = useState(false);
   const handleCloseBuy = () => {
@@ -29,46 +30,22 @@ const Ingredients = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients())
+    setSearch("")
   }, []);
 
-  // const [ingredientFilter, setIngredientFilter] = useState<Ingredient[]>(Ingredients);
-  // const handleChange = (e: any) => {
-  //   setSearch(e.target.value);
-  //   filter(e.target.value);
-  // };
+  async function getIngredientsSearch(name: string) {
+    if (name !== "" || estado !== "") {
+      const data: Ingredient[] = await getData<Ingredient[]>(`/api/ingredient/nameAndState?name=${name}&state=${estado}`);
+      dispatch(setIngredients(data))
+    } else {
+      dispatch(fetchIngredients())
+    }
+  }
 
-  // const filter = (serchParam: string) => {
-  //   var serchResult = Ingredients.filter((ingredientVal: Ingredient) => {
-  //     if (
-  //       ingredientVal.name
-  //         .toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       ingredientVal.ingredientCategory.name
-  //         ?.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       ingredientVal.costPrice
-  //         ?.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       ingredientVal.minimumStock
-  //         ?.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       ingredientVal.currentStock
-  //         ?.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase()) ||
-  //       ingredientVal.measurementUnit
-  //         ?.toString()
-  //         .toLowerCase()
-  //         .includes(serchParam.toLowerCase())
-  //     )
-  //       return ingredientVal;
-  //   });
-  //   setIngredientFilter(serchResult);
-  // };
+  useEffect(() => {
+    getIngredientsSearch(search)
+  }, [estado]);
+
 
   return (
     <div className="Container_Ingredientes">
@@ -83,11 +60,11 @@ const Ingredients = () => {
         </div>
         <div>
           <span>Nivel de stock: </span>
-          <select className="Select_nivelStock">
-            <option>Todos</option>
-            <option>Faltante</option>
-            <option>Optimo</option>
-            <option>Pedir</option>
+          <select className="Select_nivelStock" value={estado} onChange={(e) => { setEstado(e.target.value) }}>
+            <option value={""}>Todos</option>
+            <option value={"FALTANTE"}>Faltante</option>
+            <option value={"OPTIMO"}>Optimo</option>
+            <option value={"PEDIR"}>Pedir</option>
           </select>
         </div>
         <div className="Container_input">
@@ -95,16 +72,24 @@ const Ingredients = () => {
             placeholder="Busqueda"
             className="busqueda_comida"
             value={search}
-            onChange={(e) => (setSearch(e.target.value))}
+            onChange={(e) => {
+              setSearch(e.target.value)
+              if (e.target.value === "") {
+                getIngredientsSearch(search)
+              }
+            }}
             onKeyUp={(event) => {
               if (event.key === "Enter") {
-                // handleChange(event);
+                getIngredientsSearch(search)
               }
             }}
           ></input>
           <i
             className="fa-solid fa-magnifying-glass"
-            style={{ color: "black" }}
+            onClick={() => {
+              getIngredientsSearch(search)
+            }}
+            style={{ color: "black", cursor: "pointer" }}
           ></i>
         </div>
       </div>
