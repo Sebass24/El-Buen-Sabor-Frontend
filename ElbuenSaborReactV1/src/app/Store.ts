@@ -28,9 +28,9 @@ export const Store = configureStore({
     clients: ClientSlice,
     cartProducts: cartProductsSlice
   },
-  preloadedState: {
-    cartProducts: loadState().cartProducts  // Only include the cartProducts slice
-  },
+  // preloadedState: {
+  //   cartProducts: loadState().cartProducts  // Only include the cartProducts slice
+  // },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

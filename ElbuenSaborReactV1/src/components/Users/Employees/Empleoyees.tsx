@@ -6,6 +6,7 @@ import { getData } from 'components/GenericFetch/GenericFetch';
 import { useAppDispatch, useAppSelector } from '@app/Hooks';
 import { fetchEmpleoyees } from '@features/Empleoyees/EmpleoyeesThunk';
 import { setEmpleoyees } from '@features/Empleoyees/empleoyeeSlice';
+import { ModalAddUserAdmin } from '../ModalAddUserAdmin/ModalAddUserAdmin';
 
 export default function Empleoyees() {
 
@@ -13,11 +14,12 @@ export default function Empleoyees() {
   const dispatch = useAppDispatch()
   const [search, setSearch] = useState("");
   const [estado, setEstado] = useState("")
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => {
+    setShowModal(false);
+  };
   async function getUser() {
     const data = await getData<Users[]>(`/api/user/Empleoyees${estado != '' && search != '' ? `?rol=${estado}&name=${search}` :
-      (estado != '' && search == '' ? `?rol=${estado}` :
-        (estado == '' && search != '' ? `?&name=${search}` : ""))}`)
-    console.log(`/api/user/Empleoyees${estado != '' && search != '' ? `?rol=${estado}&name=${search}` :
       (estado != '' && search == '' ? `?rol=${estado}` :
         (estado == '' && search != '' ? `?&name=${search}` : ""))}`)
     dispatch(setEmpleoyees(data))
@@ -36,7 +38,7 @@ export default function Empleoyees() {
       <div className="actions_Ingredientes">
         <div className="actions_Ingredientes_buttons">
 
-          <Button variant="success">
+          <Button variant="success" onClick={() => (setShowModal(true))}>
             Nuevo
           </Button>
         </div>
@@ -77,7 +79,11 @@ export default function Empleoyees() {
       <TableUsers
         Users={Empleoyees}
       />
+      <ModalAddUserAdmin
+        showModal={showModal}
+        handleClose={handleClose}
 
+      />
 
     </div>
   )
