@@ -21,7 +21,9 @@ const initialValues: Orders = {
   paid: false,
   paymentMethod: null as any,
   total: 0,
-  user: null as any
+  user: null as any,
+  address: null as any,
+  phone: null as any
 }
 
 export default function OrderDetailCook() {
