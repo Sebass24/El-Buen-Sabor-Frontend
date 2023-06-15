@@ -8,6 +8,7 @@ export async function getData<T>(path: string): Promise<T> {
     }
   }
   const response = await fetch(`http://localhost:8080${path}`, options);
+  console.log(response);
   if (!response.ok) {
     throw Error(response.statusText);
   }

@@ -16,6 +16,8 @@ Store.subscribe(
   }, 800)
 );
 
+saveState(Store.getState());
+
 function App() {
   return (
     <Provider store={Store}>
