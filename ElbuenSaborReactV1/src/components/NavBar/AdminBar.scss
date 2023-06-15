@@ -35,7 +35,7 @@
       .btn.active,
       .btn.show,
       .btn:first-child:active,
-      :not(.btn-check) + .btn:active {
+      :not(.btn-check)+.btn:active {
         background-color: rgb(253, 253, 253);
       }
     }
@@ -49,6 +49,22 @@
   transform: translateX(-50%);
   display: flex;
   justify-content: center;
+}
+
+.link {
+  text-decoration: none;
+  padding: 0 1rem;
+  color: black;
+  width: 100%;
+  position: relative;
+
+  &:hover {
+    color: black;
+  }
+}
+
+.dropdown_menu {
+  width: 12.5rem;
 }
 
 .arrowBottom_admin {

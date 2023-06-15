@@ -12,34 +12,52 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./LoginButton.scss";
 import { useEffect, useState } from "react";
 import PersonalDataModal from "components/Users/UsersPersonalData/PersonalDataModal";
+import { Link } from "react-router-dom";
+import { useAppSelector } from "@app/Hooks";
 
 library.add(faUser);
 
 export const LoginButton = () => {
-    const { isAuthenticated } = useAuth0();
-    const [showPersonalData, setShowPersonalData] = useState(false);
+  const { isAuthenticated } = useAuth0();
+  const [showPersonalData, setShowPersonalData] = useState(false);
+  const { user } = useAppSelector(state => state.users)
 
-    const handlePersonalDataModal = () => {
-        setShowPersonalData(false);
-    }
+  const handlePersonalDataModal = () => {
+    setShowPersonalData(false);
+  }
 
-    return (
-        <div className="Container_RightNavBar">
-            {isAuthenticated ?
-                <Dropdown>
-                    <Dropdown.Toggle id="dropdown-basic" className='MyAccount' >
-                        <Profile />
-                        <FontAwesomeIcon icon={faUser} />
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item style={{ padding: "0" }} ><LogOutAuth /></Dropdown.Item>
-                        <Dropdown.Item style={{ padding: "0", }} onClick={() => { setShowPersonalData(true) }}>Mis datos personales</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-                :
-                <LoginAuth />}
-            {showPersonalData ?
-                <PersonalDataModal onClose={handlePersonalDataModal} /> : ""}
-        </div>
-    )
+  return (
+    <div className="Container_RightNavBar">
+      {isAuthenticated ?
+        <Dropdown>
+          <Dropdown.Toggle id="dropdown-basic" className='MyAccount' >
+            <Profile />
+            <FontAwesomeIcon icon={faUser} />
+          </Dropdown.Toggle>
+          <Dropdown.Menu style={{ width: "12.5rem" }}>
+            <Dropdown.Item style={{ padding: "0" }} ><LogOutAuth /></Dropdown.Item>
+            <Dropdown.Item style={{ padding: "0", }} onClick={() => { setShowPersonalData(true) }}>Mis datos personales</Dropdown.Item>
+            {user.role?.description === "Administrador" ? (<>
+              <Dropdown.Item ><Link to="/cashier" className="link"><span>Cajero</span></Link></Dropdown.Item>
+              <Dropdown.Item ><Link to="/cook" className="link"><span>Cocinero</span></Link></Dropdown.Item>
+              <Dropdown.Item ><Link to="/delivery" className="link"><span>Delivery</span></Link></Dropdown.Item>
+              <Dropdown.Item ><Link to="/admin" className="link"><span>Administrador</span></Link></Dropdown.Item>
+            </>) : <></>}
+            {user.role?.description === "Cocinero" ? (
+              <Dropdown.Item ><Link to="/cook" className="link"><span>Cocinero</span></Link></Dropdown.Item>
+            ) : <></>}
+            {user.role?.description === "Cajero" ? (
+              <Dropdown.Item ><Link to="/cashier" className="link"><span>Cajero</span></Link></Dropdown.Item>
+            ) : <></>}
+            {user.role?.description === "Delivery" ? (
+              <Dropdown.Item ><Link to="/delivery" className="link"><span>Delivery</span></Link></Dropdown.Item>
+            ) : <></>}
+          </Dropdown.Menu>
+        </Dropdown>
+        :
+        <LoginAuth />}
+      {showPersonalData ?
+        <PersonalDataModal onClose={handlePersonalDataModal} /> : ""}
+    </div>
+  )
 }

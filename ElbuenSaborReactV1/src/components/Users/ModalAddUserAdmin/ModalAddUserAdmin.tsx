@@ -105,31 +105,31 @@ export const ModalAddUserAdmin = ({
                 }
               }
 
-              // if (editing) {
-              //   dispatch(startLoading())
-              //   postPutData(`/api/ingredient`, "PUT", values).then(
-              //     () => {
-              //       if (Client) {
-              //         dispatch(updateClient(values))
-              //       } else {
-              //         dispatch(updateClient(values))
-              //       }
-              //     }
-              //   )
-              //   dispatch(finishLoading())
-              // } else {
-              //   dispatch(startLoading())
-              //   postPutData(`/api/ingredient`, "POST", values).then(
-              //     () => {
-              //       if (Client) {
-              //         dispatch(addClient(values))
-              //       } else {
-              //         dispatch(addEmpleoyee(values))
-              //       }
-              //     }
-              //   )
-              //   dispatch(finishLoading())
-              // }
+              if (editing) {
+                dispatch(startLoading())
+                postPutData(`/api/user`, "PUT", values).then(
+                  () => {
+                    if (Client) {
+                      dispatch(updateClient(values))
+                    } else {
+                      dispatch(updateClient(values))
+                    }
+                  }
+                )
+                dispatch(finishLoading())
+              } else {
+                dispatch(startLoading())
+                postPutData(`/api/user/createEmployee`, "POST", values).then(
+                  () => {
+                    if (Client) {
+                      dispatch(addClient(values))
+                    } else {
+                      dispatch(addEmpleoyee(values))
+                    }
+                  }
+                )
+                dispatch(finishLoading())
+              }
               handleClose();
 
             }}
