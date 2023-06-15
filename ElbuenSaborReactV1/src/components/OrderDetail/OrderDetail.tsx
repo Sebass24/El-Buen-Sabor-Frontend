@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import "./OrderDetail.scss"
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Button } from 'react-bootstrap';
-import Orders from '@Models/orders/Order';
+import Orders from '@Models/Orders/Order';
 import { getData } from 'components/GenericFetch/GenericFetch';
 
 
