@@ -22,13 +22,15 @@ export default function PersonalDataModal({ onClose }: Props) {
     const { user } = useAppSelector(state => state.users)
     const [showModal, setShowModal] = useState(true);
     const dispatch = useAppDispatch();
+    const [phones, setPhones] = useState<Phone[]>([]);
+    const [addresses, setAddresses] = useState<Address[]>([]);
 
-    let addresses: Address[] = [];
-    let phones: Phone[] = [];
     const getAddressesPhones = async () => {
         try {
-            addresses = await getAddressesByUserId(user.id);
-            phones = await getPhonesByUserId(user.id);
+            const addresses = await getAddressesByUserId(user.id);
+            setAddresses(addresses);
+            const phones = await getPhonesByUserId(user.id);
+            setPhones(phones);
         } catch (error) {
             console.log(error);
         }
@@ -36,6 +38,7 @@ export default function PersonalDataModal({ onClose }: Props) {
 
     const handleCloseModal = () => {
         setShowModal(false);
+        getAddressesPhones();
         onClose();
     };
 
@@ -106,9 +109,15 @@ export default function PersonalDataModal({ onClose }: Props) {
                                             </Button>
                                         </div>
                                         <Table>
-                                            <thead></thead>
+                                            <thead>
+                                                <th>Calle</th>
+                                                <th>Número</th>
+                                                <th>Localidad</th>
+                                                <th>Editar</th>
+                                                <th>Eliminar</th>
+                                            </thead>
                                             <tbody>
-                                                {!addresses ?
+                                                {addresses.length === 0 ?
                                                     <tr>
                                                         <td colSpan={5}>
                                                             No hay teléfonos cargados
@@ -134,9 +143,8 @@ export default function PersonalDataModal({ onClose }: Props) {
                                             </Button>
                                         </div>
                                         <Table>
-                                            <thead></thead>
                                             <tbody>
-                                                {!phones ?
+                                                {phones.length === 0 ?
                                                     <tr>
                                                         <td colSpan={5}>
                                                             No hay teléfonos cargados

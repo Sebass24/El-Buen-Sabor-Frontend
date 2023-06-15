@@ -24,7 +24,12 @@
         border-color: #A60202;
     }
 
-    .straight-line {
-        width: 100%;
+    .separator {
+        display: flex;
+        justify-content: space-between;
     }
+}
+
+.straight-line {
+    width: 100% !important;
 }

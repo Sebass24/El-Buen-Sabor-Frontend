@@ -1,29 +1,23 @@
 import { Button, Modal, Table } from "react-bootstrap";
-import { useAppDispatch, useAppSelector } from "@app/Hooks";
+import { useAppSelector } from "@app/Hooks";
 import { ChangeEvent, useEffect, useState } from "react";
 import "./UserDataModal.scss";
 import { Formik, Form, FormikValues, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { setUserData } from "@features/User/UserSlice";
 import TextFieldValue from "components/Inputs/TextFieldValue";
-import { BsPencilSquare } from "react-icons/bs";
-import { MdDelete } from "react-icons/md";
-import { Link } from "react-router-dom";
 import { getLocations } from "../../../services/locations";
 import Address from "@Models/Users/Address";
 import Location from "@Models/Users/Location";
-import Phone from "@Models/Users/Phone";
-import { postNewAddress } from "services/users";
+import { postNewAddress } from "../../../services/users";
 
 interface Props {
     addressId: number;
-    userId: number;
     onClose: () => void; // Callback function for when the modal is closed
 }
 
-export default function NewAddressModal({ addressId, userId, onClose }: Props) {
+export default function NewAddressModal({ addressId, onClose }: Props) {
 
-    const { id } = useAppSelector(state => state.users.user)
+    const { id: userId } = useAppSelector(state => state.users.user)
     const [showModal, setShowModal] = useState(true);
 
     let locations: Location[] = [];
@@ -40,21 +34,23 @@ export default function NewAddressModal({ addressId, userId, onClose }: Props) {
         onClose();
     };
 
-    const initialValues: Address = {
+    const initialValues = {
         street: "",
         number: "",
-        location: { id: 0, name: "" },
+        location: 0,
     };
 
     const saveAddress = async (values: FormikValues) => {
+        console.log(values.Location);
         const newAddress: Address = {
             street: values.street,
             number: values.number,
-            location: { id: values.location.id, name: values.location.name },
+            location: { id: values.location, name: "" },
             user: { id: userId }
         }
         try {
             await postNewAddress(newAddress);
+            handleCloseModal();
         } catch (error) {
             console.log(error);
         }
@@ -113,8 +109,8 @@ export default function NewAddressModal({ addressId, userId, onClose }: Props) {
                                                     const location = event.target.value;
                                                     Formik.setFieldValue("location", location);
                                                 }}
-                                            /* value={Formik.values.addresses} */ // Correct the value field to "addresses" instead of "target"
                                             >
+                                                <option>Elegir localidad</option>
                                                 {locations.length > 0 ?
                                                     (
                                                         locations.map((l: Location) => {
@@ -155,6 +151,6 @@ export default function NewAddressModal({ addressId, userId, onClose }: Props) {
                     </Formik>
                 </Modal.Body>
             </Modal>
-        </div>
+        </div >
     )
 }

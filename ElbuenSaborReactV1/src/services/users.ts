@@ -42,3 +42,10 @@ export async function postNewAddress(newAddress: Address) {
     const address = await postPutData(url, method, newAddress);
     return address;
 }
+
+export async function postNewPhone(newPhone: Phone) {
+    const url = "/api/phone";
+    const method = 'POST';
+    const address = await postPutData(url, method, newPhone);
+    return address;
+}

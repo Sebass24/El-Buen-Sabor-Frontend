@@ -10,14 +10,32 @@ export default function OrderOptionsReview() {
         <>
             <OrderTotalPrice />
             <div className="order-total-price-info">
-                <div className="separator">
-                    <label className="total-products"><strong>{order.deliveryMethod.description}</strong></label>
-                </div>
+                {order.deliveryMethod.description === "Envío a domicilio" ?
+                    <>
+                        <hr className="straight-line" />
+                        <div className="separator">
+                            <label className="total-products"><strong>{order.deliveryMethod.description}</strong></label >
+                        </div >
+                        <div className="separator">
+                            <label><strong>Dirección:</strong></label>
+                            <label>{order.address as string}</label>
+                        </div >
+                        <div className="separator">
+                            <label><strong>Teléfono:</strong></label>
+                            <label>{order.phone as string}</label>
+                        </div >
+                    </> :
+                    <>
+                        <div className="separator">
+                            <label className="total-products"><strong>{order.deliveryMethod.description}</strong></label >
+                        </div >
+                    </>
+                }
                 <div className="separator">
                     <label>Forma de pago:</label>
                     <label><strong>{order.paymentMethod.description}</strong></label>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

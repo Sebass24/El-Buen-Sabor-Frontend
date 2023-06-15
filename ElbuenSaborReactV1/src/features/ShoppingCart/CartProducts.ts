@@ -84,10 +84,11 @@ export const cartOrderSlice = createSlice({
         setPaymentMethod: (state, action: PayloadAction<PaymentMethod>) => {
             state.order.paymentMethod = action.payload;
         },
-        setAddressPhone: (state, action: PayloadAction<addressPhone>) => {
-            const { address, phone } = action.payload;
-            state.order.address = address;
-            state.order.phone = phone;
+        setAddress: (state, action: PayloadAction<string>) => {
+            state.order.address = action.payload;
+        },
+        setPhone: (state, action: PayloadAction<string>) => {
+            state.order.phone = action.payload;
         },
         setTotalPrice: (state) => {
             state.order.total = state.order.orderDetails.reduce((total, item) => total + (item.product.sellPrice as number * item.quantity), 0);
@@ -102,7 +103,7 @@ export const cartOrderSlice = createSlice({
     },
 });
 
-export const { addProduct, deleteProduct, modifyProductQuantity, setDeliveryMethod, setPaymentMethod, setAddressPhone, setTotalPrice, setCartUser, setCartDate } = cartOrderSlice.actions;
+export const { addProduct, deleteProduct, modifyProductQuantity, setDeliveryMethod, setPaymentMethod, setAddress, setPhone, setTotalPrice, setCartUser, setCartDate } = cartOrderSlice.actions;
 
 export default cartOrderSlice.reducer;
 
