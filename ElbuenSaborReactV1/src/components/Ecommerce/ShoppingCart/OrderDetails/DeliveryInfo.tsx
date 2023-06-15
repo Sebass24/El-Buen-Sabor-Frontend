@@ -2,7 +2,7 @@ import Address from '@Models/Users/Address';
 import Phone from '@Models/Users/Phone';
 import { ChangeEvent, useEffect, useState } from "react";
 import "./DeliveryInfo.scss";
-import { getAddressesByUserId, getPhonesByUserId } from '../../../../services/users';
+import { getAddressesByUserId, getPhonesByUserId } from '@services/users';
 import { useAppDispatch, useAppSelector } from '@app/Hooks';
 import * as Yup from "yup";
 import { ErrorMessage, Field, Form, Formik } from "formik";

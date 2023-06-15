@@ -5,7 +5,7 @@ import "./UserDataModal.scss";
 import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { useAuth0 } from "@auth0/auth0-react";
-import { postNewUser } from "../../../services/users";
+import { postNewUser } from "@services/users";
 import { setStoredInDB, setUserData, setUserId } from "@features/User/UserSlice";
 import TextFieldValue from "components/Inputs/TextFieldValue";
 

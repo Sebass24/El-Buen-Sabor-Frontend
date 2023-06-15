@@ -8,7 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import OrderOptions from "./OrderDetails/OrderOptions";
 import OrderTotalPrice from "./OrderDetails/OrderTotalPrice";
 import OrderOptionsReview from "./OrderDetails/OrderOptionsReview";
-import { postNewOrder } from "../../../services/users";
+import { postNewOrder } from "@services/users";
 import { resetOrderDetails, setCartDate } from "@features/ShoppingCart/CartProducts";
 import { Alert } from "@mui/material";
 import OrderDetail from "@Models/Orders/OrderDetail";

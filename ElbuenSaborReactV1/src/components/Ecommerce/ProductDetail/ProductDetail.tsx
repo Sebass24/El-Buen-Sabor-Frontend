@@ -4,7 +4,7 @@ import Product from "@Models/Product/Product";
 import { useState, useEffect } from "react";
 import "./ProductDetail.scss";
 import ProductQuantitySelector from "./ProductQuantitySelector";
-import { getProductById } from "../../../services/products";
+import { getProductById } from "@services/products";
 import { useAppDispatch } from "@app/Hooks";
 import { addProduct, setTotalPrice } from "@features/ShoppingCart/CartProducts";
 import { openRestaurant } from "../WorkingHours/WorkingSchedule";

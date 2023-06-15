@@ -5,7 +5,7 @@ import { Form } from "react-bootstrap";
 import DeliveryInfo from "./DeliveryInfo";
 import OrderTotalPrice from "./OrderTotalPrice";
 import "./OrderOptions.scss";
-import { getDeliveryMethodById, getPaymentMethodById } from "../../../../services/order";
+import { getDeliveryMethodById, getPaymentMethodById } from "@services/order";
 
 export default function OrderOptions() {
 

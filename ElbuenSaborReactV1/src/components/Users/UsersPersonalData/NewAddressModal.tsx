@@ -5,10 +5,10 @@ import "./UserDataModal.scss";
 import { Formik, Form, FormikValues, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import TextFieldValue from "components/Inputs/TextFieldValue";
-import { getLocations } from "../../../services/locations";
+import { getLocations } from "@services/locations";
 import Address from "@Models/Users/Address";
 import Location from "@Models/Users/Location";
-import { postNewAddress } from "../../../services/users";
+import { postNewAddress } from "@services/users";
 
 interface Props {
     addressId: number;

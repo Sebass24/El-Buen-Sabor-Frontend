@@ -9,7 +9,7 @@ import TextFieldValue from "components/Inputs/TextFieldValue";
 import { BsPencilSquare } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { getAddressesByUserId, getPhonesByUserId } from "../../../services/users";
+import { getAddressesByUserId, getPhonesByUserId } from "@services/users";
 import Address from "@Models/Users/Address";
 import Phone from "@Models/Users/Phone";
 

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import Product from "@Models/Product/Product";
 import ProductCard from "../Catalogue/ProductCard";
-import { getProductsRandom } from "../../../services/products";
+import { getProductsRandom } from "@services/products";
 
 interface SuggestedProductsProps {
     phrase: string;

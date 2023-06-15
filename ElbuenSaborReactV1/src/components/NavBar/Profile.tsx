@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { setUserToken, resetUserData, setUserData, setStoredInDB, setUserRole } from "@features/User/UserSlice";
 import { setCartUser } from "@features/ShoppingCart/CartProducts";
 import User from "@Models/Users/User";
-import { getUserData } from "../../services/users";
+import { getUserData } from "@services/users";
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();

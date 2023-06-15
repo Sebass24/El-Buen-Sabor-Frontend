@@ -6,7 +6,7 @@ import { Formik, Form, FormikValues, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import TextFieldValue from "components/Inputs/TextFieldValue";
 import Location from "@Models/Users/Location";
-import { postNewPhone } from "../../../services/users";
+import { postNewPhone } from "@services/users";
 import Phone from "@Models/Users/Phone";
 
 interface Props {
