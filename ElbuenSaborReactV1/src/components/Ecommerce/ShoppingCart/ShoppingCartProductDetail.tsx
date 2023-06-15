@@ -2,8 +2,8 @@ import ProductQuantitySelector from "../ProductDetail/ProductQuantitySelector";
 import { useState, useEffect } from "react";
 import { useAppDispatch } from "@app/Hooks";
 import { deleteProduct, modifyProductQuantity, setTotalPrice } from "@features/ShoppingCart/CartProducts";
-import OrderDetail from "@Models/Orders/OrderDetail";
 import "./ShoppingCartProductDetail.scss";
+import OrderDetail from "@Models/orders/OrderDetail";
 
 interface props {
     order: OrderDetail
@@ -36,7 +36,7 @@ export default function ShoppingCartProductDetail({ order, reviewMode }: props) 
     return (
         <>
             <div className="cart-product-container">
-                <div><img className="cart-product-image" src={`../Images/${order.product.image.path}`} /></div>
+                <div><img className="cart-product-image" src={`../Images/${order.product.image?.path}`} /></div>
                 <div className="cart-product-info">
                     <label className="cart-product-title">{order.product.name}</label>
                     <label className="cart-product-description">{order.product.shortDescription}</label><br />

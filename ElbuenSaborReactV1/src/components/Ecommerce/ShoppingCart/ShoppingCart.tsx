@@ -2,7 +2,6 @@ import { Button, Container, Row } from "react-bootstrap";
 import "./ShoppingCart.scss";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import ShoppingCartProductDetail from "./ShoppingCartProductDetail";
-import OrderDetail from '@Models/Orders/OrderDetail';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -12,6 +11,7 @@ import OrderOptionsReview from "./OrderDetails/OrderOptionsReview";
 import { postNewOrder } from "../../../services/users";
 import { resetOrderDetails, setCartDate } from "@features/ShoppingCart/CartProducts";
 import { Alert } from "@mui/material";
+import OrderDetail from "@Models/orders/OrderDetail";
 
 export default function ShoppingCart() {
 

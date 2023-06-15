@@ -7,10 +7,10 @@ import ProductCategorySlice from "@features/ProductCategory/ProductCategorySlice
 import ProductSlice from "@features/ProductSlice/ProductSlice";
 import UserSlice from "@features/User/UserSlice";
 import OrderSlice from "@features/Orders/OrderSlice";
-import cartSlice from "@features/ShoppingCart/Cart";
 import EmpleoyeesSlice from "@features/Empleoyees/empleoyeeSlice";
 import ClientSlice from "@features/Clients/ClientSlice";
 import cartProductsSlice from "@features/ShoppingCart/CartProducts";
+import cartSlice from "@features/ShoppingCart/CartProducts";
 import { loadState } from "./BrowserStorage";
 
 export const Store = configureStore({
@@ -29,7 +29,6 @@ export const Store = configureStore({
     cartProducts: cartProductsSlice
   },
   preloadedState: {
-
     cartProducts: loadState().cartProducts  // Only include the cartProducts slice
   },
 });

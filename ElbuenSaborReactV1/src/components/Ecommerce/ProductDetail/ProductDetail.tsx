@@ -6,10 +6,10 @@ import "./ProductDetail.scss";
 import ProductQuantitySelector from "./ProductQuantitySelector";
 import { getProductById } from "../../../services/products";
 import { useAppDispatch } from "@app/Hooks";
-import OrderDetail from "@Models/Orders/OrderDetail";
 import { addProduct, setTotalPrice } from "@features/ShoppingCart/CartProducts";
 import { openRestaurant } from "../WorkingHours/WorkingSchedule";
 import { Alert } from "@mui/material";
+import OrderDetail from "@Models/Orders/OrderDetail";
 
 export default function ProductDetail() {
     const dispatch = useAppDispatch();
@@ -71,53 +71,53 @@ export default function ProductDetail() {
     today.setSeconds(0);
     today.setMilliseconds(0);
 
-    if (loading) {
-        return "";
-    } else {
-        return (
-            <>
-                <div className="product-detail-container">
-                    <Card className='card2'>
-                        <Card.Img variant="top" className="product-image2 img-fluid mx-auto d-block" src={`../Images/${product?.image.path}`} />
-                        <Card.Body>
-                            <Card.Title className="card-title2">{product?.name}</Card.Title>
-                            <Card.Text>
-                                <label className="description2">{product?.description}</label>
-                                <label className="short-description2">{product?.shortDescription}</label><br />
-                                <label>Precio: ${product?.sellPrice}</label><br />
-                                {product?.available ? <label className="available">DISPONIBLE</label> : <label className="unavailable2">SIN STOCK</label>}
-                                <span className="label-container2">
-                                    <span className="s2"><ProductQuantitySelector quantity={quantity} onChange={handleQuantityChange} /></span>
-                                    <span className="s1">${product?.sellPrice! as number * quantity}</span>
-                                    <span className="s3">
-                                        <Button
-                                            className={product?.available ? 'add-to-cart-button' : 'disabled'}
-                                            disabled={!product?.available}
-                                            onClick={(e) => { handleAddToCart(product as Product, quantity) }}>
-                                            Agregar al carrito
-                                        </Button>
+    return (
+        <>
+            {loading ? <></> :
+                <>
+                    <div className="product-detail-container">
+                        <Card className='card2'>
+                            <Card.Img variant="top" className="product-image2 img-fluid mx-auto d-block" src={`../Images/${product?.image?.path}`} />
+                            <Card.Body>
+                                <Card.Title className="card-title2">{product?.name}</Card.Title>
+                                <Card.Text>
+                                    <label className="description2">{product?.description}</label>
+                                    <label className="short-description2">{product?.shortDescription}</label><br />
+                                    <label>Precio: ${product?.sellPrice}</label><br />
+                                    {product?.available ? <label className="available">DISPONIBLE</label> : <label className="unavailable2">SIN STOCK</label>}
+                                    <span className="label-container2">
+                                        <span className="s2"><ProductQuantitySelector quantity={quantity} onChange={handleQuantityChange} /></span>
+                                        <span className="s1">${product?.sellPrice! as number * quantity}</span>
+                                        <span className="s3">
+                                            <Button
+                                                className={product?.available ? 'add-to-cart-button' : 'disabled'}
+                                                disabled={!product?.available}
+                                                onClick={(e) => { handleAddToCart(product as Product, quantity) }}>
+                                                Agregar al carrito
+                                            </Button>
+                                        </span>
                                     </span>
-                                </span>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </div>
-                {showMessage ?
-                    <div className="alert-container">
-                        <Alert onClose={() => { setShowMessage(false) }}>Producto agregado al carrito</Alert>
+                                </Card.Text>
+                            </Card.Body>
+                        </Card>
                     </div>
-                    : ""}
-                <Modal show={show} onHide={handleModal}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Local cerrado</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        Nuestro horario de atención es:
-                        - Lunes a domingos: 20:00 a 00:00hs.
-                        - Sábados y domingos: 11:00 a 15:00hs.
-                    </Modal.Body>
-                </Modal>
-            </>
-        )
-    }
+                    {showMessage ?
+                        <div className="alert-container">
+                            <Alert onClose={() => { setShowMessage(false) }}>Producto agregado al carrito</Alert>
+                        </div>
+                        : ""}
+                    <Modal show={show} onHide={handleModal}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Local cerrado</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            Nuestro horario de atención es:
+                            - Lunes a domingos: 20:00 a 00:00hs.
+                            - Sábados y domingos: 11:00 a 15:00hs.
+                        </Modal.Body>
+                    </Modal>
+                </>}
+        </>
+    )
+
 }

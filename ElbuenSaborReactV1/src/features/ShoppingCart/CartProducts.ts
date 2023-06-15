@@ -1,11 +1,11 @@
 import DeliveryMethod from '@Models/Orders/DeliveryMethod';
-import Order from '@Models/Orders/Order';
 import OrderDetail from '@Models/Orders/OrderDetail';
 import PaymentMethod from '@Models/Orders/PaymentMethod';
 import User from '@Models/Users/User';
+import Order from '../../types/Orders/Order';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface cartOrderSlice {
+export interface cartSlice {
     order: Order;
 }
 
@@ -15,7 +15,7 @@ interface addressPhone {
 }
 
 // Define the initial state
-const initialCartState: cartOrderSlice = {
+const initialCartState: cartSlice = {
     order: {
         id: null as any,
         deleted: false,
@@ -35,7 +35,7 @@ const initialCartState: cartOrderSlice = {
 };
 
 // Define the slice using createSlice
-export const cartOrderSlice = createSlice({
+export const cartSlice = createSlice({
     name: 'order',
     initialState: initialCartState,
     reducers: {
@@ -106,7 +106,7 @@ export const cartOrderSlice = createSlice({
     },
 });
 
-export const { addProduct, deleteProduct, modifyProductQuantity, setDeliveryMethod, setPaymentMethod, setAddress, setPhone, setTotalPrice, setCartUser, setCartDate, resetOrderDetails } = cartOrderSlice.actions;
+export const { addProduct, deleteProduct, modifyProductQuantity, setDeliveryMethod, setPaymentMethod, setAddress, setPhone, setTotalPrice, setCartUser, setCartDate, resetOrderDetails } = cartSlice.actions;
 
-export default cartOrderSlice.reducer;
+export default cartSlice.reducer;
 
