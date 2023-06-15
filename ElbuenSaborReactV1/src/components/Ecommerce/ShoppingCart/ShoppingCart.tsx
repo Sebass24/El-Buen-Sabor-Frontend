@@ -18,7 +18,7 @@ export default function ShoppingCart() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { order } = useAppSelector(state => state.cartProducts);
+  const { order } = useAppSelector(state => state.cart);
   const [showReview, setShowReview] = useState(false);
   const { isAuthenticated } = useAuth0();
   const { loginWithRedirect } = useAuth0();

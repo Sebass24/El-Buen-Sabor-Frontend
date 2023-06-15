@@ -9,21 +9,16 @@ export interface cartSlice {
     order: Order;
 }
 
-interface addressPhone {
-    address: string;
-    phone: string;
-}
-
 // Define the initial state
 const initialCartState: cartSlice = {
     order: {
         id: null as any,
         deleted: false,
-        deliveryMethod: null as any,
+        deliveryMethod: { id: 0, description: "none" },
         date: "",
-        orderStatus: null as any,
+        orderStatus: { id: 1, description: "A confirmar" },
         estimatedTime: null as any,
-        paymentMethod: null as any,
+        paymentMethod: { id: 0, description: "none" },
         paid: false,
         user: null as any,
         orderDetails: [],

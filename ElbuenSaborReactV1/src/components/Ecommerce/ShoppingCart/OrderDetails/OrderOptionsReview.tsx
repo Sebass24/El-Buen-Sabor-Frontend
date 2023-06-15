@@ -4,7 +4,7 @@ import "./OrderTotalPrice.scss";
 
 export default function OrderOptionsReview() {
 
-    const { order } = useAppSelector(state => state.cartProducts);
+    const { order } = useAppSelector(state => state.cart);
 
     return (
         <>

@@ -53,6 +53,7 @@ export default function ProductDetail() {
             handleMessage();
         } else {
             handleModal();
+            console.log("error al cargar al carrito");
         }
     }
 

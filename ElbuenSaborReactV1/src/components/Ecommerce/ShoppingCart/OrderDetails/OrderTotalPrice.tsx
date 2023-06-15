@@ -4,7 +4,7 @@ import "./OrderTotalPrice.scss";
 
 export default function OrderTotalPrice() {
 
-    const { order } = useAppSelector(state => state.cartProducts);
+    const { order } = useAppSelector(state => state.cart);
 
     const [totalProducts, setTotalProducts] = useState<number>(0);
 

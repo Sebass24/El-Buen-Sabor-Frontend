@@ -10,7 +10,7 @@ import { getDeliveryMethodById, getPaymentMethodById } from "@services/order";
 export default function OrderOptions() {
 
     const dispatch = useAppDispatch();
-    const { order } = useAppSelector(state => state.cartProducts);
+    const { order } = useAppSelector(state => state.cart);
 
     const handleDeliveryMethodChange = async (event: ChangeEvent<HTMLInputElement>) => {
         try {
