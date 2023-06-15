@@ -10,7 +10,8 @@ import OrderOptions from "./OrderDetails/OrderOptions";
 import OrderTotalPrice from "./OrderDetails/OrderTotalPrice";
 import OrderOptionsReview from "./OrderDetails/OrderOptionsReview";
 import { postNewOrder } from "../../../services/users";
-import { setCartDate } from "@features/ShoppingCart/CartProducts";
+import { resetOrderDetails, setCartDate } from "@features/ShoppingCart/CartProducts";
+import { Alert } from "@mui/material";
 
 export default function ShoppingCart() {
 
@@ -21,6 +22,13 @@ export default function ShoppingCart() {
     const [showReview, setShowReview] = useState(false);
     const { isAuthenticated } = useAuth0();
     const { loginWithRedirect } = useAuth0();
+    const [showMessage, setShowMessage] = useState(false);
+    const handleMessage = () => {
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 4000);
+    };
 
     const handleOrderReview = async () => {
         setShowReview(!showReview);
@@ -39,8 +47,11 @@ export default function ShoppingCart() {
         try {
             const newOrder = await postNewOrder(order);
             console.log(newOrder);
+            dispatch(resetOrderDetails());
+            //redirect to order detail
         } catch (error) {
             console.log(error);
+            handleMessage();
         }
     }
 
@@ -100,6 +111,11 @@ export default function ShoppingCart() {
                 <Button className="btn-cart" onClick={() => (navigate("/"))}>Continuar comprando</Button>
                 {showReview && <Button className="btn-cart" onClick={handleOrderReview}>Volver</Button>}
             </div>
+            {showMessage ?
+                <div className="alert-container">
+                    <Alert severity="error" onClose={() => { setShowMessage(false) }}>Error al realizar el pedido. Intente nuevamente.</Alert>
+                </div>
+                : ""}
         </div>
     )
 }

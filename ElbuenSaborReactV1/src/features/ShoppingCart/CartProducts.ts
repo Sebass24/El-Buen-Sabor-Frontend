@@ -99,11 +99,14 @@ export const cartOrderSlice = createSlice({
         },
         setCartDate: (state, action: PayloadAction<string>) => {
             state.order.date = action.payload;
+        },
+        resetOrderDetails: (state) => {
+            state.order.orderDetails = [];
         }
     },
 });
 
-export const { addProduct, deleteProduct, modifyProductQuantity, setDeliveryMethod, setPaymentMethod, setAddress, setPhone, setTotalPrice, setCartUser, setCartDate } = cartOrderSlice.actions;
+export const { addProduct, deleteProduct, modifyProductQuantity, setDeliveryMethod, setPaymentMethod, setAddress, setPhone, setTotalPrice, setCartUser, setCartDate, resetOrderDetails } = cartOrderSlice.actions;
 
 export default cartOrderSlice.reducer;
 

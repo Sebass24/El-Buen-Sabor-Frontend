@@ -7,19 +7,6 @@ import OrderTotalPrice from "./OrderTotalPrice";
 import "./OrderOptions.scss";
 import { getDeliveryMethodById, getPaymentMethodById } from "../../../../services/order";
 
-interface FormValues {
-    telefono: string;
-    direccion: string;
-    departamento: string;
-}
-
-const initialValues: FormValues = {
-    telefono: '',
-    direccion: '',
-    departamento: '',
-};
-
-
 export default function OrderOptions() {
 
     const dispatch = useAppDispatch();

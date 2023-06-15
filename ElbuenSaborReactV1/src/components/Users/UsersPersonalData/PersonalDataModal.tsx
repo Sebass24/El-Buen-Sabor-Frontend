@@ -110,11 +110,13 @@ export default function PersonalDataModal({ onClose }: Props) {
                                         </div>
                                         <Table>
                                             <thead>
-                                                <th>Calle</th>
-                                                <th>Número</th>
-                                                <th>Localidad</th>
-                                                <th>Editar</th>
-                                                <th>Eliminar</th>
+                                                <tr>
+                                                    <th>Calle</th>
+                                                    <th>Número</th>
+                                                    <th>Localidad</th>
+                                                    <th>Editar</th>
+                                                    <th>Eliminar</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 {addresses.length === 0 ?

@@ -19,11 +19,12 @@ export default function NewAddressModal({ addressId, onClose }: Props) {
 
     const { id: userId } = useAppSelector(state => state.users.user)
     const [showModal, setShowModal] = useState(true);
+    const [locations, setLocations] = useState<Location[]>([]);
 
-    let locations: Location[] = [];
     const getAllLocations = async () => {
         try {
-            locations = await getLocations();
+            const locations = await getLocations();
+            setLocations(locations);
         } catch (error) {
             console.log(error);
         }
