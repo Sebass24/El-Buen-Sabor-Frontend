@@ -65,6 +65,12 @@ export const UserSlice = createSlice({
     },
     setUserRole: (state, action: PayloadAction<Role>) => {
       state.user.role = action.payload;
+    },
+    deleteUserAddress: (state, action: PayloadAction<Address>) => {
+      state.user.addresses = state.user.addresses.filter((a) => a.id !== action.payload.id);
+    },
+    deleteUserPhone: (state, action: PayloadAction<Phone>) => {
+      state.user.phones = state.user.phones.filter((p) => p.id !== action.payload.id);
     }
   },
   extraReducers(builder) {
@@ -78,6 +84,6 @@ export const UserSlice = createSlice({
   },
 });
 
-export const { setUserToken, resetUserData, setUserData, setStoredInDB, setUserId, setUserRole } = UserSlice.actions;
+export const { setUserToken, resetUserData, setUserData, setStoredInDB, setUserId, setUserRole, deleteUserAddress, deleteUserPhone } = UserSlice.actions;
 
 export default UserSlice.reducer;

@@ -43,7 +43,7 @@ export default function ShoppingCart() {
 
   const postOrder = async () => {
     const today = new Date();
-    dispatch(setCartDate(today.toISOString()));
+    dispatch(setCartDate(today.toString()));
     try {
       const newOrder = await postNewOrder(order);
       console.log(newOrder);

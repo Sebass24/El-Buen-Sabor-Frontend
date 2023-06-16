@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import "./UserDataModal.scss";
 import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
-import { setUserData } from "@features/User/UserSlice";
+import { deleteUserAddress, deleteUserPhone, setUserData } from "@features/User/UserSlice";
 import TextFieldValue from "components/Inputs/TextFieldValue";
 import { BsPencilSquare } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
@@ -61,10 +61,10 @@ export default function PersonalDataModal({ onClose }: Props) {
         try {
             if ('street' in option) {
                 deleteAddress(option.id as number);
-                thunkdispatch(fetchAddresses(user.id));
+                dispatch(deleteUserAddress(option));
             } else {
                 deletePhone(option.id as number);
-                thunkdispatch(fetchPhones(user.id));
+                dispatch(deleteUserPhone(option));
             }
         } catch (error) {
             console.log(error);
