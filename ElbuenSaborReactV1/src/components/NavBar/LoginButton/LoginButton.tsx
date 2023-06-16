@@ -10,7 +10,7 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./LoginButton.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PersonalDataModal from "components/Users/UsersPersonalData/PersonalDataModal";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "@app/Hooks";

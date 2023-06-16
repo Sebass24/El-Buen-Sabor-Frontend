@@ -18,7 +18,7 @@ export default function OrderOptionsReview() {
                         </div >
                         <div className="separator">
                             <label><strong>Dirección:</strong></label>
-                            <label>{order.address as string}</label>
+                            <label style={{ textAlign: "right" }}>{order.address as string}</label>
                         </div >
                         <div className="separator">
                             <label><strong>Teléfono:</strong></label>
