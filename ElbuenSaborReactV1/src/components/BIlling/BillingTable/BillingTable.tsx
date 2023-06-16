@@ -233,9 +233,9 @@ export default function BillingTable({ orders }: myProps) {
                     <TableRow key={index}>
                       <TableCell className="tableCell">{order.id}</TableCell>
                       <TableCell className="tableCell">
-                        {order.date.toString().substring(0, 10) +
+                        {order.date?.toString().substring(0, 10) +
                           " " +
-                          order.date.toString().substring(11, 19)}
+                          order.date?.toString().substring(11, 19)}
                       </TableCell>
                       <TableCell className="tableCell">
                         {order.deliveryMethod.description}

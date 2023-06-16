@@ -39,10 +39,7 @@ import TextFildSelectValue from "components/Inputs/TextFildSelectValue";
 import { addProduct, updateProduct } from "@features/ProductSlice/ProductSlice";
 import { MyDropzone } from "components/Inputs/DropFileInput";
 
-
-
-const emptyIngredient: Ingredient =
-{
+const emptyIngredient: Ingredient = {
   id: 0,
   name: "",
   ingredientCategory: { name: "" },
@@ -65,14 +62,12 @@ interface Props {
   product?: Product;
 }
 
-
 const ModalAddProducts = ({
   showModal,
   handleClose,
   editing,
   product,
 }: Props) => {
-
   const initialValues: Product = {
     name: "",
     productCategory: { description: "" },
@@ -86,11 +81,11 @@ const ModalAddProducts = ({
     productDetails: [emptyDonation],
   };
 
-  const [img, setImg] = useState<any>()
+  const [img, setImg] = useState<any>();
 
   useEffect(() => {
-    setImg({})
-  }, [showModal])
+    setImg({});
+  }, [showModal]);
 
   const loading = useAppSelector((state) => state.loading);
   const dispatch = useAppDispatch();
@@ -130,26 +125,21 @@ const ModalAddProducts = ({
                   sellPrice: values.sellPrice,
                   cookingTime: values.cookingTime,
                   image: undefined,
-                  recipe: values?.recipe
-                }
-                console.log("values", valuesProduct)
+                  recipe: values?.recipe,
+                };
+                console.log("values", valuesProduct);
                 if (editing) {
-                  dispatch(startLoading())
-                  postPutData(`/api/product`, "PUT", values).then(
-                    () => {
-                      dispatch(updateProduct(valuesProduct))
-                    }
-                  )
-                  dispatch(finishLoading())
+                  dispatch(startLoading());
+                  postPutData(`/api/product`, "PUT", values).then(() => {
+                    dispatch(updateProduct(valuesProduct));
+                  });
+                  dispatch(finishLoading());
                 } else {
-                  postPutData(`/api/product`, "POST", values).then(
-                    () => {
-                      dispatch(addProduct(valuesProduct))
-                    }
-                  )
+                  postPutData(`/api/product`, "POST", values).then(() => {
+                    dispatch(addProduct(valuesProduct));
+                  });
                 }
                 handleClose();
-
               }}
             >
               <FormikStep
@@ -159,7 +149,7 @@ const ModalAddProducts = ({
                   productCategory: Yup.object().shape({
                     id: Yup.number(),
                     description: Yup.string(),
-                    deleted: Yup.boolean()
+                    deleted: Yup.boolean(),
                   }),
                   sellPrice: Yup.number().required("*Campo requerido"),
                   cookingTime: Yup.number().required("*Campo requerido"),
@@ -167,26 +157,26 @@ const ModalAddProducts = ({
                   shortDescription: Yup.string().required("*Campo requerido"),
                   description: Yup.string().required("*Campo requerido"),
                 })}
-              >
-
-              </FormikStep>
+              ></FormikStep>
 
               <FormikStep
                 label="Ingredientes"
                 validationSchema={Yup.object({
                   productDetails: Yup.array(
                     Yup.object({
-                      ingredient: Yup.object().shape({
-                        name: Yup.string().required("Campo Requerido"),
-                        ingredientCategory: Yup.object().shape({
-                          id: Yup.number().required(),
+                      ingredient: Yup.object()
+                        .shape({
                           name: Yup.string().required("Campo Requerido"),
-                        }),
-                        minimumStock: Yup.number(),
-                        currentStock: Yup.number(),
-                        measurementUnit: Yup.string(),
-                        costPrice: Yup.number(),
-                      }).required("Campo Requerido"),
+                          ingredientCategory: Yup.object().shape({
+                            id: Yup.number().required(),
+                            name: Yup.string().required("Campo Requerido"),
+                          }),
+                          minimumStock: Yup.number(),
+                          currentStock: Yup.number(),
+                          measurementUnit: Yup.string(),
+                          costPrice: Yup.number(),
+                        })
+                        .required("Campo Requerido"),
                       quantity: Yup.number().required("Campo Requerido"),
                       measurementUnit: Yup.string().required("Campo Requerido"),
                     })
@@ -196,12 +186,11 @@ const ModalAddProducts = ({
 
               <FormikStep
                 label="Receta"
-                validationSchema={
-                  Yup.object({
-                    // recipe: Yup.object().shape({
-                    //   // description: Yup.string().notRequired(),
-                    // }),
-                  })}
+                validationSchema={Yup.object({
+                  // recipe: Yup.object().shape({
+                  //   // description: Yup.string().notRequired(),
+                  // }),
+                })}
               >
                 <>
                   <TextAreaValue
@@ -232,14 +221,10 @@ export function FormikStep({ children }: FormikStepProps) {
 
 interface PropsForm extends FormikConfig<FormikValues> {
   children: React.ReactNode;
-  setImg: React.Dispatch<any>
+  setImg: React.Dispatch<any>;
 }
 
-export function FormikStepper({
-  children,
-  setImg,
-  ...props
-}: PropsForm) {
+export function FormikStepper({ children, setImg, ...props }: PropsForm) {
   const childrenArray = React.Children.toArray(
     children
   ) as React.ReactElement<FormikStepProps>[];
@@ -250,8 +235,10 @@ export function FormikStepper({
     return step === childrenArray.length - 1;
   }
 
-  const { ProductCategory } = useAppSelector(state => state.productCategories)
-  const [options, setOptions] = useState<any>([])
+  const { ProductCategory } = useAppSelector(
+    (state) => state.productCategories
+  );
+  const [options, setOptions] = useState<any>([]);
 
   function categorysProdToOptions() {
     const initialopcions = {
@@ -267,9 +254,8 @@ export function FormikStepper({
     ]);
   }
 
-
   useEffect(() => {
-    categorysProdToOptions()
+    categorysProdToOptions();
   }, [ProductCategory]);
 
   const { Ingredients } = useAppSelector((state) => state.ingredients);
@@ -293,12 +279,10 @@ export function FormikStepper({
     categorysToOptions();
   }, [Ingredients]);
 
-
   const [optionsMesureUnit, setOptionsMesureUnit] = useState<any>([""]);
 
-
   async function getMesureUnit() {
-    const data: string[] = await getData<string[]>("/api/enum/units")
+    const data: string[] = await getData<string[]>("/api/enum/units");
     const initialopcions = {
       value: "",
       label: "",
@@ -307,16 +291,14 @@ export function FormikStepper({
       initialopcions,
       ...data.map((option, index) => ({
         value: option,
-        label: option
+        label: option,
       })),
     ]);
   }
 
   useEffect(() => {
-    getMesureUnit()
-  }, [Ingredients])
-
-
+    getMesureUnit();
+  }, [Ingredients]);
 
   return (
     <Formik
@@ -360,10 +342,10 @@ export function FormikStepper({
                 value={values.productCategory.id}
                 onChange={(event: any) => {
                   let prod = ProductCategory.filter((product) => {
-                    return product.id?.toString() == event.target.value
-                  })
+                    return product.id?.toString() == event.target.value;
+                  });
                   if (prod.length === 0) {
-                    prod = [{ description: "" }]
+                    prod = [{ description: "" }];
                   }
                   setFieldValue(`productCategory`, prod[0]);
                 }}
@@ -396,91 +378,102 @@ export function FormikStepper({
                 name="available"
                 placeholder="TiempoCocina"
               />
-              <MyDropzone
-                setImg={setImg}
-              />
-
+              <MyDropzone setImg={setImg} />
             </div>
-
-          ) : <></>}
-
+          ) : (
+            <></>
+          )}
 
           {step === 1 ? (
             <FieldArray name="productDetails">
               {({ push, remove }) => (
                 <React.Fragment>
-                  {values.productDetails.map((ingre: any, index: any) => (
-                    <Grid container item key={index} spacing={2}>
-                      <Grid item>
-                        <TextFildSelectValue
-                          label="Ingrediente:"
-                          name={`productDetails.${index}.ingredient`}
-                          options={optionsIngredients}
-                          onChange={(event: any) => {
-                            let ingredient = Ingredients.filter((ingre) => {
-                              return ingre.id?.toString() == event.target.value
-                            })
-                            if (ingredient.length === 0) {
-                              ingredient = [emptyIngredient]
-                            }
-                            setFieldValue(`productDetails.${index}.ingredient`, ingredient[0]);
-                          }}
-                          value={values.productDetails[index].ingredient.id.toString()}
-
-                        />
-                      </Grid>
-
-                      <Grid item>
-                        <TextFieldValue
-                          value={ingre?.Cuantity}
-                          label="Cantidad:"
-                          name={`productDetails.${index}.quantity`}
-                          type="number"
-                          placeholder="Cantidad"
-                        />
-                      </Grid>
-
-                      <Grid item>
-                        <TextFieldSelect
-                          label="Unidad de medida:"
-                          name={`productDetails.${index}.measurementUnit`}
-                          options={optionsMesureUnit}
-                        />
-                      </Grid>
-
-                      <Grid item alignSelf={"center"}>
-                        <ButtonRB
-                          variant="success"
-                          disabled={isSubmitting}
-                          onClick={() => remove(index)}
-                        >
-                          Delete
-                        </ButtonRB>
-                      </Grid>
-                    </Grid>
-                  ))}
-                  <Grid item>
-                    {typeof errors.donations === "string" ? (
-                      <Typography color="error">{errors.donations}</Typography>
-                    ) : null}
-                  </Grid>
-
-                  <ButtonRB
-                    disabled={isSubmitting}
-                    variant="success"
-                    style={{ marginBottom: "1rem" }}
-                    onClick={() => push(emptyDonation)}
+                  <div
+                    style={{
+                      height: "25rem",
+                      overflow: "scroll",
+                      overflowX: "hidden",
+                    }}
                   >
-                    Añadir Ingredientes
-                  </ButtonRB>
+                    {values.productDetails.map((ingre: any, index: any) => (
+                      <Grid container item key={index} spacing={2}>
+                        <Grid item>
+                          <TextFildSelectValue
+                            label="Ingrediente:"
+                            name={`productDetails.${index}.ingredient`}
+                            options={optionsIngredients}
+                            onChange={(event: any) => {
+                              let ingredient = Ingredients.filter((ingre) => {
+                                return (
+                                  ingre.id?.toString() == event.target.value
+                                );
+                              });
+                              if (ingredient.length === 0) {
+                                ingredient = [emptyIngredient];
+                              }
+                              setFieldValue(
+                                `productDetails.${index}.ingredient`,
+                                ingredient[0]
+                              );
+                            }}
+                            value={values.productDetails[
+                              index
+                            ].ingredient.id.toString()}
+                          />
+                        </Grid>
+
+                        <Grid item>
+                          <TextFieldValue
+                            value={ingre?.Cuantity}
+                            label="Cantidad:"
+                            name={`productDetails.${index}.quantity`}
+                            type="number"
+                            placeholder="Cantidad"
+                          />
+                        </Grid>
+
+                        <Grid item>
+                          <TextFieldSelect
+                            label="Unidad de medida:"
+                            name={`productDetails.${index}.measurementUnit`}
+                            options={optionsMesureUnit}
+                          />
+                        </Grid>
+
+                        <Grid item alignSelf={"center"}>
+                          <ButtonRB
+                            variant="success"
+                            disabled={isSubmitting}
+                            onClick={() => remove(index)}
+                          >
+                            Delete
+                          </ButtonRB>
+                        </Grid>
+                      </Grid>
+                    ))}
+                    <Grid item>
+                      {typeof errors.donations === "string" ? (
+                        <Typography color="error">
+                          {errors.donations}
+                        </Typography>
+                      ) : null}
+                    </Grid>
+
+                    <ButtonRB
+                      disabled={isSubmitting}
+                      variant="success"
+                      style={{ marginBottom: "1rem" }}
+                      onClick={() => push(emptyDonation)}
+                    >
+                      Añadir Ingredientes
+                    </ButtonRB>
+                  </div>
                 </React.Fragment>
               )}
             </FieldArray>
           ) : (
             <></>
           )}
-
-
 
           {currentChild}
 
