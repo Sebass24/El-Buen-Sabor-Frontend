@@ -9,16 +9,18 @@ import OrderOptions from "./OrderDetails/OrderOptions";
 import OrderTotalPrice from "./OrderDetails/OrderTotalPrice";
 import OrderOptionsReview from "./OrderDetails/OrderOptionsReview";
 import { postNewOrder } from "@services/users";
-import { resetOrderDetails, setCartDate } from "@features/ShoppingCart/CartProducts";
+import {
+  resetOrderDetails,
+  setCartDate,
+} from "@features/ShoppingCart/CartProducts";
 import { Alert } from "@mui/material";
 import OrderDetail from "@Models/Orders/OrderDetail";
 
 export default function ShoppingCart() {
-
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { order } = useAppSelector(state => state.cart);
+  const { order } = useAppSelector((state) => state.cart);
   const [showReview, setShowReview] = useState(false);
   const { isAuthenticated } = useAuth0();
   const { loginWithRedirect } = useAuth0();
@@ -33,13 +35,13 @@ export default function ShoppingCart() {
   const handleOrderReview = async () => {
     setShowReview(!showReview);
     window.scrollTo(0, 0);
-  }
+  };
 
   const handleOrderLogin = () => {
     if (!isAuthenticated) {
       loginWithRedirect();
     }
-  }
+  };
 
   const postOrder = async () => {
     const today = new Date();
@@ -53,69 +55,93 @@ export default function ShoppingCart() {
       console.log(error);
       handleMessage();
     }
-  }
+  };
 
   return (
-    <div className="cart-container" >
-      <Row><label className="page-name">CARRITO DE COMPRAS</label></Row>
-      <div className="order-detail-container" style={{ display: 'flex', justifyContent: 'center' }}>
+    <div className="cart-container">
+      <Row>
+        <label className="page-name">CARRITO DE COMPRAS</label>
+      </Row>
+      <div
+        className="order-detail-container"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
         <div className="cart-products-container">
           {order.orderDetails && order.orderDetails.length > 0 ? (
-            order.orderDetails.map((orderDetail: OrderDetail, index: number) => (
-              <ShoppingCartProductDetail
-                key={index}
-                order={orderDetail}
-                //set the shopping cart product detail in reviewmode to disable product quantity edition
-                reviewMode={showReview}
-              />
-            ))
-
+            order.orderDetails.map(
+              (orderDetail: OrderDetail, index: number) => (
+                <ShoppingCartProductDetail
+                  key={index}
+                  order={orderDetail}
+                  //set the shopping cart product detail in reviewmode to disable product quantity edition
+                  reviewMode={showReview}
+                />
+              )
+            )
           ) : (
             <div className="no-products">No hay productos en el carrito</div>
           )}
         </div>
         <div className="order-options-container">
-          {isAuthenticated ?
+          {isAuthenticated ? (
             <>
-              {showReview ?
+              {showReview ? (
                 <>
                   <OrderOptionsReview />
-                  <Button className="confirm-button"
-                    onClick={postOrder}>
+                  <Button className="confirm-button" onClick={postOrder}>
                     Confirmar pedido
                   </Button>
                 </>
-                : <>
+              ) : (
+                <>
                   <OrderOptions />
-                  <Button className={order.paymentMethod.id !== 0 ? "btn-cart" : "disabled"}
-                    onClick={handleOrderReview}>
+                  <Button
+                    className={
+                      order.paymentMethod.id !== 0 ? "btn-cart" : "disabled"
+                    }
+                    onClick={handleOrderReview}
+                  >
                     Continuar
                   </Button>
                 </>
-              }
+              )}
             </>
-            :
+          ) : (
             <>
               <Container>
                 <OrderTotalPrice />
-                <Button
-                  className={"btn-cart"}
-                  onClick={handleOrderLogin}>
+                <Button className={"btn-cart"} onClick={handleOrderLogin}>
                   Continuar
                 </Button>
               </Container>
-            </>}
+            </>
+          )}
         </div>
       </div>
       <div className="button-container-1">
-        <Button className="btn-cart" onClick={() => (navigate("/"))}>Continuar comprando</Button>
-        {showReview && <Button className="btn-cart" onClick={handleOrderReview}>Volver</Button>}
+        <Button className="btn-cart" onClick={() => navigate("/")}>
+          Continuar comprando
+        </Button>
+        {showReview && (
+          <Button className="btn-cart" onClick={handleOrderReview}>
+            Volver
+          </Button>
+        )}
       </div>
-      {showMessage ?
+      {showMessage ? (
         <div className="alert-container">
-          <Alert severity="error" onClose={() => { setShowMessage(false) }}>Error al realizar el pedido. Intente nuevamente.</Alert>
+          <Alert
+            severity="error"
+            onClose={() => {
+              setShowMessage(false);
+            }}
+          >
+            Error al realizar el pedido. Intente nuevamente.
+          </Alert>
         </div>
-        : ""}
+      ) : (
+        ""
+      )}
     </div>
-  )
+  );
 }

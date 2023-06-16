@@ -1,5 +1,5 @@
-import Orders from '@Models/Orders/Order'
-import React from 'react'
+import Orders from "@Models/Orders/Order";
+import React from "react";
 import TableHead from "@mui/material/TableHead";
 import {
   createTheme,
@@ -15,8 +15,13 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "react-bootstrap";
-import "./OrderCookTable.scss"
-import { Link } from 'react-router-dom';
+import "./OrderCookTable.scss";
+import { Link } from "react-router-dom";
+import OrderStatus from "@Models/Orders/OrderStatus";
+import { useAppDispatch } from "@app/Hooks";
+import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
+import { postPutData } from "components/GenericFetch/GenericFetch";
+import { updateOrderCook } from "@features/OrderCook/OrderCookSlice";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
@@ -47,7 +52,10 @@ function getComparador(order: string, orderBy: string) {
 }
 
 const stableSort = (array: Orders[], comparator: any, orderBy: any) => {
-  const stabilizedThis = array.map((producto: any, index: number) => [producto, index]);
+  const stabilizedThis = array.map((producto: any, index: number) => [
+    producto,
+    index,
+  ]);
   stabilizedThis.sort((a: any, b: any) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -78,9 +86,7 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "id" ? order : "desc"}
             onClick={crearSortHandler("id")}
           >
-            <Typography fontWeight="bold">
-              Pedido
-            </Typography>
+            <Typography fontWeight="bold">Pedido</Typography>
           </TableSortLabel>
         </TableCell>
 
@@ -94,14 +100,13 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "date" ? order : "asc"}
             onClick={crearSortHandler("date")}
           >
-            <Typography fontWeight="bold">
-              Fecha/Hora
-            </Typography>
+            <Typography fontWeight="bold">Fecha/Hora</Typography>
           </TableSortLabel>
         </TableCell>
 
         <TableCell
-          className="tableCell" key="Pagado"
+          className="tableCell"
+          key="Pagado"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -109,34 +114,29 @@ function CabeceraMejorada(props: any) {
             direction={orderBy === "paid" ? order : "asc"}
             onClick={crearSortHandler("paid")}
           >
-            <Typography fontWeight="bold">
-              tiempo de preparacion
-            </Typography>
+            <Typography fontWeight="bold">tiempo de preparacion</Typography>
           </TableSortLabel>
         </TableCell>
         <TableCell
-          className="tableCell" key="Estado"
+          className="tableCell"
+          key="Estado"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <Typography fontWeight="bold">
-            Estado
-          </Typography>
+          <Typography fontWeight="bold">Estado</Typography>
         </TableCell>
         <TableCell
-          className="tableCell" key="Detalle"
+          className="tableCell"
+          key="Detalle"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <Typography fontWeight="bold">
-            Detalle
-          </Typography>
+          <Typography fontWeight="bold">Detalle</Typography>
         </TableCell>
         <TableCell
-          className="tableCell" key="Acciones"
+          className="tableCell"
+          key="Acciones"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <Typography fontWeight="bold">
-            Acciones
-          </Typography>
+          <Typography fontWeight="bold">Acciones</Typography>
         </TableCell>
       </TableRow>
     </TableHead>
@@ -144,7 +144,7 @@ function CabeceraMejorada(props: any) {
 }
 
 interface myProps {
-  orders: Orders[]
+  orders: Orders[];
 }
 
 export default function OrderCookTable({ orders }: myProps) {
@@ -176,7 +176,20 @@ export default function OrderCookTable({ orders }: myProps) {
     month: "2-digit",
     day: "2-digit",
   };
+  const dispatch = useAppDispatch();
 
+  function handleChangeState(order: Orders, status: OrderStatus) {
+    const neworder = { ...order, orderStatus: status };
+    dispatch(startLoading());
+    postPutData(
+      `/api/order/changeStatus/${order.id}/${status.id}`,
+      "PUT",
+      {}
+    ).then(() => {
+      dispatch(updateOrderCook(neworder));
+    });
+    dispatch(finishLoading());
+  }
 
   return (
     <div className="container_tabla">
@@ -184,8 +197,8 @@ export default function OrderCookTable({ orders }: myProps) {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -200,14 +213,12 @@ export default function OrderCookTable({ orders }: myProps) {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((order: Orders, index: number) => {
                   return (
-                    <TableRow key={index} >
-                      <TableCell
-                        className="tableCell"
-                      >
-                        {order.id}
-                      </TableCell>
+                    <TableRow key={index}>
+                      <TableCell className="tableCell">{order.id}</TableCell>
                       <TableCell className="tableCell">
-                        {order.date.toString().substring(0, 10) + " " + order.date.toString().substring(11, 19)}
+                        {order.date?.toString().substring(0, 10) +
+                          " " +
+                          order.date?.toString().substring(11, 19)}
                       </TableCell>
                       <TableCell className="tableCell">
                         {order.paid == true ? "pagado" : "Falta Pago"}
@@ -218,27 +229,32 @@ export default function OrderCookTable({ orders }: myProps) {
                       <TableCell className="tableCell_Detalle">
                         {
                           <Link to={`/detailCook/${order.id}`}>
-                            <Button
-                              className=""
-                              variant="warning"
-                            >
+                            <Button className="" variant="warning">
                               Ver detalle
                             </Button>
                           </Link>
-
                         }
                       </TableCell>
-                      <TableCell className="tableCell" style={{ display: 'flex', justifyContent: "center", alignItems: "center" }}>
+                      <TableCell
+                        className="tableCell"
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
                         <div className="tableCell_Actions_billing">
-                          <Button
-                            variant="warning"
-                          >
-                            +10 min
-                          </Button>
+                          <Button variant="warning">+10 min</Button>
                           <Button
                             className="ACocina"
                             variant="warning"
-                            onClick={() => { }}
+                            onClick={() => {
+                              handleChangeState(order, {
+                                id: 4,
+                                deleted: false,
+                                description: "Listo",
+                              });
+                            }}
                           >
                             Listo
                           </Button>
@@ -268,8 +284,7 @@ export default function OrderCookTable({ orders }: myProps) {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-
       </Paper>
-    </div >
+    </div>
   );
 }

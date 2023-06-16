@@ -12,6 +12,7 @@ import ClientSlice from "@features/Clients/ClientSlice";
 import { loadState } from "./BrowserStorage";
 import cartSlice from "@features/ShoppingCart/CartProducts";
 import { saveState } from "./BrowserStorage";
+import OrderCookSlice from "@features/OrderCook/OrderCookSlice";
 
 const saveCartToLocalStorage = () => (next: any) => (action: any) => {
   const result = next(action);
@@ -32,6 +33,7 @@ export const Store = configureStore({
     cart: cartSlice,
     empleoyees: EmpleoyeesSlice,
     clients: ClientSlice,
+    orderCook: OrderCookSlice,
   },
   preloadedState: {
     cart: loadState("cartProducts"),
