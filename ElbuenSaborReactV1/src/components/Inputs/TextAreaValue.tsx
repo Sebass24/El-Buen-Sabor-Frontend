@@ -5,8 +5,9 @@ interface props {
   name: string;
   placeholder: string;
   value?: string;
+  rows?: number
 }
-export default function TextAreaValue({ label, name, placeholder, }: props) {
+export default function TextAreaValue({ label, name, placeholder, rows }: props) {
   return (
     <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
       <div style={{
@@ -25,6 +26,7 @@ export default function TextAreaValue({ label, name, placeholder, }: props) {
         placeholder={placeholder}
         name={name}
         autoComplete="off"
+        rows={rows}
       />
       <ErrorMessage
         component="div"

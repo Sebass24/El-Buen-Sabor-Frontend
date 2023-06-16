@@ -13,7 +13,7 @@ const CashierPage = () => {
   // const [orderComplete, setOrderComplete] = useState<cashierOrder[]>();
 
   async function getOrders() {
-    dispatch(fetchOrders())
+    dispatch(fetchOrders() as any)
   }
 
   useEffect(() => {
