@@ -8,10 +8,16 @@ import { setUserData } from "@features/User/UserSlice";
 import TextFieldValue from "components/Inputs/TextFieldValue";
 import { BsPencilSquare } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { getAddressesByUserId, getPhonesByUserId } from "@services/users";
+import NewAddressModal from "./NewAddressModal";
+import NewPhoneModal from "./NewPhoneModal";
 import Address from "@Models/Users/Address";
 import Phone from "@Models/Users/Phone";
+import User from "@Models/Users/User";
+import { deleteAddress, deletePhone, updateUser } from "@services/users";
+import { fetchPhones, fetchAddresses } from "@features/User/UserThunk";
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from "@app/Store";
+import { AnyAction } from "@reduxjs/toolkit";
 
 interface Props {
     onClose: () => void; // Callback function for when the modal is closed
@@ -21,47 +27,74 @@ export default function PersonalDataModal({ onClose }: Props) {
 
     const { user } = useAppSelector(state => state.users)
     const [showModal, setShowModal] = useState(true);
-    const dispatch = useAppDispatch();
-    const [phones, setPhones] = useState<Phone[]>([]);
-    const [addresses, setAddresses] = useState<Address[]>([]);
+    const [showAddressModal, setShowAddressModal] = useState(false);
+    const [showPhoneModal, setShowPhoneModal] = useState(false);
+    const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
+    const [selectedPhone, setSelectedPhone] = useState<Phone | null>(null);
 
-    const getAddressesPhones = async () => {
+    const dispatch = useAppDispatch();
+    const thunkdispatch: ThunkDispatch<RootState, unknown, AnyAction> = useAppDispatch();
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        onClose();
+    };
+
+    const handleModal = () => {
+        setShowAddressModal(false);
+        setShowPhoneModal(false);
+        setSelectedAddress(null);
+        setSelectedPhone(null);
+    }
+
+    const handleSelectedOption = (option: Address | Phone) => {
+        if ('street' in option) {
+            setSelectedAddress(option);
+            setShowAddressModal(true);
+        } else {
+            setSelectedPhone(option);
+            setShowPhoneModal(true);
+        }
+    }
+
+    const handleDelete = (option: Address | Phone) => {
         try {
-            const addresses = await getAddressesByUserId(user.id);
-            setAddresses(addresses);
-            const phones = await getPhonesByUserId(user.id);
-            setPhones(phones);
+            if ('street' in option) {
+                deleteAddress(option.id as number);
+                thunkdispatch(fetchAddresses(user.id));
+            } else {
+                deletePhone(option.id as number);
+                thunkdispatch(fetchPhones(user.id));
+            }
         } catch (error) {
             console.log(error);
         }
     }
 
-    const handleCloseModal = () => {
-        setShowModal(false);
-        getAddressesPhones();
-        onClose();
-    };
-
     const initialValues: any = {
         lastName: user.lastName,
         name: user.name,
         email: user.userEmail,
-        addresses: addresses,
-        phones: phones,
+        addresses: user.addresses,
+        phones: user.phones,
     }
 
     const saveUserData = (values: FormikValues) => {
         const name = values.name;
         const lastName = values.lastName;
-        dispatch(setUserData({
+        const newUserData: User = {
+            ...user,
             name: name,
-            lastName: lastName,
-        }));
+            lastName: lastName
+        };
+        try {
+            updateUser(newUserData);
+            dispatch(setUserData(newUserData));
+            handleCloseModal();
+        } catch (error) {
+            console.log(error);
+        }
     };
-
-    useEffect(() => {
-        getAddressesPhones();
-    }, [])
 
     return (
         <div>
@@ -102,13 +135,13 @@ export default function PersonalDataModal({ onClose }: Props) {
                                             defaultValue={initialValues.email}
                                             disabled={true}
                                         />
-                                        <div>
-                                            <label>Direcciones:</label>
-                                            <Button type="button" className="btn-yellow" /* onClick={ } */>
+                                        <div className="title-container">
+                                            <label className="title-personal-data">Direcciones:</label>
+                                            <Button type="button" className="btn-yellow" onClick={() => setShowAddressModal(true)}>
                                                 Nueva dirección
                                             </Button>
                                         </div>
-                                        <Table>
+                                        <Table className="personal-data-table">
                                             <thead>
                                                 <tr>
                                                     <th>Calle</th>
@@ -119,45 +152,47 @@ export default function PersonalDataModal({ onClose }: Props) {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {addresses.length === 0 ?
+                                                {user.addresses.length === 0 ?
                                                     <tr>
                                                         <td colSpan={5}>
                                                             No hay teléfonos cargados
                                                         </td>
                                                     </tr>
                                                     : (
-                                                        addresses.map((a) => (
+                                                        user.addresses.map((a) => (
                                                             <tr key={a.id}>
                                                                 <td>{a.street}</td>
                                                                 <td>{a.number}</td>
                                                                 <td>{a.location.name}</td>
-                                                                <td>{/*<Link to={`/InstrumentForm/${i.id}`>*/}<BsPencilSquare size={26} />{/* </Link> */}</td>
-                                                                <td><MdDelete size={26} /* onClick={() => deleteInstrumento(i.id)} */ style={{ cursor: "pointer", color: "black" }} /></td>
+                                                                <td><BsPencilSquare size={20} onClick={() => { handleSelectedOption(a) }} style={{ cursor: "pointer", color: "black" }} /></td>
+                                                                <td><MdDelete size={20} onClick={() => { handleDelete(a) }} style={{ cursor: "pointer", color: "black" }} /></td>
                                                             </tr>
                                                         ))
                                                     )}
                                             </tbody>
                                         </Table>
-                                        <div>
-                                            <label>Teléfonos:</label>
-                                            <Button type="button" className="btn-yellow" /* onClick={ } */>
+                                        <div className="title-container">
+                                            <label className="title-personal-data">Teléfonos:</label>
+                                            <Button type="button" className="btn-yellow" onClick={() => setShowPhoneModal(true)}>
                                                 Nuevo teléfono
                                             </Button>
                                         </div>
-                                        <Table>
+                                        <Table className="personal-data-table">
                                             <tbody>
-                                                {phones.length === 0 ?
+                                                {user.phones.length === 0 ?
                                                     <tr>
                                                         <td colSpan={5}>
                                                             No hay teléfonos cargados
                                                         </td>
                                                     </tr>
                                                     : (
-                                                        phones.map((p) => (
+                                                        user.phones.map((p) => (
                                                             <tr key={p.id}>
                                                                 <td>{p.number}</td>
-                                                                <td>{/*<Link to={`/InstrumentForm/${i.id}`>*/}<BsPencilSquare size={26} />{/* </Link> */}</td>
-                                                                <td><MdDelete size={26} /* onClick={() => deleteInstrumento(i.id)} */ style={{ cursor: "pointer", color: "black" }} /></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td><BsPencilSquare size={20} onClick={() => handleSelectedOption(p)} style={{ cursor: "pointer", color: "black" }} /></td>
+                                                                <td><MdDelete size={20} onClick={() => { handleDelete(p) }} style={{ cursor: "pointer", color: "black" }} /></td>
                                                             </tr>
                                                         ))
                                                     )}
@@ -165,11 +200,11 @@ export default function PersonalDataModal({ onClose }: Props) {
                                         </Table>
                                     </div>
                                     <Modal.Footer>
-                                        <Button type="submit" className="btn-yellow">
-                                            Guardar
-                                        </Button>
                                         <Button type="button" className="btn-yellow" onClick={handleCloseModal}>
                                             Cerrar
+                                        </Button>
+                                        <Button type="submit" className="btn-yellow">
+                                            Guardar
                                         </Button>
                                     </Modal.Footer>
                                 </Form>
@@ -178,6 +213,10 @@ export default function PersonalDataModal({ onClose }: Props) {
                         }
                     </Formik>
                 </Modal.Body>
+                {showAddressModal ?
+                    <NewAddressModal address={selectedAddress} onClose={handleModal} /> : ""}
+                {showPhoneModal ?
+                    <NewPhoneModal phone={selectedPhone} onClose={handleModal} /> : ""}
             </Modal>
         </div>
     )

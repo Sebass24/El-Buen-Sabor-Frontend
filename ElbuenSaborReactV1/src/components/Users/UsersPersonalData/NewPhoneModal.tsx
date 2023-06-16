@@ -1,23 +1,29 @@
-import { Button, Modal, Table } from "react-bootstrap";
-import { useAppSelector } from "@app/Hooks";
-import { ChangeEvent, useEffect, useState } from "react";
+import { Button, Modal } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "@app/Hooks";
+import { useState } from "react";
 import "./UserDataModal.scss";
-import { Formik, Form, FormikValues, Field, ErrorMessage } from 'formik';
+import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import TextFieldValue from "components/Inputs/TextFieldValue";
-import Location from "@Models/Users/Location";
-import { postNewPhone } from "@services/users";
+import { postNewPhone, updatePhone } from "@services/users";
 import Phone from "@Models/Users/Phone";
+import "./UserDataModal.scss";
+import { fetchPhones } from "@features/User/UserThunk";
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from "@app/Store";
+import { AnyAction } from "@reduxjs/toolkit";
 
 interface Props {
-    phoneId: number;
+    phone?: Phone | null;
     onClose: () => void; // Callback function for when the modal is closed
 }
 
-export default function NewPhoneModal({ phoneId, onClose }: Props) {
+export default function NewPhoneModal({ phone, onClose }: Props) {
 
     const { id: userId } = useAppSelector(state => state.users.user)
     const [showModal, setShowModal] = useState(true);
+
+    const thunkdispatch: ThunkDispatch<RootState, unknown, AnyAction> = useAppDispatch();
 
     const handleCloseModal = () => {
         setShowModal(false);
@@ -25,18 +31,28 @@ export default function NewPhoneModal({ phoneId, onClose }: Props) {
     };
 
     const initialValues = {
-        number: "",
+        number: phone?.number || "",
     };
 
     const savePhone = async (values: FormikValues) => {
-        console.log(values.Location);
-        const newPhone: Phone = {
-            number: values.number,
-            user: { id: userId }
-        }
         try {
-            await postNewPhone(newPhone);
-            handleCloseModal();
+            if (phone) {
+                phone = {
+                    ...phone,
+                    number: values.number,
+                    user: { id: userId }
+                }
+                await updatePhone(phone);
+                handleCloseModal();
+            } else {
+                const newPhone: Phone = {
+                    number: values.number,
+                    user: { id: userId }
+                }
+                await postNewPhone(newPhone);
+                handleCloseModal();
+            }
+            thunkdispatch(fetchPhones(userId));
         } catch (error) {
             console.log(error);
         }
@@ -47,7 +63,7 @@ export default function NewPhoneModal({ phoneId, onClose }: Props) {
             <Modal className="complete-data" show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {phoneId !== 0 ? "Editar dirección" : "Nueva dirección"}
+                        {phone ? "Editar dirección" : "Nueva dirección"}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -71,11 +87,11 @@ export default function NewPhoneModal({ phoneId, onClose }: Props) {
                                         />
                                     </div>
                                     <Modal.Footer>
-                                        <Button type="submit" className="btn-yellow">
-                                            Guardar
-                                        </Button>
                                         <Button type="button" className="btn-yellow" onClick={handleCloseModal}>
                                             Cerrar
+                                        </Button>
+                                        <Button type="submit" className="btn-yellow">
+                                            Guardar
                                         </Button>
                                     </Modal.Footer>
                                 </Form>

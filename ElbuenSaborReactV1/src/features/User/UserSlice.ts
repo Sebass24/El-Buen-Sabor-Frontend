@@ -3,6 +3,7 @@ import Phone from "@Models/Users/Phone";
 import Role from "@Models/Users/Role";
 import User from "@Models/Users/User";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { fetchAddresses, fetchPhones } from "./UserThunk";
 
 // Define a type for the Loading state
 interface LoadingState {
@@ -15,6 +16,8 @@ interface LoadingState {
     name: string;
     userEmail: string;
     role: Role;
+    addresses: Address[];
+    phones: Phone[];
   }
 }
 
@@ -28,7 +31,9 @@ const initialState: LoadingState = {
     lastName: "",
     name: "",
     userEmail: "",
-    role: null as any
+    role: null as any,
+    addresses: [],
+    phones: [],
   }
 };
 
@@ -61,6 +66,15 @@ export const UserSlice = createSlice({
     setUserRole: (state, action: PayloadAction<Role>) => {
       state.user.role = action.payload;
     }
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchAddresses.fulfilled, (state, action) => {
+        state.user.addresses = action.payload
+      })
+      .addCase(fetchPhones.fulfilled, (state, action) => {
+        state.user.phones = action.payload
+      });
   },
 });
 

@@ -8,6 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { postNewUser } from "@services/users";
 import { setStoredInDB, setUserData, setUserId } from "@features/User/UserSlice";
 import TextFieldValue from "components/Inputs/TextFieldValue";
+import "./UserDataModal.scss";
 
 export default function NewClientModal() {
 
@@ -112,11 +113,11 @@ export default function NewClientModal() {
                                         />
                                     </div>
                                     <Modal.Footer>
-                                        <Button type="submit" className="btn-yellow">
-                                            Guardar
-                                        </Button>
                                         <Button type="button" className="btn-yellow" onClick={closeSession as any}>
                                             Cerrar
+                                        </Button>
+                                        <Button type="submit" className="btn-yellow">
+                                            Guardar
                                         </Button>
                                     </Modal.Footer>
                                 </Form>

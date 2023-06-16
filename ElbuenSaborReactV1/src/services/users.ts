@@ -1,5 +1,5 @@
 import Address from "@Models/Users/Address";
-import { getData, postPutData } from "../components/GenericFetch/GenericFetch";
+import { deleteData, getData, postPutData } from "../components/GenericFetch/GenericFetch";
 import Phone from "@Models/Users/Phone";
 import User from "@Models/Users/User";
 import Order from "@Models/Orders/Order";
@@ -29,6 +29,13 @@ export async function postNewUser(newUser: User) {
     return user;
 }
 
+export async function updateUser(user: User) {
+    const url = "/api/user";
+    const method = 'PUT';
+    const updatedUser = await postPutData(url, method, user);
+    return updatedUser;
+}
+
 export async function postNewOrder(newOrder: Order) {
     const url = "/api/order";
     const method = 'POST';
@@ -43,9 +50,33 @@ export async function postNewAddress(newAddress: Address) {
     return address;
 }
 
+export async function updateAddress(address: Address) {
+    const url = "/api/address";
+    const method = 'PUT';
+    const response = await postPutData(url, method, address);
+    return response;
+}
+
+export async function deleteAddress(addressId: number) {
+    const url = `/api/address/${addressId}`;
+    await deleteData(url);
+}
+
 export async function postNewPhone(newPhone: Phone) {
     const url = "/api/phone";
     const method = 'POST';
     const address = await postPutData(url, method, newPhone);
     return address;
+}
+
+export async function updatePhone(phone: Phone) {
+    const url = "/api/phone";
+    const method = 'PUT';
+    const updatedPhone = await postPutData(url, method, phone);
+    return updatedPhone;
+}
+
+export async function deletePhone(phoneId: number) {
+    const url = `/api/phone/${phoneId}`;
+    await deleteData(url);
 }
