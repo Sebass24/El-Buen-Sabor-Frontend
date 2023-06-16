@@ -5,12 +5,18 @@ import { setUserToken, resetUserData, setUserData, setStoredInDB, setUserRole } 
 import { setCartUser } from "@features/ShoppingCart/CartProducts";
 import User from "@Models/Users/User";
 import { getUserData } from "@services/users";
+import { fetchAddresses, fetchPhones } from "@features/User/UserThunk";
+import { ThunkDispatch } from 'redux-thunk';
+import { RootState } from "@app/Store";
+import { AnyAction } from "@reduxjs/toolkit";
+
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const { user: currentUser } = useAppSelector(state => state.users);
 
   const dispatch = useAppDispatch();
+  const thunkdispatch: ThunkDispatch<RootState, unknown, AnyAction> = useAppDispatch();
 
   async function getToken() {
     const token = await getAccessTokenSilently()
@@ -25,6 +31,8 @@ const Profile = () => {
         console.log(dbuser)
         dispatch(setUserData(dbuser));
         dispatch(setStoredInDB(true));
+        thunkdispatch(fetchAddresses(dbuser.id as number));
+        thunkdispatch(fetchPhones(dbuser.id as number));
         if (dbuser.role?.id === undefined) {
           dispatch(setUserRole({
             id: 2,

@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+
+* {
+    font-family: "inter", sans-serif;
+}
+
 .Container_RightNavBar {
 
     /*  position: relative;
@@ -30,6 +36,16 @@
         &:focus {
             color: black;
             background-color: transparent;
+        }
+    }
+
+    .login-button {
+        width: fit-content;
+
+        .dropdown-item {
+            padding: 0 1rem;
+            text-align: left;
+            font-size: 1rem;
         }
     }
 }

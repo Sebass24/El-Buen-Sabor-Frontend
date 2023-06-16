@@ -21,7 +21,6 @@ const LogOutAuth = () => {
         cursor: "pointer",
         width: "100%",
         display: "block",
-        padding: "0 1rem",
       }}
       onClick={() => handleLogOut()}
     >

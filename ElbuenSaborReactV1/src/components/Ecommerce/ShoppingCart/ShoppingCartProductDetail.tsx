@@ -38,7 +38,7 @@ export default function ShoppingCartProductDetail({ order, reviewMode }: props) 
       <div className="cart-product-container">
         <div><img className="cart-product-image" src={`../Images/${order.product.image?.path}`} /></div>
         <div className="cart-product-info">
-          <label className="cart-product-title">{order.product.name}</label>
+          <label className="cart-product-title">{order.product.name}</label><br />
           <label className="cart-product-description">{order.product.shortDescription}</label><br />
           <label className="cart-product-price">${order.product.sellPrice}</label>
         </div>

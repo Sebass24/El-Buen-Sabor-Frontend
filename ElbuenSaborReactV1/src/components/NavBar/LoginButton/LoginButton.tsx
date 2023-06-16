@@ -34,9 +34,8 @@ export const LoginButton = () => {
             <Profile />
             <FontAwesomeIcon icon={faUser} />
           </Dropdown.Toggle>
-          <Dropdown.Menu style={{ width: "12.5rem" }}>
-            <Dropdown.Item style={{ padding: "0" }} ><LogOutAuth /></Dropdown.Item>
-            <Dropdown.Item style={{ padding: "0", }} onClick={() => { setShowPersonalData(true) }}>Mis datos personales</Dropdown.Item>
+          <Dropdown.Menu className="login-button">
+            <Dropdown.Item onClick={() => { setShowPersonalData(true) }}>Mis datos personales</Dropdown.Item>
             {user.role?.description === "Administrador" ? (<>
               <Dropdown.Item ><Link to="/cashier" className="link"><span>Cajero</span></Link></Dropdown.Item>
               <Dropdown.Item ><Link to="/cook" className="link"><span>Cocinero</span></Link></Dropdown.Item>
@@ -52,6 +51,7 @@ export const LoginButton = () => {
             {user.role?.description === "Delivery" ? (
               <Dropdown.Item ><Link to="/delivery" className="link"><span>Delivery</span></Link></Dropdown.Item>
             ) : <></>}
+            <Dropdown.Item><LogOutAuth /></Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         :
