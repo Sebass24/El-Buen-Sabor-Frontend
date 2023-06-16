@@ -28,7 +28,6 @@ const Profile = () => {
     if (user && isAuthenticated) {
       const dbuser: User = await getUserData(user.sub!);
       if (dbuser && dbuser.name !== undefined) {
-        console.log(dbuser)
         dispatch(setUserData(dbuser));
         dispatch(setStoredInDB(true));
         thunkdispatch(fetchAddresses(dbuser.id as number));

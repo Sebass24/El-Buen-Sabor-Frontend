@@ -32,9 +32,9 @@ export default function NavigationBar() {
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav'>
             <Nav style={{ position: 'relative' }}>
-              <Link to="/" className="link-nav"><span className="nav-link">Contactanos</span></Link>
+              <Link to="/contactUs" className="link-nav"><span className="nav-link">Contactanos</span></Link>
               <Link to="/" className="link-nav"><span className="nav-link">Catálogo</span></Link>
-              <Link to="/" className="link-nav"><span className="nav-link">Sobre nosotros</span></Link>
+              <Link to="/aboutUs" className="link-nav"><span className="nav-link">Sobre nosotros</span></Link>
             </Nav>
             {isSmallScreen && <LoginButton />}
           </Navbar.Collapse>

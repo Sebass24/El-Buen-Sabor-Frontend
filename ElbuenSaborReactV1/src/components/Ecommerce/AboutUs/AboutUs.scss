@@ -1,0 +1,108 @@
+.img {
+  height: 10rem;
+  background-image: url(../../../resources/sliderbg1_2048x.webp);
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+
+  .Title_AboutUS {
+    color: #fff;
+  }
+}
+
+
+.AboutUs {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: black;
+  padding: 2rem 0rem;
+  gap: 3rem;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+    article:has(p) {
+      gap: 2rem;
+      width: 60%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      h2 {
+        text-decoration: underline;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .integrantes-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    article {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: left;
+      position: relative;
+
+      img {
+        height: 20rem;
+        width: 17rem;
+        object-fit: cover;
+
+      }
+
+      h2 {
+        font-size: 1rem;
+      }
+
+      h3 {
+        color: grey;
+        font-size: 0.9rem;
+      }
+
+      &:hover {
+        .habilities {
+          opacity: 1;
+        }
+      }
+
+      .habilities {
+        color: #fff;
+        opacity: 0;
+        transition: all 0.3s ease;
+        height: 20rem;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        inset: 0;
+        justify-content: space-evenly;
+        align-items: center;
+        font-size: 1.2rem;
+        background-color: rgba(0, 0, 0, 0.6);
+      }
+    }
+  }
+}
+
+article:not(:has(p)):not(:has(img)) {
+  font-size: 2rem;
+  text-decoration: none;
+}
