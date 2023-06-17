@@ -1,0 +1,39 @@
+.Container-Modal {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+
+  span {
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(211, 129, 36);
+  }
+
+}
+
+.Container-Modal-General {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.Container-Modal-Ingredients {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  span {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin-bottom: .5rem;
+  }
+}
+
+.Container-Modal-description {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}

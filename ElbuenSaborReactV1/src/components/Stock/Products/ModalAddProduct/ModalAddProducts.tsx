@@ -130,12 +130,14 @@ const ModalAddProducts = ({
                 console.log("values", valuesProduct);
                 if (editing) {
                   dispatch(startLoading());
-                  postPutData(`/api/product`, "PUT", values).then(() => {
+                  postPutData(`/api/product`, "PUT", values).then((response) => {
+                    console.log(response)
                     dispatch(updateProduct(valuesProduct));
                   });
                   dispatch(finishLoading());
                 } else {
-                  postPutData(`/api/product`, "POST", values).then(() => {
+                  postPutData(`/api/product`, "POST", values).then((response) => {
+                    console.log(response)
                     dispatch(addProduct(valuesProduct));
                   });
                 }
@@ -350,12 +352,7 @@ export function FormikStepper({ children, setImg, ...props }: PropsForm) {
                   setFieldValue(`productCategory`, prod[0]);
                 }}
               />
-              <TextFieldValue
-                label="PrecioVenta"
-                name="sellPrice"
-                placeholder="PrecioVenta"
-                type="number"
-              />
+
               <TextFieldValue
                 label="TiempoCocina"
                 name="cookingTime"
