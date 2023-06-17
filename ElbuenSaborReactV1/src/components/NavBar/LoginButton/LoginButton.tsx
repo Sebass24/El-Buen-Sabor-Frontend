@@ -45,18 +45,6 @@ export const LoginButton = () => {
               <Dropdown.Item onClick={() => { navigate("/delivery") }}><span>Delivery</span></Dropdown.Item>
               <Dropdown.Item onClick={() => { navigate("/admin") }}><span>Administrador</span></Dropdown.Item>
             </>) : <></>}
-            {user.role?.description === "Cocinero" ? (<>
-              <Dropdown.Item onClick={() => { navigate("/cook") }}><span>Cocinero</span></Dropdown.Item>
-            </>
-            ) : <></>}
-            {user.role?.description === "Cajero" ? (<>
-              <Dropdown.Item onClick={() => { navigate("/cashier") }}><span>Cajero</span></Dropdown.Item>
-            </>
-            ) : <></>}
-            {user.role?.description === "Delivery" ? (<>
-              <Dropdown.Item onClick={() => { navigate("/delivery") }}><span>Delivery</span></Dropdown.Item>
-            </>
-            ) : <></>}
             <Dropdown.Item><LogOutAuth /></Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
