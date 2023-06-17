@@ -1,10 +1,16 @@
 import { useAppSelector } from "@app/Hooks";
 import { useState, useEffect } from "react";
 import "./OrderTotalPrice.scss";
+import Order from "@Models/Orders/Order";
 
-export default function OrderTotalPrice() {
+interface Props {
+    order: Order | null;
+}
 
-    const { order } = useAppSelector(state => state.cart);
+export default function OrderTotalPrice({ order: propOrder }: Props) {
+
+    const { order: reduxOrder } = useAppSelector(state => state.cart);
+    const order = propOrder || reduxOrder;
 
     const [totalProducts, setTotalProducts] = useState<number>(0);
 

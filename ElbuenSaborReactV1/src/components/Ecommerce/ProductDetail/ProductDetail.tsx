@@ -22,7 +22,7 @@ export default function ProductDetail() {
     const [showMessage, setShowMessage] = useState(false);
 
     const getProduct = async () => {
-        let p: Product = await getProductById(parseInt(idproduct!));
+        const p: Product = await getProductById(parseInt(idproduct!));
         setProduct(p);
         setLoading(false);
     }

@@ -45,6 +45,9 @@ export const LoginButton = () => {
               <Dropdown.Item onClick={() => { navigate("/delivery") }}><span>Delivery</span></Dropdown.Item>
               <Dropdown.Item onClick={() => { navigate("/admin") }}><span>Administrador</span></Dropdown.Item>
             </>) : <></>}
+            {user.role?.description === "Cliente" ? (<>
+              <Dropdown.Item onClick={() => { navigate("/orderList") }}><span>Mis pedidos</span></Dropdown.Item>
+            </>) : <></>}
             <Dropdown.Item><LogOutAuth /></Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

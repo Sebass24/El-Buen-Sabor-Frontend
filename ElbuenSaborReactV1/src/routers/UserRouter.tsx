@@ -5,6 +5,7 @@ import ProductDetail from "../screens/ProductDetail";
 import ShoppingCart from "../screens/ShoppingCart";
 import AboutUs from "components/Ecommerce/AboutUs/AboutUs";
 import ContactUs from "components/Ecommerce/ContactUs/ContactUs";
+import ClientOrderDetail from "components/OrderDetail/ClientOrderDetail";
 
 const UserRouter = () => {
   return (
@@ -14,6 +15,9 @@ const UserRouter = () => {
         <Route path="/" element={<LandingCatalogue />} />
         <Route path="/productDetail">
           <Route path=":idproduct" element={<ProductDetail />} />
+        </Route>
+        <Route path="/orderDetail">
+          <Route path=":idorder" element={<ClientOrderDetail />} />
         </Route>
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/aboutUs" element={<AboutUs />} />

@@ -55,6 +55,9 @@ export default function ShoppingCart() {
   const postOrder = async () => {
     try {
       const newOrder = await postNewOrder(order);
+      if (newOrder.paymentMethod.id === 1) {
+        navigate(`/orderdetail/${newOrder.id}`);
+      }
       //if newOrder paymentMethod == MP, redirect to MP payment
       //if error in payment or anything, redirect to cart and throw error
       //else, redirect to order detail and resetOrderDetails
@@ -93,7 +96,7 @@ export default function ShoppingCart() {
             <>
               {showReview ?
                 <>
-                  <OrderOptionsReview />
+                  <OrderOptionsReview order={null} />
                   <Button className="confirm-button"
                     onClick={postOrder}>
                     Confirmar pedido
@@ -111,7 +114,7 @@ export default function ShoppingCart() {
             :
             <>
               <Container>
-                <OrderTotalPrice />
+                <OrderTotalPrice order={null} />
                 <Button
                   className={"btn-cart"}
                   onClick={handleOrderLogin}>

@@ -32,7 +32,7 @@ export default function OrderOptions() {
 
     return (
         <div className="order-options">
-            <OrderTotalPrice />
+            <OrderTotalPrice order={null} />
             <hr className="straight-line" />
             <div className="delivery-options">
                 <label>Seleccionar:</label>
