@@ -99,7 +99,6 @@ export default function NewAddressModal({ address, onClose }: Props) {
                                 .required('*Campo requerido'),
                         })}
                         onSubmit={(values) => {
-                            console.log("Form Values:", values);
                             saveAddress(values)
                         }}
                     >

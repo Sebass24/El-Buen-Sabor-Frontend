@@ -12,7 +12,6 @@ import { postNewOrder } from "@services/users";
 import { resetOrderDetails, setCartDate } from "@features/ShoppingCart/CartProducts";
 import { Alert } from "@mui/material";
 import OrderDetail from "@Models/Orders/OrderDetail";
-import { set } from "date-fns";
 
 export default function ShoppingCart() {
 
@@ -27,7 +26,9 @@ export default function ShoppingCart() {
   const [continueToReview, setContinueToReview] = useState(false);
 
   const handleContinue = () => {
-    if (order.paymentMethod.id === 0 || order.orderDetails.length === 0 || order.address === "" || order.phone === "") {
+    if (order.paymentMethod.id !== 0 && order.deliveryMethod.id === 2) {
+      setContinueToReview(true);
+    } else if (order.paymentMethod.id !== 0 && order.deliveryMethod.id === 1 && order.address !== "" && order.phone !== "") {
       setContinueToReview(true);
     } else {
       setContinueToReview(false);
@@ -57,8 +58,10 @@ export default function ShoppingCart() {
     try {
       const newOrder = await postNewOrder(order);
       console.log(newOrder);
+      //if newOrder paymentMethod == MP, redirect to MP payment
+      //if error in payment or anything, redirect to cart (dont dispatch resetOrderDetails)
+      //else, redirect to order detail and resetOrderDetails
       dispatch(resetOrderDetails());
-      //redirect to order detail
     } catch (error) {
       console.log(error);
       handleMessage();
@@ -101,7 +104,7 @@ export default function ShoppingCart() {
                 </>
                 : <>
                   <OrderOptions />
-                  <Button className={!continueToReview ? "btn-cart" : "disabled"}
+                  <Button className={continueToReview ? "btn-cart" : "disabled"}
                     onClick={handleOrderReview}>
                     Continuar
                   </Button>

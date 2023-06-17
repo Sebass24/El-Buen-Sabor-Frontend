@@ -52,6 +52,7 @@
     .quantity-selector-cart {
         border: 1px solid gray;
         border-radius: 4rem;
+        justify-content: left;
     }
 
     .quantity {
@@ -59,12 +60,14 @@
         color: black;
         font-weight: 500;
         font-size: .9rem;
+
     }
 }
 
 .amount-cart {
     font-size: .9rem;
     font-weight: 500;
+    min-width: 3.5rem;
 }
 
 .delete-button .button2 {
