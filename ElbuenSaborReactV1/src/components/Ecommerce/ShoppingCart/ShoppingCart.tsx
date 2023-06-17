@@ -53,13 +53,10 @@ export default function ShoppingCart() {
   }
 
   const postOrder = async () => {
-    const today = new Date();
-    dispatch(setCartDate(today.toString()));
     try {
       const newOrder = await postNewOrder(order);
-      console.log(newOrder);
       //if newOrder paymentMethod == MP, redirect to MP payment
-      //if error in payment or anything, redirect to cart (dont dispatch resetOrderDetails)
+      //if error in payment or anything, redirect to cart and throw error
       //else, redirect to order detail and resetOrderDetails
       dispatch(resetOrderDetails());
     } catch (error) {
