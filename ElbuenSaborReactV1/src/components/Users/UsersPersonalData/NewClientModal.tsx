@@ -76,7 +76,7 @@ export default function NewClientModal() {
         <div>
             <Modal className="complete-data" show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
                 <Modal.Header>
-                    <Modal.Title>Completar datos personales</Modal.Title>
+                    <Modal.Title className="modal-title-personal-data">Completar datos personales</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Formik
@@ -112,11 +112,11 @@ export default function NewClientModal() {
                                             disabled={true}
                                         />
                                     </div>
-                                    <Modal.Footer>
-                                        <Button type="button" className="btn-yellow" onClick={closeSession as any}>
+                                    <Modal.Footer className="modal-footer-personal-data">
+                                        <Button type="button" className="btn-cart" onClick={closeSession as any}>
                                             Cerrar
                                         </Button>
-                                        <Button type="submit" className="btn-yellow">
+                                        <Button type="submit" className="btn-cart">
                                             Guardar
                                         </Button>
                                     </Modal.Footer>

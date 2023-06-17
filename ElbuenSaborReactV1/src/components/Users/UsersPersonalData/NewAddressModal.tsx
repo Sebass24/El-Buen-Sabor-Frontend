@@ -84,7 +84,7 @@ export default function NewAddressModal({ address, onClose }: Props) {
         <div>
             <Modal className="complete-data" show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>
+                    <Modal.Title className="modal-title-personal-data">
                         {address ? "Editar dirección" : "Nueva dirección"}
                     </Modal.Title>
                 </Modal.Header>
@@ -156,11 +156,11 @@ export default function NewAddressModal({ address, onClose }: Props) {
                                             />
                                         </div>
                                     </div>
-                                    <Modal.Footer>
-                                        <Button type="button" className="btn-yellow" onClick={handleCloseModal}>
+                                    <Modal.Footer className="modal-footer-personal-data">
+                                        <Button type="button" className="btn-cart" onClick={handleCloseModal}>
                                             Cerrar
                                         </Button>
-                                        <Button type="submit" className="btn-yellow">
+                                        <Button type="submit" className="btn-cart">
                                             Guardar
                                         </Button>
                                     </Modal.Footer>

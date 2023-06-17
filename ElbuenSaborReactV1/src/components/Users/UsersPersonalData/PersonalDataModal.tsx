@@ -1,6 +1,6 @@
 import { Button, Modal, Table } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./UserDataModal.scss";
 import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
@@ -14,7 +14,6 @@ import Address from "@Models/Users/Address";
 import Phone from "@Models/Users/Phone";
 import User from "@Models/Users/User";
 import { deleteAddress, deletePhone, updateUser } from "@services/users";
-import { fetchPhones, fetchAddresses } from "@features/User/UserThunk";
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from "@app/Store";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -33,7 +32,6 @@ export default function PersonalDataModal({ onClose }: Props) {
     const [selectedPhone, setSelectedPhone] = useState<Phone | null>(null);
 
     const dispatch = useAppDispatch();
-    const thunkdispatch: ThunkDispatch<RootState, unknown, AnyAction> = useAppDispatch();
 
     const handleCloseModal = () => {
         setShowModal(false);
@@ -100,7 +98,7 @@ export default function PersonalDataModal({ onClose }: Props) {
         <div>
             <Modal className="complete-data" show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Mis datos personales</Modal.Title>
+                    <Modal.Title className="modal-title-personal-data">Mis datos personales</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Formik
@@ -137,7 +135,7 @@ export default function PersonalDataModal({ onClose }: Props) {
                                         />
                                         <div className="title-container">
                                             <label className="title-personal-data">Direcciones:</label>
-                                            <Button type="button" className="btn-yellow" onClick={() => setShowAddressModal(true)}>
+                                            <Button type="button" className="btn-cart" onClick={() => setShowAddressModal(true)}>
                                                 Nueva dirección
                                             </Button>
                                         </div>
@@ -173,7 +171,7 @@ export default function PersonalDataModal({ onClose }: Props) {
                                         </Table>
                                         <div className="title-container">
                                             <label className="title-personal-data">Teléfonos:</label>
-                                            <Button type="button" className="btn-yellow" onClick={() => setShowPhoneModal(true)}>
+                                            <Button type="button" className="btn-cart" onClick={() => setShowPhoneModal(true)}>
                                                 Nuevo teléfono
                                             </Button>
                                         </div>
@@ -199,11 +197,11 @@ export default function PersonalDataModal({ onClose }: Props) {
                                             </tbody>
                                         </Table>
                                     </div>
-                                    <Modal.Footer>
-                                        <Button type="button" className="btn-yellow" onClick={handleCloseModal}>
+                                    <Modal.Footer className="modal-footer-personal-data">
+                                        <Button type="button" className="btn-cart" onClick={handleCloseModal}>
                                             Cerrar
                                         </Button>
-                                        <Button type="submit" className="btn-yellow">
+                                        <Button type="submit" className="btn-cart">
                                             Guardar
                                         </Button>
                                     </Modal.Footer>

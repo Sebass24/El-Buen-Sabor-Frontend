@@ -96,7 +96,7 @@ export default function DeliveryInfo() {
                                     className="error"
                                 />
                             </div>
-                            <Button type="button" className="btn-yellow" onClick={() => setShowAddressModal(true)}>
+                            <Button type="button" className="btn-cart" onClick={() => setShowAddressModal(true)}>
                                 Nueva dirección
                             </Button>
                             <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
@@ -142,7 +142,7 @@ export default function DeliveryInfo() {
                                     className="error"
                                 />
                             </div>
-                            <Button type="button" className="btn-yellow" onClick={() => setShowPhoneModal(true)}>
+                            <Button type="button" className="btn-cart" onClick={() => setShowPhoneModal(true)}>
                                 Nuevo teléfono
                             </Button>
                         </Form>
