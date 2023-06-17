@@ -9,6 +9,7 @@ import { fetchAddresses, fetchPhones } from "@features/User/UserThunk";
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from "@app/Store";
 import { AnyAction } from "@reduxjs/toolkit";
+import Role from "@Models/Users/Role";
 
 
 const Profile = () => {
@@ -27,18 +28,18 @@ const Profile = () => {
   async function getUser() {
     if (user && isAuthenticated) {
       const dbuser: User = await getUserData(user.sub!);
-      if (dbuser && dbuser.name !== undefined) {
+      if (dbuser.name !== null) {
         dispatch(setUserData(dbuser));
         dispatch(setStoredInDB(true));
         thunkdispatch(fetchAddresses(dbuser.id as number));
         thunkdispatch(fetchPhones(dbuser.id as number));
-        if (dbuser.role?.id === undefined) {
+        if (dbuser.role === null) {
           dispatch(setUserRole({
             id: 2,
             description: "Cliente",
           }))
         } else {
-          dispatch(setUserRole(dbuser.role))
+          dispatch(setUserRole(dbuser.role as Role))
         }
         dispatch(setCartUser(dbuser));
       } else {

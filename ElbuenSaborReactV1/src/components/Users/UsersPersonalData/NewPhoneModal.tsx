@@ -82,7 +82,7 @@ export default function NewPhoneModal({ phone, onClose }: Props) {
                                         <TextFieldValue
                                             label="Número:"
                                             name="number"
-                                            type="text"
+                                            type="number"
                                             defaultValue={initialValues.number}
                                         />
                                     </div>

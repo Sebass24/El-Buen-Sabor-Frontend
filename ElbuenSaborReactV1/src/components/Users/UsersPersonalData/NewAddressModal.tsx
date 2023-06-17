@@ -45,7 +45,7 @@ export default function NewAddressModal({ address, onClose }: Props) {
     const initialValues = {
         street: address?.street || "",
         number: address?.number || "",
-        location: address?.location.id || 0,
+        location: address?.location.id || "",
     };
 
     const saveAddress = async (values: FormikValues) => {
@@ -94,9 +94,14 @@ export default function NewAddressModal({ address, onClose }: Props) {
                         validationSchema={Yup.object().shape({
                             street: Yup.string().required('*Campo requerido'),
                             number: Yup.string().required('*Campo requerido'),
-                            location: Yup.string().required("*Campo requerido"),
+                            location: Yup.string()
+                                .test('required', '*Campo requerido', (value) => value !== '0')
+                                .required('*Campo requerido'),
                         })}
-                        onSubmit={(values) => { saveAddress(values) }}
+                        onSubmit={(values) => {
+                            console.log("Form Values:", values);
+                            saveAddress(values)
+                        }}
                     >
                         {(Formik) =>
                         (
@@ -130,7 +135,9 @@ export default function NewAddressModal({ address, onClose }: Props) {
                                                     Formik.setFieldValue("location", location);
                                                 }}
                                             >
-                                                <option>Elegir localidad</option>
+                                                <option value="" disabled hidden>
+                                                    Elegir localidad
+                                                </option>
                                                 {locations.length > 0 ?
                                                     (
                                                         locations.map((l: Location) => {
@@ -143,7 +150,7 @@ export default function NewAddressModal({ address, onClose }: Props) {
                                                     )
                                                     :
                                                     (
-                                                        <option value={"none"} >
+                                                        <option>
                                                             No se han encontrado localidades
                                                         </option>
                                                     )}
@@ -151,7 +158,7 @@ export default function NewAddressModal({ address, onClose }: Props) {
                                             </Field>
                                             <ErrorMessage
                                                 component="div"
-                                                name={"lcoation"}
+                                                name={"location"}
                                                 className="error"
                                             />
                                         </div>
