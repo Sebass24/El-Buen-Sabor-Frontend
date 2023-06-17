@@ -46,6 +46,15 @@ export default function ClientOrderDetail() {
         }
     }
 
+    const handleCreditNoteDownload = () => {
+        try {
+            const url = `${import.meta.env.VITE_BILL_DOWNLOAD}/api/credit-note/download-credit-note/${order?.id}`;
+            window.location.href = url;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         getOrder();
     }, [])
@@ -72,6 +81,12 @@ export default function ClientOrderDetail() {
                             <label className="title-order-id" style={{ textAlign: "right" }}>{order?.id}</label>
                         </div >
                         <OrderOptionsReview order={order} />
+                        {order?.orderStatus.description === "Cancelado" ?
+                            <Button className={"btn-cart-review"}
+                                style={{ width: "100%" }}
+                                onClick={handleCreditNoteDownload} >
+                                Ver nota de crédito
+                            </Button> : <></>}
                         {order?.paid ?
                             <Button className={"btn-cart-review"}
                                 style={{ width: "100%" }}
@@ -79,10 +94,15 @@ export default function ClientOrderDetail() {
                                 Ver factura
                             </Button> : <></>}
                         <div>
-                            <Button
-                                className={"time-button"} disabled>
-                                Hora estimada: {getEstimatedTime()}
-                            </Button>
+                            {order?.orderStatus.description === "Entregado" ?
+                                <Button
+                                    className={"time-button"} disabled>
+                                    Entregado
+                                </Button> :
+                                <Button
+                                    className={"time-button"} disabled>
+                                    Hora estimada: {getEstimatedTime()}
+                                </Button>}
                         </div>
                     </div>
                 </div>
