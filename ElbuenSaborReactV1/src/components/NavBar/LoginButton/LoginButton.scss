@@ -39,14 +39,19 @@
         }
     }
 
-    .login-button {
-        width: fit-content;
 
-        .dropdown-item {
-            padding: 0 1rem;
-            text-align: left;
-            font-size: 1rem;
-        }
+}
+
+.login-button {
+    width: fit-content;
+
+    .dropdown-item {
+        text-align: left;
+        font-size: 1rem;
+    }
+
+    .login-button-label {
+        padding: 0 1rem !important;
     }
 }
 
