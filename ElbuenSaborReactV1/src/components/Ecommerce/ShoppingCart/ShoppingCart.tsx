@@ -2,7 +2,7 @@ import { Button, Container, Row } from "react-bootstrap";
 import "./ShoppingCart.scss";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import ShoppingCartProductDetail from "./ShoppingCartProductDetail";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import OrderOptions from "./OrderDetails/OrderOptions";
@@ -12,6 +12,7 @@ import { postNewOrder } from "@services/users";
 import { resetOrderDetails, setCartDate } from "@features/ShoppingCart/CartProducts";
 import { Alert } from "@mui/material";
 import OrderDetail from "@Models/Orders/OrderDetail";
+import { set } from "date-fns";
 
 export default function ShoppingCart() {
 
@@ -23,6 +24,15 @@ export default function ShoppingCart() {
   const { isAuthenticated } = useAuth0();
   const { loginWithRedirect } = useAuth0();
   const [showMessage, setShowMessage] = useState(false);
+  const [continueToReview, setContinueToReview] = useState(false);
+
+  const handleContinue = () => {
+    if (order.paymentMethod.id === 0 || order.orderDetails.length === 0 || order.address === "" || order.phone === "") {
+      setContinueToReview(true);
+    } else {
+      setContinueToReview(false);
+    }
+  }
   const handleMessage = () => {
     setShowMessage(true);
     setTimeout(() => {
@@ -54,6 +64,10 @@ export default function ShoppingCart() {
       handleMessage();
     }
   }
+
+  useEffect(() => {
+    handleContinue();
+  }, [order])
 
   return (
     <div className="cart-container" >
@@ -87,7 +101,7 @@ export default function ShoppingCart() {
                 </>
                 : <>
                   <OrderOptions />
-                  <Button className={order.paymentMethod.id !== 0 ? "btn-cart" : "disabled"}
+                  <Button className={!continueToReview ? "btn-cart" : "disabled"}
                     onClick={handleOrderReview}>
                     Continuar
                   </Button>
@@ -111,11 +125,13 @@ export default function ShoppingCart() {
         <Button className="btn-cart" onClick={() => (navigate("/"))}>Continuar comprando</Button>
         {showReview && <Button className="btn-cart" onClick={handleOrderReview}>Volver</Button>}
       </div>
-      {showMessage ?
-        <div className="alert-container">
-          <Alert severity="error" onClose={() => { setShowMessage(false) }}>Error al realizar el pedido. Intente nuevamente.</Alert>
-        </div>
-        : ""}
-    </div>
+      {
+        showMessage ?
+          <div className="alert-container">
+            <Alert severity="error" onClose={() => { setShowMessage(false) }}>Error al realizar el pedido. Intente nuevamente.</Alert>
+          </div>
+          : ""
+      }
+    </div >
   )
 }
