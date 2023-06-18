@@ -24,15 +24,6 @@
     padding-left: 9%;
 }
 
-/* .suggestions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 75rem;
-    margin-top: 1.5rem;
-    width: auto;
-} */
-
 .suggestions {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
@@ -46,9 +37,11 @@
 @media (max-width: 450px) {
 
     .suggestions {
+        display: flex;
+        flex-direction: column;
         justify-content: center;
-        margin-left: 1rem;
         margin-top: 1rem;
+        gap: 0.5rem;
     }
 
     .suggestion-title {

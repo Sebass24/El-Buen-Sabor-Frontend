@@ -89,8 +89,18 @@
 
 @media (max-width: 640px) {
     .cart-product-container {
-        flex-wrap: wrap;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: 35% 65%;
+
+        .cart-product-image {
+            grid-column: 1;
+        }
+
+        .cart-product-info {
+            grid-column: 2;
+            width: 100%;
+            padding: 0;
+        }
     }
 
     .cart-quantity-container {
@@ -98,6 +108,7 @@
         padding: 0;
         width: 100%;
         grid-template-columns: 1fr, 2fr, 3fr;
+        transform: translateX(50%);
 
         .quantity-cart-container {
             grid-column: 1;
