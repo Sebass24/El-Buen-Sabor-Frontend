@@ -39,7 +39,7 @@ export const LoginButton = () => {
           <Dropdown.Menu className="login-button">
             <Dropdown.Item onClick={() => { setShowPersonalData(true) }}><span>Mis datos personales</span></Dropdown.Item>
             {user.role?.description === "Administrador" ? (<>
-              <Dropdown.Item onClick={() => { navigate("/home") }}><span>Home</span></Dropdown.Item>
+              <Dropdown.Item onClick={() => { navigate("/") }}><span>Home</span></Dropdown.Item>
               <Dropdown.Item onClick={() => { navigate("/cashier") }}><span>Cajero</span></Dropdown.Item>
               <Dropdown.Item onClick={() => { navigate("/cook") }}><span>Cocinero</span></Dropdown.Item>
               <Dropdown.Item onClick={() => { navigate("/delivery") }}><span>Delivery</span></Dropdown.Item>

@@ -1,16 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import "./AboutUs.scss";
+import HeaderEcommerce from "../HeaderEcommerce/HeaderEcommerce";
+import { Row } from "react-bootstrap";
 const AboutUs = () => {
   const navigate = useNavigate();
   return (
     <div>
-      <div className="img">
+      <HeaderEcommerce />
+      <Row><label className="page-name">SOBRE NOSOTROS</label></Row>
+      {/* <div className="img">
         <h1 className='Title_AboutUS'>{"Sobre Nosotros"}</h1>
-      </div>
+      </div> */}
       <div className="AboutUs">
         <article>
-          <h2>Trabajo Integrador El Buen Sabor</h2>
+          <h3>Trabajo Integrador El Buen Sabor</h3>
         </article>
         <div className="wrapper">
           <article>
@@ -64,9 +68,9 @@ const AboutUs = () => {
               <span> Javascript </span>
               <span> Typescript </span>
               <span> NodeJs </span>
-              <span> React = Nivel Alto</span>
-              <span> HTML = Nivel Alto</span>
-              <span> CSS = Nivel Alto</span>
+              <span> React</span>
+              <span> HTML</span>
+              <span> CSS</span>
             </div>
           </article>
         </div>
