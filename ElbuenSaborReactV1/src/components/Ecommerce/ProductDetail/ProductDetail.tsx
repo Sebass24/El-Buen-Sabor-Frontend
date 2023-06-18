@@ -8,8 +8,8 @@ import { getProductById } from "@services/products";
 import { useAppDispatch } from "@app/Hooks";
 import { addProduct, setTotalPrice } from "@features/ShoppingCart/CartProducts";
 import { openRestaurant } from "../WorkingHours/WorkingSchedule";
-import { Alert } from "@mui/material";
 import OrderDetail from "@Models/Orders/OrderDetail";
+import AlertMessage from "components/AlertMessage";
 
 export default function ProductDetail() {
     const dispatch = useAppDispatch();
@@ -103,10 +103,9 @@ export default function ProductDetail() {
                         </Card>
                     </div>
                     {showMessage ?
-                        <div className="alert-container">
-                            <Alert onClose={() => { setShowMessage(false) }}>Producto agregado al carrito</Alert>
-                        </div>
-                        : ""}
+                        <AlertMessage
+                            onClose={() => { setShowMessage(false) }}
+                            label={"Producto agregado al carrito."} /> : ""}
                     <Modal show={show} onHide={handleModal}>
                         <Modal.Header closeButton>
                             <Modal.Title>Local cerrado</Modal.Title>

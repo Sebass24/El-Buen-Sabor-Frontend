@@ -9,9 +9,9 @@ import OrderOptions from "./OrderDetails/OrderOptions";
 import OrderTotalPrice from "./OrderDetails/OrderTotalPrice";
 import OrderOptionsReview from "./OrderDetails/OrderOptionsReview";
 import { postNewOrder } from "@services/users";
-import { resetOrderDetails, setCartDate } from "@features/ShoppingCart/CartProducts";
-import { Alert } from "@mui/material";
+import { resetOrderDetails } from "@features/ShoppingCart/CartProducts";
 import OrderDetail from "@Models/Orders/OrderDetail";
+import AlertMessage from "components/AlertMessage";
 
 export default function ShoppingCart() {
 
@@ -34,12 +34,6 @@ export default function ShoppingCart() {
       setContinueToReview(false);
     }
   }
-  const handleMessage = () => {
-    setShowMessage(true);
-    setTimeout(() => {
-      setShowMessage(false);
-    }, 4000);
-  };
 
   const handleOrderReview = async () => {
     setShowReview(!showReview);
@@ -64,7 +58,7 @@ export default function ShoppingCart() {
       dispatch(resetOrderDetails());
     } catch (error) {
       console.log(error);
-      handleMessage();
+      setShowMessage(true);
     }
   }
 
@@ -128,13 +122,12 @@ export default function ShoppingCart() {
         <Button className="btn-cart" onClick={() => (navigate("/"))}>Continuar comprando</Button>
         {showReview && <Button className="btn-cart" onClick={handleOrderReview}>Volver</Button>}
       </div>
-      {
-        showMessage ?
-          <div className="alert-container">
-            <Alert severity="error" onClose={() => { setShowMessage(false) }}>Error al realizar el pedido. Intente nuevamente.</Alert>
-          </div>
-          : ""
-      }
+      {showMessage ?
+        <AlertMessage
+          severity="error"
+          onClose={(() => { setShowMessage(false) })}
+          label={"Error al realizar el pedido. Intente nuevamente."} />
+        : ""}
     </div >
   )
 }

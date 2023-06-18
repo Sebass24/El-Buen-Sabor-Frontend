@@ -6,9 +6,9 @@ import { Button, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import * as Yup from "yup"
 import "./ContactUs.scss"
-import { Alert } from "@mui/material";
 import { postPutData } from "components/GenericFetch/GenericFetch";
 import HeaderEcommerce from "../HeaderEcommerce/HeaderEcommerce";
+import AlertMessage from "components/AlertMessage";
 
 const ContactUs = () => {
   const navigate = useNavigate();
@@ -97,10 +97,10 @@ const ContactUs = () => {
         </div>
       </div>
       {showMessage ?
-        <div className="alert-container">
-          <Alert severity="error" onClose={() => { setShowMessage(false) }}>Producto agregado al carrito</Alert>
-        </div>
-        : ""}
+        <AlertMessage
+          severity="error"
+          onClose={() => { setShowMessage(false) }}
+          label={"Error al enviar el mensaje"} /> : ""}
     </div>
   );
 };

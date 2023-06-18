@@ -5,7 +5,7 @@ import HeaderEcommerce from "components/Ecommerce/HeaderEcommerce/HeaderEcommerc
 import OrderOptionsReview from "components/Ecommerce/ShoppingCart/OrderDetails/OrderOptionsReview"
 import ShoppingCartProductDetail from "components/Ecommerce/ShoppingCart/ShoppingCartProductDetail"
 import { useEffect, useState } from "react";
-import { Alert, Button, Row } from "react-bootstrap"
+import { Button, Row } from "react-bootstrap"
 import { useNavigate, useParams } from "react-router-dom";
 import "./ClientOrderDetail.scss";
 
@@ -108,15 +108,13 @@ export default function ClientOrderDetail() {
                 </div>
                 <div className="button-container-1">
                     <Button className="btn-cart" onClick={() => (navigate("/"))}>Volver al catálogo</Button>
-
                 </div>
-                {/*  {
-                showMessage ?
-                    <div className="alert-container">
-                        <Alert severity="error" onClose={() => { setShowMessage(false) }}>Error al descargar la factura.</Alert>
-                    </div>
-                    : ""
-            } */}
+                {/* {showMessage ?
+                    <AlertMessage
+                        severity="error"
+                        onClose={(() => { setShowMessage(false) })}
+                        label={"Error al descargar la factura"} />
+                    : ""} */}
             </div >
         </>
     )
