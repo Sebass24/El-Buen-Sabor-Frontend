@@ -34,21 +34,30 @@
     transform: translate(-50% 0);
 }
 
-.product-container {
+.catalogue,
+.tab-pane {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 2rem;
+    row-gap: 1.5rem;
+    padding: 1.5rem 3rem;
     max-width: 75rem;
-    padding-right: 4%;
-    padding-left: 4%;
-    margin-top: 1.5rem;
-    width: auto;
 }
 
 @media (max-width: 767px) {
 
     .nav-tabs .nav-item:nth-child(1) {
         display: none;
+    }
+
+    .product-container {
+        gap: 1rem;
     }
 
 }
