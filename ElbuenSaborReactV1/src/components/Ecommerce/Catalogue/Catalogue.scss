@@ -52,9 +52,9 @@
 
 @media (max-width: 767px) {
 
-    .nav-tabs .nav-item:nth-child(1) {
+    /*  .nav-tabs .nav-item:nth-child(1) {
         display: none;
-    }
+    } */
 
     .product-container {
         gap: 1rem;
@@ -68,6 +68,9 @@
         justify-content: center;
         margin-left: 1rem;
         margin-top: 1rem;
+        padding: 0;
+        grid-template-columns: none;
+        gap: 0.5rem;
     }
 
 }

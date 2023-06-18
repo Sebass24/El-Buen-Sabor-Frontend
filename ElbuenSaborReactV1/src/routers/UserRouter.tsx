@@ -20,7 +20,7 @@ const UserRouter = () => {
         <Route path="/orderDetail">
           <Route path=":idorder" element={<ClientOrderDetail />} />
         </Route>
-        <Route path="/" element={<ClientOrderList />} />
+        <Route path="/myOrders" element={<ClientOrderList />} />
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/contactUs" element={<ContactUs />} />

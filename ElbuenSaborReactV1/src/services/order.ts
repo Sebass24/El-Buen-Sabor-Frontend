@@ -26,3 +26,9 @@ export async function getOrderBill(id: number) {
     const bill = await getData<string>(url);
     return bill;
 }
+
+export async function getUserOrders(id: number) {
+    const url = `/api/order/byUserID/${id}`;
+    const orders = await getData<Order[]>(url);
+    return orders;
+}

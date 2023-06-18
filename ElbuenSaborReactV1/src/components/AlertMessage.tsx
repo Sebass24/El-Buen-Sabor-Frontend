@@ -3,7 +3,7 @@ import { Alert, AlertColor } from "@mui/material";
 
 interface Props {
     label: string;
-    severity?: AlertColor | undefined;
+    severity?: AlertColor | undefined;  //severity can be error(red), warning(orange), info(blue), success(green)
     onClose: () => void; // Callback function for when the modal is closed
 }
 
