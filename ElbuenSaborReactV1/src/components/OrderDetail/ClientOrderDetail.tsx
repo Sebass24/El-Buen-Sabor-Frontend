@@ -106,6 +106,10 @@ export default function ClientOrderDetail() {
                         </div>
                     </div>
                 </div>
+                <div className="button-container-1">
+                    <Button className="btn-cart" onClick={() => (navigate("/"))}>Volver al catálogo</Button>
+
+                </div>
                 {/*  {
                 showMessage ?
                     <div className="alert-container">

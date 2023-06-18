@@ -18,7 +18,7 @@ const AboutUs = () => {
         </article>
         <div className="wrapper">
           <article>
-            <h2>¿En qué consiste nuetra e-commerce?</h2>
+            <h2>¿En qué consiste nuestra e-commerce?</h2>
             <p>
               El Buen Sabor es un local de comida rápida ubicado en Mendoza cuya especialidad son las hamburguesas, aunque también vende pizas, papas y bebidas. El local vende a través de su página web y permite retiro en el local y delivery, su público objetivo son personas de entre 16 y 45 años de la provincia de Mendoza que estén dispuestos a desafiar sus paladares.
             </p>

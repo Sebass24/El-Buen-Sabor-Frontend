@@ -26,9 +26,9 @@ export default function ShoppingCart() {
   const [continueToReview, setContinueToReview] = useState(false);
 
   const handleContinue = () => {
-    if (order.paymentMethod.id !== 0 && order.deliveryMethod.id === 2) {
+    if (order.paymentMethod.id !== 0 && order.deliveryMethod.id === 2 && order.orderDetails.length > 0) {
       setContinueToReview(true);
-    } else if (order.paymentMethod.id !== 0 && order.deliveryMethod.id === 1 && order.address !== "" && order.phone !== "") {
+    } else if (order.paymentMethod.id !== 0 && order.deliveryMethod.id === 1 && order.address !== "" && order.phone !== "" && order.orderDetails.length > 0) {
       setContinueToReview(true);
     } else {
       setContinueToReview(false);
