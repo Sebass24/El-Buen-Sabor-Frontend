@@ -24,13 +24,21 @@
     padding-left: 9%;
 }
 
-.suggestions {
+/* .suggestions {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     max-width: 75rem;
     margin-top: 1.5rem;
     width: auto;
+} */
+
+.suggestions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: 1rem;
+    row-gap: 1rem;
+    margin: 1rem;
 }
 
 @media (max-width: 767px) {}
