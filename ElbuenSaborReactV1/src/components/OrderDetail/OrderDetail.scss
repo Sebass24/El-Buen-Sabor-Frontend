@@ -2,13 +2,11 @@
   background-color: rgba(217, 217, 217, 0.76);
   border-radius: 1rem;
   padding: 1rem 0;
-  margin: 2rem 8rem 1rem 8rem;
+  margin: 1rem 8rem 1rem 8rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-
-
 
   .title {
     width: 90%;
@@ -57,13 +55,18 @@
 }
 
 .SubTotal_order {
+  display: flex;
+  justify-content: end;
   margin-top: .5rem;
   width: 90%;
   padding-left: 1rem;
+
 }
 
 .Descuentos {
-  padding-left: 1rem;
+  display: flex;
+  justify-content: end;
+  padding-right: .6rem;
   width: 90%;
   padding-bottom: .5rem;
   border-bottom: 2px solid grey;
@@ -73,14 +76,42 @@
   font-weight: bold;
   font-size: 1.5rem;
   width: 90%;
-
+  display: flex;
+  justify-content: end;
 }
 
 .Button_Back {
-  margin: 2rem 8rem 1rem 8rem;
+  margin: 1rem 8rem 1rem 8rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+}
+
+@media (max-width:800px) {
+
+  .Container_OrderDetail {
+    margin: 2rem .5rem;
+    width: 95%;
+
+    .Order_Data {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: .5rem;
+    }
+
+    .table_container {
+      th {
+        font-size: 12px;
+      }
+
+      tr td {
+        font-size: 12px;
+      }
+    }
+  }
+
 
 }
