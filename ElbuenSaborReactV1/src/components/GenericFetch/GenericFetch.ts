@@ -7,7 +7,7 @@ export async function getData<T>(path: string): Promise<T> {
       "Authorization": `Bearer ${token}`
     }
   }
-  const response = await fetch(`http://localhost:8080${path}`, options);
+  const response = await fetch(`${import.meta.env.VITE_BILL_DOWNLOAD}${path}`, options);
 
   if (!response.ok) {
     throw Error(response.statusText);
@@ -24,7 +24,7 @@ export async function deleteData(path: string) {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await fetch(`http://localhost:8080${path}`, options);
+  const response = await fetch(`${import.meta.env.VITE_BILL_DOWNLOAD}${path}`, options);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
@@ -39,7 +39,7 @@ export async function postPutData<T>(
   data: T
 ): Promise<T> {
   const token = sessionStorage.getItem("token")
-  const response = await fetch(`http://localhost:8080${path}`, {
+  const response = await fetch(`${import.meta.env.VITE_BILL_DOWNLOAD}${path}`, {
     method: method.toUpperCase(),
     credentials: 'include',
     headers: {
