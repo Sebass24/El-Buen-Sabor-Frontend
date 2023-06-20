@@ -51,14 +51,14 @@ export default function ShoppingCart() {
     let continueToReview = false;
 
     if (
-      order.paymentMethod.id !== 0 &&
-      order.deliveryMethod.id === 2 &&
+      order.paymentMethod?.id !== 0 &&
+      order.deliveryMethod?.id === 2 &&
       order.orderDetails.length > 0
     ) {
       continueToReview = true;
     } else if (
-      order.paymentMethod.id !== 0 &&
-      order.deliveryMethod.id === 1 &&
+      order.paymentMethod?.id !== 0 &&
+      order.deliveryMethod?.id === 1 &&
       order.address !== "" &&
       order.phone !== "" &&
       order.orderDetails.length > 0
@@ -98,9 +98,9 @@ export default function ShoppingCart() {
       if (open) {
         const newOrder = await postNewOrder(order);
         setNewOrderId(newOrder.id as number);
-        if (newOrder.paymentMethod.id === 1) {
+        if (newOrder.paymentMethod?.id === 1) {
           navigate(`/orderdetail/${newOrder.id}`);
-        } else if (newOrder.paymentMethod.id === 2) {
+        } else if (newOrder.paymentMethod?.id === 2) {
           mercadoPagoPayment(newOrder);
         }
       } else {

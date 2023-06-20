@@ -140,15 +140,10 @@ const ModalAddProducts = ({
                 } else {
 
                   const formData = new FormData();
-
-
-
                   console.log(img)
                   formData.append("Image", img)
                   //formData.append("Image", new Blob([img], { type: 'multipart/form-data' }))
                   formData.append("Product", new Blob([JSON.stringify(values)], { type: 'application/json' }))
-
-
                   const token = sessionStorage.getItem("token")
                   const response = await fetch(`http://localhost:8080/api/product/save`, {
                     method: "POST",
@@ -163,13 +158,10 @@ const ModalAddProducts = ({
                     //  dispatch(addProduct(valuesProduct));
                   }
                   )
-
-
                   // postPutData(`/api/product/save`, "POST", formData).then((response) => {
                   //   console.log(response)
                   //   dispatch(addProduct(valuesProduct));
                   // });
-
                 }
                 handleClose();
               }}

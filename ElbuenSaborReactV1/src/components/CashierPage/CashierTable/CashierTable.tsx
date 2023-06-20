@@ -170,7 +170,7 @@ const CahierTable = ({ orders }: myProps) => {
   const [orderBy, setOrderBy] = React.useState("id");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+  const [PaidBack, setPaidBack] = useState(false)
 
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === "asc";
@@ -210,6 +210,16 @@ const CahierTable = ({ orders }: myProps) => {
     dispatch(startLoading());
     postPutData(`/api/order/paiOrder/${order.id}`, "PUT", {}).then(() => {
       dispatch(updateOrder(neworder));
+      setPaidBack(true)
+    });
+    dispatch(finishLoading());
+  }
+  function handleBackPaid(order: Orders,) {
+    const neworder = { ...order, paid: false, change: order.change ? false : true };
+    dispatch(startLoading());
+    postPutData(`/api/order/paiOrder/${order.id}`, "PUT", {}).then(() => {
+      dispatch(updateOrder(neworder));
+      setPaidBack(false)
     });
     dispatch(finishLoading());
   }
@@ -430,7 +440,11 @@ const CahierTable = ({ orders }: myProps) => {
                         </div>
                         {
                           order.change ? <i className="fa-solid fa-arrow-rotate-left goBack" onClick={() => {
-                            handleBackOrderStatus(order)
+                            if (PaidBack) {
+                              handleBackPaid(order)
+                            } else {
+                              handleBackOrderStatus(order)
+                            }
                           }
                           }></i> : <></>
                         }

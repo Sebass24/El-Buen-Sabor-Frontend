@@ -40,36 +40,36 @@ export default function OrderOptions() {
           type="radio"
           label="Retiro en el local"
           value="2"
-          checked={order.deliveryMethod.id === 2}
+          checked={order.deliveryMethod?.id === 2}
           onChange={handleDeliveryMethodChange}
         />
         <Form.Check
           type="radio"
           label="Envío a domicilio"
           value="1"
-          checked={order.deliveryMethod.id === 1}
+          checked={order.deliveryMethod?.id === 1}
           onChange={handleDeliveryMethodChange}
         />
       </div>
-      {order.deliveryMethod.id === 1 ?
+      {order.deliveryMethod?.id === 1 ?
         <DeliveryInfo />
         : ("")}
       <hr className="straight-line" />
-      {order.deliveryMethod.id === 2 ?
+      {order.deliveryMethod?.id === 2 ?
         (<span>
           <label>Forma de pago:</label><br />
           <Form.Check
             type="radio"
             label="Efectivo"
             value="1"
-            checked={order.paymentMethod.id === 1}
+            checked={order.paymentMethod?.id === 1}
             onChange={handlePaymentMethodChange}
           />
           <Form.Check
             type="radio"
             label="Mercado Pago"
             value="2"
-            checked={order.paymentMethod.id === 2}
+            checked={order.paymentMethod?.id === 2}
             onChange={handlePaymentMethodChange}
           />
         </span>)
@@ -79,7 +79,7 @@ export default function OrderOptions() {
             type="radio"
             label="Mercado Pago"
             value="2"
-            checked={order.paymentMethod.id === 2}
+            checked={order.paymentMethod?.id === 2}
             onChange={handlePaymentMethodChange}
           />
         </span>)}

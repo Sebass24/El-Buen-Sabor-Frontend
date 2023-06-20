@@ -11,20 +11,22 @@ import UserRouter from "./UserRouter";
 import { useAppSelector } from "@app/Hooks";
 import { PrivateRoute } from "./PrivateRoute";
 import { useAuth0 } from "@auth0/auth0-react";
+import { PrivateRouteAll } from "./PrivateRouteAll";
 const IndexRouter = () => {
   const { user } = useAppSelector(state => state.users)
-  const { isAuthenticated } = useAuth0();
+
   return (
     <BrowserRouter>
       <Routes>
 
         <Route path="/*" element={
-          <PrivateRoute
-            isRolPermited={user?.role?.id === 1 || user?.role?.id === 2}
-            path={user?.role?.id === 4 ? "/cashier" : (user?.role?.id === 5 ? "/Delivery" : "/Cook")}
+          <PrivateRouteAll
+            isRolPermited={user?.role?.id === 1 || user?.role?.id === 2 || user?.role === null}
+            path={user?.role?.id === 4 ? "/cashier" : (user?.role?.id === 5 ? "/Delivery" : (user?.role?.id === 3 ? "/cook" : "/"))}
+
           >
             <UserRouter />
-          </PrivateRoute>
+          </PrivateRouteAll>
         } />
 
 
