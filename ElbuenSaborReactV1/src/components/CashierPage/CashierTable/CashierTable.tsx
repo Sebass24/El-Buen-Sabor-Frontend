@@ -22,7 +22,7 @@ import { useAppDispatch } from "@app/Hooks";
 import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
 import OrderStatus from "@Models/Orders/OrderStatus";
 import { postPutData } from "components/GenericFetch/GenericFetch";
-import { updateOrder } from "@features/Orders/OrderSlice";
+import { updateOrder, UpdateStateOrder, UpdateStateOrderFalse } from "@features/Orders/OrderSlice";
 import { fetchOrders } from "@features/Orders/OrderThunks";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
@@ -171,6 +171,7 @@ const CahierTable = ({ orders }: myProps) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+
   const handleRequestSort = (event: any, property: any) => {
     const isAsc = orderBy === property && order === "asc";
     setOrderBy(property);
@@ -192,7 +193,7 @@ const CahierTable = ({ orders }: myProps) => {
   const dispatch = useAppDispatch();
 
   function handleChangeState(order: Orders, status: OrderStatus) {
-    const neworder = { ...order, orderStatus: status };
+    const neworder = { ...order, orderStatus: status, change: order.change ? false : true };
     dispatch(startLoading());
     postPutData(
       `/api/order/changeStatus/${order.id}/${status.id}`,
@@ -205,12 +206,60 @@ const CahierTable = ({ orders }: myProps) => {
   }
 
   function handleChangePaid(order: Orders, paid: boolean) {
-    const neworder = { ...order, paid: paid };
+    const neworder = { ...order, paid: paid, change: order.change ? false : true };
     dispatch(startLoading());
     postPutData(`/api/order/paiOrder/${order.id}`, "PUT", {}).then(() => {
       dispatch(updateOrder(neworder));
     });
     dispatch(finishLoading());
+  }
+
+
+  function handleBackOrderStatus(order: Orders) {
+    var NewStatus: OrderStatus
+    switch (order.orderStatus.id) {
+      case 2:
+        NewStatus = {
+          id: 1,
+          deleted: false,
+          description: "A confirmar",
+        }
+        handleChangeState(order, NewStatus)
+        break;
+      case 3:
+        NewStatus = {
+          id: 4,
+          deleted: false,
+          description: "Listo",
+        }
+        handleChangeState(order, NewStatus)
+        break;
+      case 4:
+        NewStatus = {
+          id: 2,
+          deleted: false,
+          description: "En cocina",
+        }
+        handleChangeState(order, NewStatus)
+        break;
+      case 5:
+        NewStatus = {
+          id: 4,
+          deleted: false,
+          description: "Listo",
+        }
+        handleChangeState(order, NewStatus)
+        break;
+      default:
+        break;
+    }
+  }
+
+  function setBackState(index?: number) {
+    dispatch(UpdateStateOrder(index));
+    setTimeout(() => {
+      dispatch(UpdateStateOrderFalse(index))
+    }, 10000);
   }
 
   return (
@@ -219,8 +268,8 @@ const CahierTable = ({ orders }: myProps) => {
         <TableContainer>
           <Table
             className="table"
-            // aria-labelledby="tableTitle"
-            // aria-label="enhanced table"
+          // aria-labelledby="tableTitle"
+          // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -229,6 +278,7 @@ const CahierTable = ({ orders }: myProps) => {
               handleRequestSort={handleRequestSort}
               rowCount={orders.length}
             />
+
 
             <TableBody>
               {stableSort(orders, getComparador(order, orderBy), orderBy)
@@ -264,51 +314,58 @@ const CahierTable = ({ orders }: myProps) => {
                       <TableCell className="tableCell">
                         <div className="tableCell_Actions">
                           {order.orderStatus.description === "A confirmar" &&
-                          order.paid === true ? (
+                            order.paid === true ? (
                             <Button
                               className="ACocina"
                               variant="warning"
-                              onClick={() =>
+                              onClick={() => {
                                 handleChangeState(order, {
                                   id: 2,
                                   deleted: false,
                                   description: "En cocina",
                                 })
+                                console.log(order)
+                                setBackState(order.id)
+                              }
                               }
                             >
                               A Cocina
                             </Button>
                           ) : order.orderStatus.description === "Listo" &&
                             order.deliveryMethod.description ===
-                              "Envío a domicilio" &&
+                            "Envío a domicilio" &&
                             order.paid === true ? (
                             <Button
                               className="ACocina"
                               variant="warning"
-                              onClick={() =>
+                              onClick={() => {
                                 handleChangeState(order, {
                                   id: 3,
                                   deleted: false,
                                   description: "En delivery",
                                 })
+                                setBackState(order.id)
+                              }
                               }
                             >
                               Delivery
                             </Button>
                           ) : order.orderStatus.description === "Listo" &&
                             order.deliveryMethod.description ===
-                              "Retiro en el local" &&
+                            "Retiro en el local" &&
                             order.paid === true ? (
                             <Button
                               className="ACocina"
                               variant="warning"
-                              onClick={() =>
+                              onClick={() => {
+
                                 handleChangeState(order, {
                                   id: 5,
                                   deleted: false,
                                   description: "Entregado",
                                 })
-                              }
+                                setBackState(order.id)
+                              }}
                             >
                               Entregar
                             </Button>
@@ -319,7 +376,10 @@ const CahierTable = ({ orders }: myProps) => {
                             <Button
                               className="Pagado"
                               variant="Success"
-                              onClick={() => handleChangePaid(order, true)}
+                              onClick={() => {
+                                handleChangePaid(order, true)
+                                setBackState(order.id)
+                              }}
                             >
                               Pagar
                             </Button>
@@ -330,9 +390,8 @@ const CahierTable = ({ orders }: myProps) => {
                             <Button
                               className="verFactura"
                               variant="warning"
-                              href={`${
-                                import.meta.env.VITE_BILL_DOWNLOAD
-                              }/api/bill/download-bill/${order.id}`}
+                              href={`${import.meta.env.VITE_BILL_DOWNLOAD
+                                }/api/bill/download-bill/${order.id}`}
                               target="_blank"
                             >
                               Ver Factura
@@ -344,12 +403,14 @@ const CahierTable = ({ orders }: myProps) => {
                             <Button
                               className="Anular"
                               variant="danger"
-                              onClick={() =>
+                              onClick={() => {
                                 handleChangeState(order, {
                                   id: 6,
                                   deleted: false,
                                   description: "Cancelado",
                                 })
+                                setBackState(order.id)
+                              }
                               }
                             >
                               Anular
@@ -358,18 +419,21 @@ const CahierTable = ({ orders }: myProps) => {
                             <Button
                               className="Anular"
                               variant="warning"
-                              onClick={() =>
-                                handleChangeState(order, {
-                                  id: 6,
-                                  deleted: false,
-                                  description: "Cancelado",
-                                })
+                              onClick={() => {
+                                setBackState(order.id)
+                              }
                               }
                             >
                               Ver Nota
                             </Button>
                           )}
                         </div>
+                        {
+                          order.change ? <i className="fa-solid fa-arrow-rotate-left goBack" onClick={() => {
+                            handleBackOrderStatus(order)
+                          }
+                          }></i> : <></>
+                        }
                       </TableCell>
                     </TableRow>
                   );
@@ -396,7 +460,7 @@ const CahierTable = ({ orders }: myProps) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-    </div>
+    </div >
   );
 };
 export default CahierTable;

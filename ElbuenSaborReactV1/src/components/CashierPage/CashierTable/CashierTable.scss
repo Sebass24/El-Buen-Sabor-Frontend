@@ -13,18 +13,17 @@
   border-radius: .5rem;
 }
 
+.goBack {
+  margin: .5rem 0;
+  display: flex;
+  justify-content: start;
+  cursor: pointer;
+  font-size: large;
+}
 
 .table {
   display: table;
   overflow-x: auto;
-}
-
-
-.tableCell {
-  text-align: center !important;
-  padding-right: 4;
-  padding-left: 5;
-
 }
 
 .tableCell_Actions {
@@ -33,6 +32,7 @@
   padding-right: 4;
   padding-left: 5;
   gap: .2rem;
+
 
   .ACocina {
     grid-column: 1;

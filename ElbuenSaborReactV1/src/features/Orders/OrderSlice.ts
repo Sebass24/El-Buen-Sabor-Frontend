@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { fetchOrders } from "./OrderThunks";
 import Order from "../../types/Orders/Order";
+import { boolean } from "yup";
 // Define a type for the Loading state
 interface LoadingState {
   orders: Order[];
@@ -26,7 +27,15 @@ export const OrderSlice = createSlice({
     updateOrder: (state, action: PayloadAction<Order>) => {
       const index = state.orders.findIndex(ing => ing.id == action.payload.id)
       state.orders[index] = action.payload
-    }
+    },
+    UpdateStateOrder: (state, action: PayloadAction<number | undefined>) => {
+      const index = state.orders.findIndex(ing => ing.id == action.payload)
+      state.orders[index] = { ...state.orders[index], change: true }
+    },
+    UpdateStateOrderFalse: (state, action: PayloadAction<number | undefined>) => {
+      const index = state.orders.findIndex(ing => ing.id == action.payload)
+      state.orders[index] = { ...state.orders[index], change: false }
+    },
   },
   extraReducers(builder) {
     builder.addCase(fetchOrders.fulfilled, (state, action) => {
@@ -35,6 +44,6 @@ export const OrderSlice = createSlice({
   },
 });
 
-export const { updateOrder, setOrders, addOrder } = OrderSlice.actions;
+export const { updateOrder, setOrders, addOrder, UpdateStateOrder, UpdateStateOrderFalse } = OrderSlice.actions;
 
 export default OrderSlice.reducer;
