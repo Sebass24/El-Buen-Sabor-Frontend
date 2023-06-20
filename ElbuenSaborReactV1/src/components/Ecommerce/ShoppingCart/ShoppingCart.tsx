@@ -132,12 +132,12 @@ export default function ShoppingCart() {
     }
   };
 
-  if (isAuthenticated) {
-    window.addEventListener('beforeunload', function (event) {
-      //sets as deleted the created order if the page is reloaded because a new one will be created after the reload
-      deleteOrder(newOrderId);
-    });
-  }
+  /*   if (isAuthenticated) {
+      window.addEventListener('beforeunload', function (event) {
+        //sets as deleted the created order if the page is reloaded because a new one will be created after the reload
+        deleteOrder(newOrderId);
+      });
+    } */
 
   useEffect(() => {
     handleContinue();
