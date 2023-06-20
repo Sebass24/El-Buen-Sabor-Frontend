@@ -54,10 +54,10 @@ if (isWeekend(date)) {
     };
 }
 
-export const openRestaurant = (id: number): boolean => {
+export const openRestaurant = (roleid: number): boolean => {
     const today = new Date();
     //if the loggedin user is an admin, set the time on a working day and hour to be allowed to buy
-    if (id && id === 1) {
+    if (roleid && roleid === 1) {
         //set day on saturday
         today.setDate(today.getDate() + (6 - today.getDay()));
         //set time at 12:00 PM (midday)
