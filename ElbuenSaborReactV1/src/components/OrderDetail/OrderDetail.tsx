@@ -29,9 +29,9 @@ const OrderDetail = () => {
           <li>Fecha: {Order?.date?.toLocaleString()}</li>
           <li>Estado: {Order?.orderStatus.description}</li>
           <li>Nombre y Apellido: {Order?.user.name + " " + Order?.user.lastName}</li>
-          {/* <li>Télefono: {Order?.user.}</li>
-          <li>Dirección: {Order.IdPedido}</li> */}
-          {/* <li>Departamento: {Order.user.}</li> */}
+          <li>Télefono: {Order?.phone?.number}</li>
+          <li>Dirección: {Order?.address?.street}</li>
+          <li>Departamento: {Order?.address?.location}</li>
           <li>Forma de Entrega: {Order?.deliveryMethod.description}</li>
           <li>Forma de Pago: {Order?.paymentMethod.description}</li>
           <li>Hora Estimada: {Order?.estimatedTime.toLocaleString()}</li>

@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import Products from "@Models/Product/Product";
 import ModalAddProducts from "../ModalAddProduct/ModalAddProducts";
+import ModalViewProduct from "../ModalViewProduct/ModalViewProduct";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
@@ -162,7 +163,9 @@ const TableProducts = ({ products }: MyProps) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [showModal, setShowModal] = React.useState(false);
+  const [showModalView, setShowModalView] = React.useState(false);
   const [productEditing, setProductEditing] = React.useState<Products>();
+  const [productView, setProductView] = React.useState<Products>();
 
   const handleShowModal = (prod: Products) => {
     setShowModal(true);
@@ -170,6 +173,9 @@ const TableProducts = ({ products }: MyProps) => {
   };
   const handleClose = () => {
     setShowModal(false);
+  };
+  const handleCloseView = () => {
+    setShowModalView(false);
   };
 
   const handleRequestSort = (event: any, property: any) => {
@@ -196,8 +202,8 @@ const TableProducts = ({ products }: MyProps) => {
         <TableContainer>
           <Table
             className="table"
-            // aria-labelledby="tableTitle"
-            // aria-label="enhanced table"
+          // aria-labelledby="tableTitle"
+          // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -230,14 +236,27 @@ const TableProducts = ({ products }: MyProps) => {
                       </TableCell>
                       <TableCell className="tableCell">
                         {
-                          <button
-                            data-title="Eliminar"
-                            type="button"
-                            className="btn btn-sm"
-                            onClick={() => handleShowModal(product)}
-                          >
-                            <i className="fa-solid fa-pen-to-square"></i>
-                          </button>
+                          <>
+                            <button
+                              data-title="Eliminar"
+                              type="button"
+                              className="btn btn-sm"
+                              onClick={() => handleShowModal(product)}
+                            >
+                              <i className="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button
+                              data-title="Eliminar"
+                              type="button"
+                              className="btn btn-sm"
+                              onClick={() => {
+                                setShowModalView(true)
+                                setProductView(product)
+                              }}
+                            >
+                              <i className="fa-solid fa-eye"></i>
+                            </button>
+                          </>
                         }
                       </TableCell>
                     </TableRow>
@@ -271,6 +290,11 @@ const TableProducts = ({ products }: MyProps) => {
         showModal={showModal}
         editing={true}
         product={productEditing}
+      />
+      <ModalViewProduct
+        handleClose={handleCloseView}
+        showModal={showModalView}
+        product={productView}
       />
     </div>
   );

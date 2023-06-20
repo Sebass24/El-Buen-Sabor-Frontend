@@ -38,6 +38,7 @@ import TextCheckBox from "components/Inputs/TextCheckBox";
 import TextFildSelectValue from "components/Inputs/TextFildSelectValue";
 import { addProduct, updateProduct } from "@features/ProductSlice/ProductSlice";
 import { MyDropzone } from "components/Inputs/DropFileInput";
+import { blob } from "stream/consumers";
 
 const emptyIngredient: Ingredient = {
   id: 0,
@@ -61,6 +62,7 @@ interface Props {
   editing?: boolean;
   product?: Product;
 }
+
 
 const ModalAddProducts = ({
   showModal,
@@ -112,7 +114,7 @@ const ModalAddProducts = ({
             <FormikStepper
               setImg={setImg}
               initialValues={product ? product : initialValues}
-              onSubmit={(values) => {
+              onSubmit={async (values) => {
                 console.log(values);
                 const valuesProduct: Product = {
                   id: product?.id,
@@ -130,14 +132,44 @@ const ModalAddProducts = ({
                 console.log("values", valuesProduct);
                 if (editing) {
                   dispatch(startLoading());
-                  postPutData(`/api/product`, "PUT", values).then(() => {
+                  postPutData(`/api/product`, "PUT", values).then((response) => {
+                    console.log(response)
                     dispatch(updateProduct(valuesProduct));
                   });
                   dispatch(finishLoading());
                 } else {
-                  postPutData(`/api/product`, "POST", values).then(() => {
-                    dispatch(addProduct(valuesProduct));
-                  });
+
+                  const formData = new FormData();
+
+
+
+                  console.log(img)
+                  formData.append("Image", img)
+                  //formData.append("Image", new Blob([img], { type: 'multipart/form-data' }))
+                  formData.append("Product", new Blob([JSON.stringify(values)], { type: 'application/json' }))
+
+
+                  const token = sessionStorage.getItem("token")
+                  const response = await fetch(`http://localhost:8080/api/product/save`, {
+                    method: "POST",
+                    credentials: 'include',
+                    headers: {
+                      //'Content-Type': 'multipart/form-data',
+                      "Authorization": `Bearer ${token}`
+                    },
+                    body: formData,
+                  }).then((response) => {
+                    console.log(response)
+                    //  dispatch(addProduct(valuesProduct));
+                  }
+                  )
+
+
+                  // postPutData(`/api/product/save`, "POST", formData).then((response) => {
+                  //   console.log(response)
+                  //   dispatch(addProduct(valuesProduct));
+                  // });
+
                 }
                 handleClose();
               }}
@@ -151,7 +183,6 @@ const ModalAddProducts = ({
                     description: Yup.string(),
                     deleted: Yup.boolean(),
                   }),
-                  sellPrice: Yup.number().required("*Campo requerido"),
                   cookingTime: Yup.number().required("*Campo requerido"),
                   available: Yup.boolean().required("*Campo requerido"),
                   shortDescription: Yup.string().required("*Campo requerido"),
@@ -350,12 +381,7 @@ export function FormikStepper({ children, setImg, ...props }: PropsForm) {
                   setFieldValue(`productCategory`, prod[0]);
                 }}
               />
-              <TextFieldValue
-                label="PrecioVenta"
-                name="sellPrice"
-                placeholder="PrecioVenta"
-                type="number"
-              />
+
               <TextFieldValue
                 label="TiempoCocina"
                 name="cookingTime"
@@ -378,7 +404,9 @@ export function FormikStepper({ children, setImg, ...props }: PropsForm) {
                 name="available"
                 placeholder="TiempoCocina"
               />
+
               <MyDropzone setImg={setImg} />
+
             </div>
           ) : (
             <></>

@@ -22,13 +22,13 @@ const TextFieldValue = ({
   defaultValue
 }: props) => {
   return (
-    <div className="mt-0" style={{ display: "flex", flexDirection: "column" }}>
+    <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
       <div
         style={{
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "center",
-          padding: ".1rem 0",
+          padding: ".3rem 0",
         }}
       >
         <label

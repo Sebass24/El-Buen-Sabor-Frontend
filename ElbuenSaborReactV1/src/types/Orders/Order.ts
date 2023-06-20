@@ -20,4 +20,5 @@ export default interface Order extends Base {
   discount: number;
   address: Address | string;
   phone: Phone | string;
+  change?: boolean
 }
