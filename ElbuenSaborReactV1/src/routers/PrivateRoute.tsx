@@ -5,9 +5,11 @@ import { Navigate } from "react-router-dom";
 interface PrivateRouteProps {
   children: React.ReactNode;
   isRolPermited: boolean;
+  path: string
+
 }
 
-export function PrivateRoute({ children, isRolPermited }: PrivateRouteProps) {
+export function PrivateRoute({ children, isRolPermited, path }: PrivateRouteProps) {
   const { isAuthenticated } = useAuth0();
-  return isAuthenticated ? (isRolPermited ? <>{children}</> : <Navigate replace to="/" />) : <Navigate replace to="/" />;
+  return isAuthenticated ? (isRolPermited ? <>{children}</> : <Navigate replace to={path} />) : <Navigate replace to={path} />;
 };

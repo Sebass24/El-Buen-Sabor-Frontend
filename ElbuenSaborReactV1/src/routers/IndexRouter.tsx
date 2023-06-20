@@ -17,7 +17,15 @@ const IndexRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/*" element={<UserRouter />} />
+
+        <Route path="/*" element={
+          <PrivateRoute
+            isRolPermited={user?.role?.id === 1 || user?.role?.id === 2}
+            path={user?.role?.id === 4 ? "/cashier" : (user?.role?.id === 5 ? "/Delivery" : "/Cook")}
+          >
+            <UserRouter />
+          </PrivateRoute>
+        } />
 
 
 
@@ -25,6 +33,7 @@ const IndexRouter = () => {
         <Route path="/admin" element={
           <PrivateRoute
             isRolPermited={user?.role?.id === 1}
+            path="/"
           >
             <Admin />
           </PrivateRoute>
@@ -34,6 +43,7 @@ const IndexRouter = () => {
         <Route path="/cashier" element={
           <PrivateRoute
             isRolPermited={user?.role?.id === 1 || user?.role?.id === 4}
+            path="/"
           >
             <Cashier />
           </PrivateRoute>
@@ -42,6 +52,7 @@ const IndexRouter = () => {
         <Route path="/Delivery" element={
           <PrivateRoute
             isRolPermited={user?.role?.id === 1 || user?.role?.id === 5}
+            path="/"
           >
             <Delivery />
           </PrivateRoute>
@@ -50,6 +61,7 @@ const IndexRouter = () => {
         <Route path="/Cook" element={
           <PrivateRoute
             isRolPermited={user?.role?.id === 1 || user?.role?.id === 3}
+            path="/"
           >
             <Cook />
           </PrivateRoute>
@@ -58,6 +70,7 @@ const IndexRouter = () => {
         <Route path="/detailCook/:IdPedido" element={
           <PrivateRoute
             isRolPermited={user?.role?.id === 1 || user?.role?.id === 3}
+            path="/"
           >
             <DetailCook />
           </PrivateRoute>
