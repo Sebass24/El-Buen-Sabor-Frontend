@@ -7,13 +7,13 @@ interface Props {
 
 export default function ClosedRestaurant({ show, onClose }: Props) {
     return (
-        <Modal show={show} onHide={onClose}>
+        <Modal className="complete-data" show={show} onHide={onClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Local cerrado</Modal.Title>
+                <Modal.Title className="modal-title-personal-data">Local cerrado</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                Nuestro horario de atención es:
-                - Lunes a domingos: 20:00 a 00:00hs.
+            <Modal.Body style={{ margin: "1rem" }}>
+                Nuestro horario de atención es:<br />
+                - Lunes a domingos: 20:00 a 00:00hs.<br />
                 - Sábados y domingos: 11:00 a 15:00hs.
             </Modal.Body>
         </Modal>
