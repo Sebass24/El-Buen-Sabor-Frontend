@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAppDispatch } from "@app/Hooks";
 import { setSearchValue } from "@features/SearchProduct/Search";
 
-
 library.add(faMagnifyingGlass);
 
 export default function Landing() {

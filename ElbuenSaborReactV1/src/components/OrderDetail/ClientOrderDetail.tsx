@@ -1,19 +1,26 @@
 import Order from "@Models/Orders/Order";
 import OrderDetail from "@Models/Orders/OrderDetail"
-import { getOrderBill, getOrderById } from "@services/order";
+import { getOrderById } from "@services/order";
 import HeaderEcommerce from "components/Ecommerce/HeaderEcommerce/HeaderEcommerce";
 import OrderOptionsReview from "components/Ecommerce/ShoppingCart/OrderDetails/OrderOptionsReview"
 import ShoppingCartProductDetail from "components/Ecommerce/ShoppingCart/ShoppingCartProductDetail"
 import { useEffect, useState } from "react";
 import { Button, Row } from "react-bootstrap"
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./ClientOrderDetail.scss";
+import { useAppDispatch } from "@app/Hooks";
+import { resetOrderDetails } from "@features/ShoppingCart/CartProducts";
 
 export default function ClientOrderDetail() {
 
     const { idorder } = useParams();
     const [order, setOrder] = useState<Order | null>(null);
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const success = queryParams.get("success");
 
     const getOrder = async () => {
         try {
@@ -59,6 +66,12 @@ export default function ClientOrderDetail() {
         getOrder();
     }, [])
 
+    useEffect(() => {
+        if (success) {
+            dispatch(resetOrderDetails());
+        }
+    }, [])
+
     return (
         <>
             <HeaderEcommerce />
@@ -94,15 +107,20 @@ export default function ClientOrderDetail() {
                                 Ver factura
                             </Button> : <></>}
                         <div>
-                            {order?.orderStatus.description === "Entregado" ?
-                                <Button
-                                    className={"time-button"} disabled>
+                            {order?.orderStatus.description === "Entregado" ? (
+                                <Button className="time-button" disabled>
                                     Entregado
-                                </Button> :
-                                <Button
-                                    className={"time-button"} disabled>
+                                </Button>
+                            ) : order?.orderStatus.description === "Listo" ? (
+                                <Button className="time-button" disabled>
+                                    Tu pedido ya está listo {order.deliveryMethod.description === "Envío a domicilio" ?
+                                        "para enviarlo" : ""}
+                                </Button>
+                            ) : (
+                                <Button className="time-button" disabled>
                                     Hora estimada: {getEstimatedTime()}
-                                </Button>}
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </div>

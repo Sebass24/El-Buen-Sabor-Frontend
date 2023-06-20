@@ -1,41 +1,74 @@
-import { Button, Container, Row } from "react-bootstrap";
+import { Button, Container, Modal, Row } from "react-bootstrap";
 import "./ShoppingCart.scss";
-import { useAppDispatch, useAppSelector } from "@app/Hooks";
+import { useAppSelector } from "@app/Hooks";
 import ShoppingCartProductDetail from "./ShoppingCartProductDetail";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import OrderOptions from "./OrderDetails/OrderOptions";
 import OrderTotalPrice from "./OrderDetails/OrderTotalPrice";
 import OrderOptionsReview from "./OrderDetails/OrderOptionsReview";
 import { postNewOrder } from "@services/users";
-import { resetOrderDetails } from "@features/ShoppingCart/CartProducts";
 import OrderDetail from "@Models/Orders/OrderDetail";
 import AlertMessage from "components/AlertMessage";
+import { Wallet, initMercadoPago } from '@mercadopago/sdk-react'
+import { createPreferenceMP, deleteOrder } from "@services/order";
+import Order from "@Models/Orders/Order";
+import { AlertColor } from "@mui/material";
+
+interface responsePrefId {
+  preferenceId: string;
+}
+
+interface alertMessage { //to use the same alert with different messages
+  severity: AlertColor;
+  message: string;
+}
 
 export default function ShoppingCart() {
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const { order } = useAppSelector(state => state.cart);
-  const [showReview, setShowReview] = useState(false);
-  const { isAuthenticated } = useAuth0();
-  const { loginWithRedirect } = useAuth0();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
   const [showMessage, setShowMessage] = useState(false);
+  const [alertMessage, setAlertMessage] = useState<alertMessage>();
   const [continueToReview, setContinueToReview] = useState(false);
+  const [showReview, setShowReview] = useState(false);
+  const [showPaymentButton, setShowPaymentButton] = useState(false);
+  const [prefId, setPrefId] = useState("");
+  const [newOrderId, setNewOrderId] = useState(0);
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const failure = queryParams.get("failure");
 
   const handleContinue = () => {
-    if (order.paymentMethod.id !== 0 && order.deliveryMethod.id === 2 && order.orderDetails.length > 0) {
-      setContinueToReview(true);
-    } else if (order.paymentMethod.id !== 0 && order.deliveryMethod.id === 1 && order.address !== "" && order.phone !== "" && order.orderDetails.length > 0) {
-      setContinueToReview(true);
-    } else {
-      setContinueToReview(false);
+    let continueToReview = false;
+
+    if (
+      order.paymentMethod.id !== 0 &&
+      order.deliveryMethod.id === 2 &&
+      order.orderDetails.length > 0
+    ) {
+      continueToReview = true;
+    } else if (
+      order.paymentMethod.id !== 0 &&
+      order.deliveryMethod.id === 1 &&
+      order.address !== "" &&
+      order.phone !== "" &&
+      order.orderDetails.length > 0
+    ) {
+      continueToReview = true;
     }
-  }
+
+    setContinueToReview(continueToReview);
+  };
 
   const handleOrderReview = async () => {
+    setPrefId("");
+    setShowPaymentButton(false);
+    deleteOrder(newOrderId);
     setShowReview(!showReview);
     window.scrollTo(0, 0);
   }
@@ -49,22 +82,55 @@ export default function ShoppingCart() {
   const postOrder = async () => {
     try {
       const newOrder = await postNewOrder(order);
+      setNewOrderId(newOrder.id as number);
       if (newOrder.paymentMethod.id === 1) {
         navigate(`/orderdetail/${newOrder.id}`);
+      } else if (newOrder.paymentMethod.id === 2) {
+        mercadoPagoPayment(newOrder);
       }
-      //if newOrder paymentMethod == MP, redirect to MP payment
-      //if error in payment or anything, redirect to cart and throw error
-      //else, redirect to order detail and resetOrderDetails
-      dispatch(resetOrderDetails());
     } catch (error) {
       console.log(error);
+      setAlertMessage({ severity: "error", message: "Error al realizar el pedido. Intente nuevamente" });
       setShowMessage(true);
     }
+  }
+
+  const mercadoPagoPayment = async (newOrder: Order) => {
+    try {
+      initMercadoPago('TEST-f9a81470-5f5f-467c-85fe-e3d799f97788', { locale: 'es-AR' });
+      const orderItem = {
+        code: String(newOrder.id),
+        title: `${newOrder.orderDetails.length} artículos`,
+        description: newOrder.date.toString(),
+        price: newOrder.total,
+      }
+      const pref_id: responsePrefId = await createPreferenceMP(orderItem);
+      setPrefId(pref_id.preferenceId);
+      setShowPaymentButton(true);
+    } catch (error) {
+      console.log(error);
+      setAlertMessage({ severity: "error", message: "Error con Mercado Pago." });
+      setShowMessage(true);
+    }
+  }
+
+  if (isAuthenticated) {
+    window.addEventListener('beforeunload', function (event) {
+      //sets as deleted the created order if the page is reloaded because a new one will be created after the reload
+      deleteOrder(newOrderId);
+    });
   }
 
   useEffect(() => {
     handleContinue();
   }, [order])
+
+  useEffect(() => {
+    if (failure) {
+      setAlertMessage({ severity: "error", message: "Error al realizar el pago. Intente nuevamente" });
+      setShowMessage(true);
+    }
+  }, [])
 
   return (
     <div className="cart-container" >
@@ -91,10 +157,12 @@ export default function ShoppingCart() {
               {showReview ?
                 <>
                   <OrderOptionsReview order={null} />
-                  <Button className="confirm-button"
-                    onClick={postOrder}>
-                    Confirmar pedido
-                  </Button>
+                  {!showPaymentButton ?
+                    <Button className="confirm-button"
+                      onClick={postOrder}>
+                      Confirmar pedido
+                    </Button> :
+                    <></>}
                 </>
                 : <>
                   <OrderOptions />
@@ -118,16 +186,23 @@ export default function ShoppingCart() {
             </>}
         </div>
       </div>
+      {showPaymentButton &&
+        <div id="wallet_container">
+          <Wallet initialization={{ preferenceId: prefId }} />
+        </div>
+      }
       <div className="button-container-1">
         <Button className="btn-cart" onClick={() => (navigate("/"))}>Continuar comprando</Button>
         {showReview && <Button className="btn-cart" onClick={handleOrderReview}>Volver</Button>}
       </div>
-      {showMessage ?
-        <AlertMessage
-          severity="error"
-          onClose={(() => { setShowMessage(false) })}
-          label={"Error al realizar el pedido. Intente nuevamente."} />
-        : ""}
+      {
+        showMessage ?
+          <AlertMessage
+            severity={alertMessage?.severity}
+            onClose={(() => { setShowMessage(false) })}
+            label={alertMessage?.message as string} />
+          : ""
+      }
     </div >
   )
 }

@@ -21,6 +21,7 @@ export default function ClientOrderList() {
     const [orders, setOrders] = useState<Order[]>([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     const handleChangePage = (event: unknown, newPage: number) => {
@@ -37,6 +38,7 @@ export default function ClientOrderList() {
             if (id) {
                 const orders = await getUserOrders(id);
                 setOrders(orders);
+                setLoading(false);
             }
         } catch (error) {
             console.log(error);
@@ -77,105 +79,104 @@ export default function ClientOrderList() {
 
     useEffect(() => {
         getOrders();
-    }, [orders])
+    }, [id]);
 
     return (
         <div>
             <HeaderEcommerce />
             <Row><label className="page-name">MIS PEDIDOS</label></Row>
             <div className="my-orders-container">
-                {orders.length > 0 ?
-                    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                        <TableContainer>
-                            <Table stickyHeader aria-label="sticky table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell style={{ width: "25%" }}>Fecha y Hora</TableCell>
-                                        <TableCell style={{ width: "15%" }}>Nro pedido</TableCell>
-                                        <TableCell style={{ width: "15%" }}>Total</TableCell>
-                                        <TableCell style={{ width: "15%" }}>Estado</TableCell>
-                                        <TableCell style={{ textAlign: "center", width: "30%" }}>Acciones</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {orders
-                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                        .map((order: Order) => {
-                                            return (
-                                                <TableRow hover role="checkbox" tabIndex={-1} key={order.id}>
-                                                    <TableCell>{formatDate(order.date as string)}</TableCell>
-                                                    <TableCell>{order.id}</TableCell>
-                                                    <TableCell>{order.total}</TableCell>
-                                                    <TableCell>{order.orderStatus.description}</TableCell>
-                                                    <TableCell style={{ textAlign: "center" }}>
-                                                        <Button
-                                                            className="btn-order-list"
-                                                            onClick={() => {
-                                                                navigate(`/orderdetail/${order.id}`);
-                                                            }}>
-                                                            Ver detalle
-                                                        </Button>
-                                                        {order.paid ? (
-                                                            order.orderStatus.description === "Cancelado" ? (
-                                                                <Button
-                                                                    className={"btn-order-list"}
-                                                                    style={{ width: "100%" }}
-                                                                    onClick={() => {
-                                                                        handleCreditNoteDownload(order.id as number);
-                                                                    }}>
-                                                                    Ver nota de crédito
-                                                                </Button>
-                                                            ) : (
-                                                                <Button
-                                                                    className={"btn-order-list"}
-                                                                    style={{ width: "100%" }}
-                                                                    onClick={() => {
-                                                                        handleBillDownload(order.id as number);
-                                                                    }}>
-                                                                    Ver factura
-                                                                </Button>
-                                                            )
-                                                        ) : (
-                                                            <></>
-                                                        )}
-                                                    </TableCell>
-                                                </TableRow>
-                                            );
-                                        })}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                        <TablePagination
-                            rowsPerPageOptions={[5, 10, 20]}
-                            component="div"
-                            count={orders.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                        />
-                    </Paper>
-                    :
-                    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                        <TableContainer>
-                            <Table stickyHeader aria-label="sticky table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Fecha y Hora</TableCell>
-                                        <TableCell>Nro pedido</TableCell>
-                                        <TableCell>Total</TableCell>
-                                        <TableCell>Estado</TableCell>
-                                        <TableCell>Acciones</TableCell>
-                                    </TableRow>
-                                </TableHead>
+                <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+                    <TableContainer>
+                        <Table stickyHeader aria-label="sticky table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell style={{ width: "25%" }}>Fecha y Hora</TableCell>
+                                    <TableCell style={{ width: "15%" }}>Nro pedido</TableCell>
+                                    <TableCell style={{ width: "15%" }}>Total</TableCell>
+                                    <TableCell style={{ width: "15%" }}>Estado</TableCell>
+                                    <TableCell style={{ textAlign: "center", width: "30%" }}>Acciones</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            {loading ? (
                                 <TableBody>
                                     <TableRow>
-                                        <TableCell colSpan={5}>Aun no has realizado ningún pedido.</TableCell>
+                                        <TableCell colSpan={5} style={{ textAlign: "center" }}>Cargando...</TableCell>
                                     </TableRow>
                                 </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </Paper>}
+                            ) : (
+                                <>
+                                    {orders.length > 0 ? (
+                                        <TableBody>
+                                            {orders
+                                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                .map((order: Order) => {
+                                                    return (
+                                                        <TableRow hover role="checkbox" tabIndex={-1} key={order.id}>
+                                                            <TableCell>{formatDate(order.date as string)}</TableCell>
+                                                            <TableCell>{order.id}</TableCell>
+                                                            <TableCell>{order.total}</TableCell>
+                                                            <TableCell>{order.orderStatus.description}</TableCell>
+                                                            <TableCell style={{ textAlign: "center" }}>
+                                                                <Button
+                                                                    className="btn-order-list"
+                                                                    onClick={() => {
+                                                                        navigate(`/orderdetail/${order.id}`);
+                                                                    }}
+                                                                >
+                                                                    Ver detalle
+                                                                </Button>
+                                                                {order.paid ? (
+                                                                    order.orderStatus.description === "Cancelado" ? (
+                                                                        <Button
+                                                                            className={"btn-order-list"}
+                                                                            style={{ width: "100%" }}
+                                                                            onClick={() => {
+                                                                                handleCreditNoteDownload(order.id as number);
+                                                                            }}
+                                                                        >
+                                                                            Ver nota de crédito
+                                                                        </Button>
+                                                                    ) : (
+                                                                        <Button
+                                                                            className={"btn-order-list"}
+                                                                            style={{ width: "100%" }}
+                                                                            onClick={() => {
+                                                                                handleBillDownload(order.id as number);
+                                                                            }}
+                                                                        >
+                                                                            Ver factura
+                                                                        </Button>
+                                                                    )
+                                                                ) : (
+                                                                    <></>
+                                                                )}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    );
+                                                })}
+                                        </TableBody>
+                                    ) : (
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell colSpan={5} style={{ textAlign: "center" }}>Aun no has realizado ningún pedido.</TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    )}
+                                </>
+                            )}
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[5, 10, 20]}
+                        component="div"
+                        count={orders.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </Paper>
             </div>
         </div>
     )

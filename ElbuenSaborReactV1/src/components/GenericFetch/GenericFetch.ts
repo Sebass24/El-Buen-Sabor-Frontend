@@ -15,7 +15,7 @@ export async function getData<T>(path: string): Promise<T> {
   return response.json();
 }
 
-export async function deleteData<T>(path: string) {
+export async function deleteData(path: string) {
   const token = sessionStorage.getItem("token");
   const options = {
     method: "DELETE",
