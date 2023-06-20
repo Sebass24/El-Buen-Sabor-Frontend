@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import { Button } from 'react-bootstrap';
 import Orders from '@Models/Orders/Order';
 import { getData } from 'components/GenericFetch/GenericFetch';
+import OrderDetail from '@Models/Orders/OrderDetail';
 
 
 const OrderDetail = () => {
@@ -29,9 +30,9 @@ const OrderDetail = () => {
           <li>Fecha: {Order?.date?.toLocaleString()}</li>
           <li>Estado: {Order?.orderStatus.description}</li>
           <li>Nombre y Apellido: {Order?.user.name + " " + Order?.user.lastName}</li>
-          <li>Télefono: {Order?.phone?.number}</li>
-          <li>Dirección: {Order?.address?.street}</li>
-          <li>Departamento: {Order?.address?.location}</li>
+          <li>Télefono: {Order?.phone as string}</li>
+          <li>Dirección: {Order?.address as string}</li>
+          <li>Departamento: {Order?.address as string}</li>
           <li>Forma de Entrega: {Order?.deliveryMethod.description}</li>
           <li>Forma de Pago: {Order?.paymentMethod.description}</li>
           <li>Hora Estimada: {Order?.estimatedTime.toLocaleString()}</li>
@@ -50,8 +51,8 @@ const OrderDetail = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {Order?.orderDetails.map((row, index) => {
-              subtotal += (row.product.sellPrice * row.quantity)
+            {Order?.orderDetails.map((row: OrderDetail, index) => {
+              subtotal += (row.product.sellPrice as number * row.quantity)
               return (
                 <TableRow
                   className='table_row'
@@ -61,7 +62,7 @@ const OrderDetail = () => {
                   <TableCell >{row.product.name}</TableCell>
                   <TableCell >{row.quantity}</TableCell>
                   <TableCell >${row.product.sellPrice}</TableCell>
-                  <TableCell >${row.product.sellPrice * row.quantity}</TableCell>
+                  <TableCell >${row.product.sellPrice as number * row.quantity}</TableCell>
                 </TableRow>
               )
 

@@ -11,7 +11,7 @@ export default function Billing() {
   const { orders } = useAppSelector((state) => state.Order);
 
   async function getOrders() {
-    dispatch(fetchOrders());
+    dispatch(fetchOrders() as any);
   }
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function Billing() {
       );
       dispatch(setOrders(data));
     } else {
-      dispatch(fetchOrders());
+      dispatch(fetchOrders() as any);
     }
   }
   useEffect(() => {

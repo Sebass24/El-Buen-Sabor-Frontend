@@ -255,7 +255,7 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
                         {ingrediente.ingredientCategory.name}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {formatoMonedaLocal.format(ingrediente?.costPrice)}{" "}
+                        {formatoMonedaLocal.format(ingrediente?.costPrice as number)}{" "}
                       </TableCell>
                       <TableCell className="tableCell">
                         {ingrediente.minimumStock}
@@ -271,8 +271,8 @@ const TableIngredients = ({ Ingredients }: MyProps) => {
 
                           ingrediente.currentStock < ingrediente.minimumStock ? (
                             <p>Faltante</p>
-                          ) : ingrediente.currentStock >
-                            ingrediente.minimumStock * 1.2 ? (
+                          ) : (ingrediente.currentStock as number) >
+                            (ingrediente.minimumStock as number) * 1.2 ? (
                             <p>Optimo</p>
                           ) : (
                             <p>Pedir</p>

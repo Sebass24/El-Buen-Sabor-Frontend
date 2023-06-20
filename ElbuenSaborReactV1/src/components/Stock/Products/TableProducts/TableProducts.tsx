@@ -226,7 +226,7 @@ const TableProducts = ({ products }: MyProps) => {
                         {product.productCategory.description}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {formatoMonedaLocal.format(product?.sellPrice)}{" "}
+                        {formatoMonedaLocal.format(product?.sellPrice as number)}{" "}
                       </TableCell>
                       <TableCell className="tableCell">
                         {product.cookingTime}

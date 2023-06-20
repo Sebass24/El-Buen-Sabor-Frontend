@@ -24,13 +24,13 @@ export default function IngredientsCategories() {
       const data: IngredientCategory[] = await getData<IngredientCategory[]>(`/api/rubro/name/${name}`);
       dispatch(setIngredientsCategories(data))
     } else {
-      dispatch(fetchIngredientCategory())
+      dispatch(fetchIngredientCategory() as any)
     }
   }
 
 
   useEffect(() => {
-    dispatch(fetchIngredientCategory())
+    dispatch(fetchIngredientCategory() as any)
   }, []);
 
 
@@ -46,7 +46,7 @@ export default function IngredientsCategories() {
             onChange={(event) => {
               setSearch(event.target.value)
               if (event.target.value === "") {
-                dispatch(fetchIngredientCategory())
+                dispatch(fetchIngredientCategory() as any)
               }
             }}
             className="busqueda_comida"

@@ -24,7 +24,7 @@ export default function Clients() {
   }
 
   useEffect(() => {
-    dispatch(fetchClients())
+    dispatch(fetchClients() as any)
   }, [])
 
   return (

@@ -30,7 +30,7 @@ export default function Empleoyees() {
   }, [estado])
 
   useEffect(() => {
-    dispatch(fetchEmpleoyees())
+    dispatch(fetchEmpleoyees() as any)
   }, [])
 
   return (

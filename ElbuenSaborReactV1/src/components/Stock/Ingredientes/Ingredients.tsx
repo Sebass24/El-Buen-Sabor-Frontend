@@ -29,7 +29,7 @@ const Ingredients = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchIngredients())
+    dispatch(fetchIngredients() as any)
     setSearch("")
   }, []);
 
@@ -38,7 +38,7 @@ const Ingredients = () => {
       const data: Ingredient[] = await getData<Ingredient[]>(`/api/ingredient/nameAndState?name=${name}&state=${estado}`);
       dispatch(setIngredients(data))
     } else {
-      dispatch(fetchIngredients())
+      dispatch(fetchIngredients() as any)
     }
   }
 

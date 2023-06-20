@@ -87,7 +87,7 @@ export function ChartStatistic() {
       const user: User = pr[0]
       return user.name
     })
-    setLabels(label)
+    setLabels(label as string[])
 
 
   }, [Users])

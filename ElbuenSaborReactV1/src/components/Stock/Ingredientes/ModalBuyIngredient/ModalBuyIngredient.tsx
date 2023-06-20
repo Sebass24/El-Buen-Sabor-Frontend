@@ -97,7 +97,7 @@ export default function ModalBuyIngredient({ showModal, handleClose, handleClose
             onSubmit={async (values) => {
 
               const ingredienteEdit: Ingredient = {
-                ...values.ingredient, currentStock: values.Cuantity + values.ingredient.currentStock,
+                ...values.ingredient, currentStock: (values.Cuantity + (values.ingredient.currentStock as number)),
                 costPrice: values.PriceCost
               }
 

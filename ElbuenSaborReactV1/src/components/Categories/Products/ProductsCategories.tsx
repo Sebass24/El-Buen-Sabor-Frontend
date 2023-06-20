@@ -25,13 +25,13 @@ export default function ProductsCategories() {
       const data: ProductCategory[] = await getData<ProductCategory[]>(`/api/category/name/${name}`);
       dispatch(setProductCategory(data))
     } else {
-      dispatch(fetchProductCategory())
+      dispatch(fetchProductCategory() as any)
     }
   }
 
 
   useEffect(() => {
-    dispatch(fetchProductCategory());
+    dispatch(fetchProductCategory() as any);
   }, []);
 
 
@@ -49,7 +49,7 @@ export default function ProductsCategories() {
             onChange={(event) => {
               setSearch(event.target.value)
               if (event.target.value === "") {
-                dispatch(fetchProductCategory())
+                dispatch(fetchProductCategory() as any)
               }
             }}
             className="busqueda_comida"

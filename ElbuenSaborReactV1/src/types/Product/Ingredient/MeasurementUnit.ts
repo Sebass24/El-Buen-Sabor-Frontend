@@ -1,3 +1,3 @@
-enum MeasurementUnit {
-    l, ml, g, mg, kg, u
+export enum MeasurementUnit {
+  l, ml, g, mg, kg, u
 }

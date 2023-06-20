@@ -22,7 +22,7 @@ const Productos = () => {
   const [search, setSearch] = useState("")
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts() as any);
   }, []);
 
   async function getProductsSearch(name: string) {
@@ -30,7 +30,7 @@ const Productos = () => {
       const data: Product[] = await getData<Product[]>(`/api/product/name/${name}`);
       dispatch(setProducts(data))
     } else {
-      dispatch(fetchProducts())
+      dispatch(fetchProducts() as any)
     }
   }
 
@@ -47,7 +47,7 @@ const Productos = () => {
             onChange={(event) => {
               setSearch(event.target.value)
               if (event.target.value === "") {
-                dispatch(fetchProducts())
+                dispatch(fetchProducts() as any)
               }
             }}
             className="busqueda_comida"
