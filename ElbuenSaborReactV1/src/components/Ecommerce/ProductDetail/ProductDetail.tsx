@@ -5,11 +5,13 @@ import { useState, useEffect } from "react";
 import "./ProductDetail.scss";
 import ProductQuantitySelector from "./ProductQuantitySelector";
 import { getProductById } from "@services/products";
-import { useAppDispatch } from "@app/Hooks";
+import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { addProduct, setTotalPrice } from "@features/ShoppingCart/CartProducts";
 import { openRestaurant } from "../WorkingHours/WorkingSchedule";
 import OrderDetail from "@Models/Orders/OrderDetail";
 import AlertMessage from "components/AlertMessage";
+import ClosedRestaurant from "../WorkingHours/ClosedRestaurant";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function ProductDetail() {
     const dispatch = useAppDispatch();
@@ -17,9 +19,12 @@ export default function ProductDetail() {
     const { idproduct } = useParams();
     const [product, setProduct] = useState<Product | null>(null);
     const [quantity, setQuantity] = useState(1);
-    const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(true);
     const [showMessage, setShowMessage] = useState(false);
+
+    const [showModal, setShowModal] = useState(false);
+    const { role } = useAppSelector(state => state.users.user);
+    const { isAuthenticated } = useAuth0();
 
     const getProduct = async () => {
         const p: Product = await getProductById(parseInt(idproduct!));
@@ -36,7 +41,9 @@ export default function ProductDetail() {
         setQuantity(value);
     };
 
-    const handleModal = () => setShow(!show);
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
     const handleMessage = () => {
         setShowMessage(true);
         setTimeout(() => {
@@ -45,32 +52,21 @@ export default function ProductDetail() {
     };
 
     const handleAddToCart = (p: Product, quantity: number) => {
-        //if (openRestaurant(new Date())) {                 //this will set the current date to do the logic
-        if (openRestaurant(today)) {                        //setted date for trials
+        let open = false;
+        if (isAuthenticated && role.id) {
+            open = openRestaurant(role.id);
+        } else {
+            open = openRestaurant(0);
+        }
+        if (open) {
             const newOrder: OrderDetail = { product: p, quantity };
             dispatch(addProduct(newOrder));
             dispatch(setTotalPrice());
             handleMessage();
         } else {
-            handleModal();
-            console.log("error al cargar al carrito");
+            setShowModal(true);
         }
     }
-
-    //pruebas de fechas y horarios
-    const today = new Date();
-    // Establecer el día de la semana en sábado
-    today.setDate(today.getDate() + (6 - today.getDay()));
-    // Establecer la hora en 21:00
-    /* today.setHours(21);
-    today.setMinutes(0);
-    today.setSeconds(0);
-    today.setMilliseconds(0); */
-    // Establecer la hora en 12:00 PM (mediodía)
-    today.setHours(12);
-    today.setMinutes(0);
-    today.setSeconds(0);
-    today.setMilliseconds(0);
 
     return (
         <>
@@ -106,16 +102,7 @@ export default function ProductDetail() {
                         <AlertMessage
                             onClose={() => { setShowMessage(false) }}
                             label={"Producto agregado al carrito."} /> : ""}
-                    <Modal show={show} onHide={handleModal}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Local cerrado</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            Nuestro horario de atención es:
-                            - Lunes a domingos: 20:00 a 00:00hs.
-                            - Sábados y domingos: 11:00 a 15:00hs.
-                        </Modal.Body>
-                    </Modal>
+                    <ClosedRestaurant show={showModal} onClose={handleCloseModal} />
                 </>}
         </>
     )

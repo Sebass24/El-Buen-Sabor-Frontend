@@ -15,6 +15,8 @@ import { Wallet, initMercadoPago } from '@mercadopago/sdk-react'
 import { createPreferenceMP, deleteOrder } from "@services/order";
 import Order from "@Models/Orders/Order";
 import { AlertColor } from "@mui/material";
+import { openRestaurant } from "../WorkingHours/WorkingSchedule";
+import ClosedRestaurant from "../WorkingHours/ClosedRestaurant";
 
 interface responsePrefId {
   preferenceId: string;
@@ -38,6 +40,9 @@ export default function ShoppingCart() {
   const [showPaymentButton, setShowPaymentButton] = useState(false);
   const [prefId, setPrefId] = useState("");
   const [newOrderId, setNewOrderId] = useState(0);
+
+  const [showModal, setShowModal] = useState(false);
+  const { role } = useAppSelector(state => state.users.user);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -79,14 +84,28 @@ export default function ShoppingCart() {
     }
   }
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   const postOrder = async () => {
     try {
-      const newOrder = await postNewOrder(order);
-      setNewOrderId(newOrder.id as number);
-      if (newOrder.paymentMethod.id === 1) {
-        navigate(`/orderdetail/${newOrder.id}`);
-      } else if (newOrder.paymentMethod.id === 2) {
-        mercadoPagoPayment(newOrder);
+      let open = false;
+      if (isAuthenticated && role.id) {
+        open = openRestaurant(role.id);
+      } else {
+        open = openRestaurant(0);
+      }
+      if (open) {
+        const newOrder = await postNewOrder(order);
+        setNewOrderId(newOrder.id as number);
+        if (newOrder.paymentMethod.id === 1) {
+          navigate(`/orderdetail/${newOrder.id}`);
+        } else if (newOrder.paymentMethod.id === 2) {
+          mercadoPagoPayment(newOrder);
+        }
+      } else {
+        setShowModal(true);
       }
     } catch (error) {
       console.log(error);
@@ -203,6 +222,7 @@ export default function ShoppingCart() {
             label={alertMessage?.message as string} />
           : ""
       }
+      <ClosedRestaurant show={showModal} onClose={handleCloseModal} />
     </div >
   )
 }
