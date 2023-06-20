@@ -115,7 +115,7 @@ export default function ClientOrderList() {
                                                         <TableRow hover role="checkbox" tabIndex={-1} key={order.id}>
                                                             <TableCell>{formatDate(order.date as string)}</TableCell>
                                                             <TableCell>{order.id}</TableCell>
-                                                            <TableCell>{order.total}</TableCell>
+                                                            <TableCell>${order.total}</TableCell>
                                                             <TableCell>{order.orderStatus.description}</TableCell>
                                                             <TableCell style={{ textAlign: "center" }}>
                                                                 <Button
