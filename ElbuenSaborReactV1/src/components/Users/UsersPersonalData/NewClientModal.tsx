@@ -9,6 +9,7 @@ import { postNewUser } from "@services/users";
 import { setStoredInDB, setUserData, setUserId, setUserRole } from "@features/User/UserSlice";
 import TextFieldValue from "components/Inputs/TextFieldValue";
 import "./UserDataModal.scss";
+import Role from "@Models/Users/Role";
 
 export default function NewClientModal() {
 
@@ -49,6 +50,7 @@ export default function NewClientModal() {
         try {
             const newUser = await postNewUser(user);
             dispatch(setUserId(newUser.id as number));
+            dispatch(setUserRole(newUser.role as Role));
             dispatch(setStoredInDB(true));
         } catch (error) {
             console.log(error);

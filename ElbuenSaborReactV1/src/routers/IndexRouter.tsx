@@ -12,6 +12,7 @@ import { useAppSelector } from "@app/Hooks";
 import { PrivateRoute } from "./PrivateRoute";
 import { useAuth0 } from "@auth0/auth0-react";
 import { PrivateRouteAll } from "./PrivateRouteAll";
+
 const IndexRouter = () => {
   const { user } = useAppSelector(state => state.users)
 
