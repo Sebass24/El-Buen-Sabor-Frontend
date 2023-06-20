@@ -54,11 +54,22 @@ if (isWeekend(date)) {
     };
 }
 
-export const openRestaurant = (currentDate: Date): boolean => {
+export const openRestaurant = (id: number): boolean => {
+    const today = new Date();
+    //if the loggedin user is an admin, set the time on a working day and hour to be allowed to buy
+    if (id && id === 1) {
+        //set day on saturday
+        today.setDate(today.getDate() + (6 - today.getDay()));
+        //set time at 12:00 PM (midday)
+        today.setHours(12);
+        today.setMinutes(0);
+        today.setSeconds(0);
+        today.setMilliseconds(0);
+    }
     // Verificar si el horario actual está dentro del rango de apertura
     if (schedule === undefined) {
         return false;
     } else {
-        return isWithinInterval(currentDate, { start: schedule.startTime, end: schedule.endTime });
+        return isWithinInterval(today, { start: schedule.startTime, end: schedule.endTime });
     }
 };

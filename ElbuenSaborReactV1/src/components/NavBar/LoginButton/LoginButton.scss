@@ -29,25 +29,33 @@
         border: none;
         min-width: 135px;
 
+        --bs-btn-border-color: rgb(189, 188, 188);
+        --bs-btn-hover-bg: rgb(189, 188, 188);
+        --bs-btn-hover-border-color: rgb(189, 188, 188);
+        --bs-btn-active-bg: rgb(189, 188, 188);
+        --bs-btn-active-border-color: rgb(189, 188, 188);
+        --bs-btn-disabled-bg: rgb(189, 188, 188);
+        --bs-btn-disabled-border-color: rgb(189, 188, 188);
+
         &:hover {
-            color: black;
-        }
-
-        &:focus {
-            color: black;
-            background-color: transparent;
+            background-color: none;
         }
     }
+}
 
-    .login-button {
-        width: fit-content;
+.login-button {
+    width: fit-content;
+    right: 0;
 
-        .dropdown-item {
-            padding: 0 1rem;
-            text-align: left;
-            font-size: 1rem;
-        }
+    .dropdown-item {
+        text-align: left;
+        font-size: 1rem;
+        padding: 0 1rem;
     }
+}
+
+.dropdown-menu {
+    right: 0;
 }
 
 @media (max-width: 767px) {

@@ -1,8 +1,13 @@
-/* import { Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
-export default function ClosedRestaurant() {
+interface Props {
+    show: boolean;
+    onClose: () => void; // Callback function for when the modal is closed
+}
+
+export default function ClosedRestaurant({ show, onClose }: Props) {
     return (
-        <Modal show={show} onHide={handleModal}>
+        <Modal show={show} onHide={onClose}>
             <Modal.Header closeButton>
                 <Modal.Title>Local cerrado</Modal.Title>
             </Modal.Header>
@@ -15,4 +20,3 @@ export default function ClosedRestaurant() {
     )
 }
 
- */

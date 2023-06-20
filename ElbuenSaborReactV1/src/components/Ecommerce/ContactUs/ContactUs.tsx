@@ -2,12 +2,13 @@ import TextAreaValue from "components/Inputs/TextAreaValue";
 import TextFieldValue from "components/Inputs/TextFieldValue";
 import { Formik, Form } from "formik";
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import * as Yup from "yup"
 import "./ContactUs.scss"
-import { Alert } from "@mui/material";
 import { postPutData } from "components/GenericFetch/GenericFetch";
+import HeaderEcommerce from "../HeaderEcommerce/HeaderEcommerce";
+import AlertMessage from "components/AlertMessage";
 
 const ContactUs = () => {
   const navigate = useNavigate();
@@ -22,9 +23,11 @@ const ContactUs = () => {
 
   return (
     <div >
-      <div className="img">
+      <HeaderEcommerce />
+      <Row><label className="page-name">CONTACTANOS</label></Row>
+      {/* <div className="img">
         <h1 className='Title_AboutUS'>{"Contáctanos"}</h1>
-      </div>
+      </div> */}
       <div className="form_Container">
         <div className="form_container_grid">
           <Formik
@@ -94,10 +97,10 @@ const ContactUs = () => {
         </div>
       </div>
       {showMessage ?
-        <div className="alert-container">
-          <Alert severity="error" onClose={() => { setShowMessage(false) }}>Producto agregado al carrito</Alert>
-        </div>
-        : ""}
+        <AlertMessage
+          severity="error"
+          onClose={() => { setShowMessage(false) }}
+          label={"Error al enviar el mensaje"} /> : ""}
     </div>
   );
 };

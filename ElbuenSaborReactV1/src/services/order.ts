@@ -1,6 +1,8 @@
 import DeliveryMethod from "@Models/Orders/DeliveryMethod";
+import Order from "@Models/Orders/Order";
 import PaymentMethod from "@Models/Orders/PaymentMethod";
-import { getData } from "components/GenericFetch/GenericFetch";
+import { deleteData, getData } from "components/GenericFetch/GenericFetch";
+import { getDataWithBody } from "./generic";
 
 export async function getDeliveryMethodById(id: number) {
     const url = `/api/deliverymethod/${id}`;
@@ -12,4 +14,40 @@ export async function getPaymentMethodById(id: number) {
     const url = `/api/paymentmethod/${id}`;
     const paymentMethod = await getData<PaymentMethod>(url);
     return paymentMethod;
+}
+
+export async function getOrderById(id: number) {
+    const url = `/api/order/${id}`;
+    const order = await getData<Order>(url);
+    return order;
+}
+
+export async function getOrderBill(id: number) {
+    const url = `/api/bill/download-bill/${id}`;
+    const bill = await getData<string>(url);
+    return bill;
+}
+
+export async function getUserOrders(id: number) {
+    const url = `/api/order/byUserID/${id}`;
+    const orders = await getData<Order[]>(url);
+    return orders;
+}
+
+interface orderItem {
+    code: string,
+    title: string,
+    description: string,
+    price: number,
+}
+
+export async function createPreferenceMP(order: orderItem) {
+    const url = "/api/mercadopago/createAndRedirect";
+    const response = await getDataWithBody(url, order);
+    return response;
+}
+
+export async function deleteOrder(id: number) {
+    const url = `/api/order/${id}`;
+    await deleteData(url);
 }

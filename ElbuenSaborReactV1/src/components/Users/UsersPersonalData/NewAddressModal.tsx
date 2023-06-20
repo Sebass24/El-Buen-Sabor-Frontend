@@ -45,7 +45,7 @@ export default function NewAddressModal({ address, onClose }: Props) {
     const initialValues = {
         street: address?.street || "",
         number: address?.number || "",
-        location: address?.location.id || 0,
+        location: address?.location.id || "",
     };
 
     const saveAddress = async (values: FormikValues) => {
@@ -84,7 +84,7 @@ export default function NewAddressModal({ address, onClose }: Props) {
         <div>
             <Modal className="complete-data" show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>
+                    <Modal.Title className="modal-title-personal-data">
                         {address ? "Editar dirección" : "Nueva dirección"}
                     </Modal.Title>
                 </Modal.Header>
@@ -94,9 +94,13 @@ export default function NewAddressModal({ address, onClose }: Props) {
                         validationSchema={Yup.object().shape({
                             street: Yup.string().required('*Campo requerido'),
                             number: Yup.string().required('*Campo requerido'),
-                            location: Yup.string().required("*Campo requerido"),
+                            location: Yup.string()
+                                .test('required', '*Campo requerido', (value) => value !== '0')
+                                .required('*Campo requerido'),
                         })}
-                        onSubmit={(values) => { saveAddress(values) }}
+                        onSubmit={(values) => {
+                            saveAddress(values)
+                        }}
                     >
                         {(Formik) =>
                         (
@@ -130,7 +134,9 @@ export default function NewAddressModal({ address, onClose }: Props) {
                                                     Formik.setFieldValue("location", location);
                                                 }}
                                             >
-                                                <option>Elegir localidad</option>
+                                                <option value="" disabled hidden>
+                                                    Elegir localidad
+                                                </option>
                                                 {locations.length > 0 ?
                                                     (
                                                         locations.map((l: Location) => {
@@ -143,7 +149,7 @@ export default function NewAddressModal({ address, onClose }: Props) {
                                                     )
                                                     :
                                                     (
-                                                        <option value={"none"} >
+                                                        <option>
                                                             No se han encontrado localidades
                                                         </option>
                                                     )}
@@ -151,16 +157,16 @@ export default function NewAddressModal({ address, onClose }: Props) {
                                             </Field>
                                             <ErrorMessage
                                                 component="div"
-                                                name={"lcoation"}
+                                                name={"location"}
                                                 className="error"
                                             />
                                         </div>
                                     </div>
-                                    <Modal.Footer>
-                                        <Button type="button" className="btn-yellow" onClick={handleCloseModal}>
+                                    <Modal.Footer className="modal-footer-personal-data">
+                                        <Button type="button" className="btn-cart" onClick={handleCloseModal}>
                                             Cerrar
                                         </Button>
-                                        <Button type="submit" className="btn-yellow">
+                                        <Button type="submit" className="btn-cart">
                                             Guardar
                                         </Button>
                                     </Modal.Footer>

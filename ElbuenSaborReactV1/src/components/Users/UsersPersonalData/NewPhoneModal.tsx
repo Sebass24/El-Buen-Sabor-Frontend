@@ -62,7 +62,7 @@ export default function NewPhoneModal({ phone, onClose }: Props) {
         <div>
             <Modal className="complete-data" show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>
+                    <Modal.Title className="modal-title-personal-data">
                         {phone ? "Editar dirección" : "Nueva dirección"}
                     </Modal.Title>
                 </Modal.Header>
@@ -82,15 +82,15 @@ export default function NewPhoneModal({ phone, onClose }: Props) {
                                         <TextFieldValue
                                             label="Número:"
                                             name="number"
-                                            type="text"
+                                            type="number"
                                             defaultValue={initialValues.number}
                                         />
                                     </div>
-                                    <Modal.Footer>
-                                        <Button type="button" className="btn-yellow" onClick={handleCloseModal}>
+                                    <Modal.Footer className="modal-footer-personal-data">
+                                        <Button type="button" className="btn-cart" onClick={handleCloseModal}>
                                             Cerrar
                                         </Button>
-                                        <Button type="submit" className="btn-yellow">
+                                        <Button type="submit" className="btn-cart">
                                             Guardar
                                         </Button>
                                     </Modal.Footer>

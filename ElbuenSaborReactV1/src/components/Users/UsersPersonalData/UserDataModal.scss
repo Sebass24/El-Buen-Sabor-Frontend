@@ -6,18 +6,20 @@
 
 .complete-data {
     .modal-dialog {
-        max-width: 70%;
+        max-width: 70% !important;
     }
 
     .modal-body {
-        padding: 8px 16px;
+        padding: 8px 16px !important;
+    }
+
+    .modal-title-personal-data {
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
     }
 }
 
-.modal-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-}
+
 
 .form-user-personal-data {
     .form-group {
@@ -34,19 +36,15 @@
 }
 
 
-.modal-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0;
-    padding: 0 12px 6px 12px;
-    border-top: 0;
-
-    .btn-yellow {
-        margin-top: 0;
-    }
+.modal-footer-personal-data {
+    display: flex !important;
+    justify-content: space-between !important;
+    margin-top: 0 !important;
+    padding: 0 12px 6px 12px !important;
+    border-top: 0 !important;
 }
 
-.btn-yellow {
+.btn-cart {
     background-color: #FFE145;
     font-weight: 600;
     font-size: 0.9rem;
@@ -58,7 +56,6 @@
     --bs-btn-hover-color: black;
     color: black;
     height: 2.2rem;
-    margin-top: 1rem;
 }
 
 .btn.disabled {
@@ -70,7 +67,6 @@
     --bs-btn-hover-border-color: gray;
     height: 2.2rem;
     width: auto;
-    margin-top: 1rem;
 }
 
 .title-container {
@@ -86,7 +82,7 @@
         font-weight: bold;
     }
 
-    .btn-yellow {
+    .btn-cart {
         margin-top: 0;
     }
 }
