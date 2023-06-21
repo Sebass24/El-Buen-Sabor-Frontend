@@ -1,6 +1,6 @@
-import DeliveryMethod from '@Models/orders/DeliveryMethod';
-import OrderDetail from '@Models/orders/OrderDetail';
-import PaymentMethod from '@Models/orders/PaymentMethod';
+import DeliveryMethod from '@Models/Orders/DeliveryMethod';
+import OrderDetail from '@Models/Orders/OrderDetail';
+import PaymentMethod from '@Models/Orders/PaymentMethod';
 import User from '@Models/Users/User';
 import Order from '../../types/Orders/Order';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';

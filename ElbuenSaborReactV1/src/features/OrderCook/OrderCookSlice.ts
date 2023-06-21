@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { fetchOrdersCook } from "./OrderCookThunk";
-import Order from "@Models/orders/Order";
+import Order from "@Models/Orders/Order";
 // Define a type for the Loading state
 interface LoadingState {
   orders: Order[];

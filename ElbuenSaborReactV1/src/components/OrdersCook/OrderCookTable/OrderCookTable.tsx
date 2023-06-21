@@ -1,4 +1,4 @@
-import Orders from "@Models/orders/Order";
+import Orders from "@Models/Orders/Order";
 import React from "react";
 import TableHead from "@mui/material/TableHead";
 import {
@@ -17,7 +17,7 @@ import {
 import { Button } from "react-bootstrap";
 import "./OrderCookTable.scss";
 import { Link } from "react-router-dom";
-import OrderStatus from "@Models/orders/OrderStatus";
+import OrderStatus from "@Models/Orders/OrderStatus";
 import { useAppDispatch } from "@app/Hooks";
 import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
 import { postPutData } from "components/GenericFetch/GenericFetch";
@@ -197,8 +197,8 @@ export default function OrderCookTable({ orders }: myProps) {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"

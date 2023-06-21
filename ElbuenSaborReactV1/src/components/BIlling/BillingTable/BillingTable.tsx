@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "react-bootstrap";
-import OrderStatus from "@Models/orders/OrderStatus";
+import OrderStatus from "@Models/Orders/OrderStatus";
 import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
 import { useAppDispatch } from "@app/Hooks";
 import { getData, postPutData } from "components/GenericFetch/GenericFetch";
@@ -214,8 +214,8 @@ export default function BillingTable({ orders }: myProps) {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -270,8 +270,9 @@ export default function BillingTable({ orders }: myProps) {
                           <Button
                             className="ACocina"
                             variant="warning"
-                            href={`${import.meta.env.VITE_BILL_DOWNLOAD
-                              }/api/bill/download-bill/${order.id}`}
+                            href={`${
+                              import.meta.env.VITE_BILL_DOWNLOAD
+                            }/api/bill/download-bill/${order.id}`}
                             target="_blank"
                           >
                             Ver Factura

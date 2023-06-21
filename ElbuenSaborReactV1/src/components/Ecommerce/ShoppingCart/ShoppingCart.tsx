@@ -9,11 +9,11 @@ import OrderOptions from "./OrderDetails/OrderOptions";
 import OrderTotalPrice from "./OrderDetails/OrderTotalPrice";
 import OrderOptionsReview from "./OrderDetails/OrderOptionsReview";
 import { postNewOrder } from "@services/users";
-import OrderDetail from "@Models/orders/OrderDetail";
+import OrderDetail from "@Models/Orders/OrderDetail";
 import AlertMessage from "components/AlertMessage";
 import { Wallet, initMercadoPago } from '@mercadopago/sdk-react'
 import { createPreferenceMP, deleteOrder } from "@services/order";
-import Order from "@Models/orders/Order";
+import Order from "@Models/Orders/Order";
 import { AlertColor } from "@mui/material";
 import { openRestaurant } from "../WorkingHours/WorkingSchedule";
 import ClosedRestaurant from "../WorkingHours/ClosedRestaurant";
