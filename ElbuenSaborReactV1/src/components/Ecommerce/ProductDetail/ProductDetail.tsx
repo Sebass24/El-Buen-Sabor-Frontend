@@ -56,6 +56,7 @@ export default function ProductDetail() {
             const newOrder: OrderDetail = { product: p, quantity };
             dispatch(addProduct(newOrder));
             dispatch(setTotalPrice());
+            setShowMessage(true);
         } else {
             setShowModal(true);
         }
