@@ -135,6 +135,8 @@ export default function ShoppingCart() {
       console.log(error);
       setAlertMessage({ severity: "error", message: "Error con Mercado Pago." });
       setShowMessage(true);
+      deleteOrder(newOrderId);
+      setLoading(false);
     }
   };
 

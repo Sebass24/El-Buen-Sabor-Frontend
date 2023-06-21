@@ -99,8 +99,6 @@ export const cartSlice = createSlice({
       state.order.date = "";
       state.order.paymentMethod = { id: 0, description: "none" };
       state.order.orderDetails = [];
-      state.order.total = 0;
-      state.order.discount = 0;
       state.order.address = "";
       state.order.phone = "";
     },
@@ -108,8 +106,6 @@ export const cartSlice = createSlice({
       state.order.deliveryMethod = { id: 0, description: "none" };
       state.order.date = "";
       state.order.paymentMethod = { id: 0, description: "none" };
-      state.order.total = 0;
-      state.order.discount = 0;
       state.order.address = "";
       state.order.phone = "";
     }
