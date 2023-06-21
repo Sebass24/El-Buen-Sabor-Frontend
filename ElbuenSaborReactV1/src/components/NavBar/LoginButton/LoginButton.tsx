@@ -30,7 +30,7 @@ export const LoginButton = () => {
 
   return (
     <div className="Container_RightNavBar">
-      {isAuthenticated && user ?
+      {isAuthenticated ?
         <Dropdown>
           <Dropdown.Toggle id="dropdown-basic" className='MyAccount' >
             <Profile />

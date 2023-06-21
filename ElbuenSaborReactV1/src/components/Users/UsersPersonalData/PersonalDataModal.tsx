@@ -1,6 +1,6 @@
 import { Button, Modal, Table } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./UserDataModal.scss";
 import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
@@ -13,13 +13,15 @@ import NewPhoneModal from "./NewPhoneModal";
 import Address from "@Models/Users/Address";
 import Phone from "@Models/Users/Phone";
 import User from "@Models/Users/User";
-import { deleteAddress, deletePhone, updateUser } from "@services/users";
-import { ThunkDispatch } from 'redux-thunk';
-import { RootState } from "@app/Store";
-import { AnyAction } from "@reduxjs/toolkit";
+import { deleteAddress, deletePhone, getPasswordChangeURL, updateUser } from "@services/users";
+import { Link } from "react-router-dom";
 
 interface Props {
     onClose: () => void; // Callback function for when the modal is closed
+}
+
+interface Ticket {
+    ticket: string;
 }
 
 export default function PersonalDataModal({ onClose }: Props) {
@@ -30,6 +32,7 @@ export default function PersonalDataModal({ onClose }: Props) {
     const [showPhoneModal, setShowPhoneModal] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
     const [selectedPhone, setSelectedPhone] = useState<Phone | null>(null);
+    const [ticketPassword, setTicketPassword] = useState("");
 
     const dispatch = useAppDispatch();
 
@@ -94,6 +97,18 @@ export default function PersonalDataModal({ onClose }: Props) {
         }
     };
 
+    const handlePasswordChange = async () => {
+        if (!user.auth0Id.includes("google")) {
+            const auth0Id = user.auth0Id.replace("|", "%7C");
+            const ticketurl: Ticket = await getPasswordChangeURL(auth0Id);
+            setTicketPassword(ticketurl.ticket);
+        }
+    }
+
+    useEffect(() => {
+        handlePasswordChange();
+    }, [])
+
     return (
         <div>
             <Modal className="complete-data" show={showModal} onHide={handleCloseModal} backdrop="static" keyboard={false}>
@@ -133,6 +148,13 @@ export default function PersonalDataModal({ onClose }: Props) {
                                             defaultValue={initialValues.email}
                                             disabled={true}
                                         />
+                                        {!user.auth0Id.includes("google") &&
+                                            <>
+                                                <Link to={ticketPassword} target="_blank" style={{ fontFamily: "inter", fontSize: ".9rem" }}>
+                                                    Cambiar contraseña
+                                                </Link>
+                                            </>
+                                        }
                                         <div className="title-container">
                                             <label className="title-personal-data">Direcciones:</label>
                                             <Button type="button" className="btn-cart" onClick={() => setShowAddressModal(true)}>

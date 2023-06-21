@@ -3,6 +3,11 @@ import { deleteData, getData, postPutData } from "../components/GenericFetch/Gen
 import Phone from "@Models/Users/Phone";
 import User from "@Models/Users/User";
 import Order from "@Models/Orders/Order";
+import { getDataNoToken } from "./generic";
+
+interface Ticket {
+    ticket: string;
+}
 
 export async function getAddressesByUserId(id: number) {
     const url = `/api/user/addresses/${id}`;
@@ -79,4 +84,10 @@ export async function updatePhone(phone: Phone) {
 export async function deletePhone(phoneId: number) {
     const url = `/api/phone/${phoneId}`;
     await deleteData(url);
+}
+
+export async function getPasswordChangeURL(authId: string) {
+    const url = `/api/user/update-password/${authId}`;
+    const ticketurl = await getDataNoToken<Ticket>(url);
+    return ticketurl;
 }
