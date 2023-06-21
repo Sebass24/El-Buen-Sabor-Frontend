@@ -3,13 +3,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { setUserToken, resetUserData, setUserData, setStoredInDB, setUserRole } from "@features/User/UserSlice";
 import { setCartUser } from "@features/ShoppingCart/CartProducts";
-import User from "@Models/Users/User";
+import User from "types/Users/User";
 import { getUserData } from "@services/users";
 import { fetchAddresses, fetchPhones } from "@features/User/UserThunk";
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from "@app/Store";
 import { AnyAction } from "@reduxjs/toolkit";
-import Role from "@Models/Users/Role";
+import Role from "types/Users/Role";
 
 
 const Profile = () => {

@@ -16,7 +16,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import Products from "@Models/Product/Product";
+import Products from "types/Product/Product";
 import ModalAddProducts from "../ModalAddProduct/ModalAddProducts";
 import ModalViewProduct from "../ModalViewProduct/ModalViewProduct";
 

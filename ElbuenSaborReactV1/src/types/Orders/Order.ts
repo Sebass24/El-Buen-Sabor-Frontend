@@ -1,11 +1,11 @@
-import Base from "@Models/Base";
-import User from "@Models/Users/User";
-import Phone from "@Models/Users/Phone";
-import Address from "@Models/Users/Address";
-import DeliveryMethod from "@Models/Orders/DeliveryMethod";
-import OrderStatus from "@Models/Orders/OrderStatus";
-import PaymentMethod from "@Models/Orders/PaymentMethod";
-import OrderDetail from "@Models/Orders/OrderDetail";
+import Base from "types/Base";
+import User from "types/Users/User";
+import Phone from "types/Users/Phone";
+import Address from "types/Users/Address";
+import DeliveryMethod from "types/Orders/DeliveryMethod";
+import OrderStatus from "types/Orders/OrderStatus";
+import PaymentMethod from "types/Orders/PaymentMethod";
+import OrderDetail from "types/Orders/OrderDetail";
 
 export default interface Order extends Base {
   deliveryMethod: DeliveryMethod;

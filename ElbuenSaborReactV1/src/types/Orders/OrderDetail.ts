@@ -1,5 +1,5 @@
-import Base from "@Models/Base";
-import Product from "@Models/Product/Product";
+import Base from "types/Base";
+import Product from "types/Product/Product";
 
 export default interface OrderDetail extends Base {
   product: Product

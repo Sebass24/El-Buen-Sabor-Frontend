@@ -1,6 +1,6 @@
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import CategoryProduct from "@Models/Product/ProductCategory";
+import CategoryProduct from "types/Product/ProductCategory";
 import { getData } from "components/GenericFetch/GenericFetch";
 
 export const fetchProductCategory = createAsyncThunk("ProductsCategory/fetch", async () => {

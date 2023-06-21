@@ -3,7 +3,7 @@ import "./Ingredients.scss";
 import { Button } from "react-bootstrap";
 import TableIngredients from "./TableIngredients/TableIngredients";
 import ModalAddIngrediente from "./ModalAddIngrediente/ModalAddIngrediente";
-import Ingredient from "@Models/Product/Ingredient";
+import Ingredient from "types/Product/Ingredient";
 import ModalBuyIngredient from "./ModalBuyIngredient/ModalBuyIngredient";
 import { getData } from "../../GenericFetch/GenericFetch";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";

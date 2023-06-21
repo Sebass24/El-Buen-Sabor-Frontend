@@ -16,7 +16,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import Category from "@Models/Product/Category";
+import Category from "types/Product/Category";
 import ModalAddCategories from "../ModalAddCategories/ModalAddCategories";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {

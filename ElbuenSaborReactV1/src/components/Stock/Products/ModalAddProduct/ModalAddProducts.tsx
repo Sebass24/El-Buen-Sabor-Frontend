@@ -14,7 +14,7 @@ import {
   FormikConfig,
   FormikValues,
 } from "formik";
-import Product from "@Models/Product/Product";
+import Product from "types/Product/Product";
 import TextFieldValue from "../../../Inputs/TextFieldValue";
 import TextFieldSelect from "../../../Inputs/TextFieldSelect";
 import "./ModalAddProducts.scss";
@@ -31,8 +31,8 @@ import TextAreaValue from "components/Inputs/TextAreaValue";
 import { useAppSelector, useAppDispatch } from "@app/Hooks";
 import { startLoading, finishLoading } from "@features/Loading/LoadingSlice";
 import Loading from "components/Loading/Loading";
-import ProductDetail from "@Models/Product/ProductDetail";
-import Ingredient from "@Models/Product/Ingredient";
+import ProductDetail from "types/Product/ProductDetail";
+import Ingredient from "types/Product/Ingredient";
 import { getData, postPutData } from "components/GenericFetch/GenericFetch";
 import TextCheckBox from "components/Inputs/TextCheckBox";
 import TextFildSelectValue from "components/Inputs/TextFildSelectValue";

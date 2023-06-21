@@ -1,5 +1,5 @@
-import Base from "@Models/Base";
+import Base from "types/Base";
 
 export default interface OrderStatus extends Base {
-    description: string;
+  description: string;
 }

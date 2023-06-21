@@ -1,4 +1,4 @@
-import ProductCategory from "@Models/Product/ProductCategory";
+import ProductCategory from "types/Product/ProductCategory";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { fetchProductCategory } from "./ProductCategoryThunk";
 // Define a type for the Loading state

@@ -1,4 +1,4 @@
-import Product from "@Models/Product/Product";
+import Product from "types/Product/Product";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getData } from "components/GenericFetch/GenericFetch";
 

@@ -15,7 +15,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import Users from "@Models/Users/User";
+import Users from "types/Users/User";
 import { ModalAddUserAdmin } from "../ModalAddUserAdmin/ModalAddUserAdmin";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {

@@ -4,12 +4,12 @@ import { Button } from "react-bootstrap";
 import TableProducts from "./TableProducts/TableProducts";
 
 import ModalAddProducts from "./ModalAddProduct/ModalAddProducts";
-import Products from "@Models/Product/Product";
+import Products from "types/Product/Product";
 import { getData } from "components/GenericFetch/GenericFetch";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { fetchProducts } from "@features/ProductSlice/ProductThunk";
 import { setProducts } from "@features/ProductSlice/ProductSlice";
-import Product from "@Models/Product/Product";
+import Product from "types/Product/Product";
 
 const Productos = () => {
   const [showModal, setShowModal] = useState(false);

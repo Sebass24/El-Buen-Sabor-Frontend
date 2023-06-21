@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "react-bootstrap";
-import { DeliveryOrder } from '@Models/types';
+import { DeliveryOrder } from 'types/types';
 import { Link } from 'react-router-dom';
 
 

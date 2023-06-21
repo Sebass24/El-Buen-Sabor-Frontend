@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TableHead from "@mui/material/TableHead";
 import { Link } from "react-router-dom";
 import "./TableIngredients.scss";
-import Ingredient from "@Models/Product/Ingredient";
+import Ingredient from "types/Product/Ingredient";
 
 import {
   createTheme,

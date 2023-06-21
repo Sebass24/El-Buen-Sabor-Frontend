@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Button } from 'react-bootstrap';
 import TableCategories from '../TableCategories/TableCategories';
-import Category from '@Models/Product/Category';
+import Category from 'types/Product/Category';
 import ModalAddCategories from '../ModalAddCategories/ModalAddCategories';
 import { getData } from 'components/GenericFetch/GenericFetch';
 import { useAppDispatch, useAppSelector } from '@app/Hooks';
 import { setIngredientsCategories } from '@features/IngredientCategory/IngredientCategorySlice';
 import { fetchIngredientCategory } from '@features/IngredientCategory/IngredientCategoryThunk';
-import IngredientCategory from '@Models/Product/Ingredient/IngredientCategory';
+import IngredientCategory from 'types/Product/Ingredient/IngredientCategory';
 
 export default function IngredientsCategories() {
   const [showModal, setShowModal] = useState(false);

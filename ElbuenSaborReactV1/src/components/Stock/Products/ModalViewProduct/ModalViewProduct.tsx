@@ -1,4 +1,4 @@
-import Product from '@Models/Product/Product';
+import Product from 'types/Product/Product';
 import React from 'react'
 import { Modal } from 'react-bootstrap';
 import "./ModalViewProduct.scss"

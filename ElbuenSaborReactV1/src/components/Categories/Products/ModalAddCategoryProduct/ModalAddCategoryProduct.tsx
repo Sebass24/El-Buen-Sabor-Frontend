@@ -1,4 +1,4 @@
-import Category from '@Models/Product/ProductCategory';
+import Category from 'types/Product/ProductCategory';
 import TextFieldSelect from 'components/Inputs/TextFieldSelect';
 import TextFieldValue from 'components/Inputs/TextFieldValue';
 import { Form, Formik } from 'formik'

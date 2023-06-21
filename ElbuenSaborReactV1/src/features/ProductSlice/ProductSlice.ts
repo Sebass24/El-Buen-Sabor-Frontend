@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { fetchProducts } from "./ProductThunk";
-import Product from "@Models/Product/Product";
+import Product from "types/Product/Product";
 // Define a type for the Loading state
 interface LoadingState {
   Products: Product[];

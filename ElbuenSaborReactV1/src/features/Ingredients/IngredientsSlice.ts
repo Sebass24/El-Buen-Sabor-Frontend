@@ -1,4 +1,4 @@
-import Ingredient from "@Models/Product/Ingredient";
+import Ingredient from "types/Product/Ingredient";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { fetchIngredients } from "./IngredientsThunks";
 // Define a type for the Loading state

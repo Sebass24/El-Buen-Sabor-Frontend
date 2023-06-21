@@ -1,4 +1,4 @@
-import Category from '@Models/Product/Category';
+import Category from 'types/Product/Category';
 import TextFieldSelect from 'components/Inputs/TextFieldSelect';
 import TextFieldValue from 'components/Inputs/TextFieldValue';
 import { Form, Formik } from 'formik'
@@ -12,7 +12,7 @@ import Loading from 'components/Loading/Loading';
 import TextFildSelectValue from 'components/Inputs/TextFildSelectValue';
 import { postPutData } from 'components/GenericFetch/GenericFetch';
 import { addIngredientCategory, updateIngredientCategory } from '@features/IngredientCategory/IngredientCategorySlice';
-import IngredientCategory from '@Models/Product/Ingredient/IngredientCategory';
+import IngredientCategory from 'types/Product/Ingredient/IngredientCategory';
 
 
 

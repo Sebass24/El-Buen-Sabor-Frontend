@@ -1,4 +1,4 @@
-import Ingredient from "@Models/Product/Ingredient";
+import Ingredient from "types/Product/Ingredient";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getData } from "components/GenericFetch/GenericFetch";
 

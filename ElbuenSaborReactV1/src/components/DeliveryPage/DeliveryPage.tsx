@@ -1,7 +1,7 @@
 import React from 'react'
 import "./DeliveryPage.scss"
 import DeliveryTable from './DeliveryTable/DeliveryTable'
-import { DeliveryOrder } from '@Models/types'
+import { DeliveryOrder } from 'types/types'
 
 const productosPrueba: DeliveryOrder[] = [
   {

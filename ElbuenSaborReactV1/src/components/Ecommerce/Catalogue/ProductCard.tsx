@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
-import Product from '@Models/Product/Product';
+import Product from 'types/Product/Product';
 import "./ProductCard.scss";
 
 interface props {

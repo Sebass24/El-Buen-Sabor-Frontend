@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
-import CategoryProduct from "@Models/Product/ProductCategory";
+import CategoryProduct from "types/Product/ProductCategory";
 import { getData } from "components/GenericFetch/GenericFetch";
 import TableProductCategories from "./TableProductCategory/TableProductCategories";
 import ModalAddCategoryProduct from "./ModalAddCategoryProduct/ModalAddCategoryProduct";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { setProductCategory } from "@features/ProductCategory/ProductCategorySlice";
 import { fetchProductCategory } from "@features/ProductCategory/ProductCategoryThunk";
-import ProductCategory from "@Models/Product/ProductCategory";
+import ProductCategory from "types/Product/ProductCategory";
 
 export default function ProductsCategories() {
   const [showModal, setShowModal] = useState(false);

@@ -11,7 +11,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import "./ChartStatisticsProducts.scss"
 import { getData } from "components/GenericFetch/GenericFetch";
-import Product from "@Models/Product/Product";
+import Product from "types/Product/Product";
 import { useAppSelector } from "@app/Hooks";
 import NotResult from "components/404/NotResult";
 import exportFromJSON from 'export-from-json';

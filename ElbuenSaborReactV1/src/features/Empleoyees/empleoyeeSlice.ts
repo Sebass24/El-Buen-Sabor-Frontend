@@ -1,4 +1,4 @@
-import User from "@Models/Users/User";
+import User from "types/Users/User";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { fetchEmpleoyees } from "./EmpleoyeesThunk";
 // Define a type for the Loading state

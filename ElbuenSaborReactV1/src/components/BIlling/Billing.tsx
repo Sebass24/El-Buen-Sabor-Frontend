@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BillingTable from "./BillingTable/BillingTable";
 import { getData } from "components/GenericFetch/GenericFetch";
-import Orders from "@Models/Orders/Order";
+import Orders from "types/Orders/Order";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { fetchOrders } from "@features/Orders/OrderThunks";
 import { setOrders, updateOrder } from "@features/Orders/OrderSlice";

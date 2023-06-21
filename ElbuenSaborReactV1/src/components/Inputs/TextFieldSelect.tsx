@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
 import { ErrorMessage, useField, Field, FieldHookConfig } from "formik";
-import Options from "@Models/Product/Options";
+import Options from "types/Product/Options";
 interface props {
   label: string;
   options: Options[];

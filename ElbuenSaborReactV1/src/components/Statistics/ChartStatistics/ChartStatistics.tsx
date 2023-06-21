@@ -12,7 +12,7 @@ import { Bar } from "react-chartjs-2";
 import "./ChartStatistics.scss"
 import { Button } from "react-bootstrap";
 import { getData } from "components/GenericFetch/GenericFetch";
-import User from "@Models/Users/User";
+import User from "types/Users/User";
 import NotResult from "components/404/NotResult";
 import exportFromJSON from 'export-from-json';
 

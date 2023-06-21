@@ -1,7 +1,7 @@
-import Address from "@Models/Users/Address";
-import Phone from "@Models/Users/Phone";
-import Role from "@Models/Users/Role";
-import User from "@Models/Users/User";
+import Address from "types/Users/Address";
+import Phone from "types/Users/Phone";
+import Role from "types/Users/Role";
+import User from "types/Users/User";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { fetchAddresses, fetchPhones } from "./UserThunk";
 

@@ -1,4 +1,4 @@
-import Users from '@Models/Users/User';
+import Users from 'types/Users/User';
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import TableUsers from '../TableUsers/TableUsers';

@@ -1,6 +1,6 @@
-import Base from "@Models/Base";
+import Base from "types/Base";
 
 export default interface Image extends Base {
-    name: string;
-    path: string;
+  name: string;
+  path: string;
 }

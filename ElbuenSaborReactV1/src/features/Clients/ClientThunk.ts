@@ -1,4 +1,4 @@
-import User from "@Models/Users/User";
+import User from "types/Users/User";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getData } from "components/GenericFetch/GenericFetch";
 
