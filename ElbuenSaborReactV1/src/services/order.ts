@@ -1,6 +1,6 @@
-import DeliveryMethod from "types/orders/DeliveryMethod";
-import Order from "types/orders/Order";
-import PaymentMethod from "types/orders/PaymentMethod";
+import DeliveryMethod from "types/orderFixed/DeliveryMethod";
+import Order from "types/orderFixed/Order";
+import PaymentMethod from "types/orderFixed/PaymentMethod";
 import { deleteData, getData } from "components/GenericFetch/GenericFetch";
 import { getDataWithBody } from "./generic";
 

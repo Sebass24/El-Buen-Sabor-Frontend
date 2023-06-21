@@ -2,7 +2,7 @@ import Address from "types/Users/Address";
 import { deleteData, getData, postPutData } from "../components/GenericFetch/GenericFetch";
 import Phone from "types/Users/Phone";
 import User from "types/Users/User";
-import Order from "types/orders/Order";
+import Order from "types/orderFixed/Order";
 
 export async function getAddressesByUserId(id: number) {
   const url = `/api/user/addresses/${id}`;

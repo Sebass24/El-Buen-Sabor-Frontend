@@ -1,4 +1,4 @@
-import Order from "types/orders/Order";
+import Order from "types/orderFixed/Order";
 import { useAppSelector } from "@app/Hooks";
 import { getUserOrders } from "@services/order";
 import HeaderEcommerce from "components/Ecommerce/HeaderEcommerce/HeaderEcommerce";

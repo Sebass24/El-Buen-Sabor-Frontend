@@ -8,7 +8,7 @@ import { getProductById } from "@services/products";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { addProduct, setTotalPrice } from "@features/ShoppingCart/CartProducts";
 import { openRestaurant } from "../WorkingHours/WorkingSchedule";
-import OrderDetail from "types/orders/OrderDetail";
+import OrderDetail from "types/orderFixed/OrderDetail";
 import AlertMessage from "components/AlertMessage";
 import ClosedRestaurant from "../WorkingHours/ClosedRestaurant";
 import { useAuth0 } from "@auth0/auth0-react";

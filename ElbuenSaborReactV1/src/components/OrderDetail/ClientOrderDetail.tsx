@@ -1,5 +1,5 @@
-import Order from "types/orders/Order";
-import OrderDetail from "types/orders/OrderDetail"
+import Order from "types/orderFixed/Order";
+import OrderDetail from "types/orderFixed/OrderDetail"
 import { getOrderById } from "@services/order";
 import HeaderEcommerce from "components/Ecommerce/HeaderEcommerce/HeaderEcommerce";
 import OrderOptionsReview from "components/Ecommerce/ShoppingCart/OrderDetails/OrderOptionsReview"

@@ -1,4 +1,4 @@
-import Order from "../../types/orders/Order";
+import Order from "../../types/orderFixed/Order";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getData } from "components/GenericFetch/GenericFetch";
 

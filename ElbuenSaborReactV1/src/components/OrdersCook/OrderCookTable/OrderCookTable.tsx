@@ -1,4 +1,4 @@
-import Orders from "types/orders/Order";
+import Orders from "types/orderFixed/Order";
 import React from "react";
 import TableHead from "@mui/material/TableHead";
 import {
@@ -17,7 +17,7 @@ import {
 import { Button } from "react-bootstrap";
 import "./OrderCookTable.scss";
 import { Link } from "react-router-dom";
-import OrderStatus from "types/orders/OrderStatus";
+import OrderStatus from "types/orderFixed/OrderStatus";
 import { useAppDispatch } from "@app/Hooks";
 import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
 import { postPutData } from "components/GenericFetch/GenericFetch";

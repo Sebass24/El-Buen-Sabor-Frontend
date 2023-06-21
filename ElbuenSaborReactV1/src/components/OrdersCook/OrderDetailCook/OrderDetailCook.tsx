@@ -1,4 +1,4 @@
-import Orders from 'types/orders/Order';
+import Orders from 'types/orderFixed/Order';
 import { getData, postPutData } from 'components/GenericFetch/GenericFetch';
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import "./OrderDetailCook.scss"
 import Product from 'types/Product/Product';
 import { useAppDispatch } from '@app/Hooks';
-import OrderStatus from 'types/orders/OrderStatus';
+import OrderStatus from 'types/orderFixed/OrderStatus';
 import { finishLoading, startLoading } from '@features/Loading/LoadingSlice';
 import { updateOrder } from '@features/Orders/OrderSlice';
 
