@@ -44,12 +44,6 @@ export default function ProductDetail() {
     const handleCloseModal = () => {
         setShowModal(false);
     };
-    const handleMessage = () => {
-        setShowMessage(true);
-        setTimeout(() => {
-            setShowMessage(false);
-        }, 4000);
-    };
 
     const handleAddToCart = (p: Product, quantity: number) => {
         let open = false;
@@ -62,7 +56,6 @@ export default function ProductDetail() {
             const newOrder: OrderDetail = { product: p, quantity };
             dispatch(addProduct(newOrder));
             dispatch(setTotalPrice());
-            handleMessage();
         } else {
             setShowModal(true);
         }

@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./LoginButton.scss";
 import { useState } from "react";
 import PersonalDataModal from "components/Users/UsersPersonalData/PersonalDataModal";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "@app/Hooks";
 
 library.add(faUser);
@@ -30,7 +30,7 @@ export const LoginButton = () => {
 
   return (
     <div className="Container_RightNavBar">
-      {isAuthenticated ?
+      {isAuthenticated && user ?
         <Dropdown>
           <Dropdown.Toggle id="dropdown-basic" className='MyAccount' >
             <Profile />
