@@ -17,7 +17,7 @@ import Order from "@Models/Orders/Order";
 import { AlertColor, CircularProgress } from "@mui/material";
 import { openRestaurant } from "../WorkingHours/WorkingSchedule";
 import ClosedRestaurant from "../WorkingHours/ClosedRestaurant";
-import { resetOrderOptions } from "@features/ShoppingCart/CartProducts";
+import { resetOrderDetails, resetOrderOptions } from "@features/ShoppingCart/CartProducts";
 
 interface responsePrefId {
   preferenceId: string;
@@ -108,6 +108,7 @@ export default function ShoppingCart() {
         } else if (newOrder.paymentMethod?.id === 2) {
           mercadoPagoPayment(newOrder);
         }
+        dispatch(resetOrderDetails());
       } else {
         setShowModal(true);
       }

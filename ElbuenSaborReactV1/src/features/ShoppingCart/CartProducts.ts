@@ -95,12 +95,7 @@ export const cartSlice = createSlice({
       state.order.orderStatus = { id: 1, description: "A confirmar" };
     },
     resetOrderDetails: (state) => {
-      state.order.deliveryMethod = { id: 0, description: "none" };
-      state.order.date = "";
-      state.order.paymentMethod = { id: 0, description: "none" };
-      state.order.orderDetails = [];
-      state.order.address = "";
-      state.order.phone = "";
+      state.order = initialCartState.order;
     },
     resetOrderOptions: (state) => {
       state.order.deliveryMethod = { id: 0, description: "none" };
