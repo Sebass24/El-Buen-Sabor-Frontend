@@ -1,7 +1,7 @@
 import { useAppSelector } from "@app/Hooks";
 import OrderTotalPrice from "./OrderTotalPrice";
 import "./OrderTotalPrice.scss";
-import Order from "types/orderFixed/Order";
+import Order from "types/order/Order";
 
 interface Props {
   order: Order | null;

@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { fetchOrders } from "./OrderThunks";
-import Order from "../../types/orderFixed/Order";
+import Order from "../../types/order/Order";
 import { boolean } from "yup";
 // Define a type for the Loading state
 interface LoadingState {

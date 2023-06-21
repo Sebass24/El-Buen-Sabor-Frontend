@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useAppDispatch } from "@app/Hooks";
 import { deleteProduct, modifyProductQuantity, setTotalPrice } from "@features/ShoppingCart/CartProducts";
 import "./ShoppingCartProductDetail.scss";
-import OrderDetail from "types/orderFixed/OrderDetail";
+import OrderDetail from "types/order/OrderDetail";
 
 interface props {
   order: OrderDetail

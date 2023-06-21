@@ -1,4 +1,4 @@
-import Orders from "types/orderFixed/Order";
+import Orders from "types/order/Order";
 import { getData } from "components/GenericFetch/GenericFetch";
 import React, { useEffect, useState } from "react";
 import OrderCookTable from "./OrderCookTable/OrderCookTable";

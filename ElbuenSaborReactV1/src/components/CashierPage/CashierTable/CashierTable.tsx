@@ -17,10 +17,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "react-bootstrap";
-import Orders from "types/orderFixed/Order";
+import Orders from "types/order/Order";
 import { useAppDispatch } from "@app/Hooks";
 import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
-import OrderStatus from "types/orderFixed/OrderStatus";
+import OrderStatus from "types/order/OrderStatus";
 import { postPutData } from "components/GenericFetch/GenericFetch";
 import { updateOrder, UpdateStateOrder, UpdateStateOrderFalse } from "@features/Orders/OrderSlice";
 import { fetchOrders } from "@features/Orders/OrderThunks";
