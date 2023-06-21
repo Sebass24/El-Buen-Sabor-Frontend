@@ -1,4 +1,4 @@
-import Orders from "@Models/Orders/Order";
+import Orders from "@Models/orders/Order";
 import { getData } from "components/GenericFetch/GenericFetch";
 import React, { useEffect, useState } from "react";
 import OrderCookTable from "./OrderCookTable/OrderCookTable";
