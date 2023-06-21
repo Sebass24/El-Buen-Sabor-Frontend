@@ -156,6 +156,7 @@ export const ModalAddUserAdmin = ({
                       name="userEmail"
                       type="email"
                       defaultValue={initialValues.userEmail}
+                      disabled={editing ? true : false}
                     />
                     {Client ? (
                       <></>
