@@ -1,8 +1,8 @@
-import DeliveryMethod from 'types/Orders/DeliveryMethod';
-import OrderDetail from 'types/Orders/OrderDetail';
-import PaymentMethod from 'types/Orders/PaymentMethod';
+import DeliveryMethod from 'types/orders/DeliveryMethod';
+import OrderDetail from 'types/orders/OrderDetail';
+import PaymentMethod from 'types/orders/PaymentMethod';
 import User from 'types/Users/User';
-import Order from '../../types/Orders/Order';
+import Order from '../../types/orders/Order';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface cartSlice {

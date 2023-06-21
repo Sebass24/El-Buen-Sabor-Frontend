@@ -2,10 +2,10 @@ import Base from "types/Base";
 import User from "types/Users/User";
 import Phone from "types/Users/Phone";
 import Address from "types/Users/Address";
-import DeliveryMethod from "types/Orders/DeliveryMethod";
-import OrderStatus from "types/Orders/OrderStatus";
-import PaymentMethod from "types/Orders/PaymentMethod";
-import OrderDetail from "types/Orders/OrderDetail";
+import DeliveryMethod from "types/orders/DeliveryMethod";
+import OrderStatus from "types/orders/OrderStatus";
+import PaymentMethod from "types/orders/PaymentMethod";
+import OrderDetail from "types/orders/OrderDetail";
 
 export default interface Order extends Base {
   deliveryMethod: DeliveryMethod;

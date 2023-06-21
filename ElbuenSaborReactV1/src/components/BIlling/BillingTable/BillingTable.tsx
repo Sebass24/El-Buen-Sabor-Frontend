@@ -17,12 +17,12 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "react-bootstrap";
-import OrderStatus from "types/Orders/OrderStatus";
+import OrderStatus from "types/orders/OrderStatus";
 import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
 import { useAppDispatch } from "@app/Hooks";
 import { getData, postPutData } from "components/GenericFetch/GenericFetch";
 import { updateOrder } from "@features/Orders/OrderSlice";
-import Order from "../../../types/Orders/Order";
+import Order from "../../../types/orders/Order";
 import { number } from "yup";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
