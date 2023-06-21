@@ -1,6 +1,6 @@
 import Address from 'types/Users/Address';
 import Phone from 'types/Users/Phone';
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import "./DeliveryInfo.scss";
 import { useAppDispatch, useAppSelector } from '@app/Hooks';
 import * as Yup from "yup";
@@ -28,6 +28,9 @@ export default function DeliveryInfo() {
   const handleModal = () => {
     setShowAddressModal(false);
     setShowPhoneModal(false);
+  }
+  const handleAddressModal = () => {
+    setShowAddressModal(true);
   }
 
   useEffect(() => {
@@ -66,6 +69,7 @@ export default function DeliveryInfo() {
                   className={`form-control  mb-3  input-formulario`}
                   name={"address"}
                   as={"select"}
+                  defaultValue={selectedAddress}
                   onChange={(event: ChangeEvent<HTMLSelectElement>) => {
                     const address = event.target.value;
                     Formik.setFieldValue("address", address);
@@ -96,7 +100,7 @@ export default function DeliveryInfo() {
                   className="error"
                 />
               </div>
-              <Button type="button" className="btn-cart" onClick={() => setShowAddressModal(true)}>
+              <Button type="button" className="btn-cart" onClick={handleAddressModal}>
                 Nueva dirección
               </Button>
               <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
