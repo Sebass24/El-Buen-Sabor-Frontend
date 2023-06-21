@@ -1,6 +1,6 @@
-import { Button, Container, Modal, Row } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import "./ShoppingCart.scss";
-import { useAppSelector } from "@app/Hooks";
+import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import ShoppingCartProductDetail from "./ShoppingCartProductDetail";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -14,9 +14,10 @@ import AlertMessage from "components/AlertMessage";
 import { Wallet, initMercadoPago } from '@mercadopago/sdk-react'
 import { createPreferenceMP, deleteOrder } from "@services/order";
 import Order from "@Models/Orders/Order";
-import { AlertColor } from "@mui/material";
+import { AlertColor, CircularProgress } from "@mui/material";
 import { openRestaurant } from "../WorkingHours/WorkingSchedule";
 import ClosedRestaurant from "../WorkingHours/ClosedRestaurant";
+import { resetOrderOptions } from "@features/ShoppingCart/CartProducts";
 
 interface responsePrefId {
   preferenceId: string;
@@ -27,8 +28,11 @@ interface alertMessage { //to use the same alert with different messages
   message: string;
 }
 
+initMercadoPago('TEST-f9a81470-5f5f-467c-85fe-e3d799f97788', { locale: 'es-AR' });
+
 export default function ShoppingCart() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { order } = useAppSelector(state => state.cart);
   const { isAuthenticated, loginWithRedirect } = useAuth0();
@@ -37,6 +41,7 @@ export default function ShoppingCart() {
   const [continueToReview, setContinueToReview] = useState(false);
   const [showReview, setShowReview] = useState(false);
   const [showPaymentButton, setShowPaymentButton] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [prefId, setPrefId] = useState("");
   const [newOrderId, setNewOrderId] = useState(0);
 
@@ -115,7 +120,7 @@ export default function ShoppingCart() {
 
   const mercadoPagoPayment = async (newOrder: Order) => {
     try {
-      initMercadoPago('TEST-f9a81470-5f5f-467c-85fe-e3d799f97788', { locale: 'es-AR' });
+      setLoading(true);
       const orderItem = {
         code: String(newOrder.id),
         title: `${newOrder.orderDetails.length} artículos`,
@@ -125,6 +130,7 @@ export default function ShoppingCart() {
       const pref_id: responsePrefId = await createPreferenceMP(orderItem);
       setPrefId(pref_id.preferenceId);
       setShowPaymentButton(true);
+      setLoading(false);
     } catch (error) {
       console.log(error);
       setAlertMessage({ severity: "error", message: "Error con Mercado Pago." });
@@ -132,10 +138,11 @@ export default function ShoppingCart() {
     }
   };
 
-  /*   if (isAuthenticated) {
+  /*   if (isAuthenticated && !showPaymentButton) {
       window.addEventListener('beforeunload', function (event) {
         //sets as deleted the created order if the page is reloaded because a new one will be created after the reload
         deleteOrder(newOrderId);
+        dispatch(resetOrderOptions());
       });
     } */
 
@@ -148,6 +155,10 @@ export default function ShoppingCart() {
       setAlertMessage({ severity: "error", message: "Error al realizar el pago. Intente nuevamente" });
       setShowMessage(true);
     }
+  }, [])
+
+  useEffect(() => {
+    dispatch(resetOrderOptions());
   }, [])
 
   return (
@@ -200,22 +211,26 @@ export default function ShoppingCart() {
             </>
           ) : (
             <>
-              <Container>
-                <OrderTotalPrice order={null} />
-                <Button
-                  className={"btn-cart"}
-                  onClick={handleOrderLogin}>
-                  Continuar
-                </Button>
-              </Container>
+              <OrderTotalPrice order={null} />
+              <Button
+                className={"btn-cart"}
+                onClick={handleOrderLogin}>
+                Continuar
+              </Button>
             </>
           )}
         </div>
       </div>
-      {showPaymentButton &&
-        <div id="wallet_container">
-          <Wallet initialization={{ preferenceId: prefId }} />
-        </div>
+      {loading ?
+        <CircularProgress color="warning" style={{ margin: "1rem" }} />
+        :
+        <>
+          {showPaymentButton &&
+            <div id="wallet_container">
+              <Wallet initialization={{ preferenceId: prefId }} />
+            </div>
+          }
+        </>
       }
       <div className="button-container-1">
         <Button className="btn-cart" onClick={() => navigate("/")}>

@@ -17,7 +17,7 @@ const Footer = () => {
         </div>
         <div className="Container_Footer_contact_items">
           <i className="fa-solid fa-envelope"></i>
-          <label>ElBuenSaborMendoza@gmail.com</label>
+          <label>buensaborfes@gmail.com</label>
         </div>
       </div>
 

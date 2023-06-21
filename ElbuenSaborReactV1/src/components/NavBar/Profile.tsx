@@ -10,11 +10,13 @@ import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from "@app/Store";
 import { AnyAction } from "@reduxjs/toolkit";
 import Role from "@Models/Users/Role";
+import NewClientModal from "components/Users/UsersPersonalData/NewClientModal";
 
 
 const Profile = () => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const { user: currentUser } = useAppSelector(state => state.users);
+  const { user: currentUser, token } = useAppSelector(state => state.users);
+  const [showNewClientModal, setShowNewClientModal] = useState(false);
 
   const dispatch = useAppDispatch();
   const thunkdispatch: ThunkDispatch<RootState, unknown, AnyAction> = useAppDispatch();
@@ -27,7 +29,8 @@ const Profile = () => {
 
   async function getUser() {
     try {
-      if (user && isAuthenticated) {
+      getToken();
+      if (token && user && isAuthenticated) {
         const dbuser: User = await getUserData(user.sub!);
         if (dbuser.name !== null) {
           dispatch(setUserData(dbuser));
@@ -44,6 +47,7 @@ const Profile = () => {
           }
           dispatch(setCartUser(dbuser));
         } else {
+          setShowNewClientModal(true);
           dispatch(setCartUser(null as any));
           dispatch(resetUserData());
         }
@@ -53,15 +57,20 @@ const Profile = () => {
     }
   }
 
+  const handleNewClientModal = () => {
+    setShowNewClientModal(false);
+  }
+
   useEffect(() => {
-    getToken();
     getUser();
-  }, [])
+  }, [token])
 
   return (
     <div>
+
       <span>{currentUser.name ? ` ${currentUser.name}` : "-"}</span>
       <span>{currentUser.lastName ? ` ${currentUser.lastName}` : "-"}</span>
+      {showNewClientModal ? <NewClientModal onClose={handleNewClientModal} /> : ""}
     </div>
   )
 };

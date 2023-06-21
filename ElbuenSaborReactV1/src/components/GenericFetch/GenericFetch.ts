@@ -49,6 +49,7 @@ export async function postPutData<T>(
     },
     body: JSON.stringify(data),
   });
+  console.log(JSON.stringify(data));
   if (!response.ok) {
     throw Error(response.statusText);
   }

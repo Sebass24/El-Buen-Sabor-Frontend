@@ -29,9 +29,8 @@ export default function Clients() {
 
   return (
     <div className='Container_Ingredientes' >
-      <div className='actions_Ingredientes'>
-        <Button variant="success" onClick={() => (setShowModal(true))}>Nuevo</Button>
-
+      <div className='actions_Ingredientes' style={{ justifyContent: "right" }}>
+        {/* <Button variant="success" onClick={() => (setShowModal(true))}>Nuevo</Button> */}
         <div className="Container_input">
           <input
             placeholder="Busqueda"
