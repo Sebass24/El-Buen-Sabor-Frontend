@@ -22,6 +22,8 @@ import { useAppDispatch } from "@app/Hooks";
 import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
 import { postPutData } from "components/GenericFetch/GenericFetch";
 import { updateOrderCook } from "@features/OrderCook/OrderCookSlice";
+import { updateOrder } from "@features/Orders/OrderSlice";
+import Order from "types/order/Order";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
@@ -106,7 +108,7 @@ function CabeceraMejorada(props: any) {
 
         <TableCell
           className="tableCell"
-          key="Pagado"
+          key="estimatedTime"
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
@@ -116,6 +118,13 @@ function CabeceraMejorada(props: any) {
           >
             <Typography fontWeight="bold">tiempo de preparacion</Typography>
           </TableSortLabel>
+        </TableCell>
+        <TableCell
+          className="tableCell"
+          key="Pagado"
+          style={{ backgroundColor: "#C6C6C6" }}
+        >
+          <Typography fontWeight="bold">Pagado</Typography>
         </TableCell>
         <TableCell
           className="tableCell"
@@ -145,9 +154,10 @@ function CabeceraMejorada(props: any) {
 
 interface myProps {
   orders: Orders[];
+  getOrders: any;
 }
 
-export default function OrderCookTable({ orders }: myProps) {
+export default function OrderCookTable({ orders, getOrders }: myProps) {
   const [order, setOrder] = React.useState("desc");
   const [orderBy, setOrderBy] = React.useState("id");
   const [page, setPage] = React.useState(0);
@@ -190,7 +200,6 @@ export default function OrderCookTable({ orders }: myProps) {
     });
     dispatch(finishLoading());
   }
-
   return (
     <div className="container_tabla">
       <Paper className="paper">
@@ -221,6 +230,9 @@ export default function OrderCookTable({ orders }: myProps) {
                           order.date?.toString().substring(11, 19)}
                       </TableCell>
                       <TableCell className="tableCell">
+                        {order.estimatedTime?.toString().substring(11, 19)}
+                      </TableCell>
+                      <TableCell className="tableCell">
                         {order.paid == true ? "pagado" : "Falta Pago"}
                       </TableCell>
                       <TableCell className="tableCell">
@@ -244,7 +256,17 @@ export default function OrderCookTable({ orders }: myProps) {
                         }}
                       >
                         <div className="tableCell_Actions_billing">
-                          <Button variant="warning">+10 min</Button>
+                          <Button variant="warning"
+                            onClick={() => {
+                              postPutData(`/api/order/add10/${order.id}`, "PUT", {}).then((response) => {
+                                console.log(response)
+                                const order: Order = { ...response as Order }
+                                dispatch(updateOrder(order))
+                                getOrders()
+                              }
+                              )
+                            }}
+                          >+10 min</Button>
                           <Button
                             className="ACocina"
                             variant="warning"

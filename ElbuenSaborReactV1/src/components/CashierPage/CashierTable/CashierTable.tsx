@@ -298,7 +298,9 @@ const CahierTable = ({ orders }: myProps) => {
                     <TableRow key={index}>
                       <TableCell className="tableCell">{order.id}</TableCell>
                       <TableCell className="tableCell">
-                        {order.date?.toLocaleString("es-Ar")}
+                        {order.date?.toString().substring(0, 10) +
+                          " " +
+                          order.date?.toString().substring(11, 19)}
                       </TableCell>
                       <TableCell className="tableCell">
                         {order.deliveryMethod.description}

@@ -18,7 +18,7 @@ export default function OrderCook() {
     getOrders();
   }, []);
 
-  setInterval(getOrders, 60000);
+  setInterval(getOrders, 600000);
 
   const [search, setSearch] = useState("");
 
@@ -49,7 +49,7 @@ export default function OrderCook() {
         </div>
       </div>
       <div className="Container_Cashier_Table">
-        <OrderCookTable orders={orders} />
+        <OrderCookTable orders={orders} getOrders={getOrders} />
       </div>
     </div>
   );

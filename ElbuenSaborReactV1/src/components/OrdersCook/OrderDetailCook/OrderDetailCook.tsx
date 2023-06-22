@@ -9,6 +9,7 @@ import { useAppDispatch } from '@app/Hooks';
 import OrderStatus from 'types/order/OrderStatus';
 import { finishLoading, startLoading } from '@features/Loading/LoadingSlice';
 import { updateOrder } from '@features/Orders/OrderSlice';
+import Order from 'types/order/Order';
 
 
 const initialValues: Orders = {
@@ -62,7 +63,7 @@ export default function OrderDetailCook() {
       <div className='Container_OrderDetail'>
         <div className='title-Order-Cook'>
           <h2 > Pedido: {Order?.id}</h2>
-          <h2 > Hora Estimada: {"no hay aun"}</h2>
+          <h2 > Hora Estimada: {Order.estimatedTime?.toString().substring(11, 19)}</h2>
         </div>
 
         <div className='Products_Container'>
@@ -134,7 +135,15 @@ export default function OrderDetailCook() {
         </Button >
         <Button
           variant='warning'
-          onClick={() => { }}
+          onClick={() => {
+            postPutData(`/api/order/add10/${Order.id}`, "PUT", {}).then((response) => {
+              console.log(response)
+              const order: Order = { ...response as Order }
+              dispatch(updateOrder(order))
+              getOrderByID()
+            }
+            )
+          }}
         >
           +10 min
         </Button >
