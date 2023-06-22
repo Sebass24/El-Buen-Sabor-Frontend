@@ -98,7 +98,7 @@ export default function ClientOrderDetail() {
               <label className="title-order-id" style={{ textAlign: "right" }}>{order?.id}</label>
             </div >
             <OrderOptionsReview order={order} />
-            {order?.orderStatus.description === "Cancelado" ?
+            {order?.orderStatus.description === "Cancelado" && order?.paid ?
               <Button className={"btn-cart-review"}
                 style={{ width: "100%" }}
                 onClick={handleCreditNoteDownload} >
@@ -119,6 +119,10 @@ export default function ClientOrderDetail() {
                 <Button className="time-button" disabled>
                   Tu pedido ya está listo {order.deliveryMethod.description === "Envío a domicilio" ?
                     "para enviarlo" : ""}
+                </Button>
+              ) : order?.orderStatus.description === "Cancelado" ? (
+                <Button className="time-button" disabled style={{ backgroundColor: "#EC5800", borderColor: "#EC5800" }}>
+                  Cancelado
                 </Button>
               ) : (
                 <Button className="time-button" disabled>

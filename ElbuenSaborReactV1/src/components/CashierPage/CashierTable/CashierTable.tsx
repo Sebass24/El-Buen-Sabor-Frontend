@@ -431,7 +431,7 @@ const CahierTable = ({ orders }: myProps) => {
                               className="Anular"
                               variant="warning"
                               href={`${import.meta.env.VITE_BILL_DOWNLOAD
-                                }/api/credit-note/${order.id}`}
+                                }/api/credit-note/download-credit-note/${order.id}`}
                               target="_blank"
                             >
                               Ver Nota
