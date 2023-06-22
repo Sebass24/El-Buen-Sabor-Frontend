@@ -17,7 +17,7 @@ import Order from "types/order/Order";
 import { AlertColor, CircularProgress } from "@mui/material";
 import { openRestaurant } from "../WorkingHours/WorkingSchedule";
 import ClosedRestaurant from "../WorkingHours/ClosedRestaurant";
-import { resetOrderOptions } from "@features/ShoppingCart/CartProducts";
+import { resetOrderDetails, resetOrderOptions } from "@features/ShoppingCart/CartProducts";
 
 interface responsePrefId {
   preferenceId: string;
@@ -108,6 +108,7 @@ export default function ShoppingCart() {
         } else if (newOrder.paymentMethod?.id === 2) {
           mercadoPagoPayment(newOrder);
         }
+        dispatch(resetOrderDetails());
       } else {
         setShowModal(true);
       }
@@ -135,6 +136,8 @@ export default function ShoppingCart() {
       console.log(error);
       setAlertMessage({ severity: "error", message: "Error con Mercado Pago." });
       setShowMessage(true);
+      deleteOrder(newOrderId);
+      setLoading(false);
     }
   };
 

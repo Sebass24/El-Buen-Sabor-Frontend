@@ -10,7 +10,6 @@ import DetailCook from "../screens/DetailCook";
 import UserRouter from "./UserRouter";
 import { useAppSelector } from "@app/Hooks";
 import { PrivateRoute } from "./PrivateRoute";
-import { useAuth0 } from "@auth0/auth0-react";
 import { PrivateRouteAll } from "./PrivateRouteAll";
 
 const IndexRouter = () => {
