@@ -28,6 +28,10 @@ export const OrderDeliverySlice = createSlice({
       const index = state.orders.findIndex(
         (ing) => ing.id == action.payload.id
       );
+      if (action.payload.orderStatus.id === 5) {
+        state.orders = state.orders.filter((o) => o.id != action.payload.id);
+        return;
+      }
       state.orders[index] = action.payload;
     },
   },

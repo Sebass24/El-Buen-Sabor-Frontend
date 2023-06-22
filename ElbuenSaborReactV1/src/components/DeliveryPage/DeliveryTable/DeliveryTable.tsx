@@ -19,6 +19,11 @@ import { Button } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import Order from '@Models/order/Order';
 import Address from '@Models/Users/Address';
+import { useAppDispatch } from '@app/Hooks';
+import OrderStatus from '@Models/order/OrderStatus';
+import { finishLoading, startLoading } from '@features/Loading/LoadingSlice';
+import { postPutData } from 'components/GenericFetch/GenericFetch';
+import { updateOrderDelivery } from '@features/OrderDelivery/OrderDelivery';
 
 
 
@@ -179,6 +184,21 @@ function DeliveryTable({ orders }: myProps) {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, orders.length - page * rowsPerPage);
 
+  const dispatch = useAppDispatch();
+
+  function handleChangeState(order: Order, status: OrderStatus) {
+    const neworder = { ...order, orderStatus: status };
+    dispatch(startLoading());
+    postPutData(
+      `/api/order/changeStatus/${order.id}/${status.id}`,
+      "PUT",
+      {}
+    ).then(() => {
+      dispatch(updateOrderDelivery(neworder));
+    });
+    dispatch(finishLoading());
+  }
+
   return (
     <div className="container_tabla">
       <Paper className="paper">
@@ -240,6 +260,13 @@ function DeliveryTable({ orders }: myProps) {
                           <Button
                             className="ACocina"
                             variant="warning"
+                            onClick={() => {
+                              handleChangeState(order, {
+                                id: 5,
+                                deleted: false,
+                                description: "Entregado",
+                              });
+                            }}
                           >
                             Entregado
                           </Button>

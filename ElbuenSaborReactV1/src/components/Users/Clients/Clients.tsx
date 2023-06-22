@@ -58,6 +58,7 @@ export default function Clients() {
 
       <TableUsers
         Users={Clients}
+        client={true}
       />
 
       <ModalAddUserAdmin

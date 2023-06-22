@@ -10,7 +10,7 @@ import TextFildSelectValue from "components/Inputs/TextFildSelectValue";
 import { getData, postPutData } from "components/GenericFetch/GenericFetch";
 import { finishLoading, startLoading } from "@features/Loading/LoadingSlice";
 import { addClient, updateClient } from "@features/Clients/ClientSlice";
-import { addEmpleoyee } from "@features/Empleoyees/empleoyeeSlice";
+import { addEmpleoyee, updateEmpleoyee } from "@features/Empleoyees/empleoyeeSlice";
 
 interface props {
   showModal: boolean;
@@ -108,14 +108,15 @@ export const ModalAddUserAdmin = ({
                   },
                 };
               }
-              console.log(values);
+              console.log(values)
               if (editing) {
                 dispatch(startLoading());
                 postPutData(`/api/user`, "PUT", values).then(() => {
                   if (Client) {
+                    console.log(values)
                     dispatch(updateClient(values));
                   } else {
-                    dispatch(updateClient(values));
+                    dispatch(updateEmpleoyee(values));
                   }
                 });
                 dispatch(finishLoading());
@@ -158,7 +159,7 @@ export const ModalAddUserAdmin = ({
                       defaultValue={initialValues.userEmail}
                       disabled={editing ? true : false}
                     />
-                    {user?.role.id === 2 ? (
+                    {user?.role?.id === 2 ? (
                       <></>
                     ) : (
                       <TextFildSelectValue

@@ -17,6 +17,10 @@ import {
 } from "@mui/material";
 import Users from "types/Users/User";
 import { ModalAddUserAdmin } from "../ModalAddUserAdmin/ModalAddUserAdmin";
+import { deleteData, postPutData } from "components/GenericFetch/GenericFetch";
+import { useAppDispatch } from "@app/Hooks";
+import { deleteEmpleoyee } from "@features/Empleoyees/empleoyeeSlice";
+import User from "types/Users/User";
 
 function comparadorDescendiente(a: any, b: any, orderBy: any) {
   if (typeof a[orderBy] == "string") {
@@ -137,9 +141,10 @@ function CabeceraMejorada(props: any) {
 
 interface myProps {
   Users: Users[];
+  client: boolean
 }
 
-export default function TableUsers({ Users }: myProps) {
+export default function TableUsers({ Users, client }: myProps) {
   const [showModal, setShowModal] = useState(false);
   const [UserEdit, setUserEdit] = useState<Users | undefined>(undefined)
   const handleClose = () => {
@@ -169,6 +174,14 @@ export default function TableUsers({ Users }: myProps) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const dispatch = useAppDispatch()
+  function handleLogicDelete(empleoyee: User) {
+    deleteData(`/api/user/deleteEmployee/${empleoyee.auth0Id}`).then(
+      (response) => {
+        dispatch(deleteEmpleoyee(empleoyee))
+      }
+    )
+  }
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, Users.length - page * rowsPerPage);
@@ -215,6 +228,18 @@ export default function TableUsers({ Users }: myProps) {
                             <i className="fa-solid fa-pen-to-square" onClick={() => { setUserEdit(user); setShowModal(true) }}></i>
                           </button>
                         }
+                        {(!client) ?
+                          <button
+                            data-title="DarDeBaja"
+                            type="button"
+                            className="btn btn-sm"
+                          >
+                            <i className="fa-solid fa-trash" onClick={() => {
+                              handleLogicDelete(user)
+                            }}></i>
+                          </button>
+                          : <></>
+                        }
                       </TableCell>
                     </TableRow>
                   );
@@ -247,6 +272,7 @@ export default function TableUsers({ Users }: myProps) {
         handleClose={handleClose}
         editing={true}
         user={UserEdit}
+        Client={client}
       />
     </div>
   );

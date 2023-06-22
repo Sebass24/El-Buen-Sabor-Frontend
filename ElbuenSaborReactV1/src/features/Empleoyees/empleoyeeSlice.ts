@@ -25,7 +25,12 @@ export const EmpleoyeesSlice = createSlice({
     updateEmpleoyee: (state, action: PayloadAction<User>) => {
       const index = state.Empleoyees.findIndex(ing => ing.id == action.payload.id)
       state.Empleoyees[index] = action.payload
-    }
+    },
+    deleteEmpleoyee: (state, action: PayloadAction<User>) => {
+      const index = state.Empleoyees.filter(ing => ing.id !== action.payload.id)
+      state.Empleoyees = index
+    },
+
   },
   extraReducers(builder) {
     builder.addCase(fetchEmpleoyees.fulfilled, (state, action) => {
@@ -34,6 +39,6 @@ export const EmpleoyeesSlice = createSlice({
   },
 });
 
-export const { setEmpleoyees, addEmpleoyee, updateEmpleoyee } = EmpleoyeesSlice.actions;
+export const { setEmpleoyees, addEmpleoyee, updateEmpleoyee, deleteEmpleoyee } = EmpleoyeesSlice.actions;
 
 export default EmpleoyeesSlice.reducer;

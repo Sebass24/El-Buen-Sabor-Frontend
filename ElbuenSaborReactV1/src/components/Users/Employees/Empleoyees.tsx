@@ -78,6 +78,7 @@ export default function Empleoyees() {
 
       <TableUsers
         Users={Empleoyees}
+        client={false}
       />
       <ModalAddUserAdmin
         showModal={showModal}

@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import * as Yup from "yup";
 // import { validacionIngredientes, ingredientesBase } from './DatosForm';
 // import FormIngredientesFields from './FormIngredientesFields';
-import { Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 // import { addIngredient } from "../../../../features/foods/IngredientSlice.js"
 import { useDispatch } from 'react-redux';
 import TextFieldValue from '../../../Inputs/TextFieldValue';
@@ -40,6 +40,7 @@ export default function ModalBuyIngredient({ showModal, handleClose, handleClose
   const { Ingredients } = useAppSelector((state) => state.ingredients);
 
   const [optionsIngredients, setOptionsIngredients] = useState<any>([]);
+  const [mesuUnitSelected, setmesuUnitSelected] = useState('')
   function categorysToOptions() {
     const initialopcions = {
       value: "",
@@ -127,11 +128,42 @@ export default function ModalBuyIngredient({ showModal, handleClose, handleClose
                         if (ingredient.length === 0) {
                           ingredient = [emptyIngredient]
                         }
+                        setmesuUnitSelected(ingredient[0]?.measurementUnit)
                         Formik.setFieldValue(`ingredient`, ingredient[0]);
                       }}
                       value={Formik.values.ingredient.id?.toString()}
 
                     />
+                    <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          padding: ".3rem 0",
+                        }}
+                      >
+                        <label
+                          style={{
+                            color: "black",
+                            fontFamily: "sans-serif",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {"Unidad de Medida"}
+                        </label>
+                      </div>
+
+                      <Field
+                        className={`form-control  mb-3  input-formulario `}
+                        type={'text'}
+                        autoComplete="off"
+                        disabled={true}
+                        value={mesuUnitSelected}
+                      />
+
+                    </div>
                     <TextFieldValue
                       label="Cantidad:"
                       name="Cuantity"

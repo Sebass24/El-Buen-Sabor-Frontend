@@ -29,18 +29,20 @@ const ModalAddIngrediente = ({
 }: props) => {
 
   const { IngredientsCategories } = useAppSelector(state => state.ingredintsCategories)
+
   const [options, setOptions] = useState<any>([])
 
   const dispatch = useAppDispatch()
 
   function categorysToOptions() {
+    const array = IngredientsCategories.filter((e) => e.parentCategory !== null)
     const initialopcions = {
       value: "todos",
       label: "",
     };
     setOptions([
       initialopcions,
-      ...IngredientsCategories.map((option, index) => ({
+      ...array.map((option, index) => ({
         value: option.name,
         label: option.name,
       })),
@@ -49,6 +51,7 @@ const ModalAddIngrediente = ({
 
 
   useEffect(() => {
+
     categorysToOptions()
   }, [IngredientsCategories]);
 
@@ -80,8 +83,8 @@ const ModalAddIngrediente = ({
   const initialValues: Ingredient = {
     name: "",
     ingredientCategory: {
-      id: null as any,
-      name: "",
+      id: 0,
+      name: "todos",
     },
     costPrice: "",
     minimumStock: "",
