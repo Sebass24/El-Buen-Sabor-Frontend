@@ -9,6 +9,7 @@ import ClientOrderDetail from "components/OrderDetail/ClientOrderDetail";
 import ClientOrderList from "components/OrderDetail/ClientOrderList";
 import { PrivateRoute } from "./PrivateRoute";
 import { useAppSelector } from "@app/Hooks";
+import PersonalData from "../screens/PersonalData";
 
 const UserRouter = () => {
   const { user } = useAppSelector(state => state.users)
@@ -30,6 +31,13 @@ const UserRouter = () => {
             path="/"
           >
             <ClientOrderList />
+          </PrivateRoute>} />
+        <Route path="/myPersonalData" element={
+          <PrivateRoute
+            isRolPermited={user?.role?.id !== 0}
+            path="/"
+          >
+            <PersonalData />
           </PrivateRoute>} />
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/aboutUs" element={<AboutUs />} />

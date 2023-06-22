@@ -10,52 +10,102 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./LoginButton.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PersonalDataModal from "components/Users/UsersPersonalData/PersonalDataModal";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "@app/Hooks";
 
 library.add(faUser);
 
-export const LoginButton = () => {
+interface Props {
+  onClick: () => void;
+}
+
+export const LoginButton = ({ onClick }: Props) => {
   const { isAuthenticated } = useAuth0();
-  const [showPersonalData, setShowPersonalData] = useState(false);
-  const { user } = useAppSelector(state => state.users)
-
-  const handlePersonalDataModal = () => {
-    setShowPersonalData(false);
-  }
-
+  /*  const [showPersonalData, setShowPersonalData] = useState(false); */
+  const { user } = useAppSelector(state => state.users);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const navigate = useNavigate();
 
+  /*  const handlePersonalDataModal = () => {
+     setShowPersonalData(false);
+   } */
+  const handlePersonalDataClick = () => {
+    navigate("/myPersonalData");/* 
+    setShowPersonalData(true); */
+    onClick();
+  }
+
+  const handleMyOrders = () => {
+    navigate("/myOrders");
+    onClick();
+  }
+
+  const handleHome = () => {
+    navigate("/");
+    onClick();
+  }
+
+  useEffect(() => {
+    const handleResize = () => setIsSmallScreen(window.matchMedia('(max-width: 767px)').matches);
+    window.addEventListener('resize', handleResize);
+
+    setIsSmallScreen(window.matchMedia('(max-width: 767px)').matches);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div className="Container_RightNavBar">
-      {isAuthenticated ?
-        <Dropdown>
-          <Dropdown.Toggle id="dropdown-basic" className='MyAccount' >
-            <Profile />
-            <FontAwesomeIcon icon={faUser} />
-          </Dropdown.Toggle>
-          <Dropdown.Menu className="login-button">
-            <Dropdown.Item onClick={() => { setShowPersonalData(true) }}><span>Mis datos personales</span></Dropdown.Item>
-            {user.role?.description === "Administrador" ? (<>
-              <Dropdown.Item onClick={() => { navigate("/myOrders") }}><span>Mis pedidos</span></Dropdown.Item>
-              <Dropdown.Item onClick={() => { navigate("/") }}><span>Home</span></Dropdown.Item>
-              <Dropdown.Item onClick={() => { navigate("/cashier") }}><span>Cajero</span></Dropdown.Item>
-              <Dropdown.Item onClick={() => { navigate("/cook") }}><span>Cocinero</span></Dropdown.Item>
-              <Dropdown.Item onClick={() => { navigate("/delivery") }}><span>Delivery</span></Dropdown.Item>
-              <Dropdown.Item onClick={() => { navigate("/admin") }}><span>Administrador</span></Dropdown.Item>
-            </>) : <></>}
-            {user.role?.description === "Cliente" ? (<>
-              <Dropdown.Item onClick={() => { navigate("/myOrders") }}><span>Mis pedidos</span></Dropdown.Item>
-            </>) : <></>}
-            <Dropdown.Item><LogOutAuth /></Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+    <>
+      {isSmallScreen && isAuthenticated ?
+        <>
+          <hr />
+          <label><strong>Menú</strong></label>
+          <Dropdown.Item onClick={handlePersonalDataClick}><span>Mis datos personales</span></Dropdown.Item>
+          {user.role?.description === "Administrador" ? (<>
+            <Dropdown.Item onClick={handleMyOrders}><span>Mis pedidos</span></Dropdown.Item>
+            <Dropdown.Item onClick={handleHome}><span>Home</span></Dropdown.Item>
+            <Dropdown.Item onClick={() => { navigate("/cashier") }}><span>Cajero</span></Dropdown.Item>
+            <Dropdown.Item onClick={() => { navigate("/cook") }}><span>Cocinero</span></Dropdown.Item>
+            <Dropdown.Item onClick={() => { navigate("/delivery") }}><span>Delivery</span></Dropdown.Item>
+            <Dropdown.Item onClick={() => { navigate("/admin") }}><span>Administrador</span></Dropdown.Item>
+          </>) : <></>}
+          {user.role?.description === "Cliente" ? (<>
+            <Dropdown.Item onClick={() => { navigate("/myOrders") }}><span>Mis pedidos</span></Dropdown.Item>
+          </>) : <></>}
+          <Dropdown.Item><LogOutAuth /></Dropdown.Item>
+        </>
         :
-        <LoginAuth />}
-      {showPersonalData ?
-        <PersonalDataModal onClose={handlePersonalDataModal} /> : ""}
-    </div>
+        <div className="Container_RightNavBar">
+          {isAuthenticated ?
+            <Dropdown>
+              <Dropdown.Toggle id="dropdown-basic" className='MyAccount' >
+                <Profile />
+                <FontAwesomeIcon icon={faUser} />
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="login-button">
+                <Dropdown.Item onClick={handlePersonalDataClick}><span>Mis datos personales</span></Dropdown.Item>
+                {user.role?.description === "Administrador" ? (<>
+                  <Dropdown.Item onClick={() => { navigate("/myOrders") }}><span>Mis pedidos</span></Dropdown.Item>
+                  <Dropdown.Item onClick={() => { navigate("/") }}><span>Home</span></Dropdown.Item>
+                  <Dropdown.Item onClick={() => { navigate("/cashier") }}><span>Cajero</span></Dropdown.Item>
+                  <Dropdown.Item onClick={() => { navigate("/cook") }}><span>Cocinero</span></Dropdown.Item>
+                  <Dropdown.Item onClick={() => { navigate("/delivery") }}><span>Delivery</span></Dropdown.Item>
+                  <Dropdown.Item onClick={() => { navigate("/admin") }}><span>Administrador</span></Dropdown.Item>
+                </>) : <></>}
+                {user.role?.description === "Cliente" ? (<>
+                  <Dropdown.Item onClick={() => { navigate("/myOrders") }}><span>Mis pedidos</span></Dropdown.Item>
+                </>) : <></>}
+                <Dropdown.Item><LogOutAuth /></Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            :
+            <LoginAuth />}
+          {/* {showPersonalData ?
+            <PersonalDataModal onClose={handlePersonalDataModal} /> : ""} */}
+        </div>
+      }
+    </>
   )
 }
