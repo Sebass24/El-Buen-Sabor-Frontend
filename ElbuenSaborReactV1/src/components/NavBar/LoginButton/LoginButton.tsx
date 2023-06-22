@@ -56,29 +56,36 @@ export const LoginButton = ({ onClick }: Props) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    onClick();
+  }, [user])
+
   return (
     <>
-      {isSmallScreen && isAuthenticated ?
-        <>
-          <hr />
-          <label><strong>Menú</strong></label>
-          <Dropdown.Item onClick={handlePersonalDataClick}><span>Mis datos personales</span></Dropdown.Item>
-          {user.role?.description === "Administrador" ? (<>
-            <Dropdown.Item onClick={handleMyOrders}><span>Mis pedidos</span></Dropdown.Item>
-            <Dropdown.Item onClick={handleHome}><span>Home</span></Dropdown.Item>
-            <Dropdown.Item onClick={() => { navigate("/cashier") }}><span>Cajero</span></Dropdown.Item>
-            <Dropdown.Item onClick={() => { navigate("/cook") }}><span>Cocinero</span></Dropdown.Item>
-            <Dropdown.Item onClick={() => { navigate("/delivery") }}><span>Delivery</span></Dropdown.Item>
-            <Dropdown.Item onClick={() => { navigate("/admin") }}><span>Administrador</span></Dropdown.Item>
-          </>) : <></>}
-          {user.role?.description === "Cliente" ? (<>
-            <Dropdown.Item onClick={() => { navigate("/myOrders") }}><span>Mis pedidos</span></Dropdown.Item>
-          </>) : <></>}
-          <Dropdown.Item><LogOutAuth /></Dropdown.Item>
-        </>
-        :
-        <div className="Container_RightNavBar">
-          {isAuthenticated ?
+      <div className="Container_RightNavBar">
+        {!isAuthenticated ?
+          <LoginAuth /> :
+          isSmallScreen ?
+            <>
+              <hr />
+              <Profile />
+              <label><strong>Menú</strong></label>
+              <Dropdown.Item onClick={handlePersonalDataClick}><span>Mis datos personales</span></Dropdown.Item>
+              {user.role?.description === "Administrador" ? (<>
+                <Dropdown.Item onClick={handleMyOrders}><span>Mis pedidos</span></Dropdown.Item>
+                <Dropdown.Item onClick={handleHome}><span>Home</span></Dropdown.Item>
+                <Dropdown.Item onClick={() => { navigate("/cashier") }}><span>Cajero</span></Dropdown.Item>
+                <Dropdown.Item onClick={() => { navigate("/cook") }}><span>Cocinero</span></Dropdown.Item>
+                <Dropdown.Item onClick={() => { navigate("/delivery") }}><span>Delivery</span></Dropdown.Item>
+                <Dropdown.Item onClick={() => { navigate("/admin") }}><span>Administrador</span></Dropdown.Item>
+              </>) : <></>}
+              {user.role?.description === "Cliente" ? (<>
+                <Dropdown.Item onClick={() => { navigate("/myOrders") }}><span>Mis pedidos</span></Dropdown.Item>
+              </>) : <></>}
+              <Dropdown.Item><LogOutAuth /></Dropdown.Item>
+
+            </>
+            :
             <Dropdown>
               <Dropdown.Toggle id="dropdown-basic" className='MyAccount' >
                 <Profile />
@@ -100,12 +107,8 @@ export const LoginButton = ({ onClick }: Props) => {
                 <Dropdown.Item><LogOutAuth /></Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            :
-            <LoginAuth />}
-          {/* {showPersonalData ?
-            <PersonalDataModal onClose={handlePersonalDataModal} /> : ""} */}
-        </div>
-      }
+        }
+      </div>
     </>
   )
 }

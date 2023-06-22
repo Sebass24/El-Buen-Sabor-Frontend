@@ -12,6 +12,7 @@ $secondaryColor: #EC5800;
 .container-nav {
   position: absolute;
   top: auto;
+  z-index: 9999;
 }
 
 .navbar-custom {
@@ -25,7 +26,7 @@ $secondaryColor: #EC5800;
 .navbar-nav .nav-link {
   font-weight: 700;
   font-family: "inter", sans-serif;
-  transition: 0.2s ease-in-out;
+  transition: none;
   color: black;
 
   &:hover {
