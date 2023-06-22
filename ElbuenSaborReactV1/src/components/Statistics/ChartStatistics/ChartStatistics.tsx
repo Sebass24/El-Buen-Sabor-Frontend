@@ -118,9 +118,9 @@ export function ChartStatistic() {
     var arrayData = []
     for (var i = 0; i < labels.length; i++) {
       const data = {
-        label: labels[i],
-        order: orders[i],
-        totalAmount: totalAmount[i]
+        "Cliente": labels[i],
+        "Cant.pedidos": orders[i],
+        "Total": totalAmount[i]
       }
       arrayData.push(data)
     }
