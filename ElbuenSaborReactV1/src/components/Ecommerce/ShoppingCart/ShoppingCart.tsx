@@ -149,11 +149,9 @@ export default function ShoppingCart() {
       });
     } */
 
-  if (isAuthenticated && !showPaymentButton) {
-    window.addEventListener('beforeunload', function (event) {
-      dispatch(resetOrderOptions());
-    });
-  }
+  useEffect(() => {
+    dispatch(resetOrderOptions());
+  }, [])
 
   useEffect(() => {
     handleContinue();
