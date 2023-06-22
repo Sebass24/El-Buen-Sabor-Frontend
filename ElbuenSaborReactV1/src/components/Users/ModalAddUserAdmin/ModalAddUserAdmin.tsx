@@ -158,7 +158,7 @@ export const ModalAddUserAdmin = ({
                       defaultValue={initialValues.userEmail}
                       disabled={editing ? true : false}
                     />
-                    {Client ? (
+                    {user?.role.id === 2 ? (
                       <></>
                     ) : (
                       <TextFildSelectValue
