@@ -218,7 +218,7 @@ const CahierTable = ({ orders }: myProps) => {
   function handleBackPaid(order: Orders,) {
     const neworder = { ...order, paid: false, change: order.change ? false : true };
     dispatch(startLoading());
-    postPutData(`/api/order/paiOrder/${order.id}`, "PUT", {}).then(() => {
+    postPutData(`/api/order`, "PUT", neworder).then(() => {
       dispatch(updateOrder(neworder));
       setPaidBack(false)
     });
@@ -420,7 +420,7 @@ const CahierTable = ({ orders }: myProps) => {
                                   id: 6,
                                   deleted: false,
                                   description: "Cancelado",
-                                }, true)
+                                }, false)
                               }
                               }
                             >
