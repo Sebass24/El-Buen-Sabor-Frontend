@@ -15,3 +15,94 @@
   display: flex;
   justify-content: center;
 }
+
+.Container_RightNavBar_admin {
+  margin: 1rem 2rem 0 0;
+
+  .MyAccount {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-family: "inter", sans-serif;
+    font-weight: 300;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: white;
+    box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.58);
+    border-radius: 0.3rem;
+    padding: 0.3rem 0.5rem;
+    border: none;
+
+    &:hover {
+      background-color: rgb(230, 230, 230);
+    }
+
+    .btn.active,
+    .btn.show,
+    .btn:first-child:active,
+    :not(.btn-check)+.btn:active {
+      background-color: rgb(253, 253, 253);
+    }
+  }
+}
+
+
+.Arow_container_admin {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+}
+
+.link {
+  text-decoration: none;
+  padding: 0 1rem;
+  color: black;
+  width: 100%;
+  position: relative;
+
+  &:hover {
+    color: black;
+  }
+}
+
+.dropdown_menu {
+  width: 12.5rem;
+}
+
+.arrowBottom_admin {
+  cursor: pointer;
+  height: 4rem;
+  width: 5rem;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+
+  .imgLogo_admin {
+    width: 5rem;
+    height: 4rem;
+    margin-top: 0.2rem;
+    background-image: url(../../resources/logo-png.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  &::before {
+    position: absolute;
+    display: block;
+    height: 5rem;
+    width: 5rem;
+    top: 4rem;
+    background-color: #fff;
+    position: absolute;
+    clip-path: polygon(50% 50%, 0 0, 100% 0);
+    content: "";
+  }
+
+  background-position: center;
+}

@@ -14,9 +14,16 @@ import { deleteAddress, deletePhone, getPasswordChangeURL, updateUser } from '@s
 import Address from '@Models/Users/Address';
 import NewAddressModal from 'components/Users/UsersPersonalData/NewAddressModal';
 import NewPhoneModal from 'components/Users/UsersPersonalData/NewPhoneModal';
+import AlertMessage from 'components/AlertMessage';
+import { AlertColor } from '@mui/material';
 
 interface Ticket {
     ticket: string;
+}
+
+interface alertMessage { //to use the same alert with different messages
+    severity: AlertColor;
+    message: string;
 }
 
 export default function MyPersonalData() {
@@ -27,6 +34,8 @@ export default function MyPersonalData() {
     const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
     const [selectedPhone, setSelectedPhone] = useState<Phone | null>(null);
     const [ticketPassword, setTicketPassword] = useState("");
+    const [showMessage, setShowMessage] = useState(false);
+    const [alertMessage, setAlertMessage] = useState<alertMessage>();
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -50,8 +59,12 @@ export default function MyPersonalData() {
         try {
             updateUser(newUserData);
             dispatch(setUserData(newUserData));
+            setAlertMessage({ severity: "success", message: "Cambios guardados con éxito." });
+            setShowMessage(true);
         } catch (error) {
             console.log(error);
+            setAlertMessage({ severity: "error", message: "Error al guardar los cambios." });
+            setShowMessage(true);
         }
     };
 
@@ -227,6 +240,14 @@ export default function MyPersonalData() {
                 {showPhoneModal ?
                     <NewPhoneModal phone={selectedPhone} onClose={handleModal} /> : ""}
             </Container>
+            {
+                showMessage ?
+                    <AlertMessage
+                        severity={alertMessage?.severity}
+                        onClose={(() => { setShowMessage(false) })}
+                        label={alertMessage?.message as string} />
+                    : ""
+            }
         </div >
     )
 }

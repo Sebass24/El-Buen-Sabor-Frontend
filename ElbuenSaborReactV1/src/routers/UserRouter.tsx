@@ -32,13 +32,7 @@ const UserRouter = () => {
           >
             <ClientOrderList />
           </PrivateRoute>} />
-        <Route path="/myPersonalData" element={
-          <PrivateRoute
-            isRolPermited={user?.role?.id !== 0}
-            path="/"
-          >
-            <PersonalData />
-          </PrivateRoute>} />
+        <Route path="/myPersonalData" element={<PersonalData />} />
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/contactUs" element={<ContactUs />} />
