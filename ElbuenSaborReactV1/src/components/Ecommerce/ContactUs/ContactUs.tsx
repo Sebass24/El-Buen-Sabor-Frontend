@@ -36,7 +36,7 @@ const ContactUs = () => {
             initialValues={initialValues}
             enableReinitialize={true}
             onSubmit={async (values, { resetForm }) => {
-              postPutData("api/user/sendReview", "PUT", values).then(() => {
+              postPutData("/api/user/sendReview", "PUT", values).then(() => {
                 setShowMessage(true)
               }
               ).catch(() => {
