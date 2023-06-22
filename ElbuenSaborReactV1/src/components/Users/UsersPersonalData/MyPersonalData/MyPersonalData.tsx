@@ -105,7 +105,7 @@ export default function MyPersonalData() {
 
     return (
         <div>
-            <Container>
+            <Container className='personal-data-container-form'>
                 <Formik
                     initialValues={initialValues}
                     validationSchema={Yup.object().shape({
@@ -227,6 +227,6 @@ export default function MyPersonalData() {
                 {showPhoneModal ?
                     <NewPhoneModal phone={selectedPhone} onClose={handleModal} /> : ""}
             </Container>
-        </div>
+        </div >
     )
 }
