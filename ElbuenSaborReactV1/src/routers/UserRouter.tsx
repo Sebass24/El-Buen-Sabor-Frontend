@@ -22,13 +22,7 @@ const UserRouter = () => {
           <Route path=":idproduct" element={<ProductDetail />} />
         </Route>
         <Route path="/orderDetail">
-          <Route path=":idorder" element={
-            <PrivateRoute
-              isRolPermited={user?.role?.id === 2 || user?.role?.id === 1}
-              path="/"
-            >
-              <ClientOrderDetail />
-            </PrivateRoute>} />
+          <Route path=":idorder" element={<ClientOrderDetail />} />
         </Route>
         <Route path="/myOrders" element={
           <PrivateRoute

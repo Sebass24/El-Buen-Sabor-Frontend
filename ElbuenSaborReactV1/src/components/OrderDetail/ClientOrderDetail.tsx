@@ -10,11 +10,13 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./ClientOrderDetail.scss";
 import { useAppDispatch } from "@app/Hooks";
 import { resetOrderDetails } from "@features/ShoppingCart/CartProducts";
+import AlertMessage from "components/AlertMessage";
 
 export default function ClientOrderDetail() {
 
   const { idorder } = useParams();
   const [order, setOrder] = useState<Order | null>(null);
+  const [showMessage, setShowMessage] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -50,6 +52,7 @@ export default function ClientOrderDetail() {
       window.location.href = url;
     } catch (error) {
       console.log(error);
+      setShowMessage(true);
     }
   }
 
@@ -59,6 +62,7 @@ export default function ClientOrderDetail() {
       window.location.href = url;
     } catch (error) {
       console.log(error);
+      setShowMessage(true);
     }
   }
 
@@ -127,12 +131,12 @@ export default function ClientOrderDetail() {
         <div className="button-container-1">
           <Button className="btn-cart" onClick={() => (navigate("/"))}>Volver al catálogo</Button>
         </div>
-        {/* {showMessage ?
-                    <AlertMessage
-                        severity="error"
-                        onClose={(() => { setShowMessage(false) })}
-                        label={"Error al descargar la factura"} />
-                    : ""} */}
+        {showMessage ?
+          <AlertMessage
+            severity="error"
+            onClose={(() => { setShowMessage(false) })}
+            label={"Error al descargar el archivo."} />
+          : ""}
       </div >
     </>
   )

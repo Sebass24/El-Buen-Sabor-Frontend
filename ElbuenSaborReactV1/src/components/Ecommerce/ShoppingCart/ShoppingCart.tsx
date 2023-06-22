@@ -17,7 +17,7 @@ import Order from "types/order/Order";
 import { AlertColor, CircularProgress } from "@mui/material";
 import { openRestaurant } from "../WorkingHours/WorkingSchedule";
 import ClosedRestaurant from "../WorkingHours/ClosedRestaurant";
-import { resetOrderDetails, resetOrderOptions } from "@features/ShoppingCart/CartProducts";
+import { resetOrderOptions } from "@features/ShoppingCart/CartProducts";
 
 interface responsePrefId {
   preferenceId: string;
@@ -108,7 +108,6 @@ export default function ShoppingCart() {
         } else if (newOrder.paymentMethod?.id === 2) {
           mercadoPagoPayment(newOrder);
         }
-        dispatch(resetOrderDetails());
       } else {
         setShowModal(true);
       }
@@ -149,6 +148,12 @@ export default function ShoppingCart() {
       });
     } */
 
+  if (isAuthenticated && !showPaymentButton) {
+    window.addEventListener('beforeunload', function (event) {
+      dispatch(resetOrderOptions());
+    });
+  }
+
   useEffect(() => {
     handleContinue();
   }, [order])
@@ -158,10 +163,6 @@ export default function ShoppingCart() {
       setAlertMessage({ severity: "error", message: "Error al realizar el pago. Intente nuevamente" });
       setShowMessage(true);
     }
-  }, [])
-
-  useEffect(() => {
-    dispatch(resetOrderOptions());
   }, [])
 
   return (
