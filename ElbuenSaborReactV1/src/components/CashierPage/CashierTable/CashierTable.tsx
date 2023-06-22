@@ -192,8 +192,8 @@ const CahierTable = ({ orders }: myProps) => {
 
   const dispatch = useAppDispatch();
 
-  function handleChangeState(order: Orders, status: OrderStatus) {
-    const neworder = { ...order, orderStatus: status, change: order.change ? false : true };
+  function handleChangeState(order: Orders, status: OrderStatus, orderChange: boolean) {
+    const neworder = { ...order, orderStatus: status, change: orderChange };
     dispatch(startLoading());
     postPutData(
       `/api/order/changeStatus/${order.id}/${status.id}`,
@@ -201,6 +201,7 @@ const CahierTable = ({ orders }: myProps) => {
       {}
     ).then(() => {
       dispatch(updateOrder(neworder));
+      setPaidBack(false)
     });
     dispatch(finishLoading());
   }
@@ -234,7 +235,7 @@ const CahierTable = ({ orders }: myProps) => {
           deleted: false,
           description: "A confirmar",
         }
-        handleChangeState(order, NewStatus)
+        handleChangeState(order, NewStatus, false)
         break;
       case 3:
         NewStatus = {
@@ -242,7 +243,7 @@ const CahierTable = ({ orders }: myProps) => {
           deleted: false,
           description: "Listo",
         }
-        handleChangeState(order, NewStatus)
+        handleChangeState(order, NewStatus, false)
         break;
       case 4:
         NewStatus = {
@@ -250,7 +251,7 @@ const CahierTable = ({ orders }: myProps) => {
           deleted: false,
           description: "En cocina",
         }
-        handleChangeState(order, NewStatus)
+        handleChangeState(order, NewStatus, false)
         break;
       case 5:
         NewStatus = {
@@ -258,7 +259,7 @@ const CahierTable = ({ orders }: myProps) => {
           deleted: false,
           description: "Listo",
         }
-        handleChangeState(order, NewStatus)
+        handleChangeState(order, NewStatus, false)
         break;
       default:
         break;
@@ -325,8 +326,7 @@ const CahierTable = ({ orders }: myProps) => {
                       </TableCell>
                       <TableCell className="tableCell">
                         <div className="tableCell_Actions">
-                          {order.orderStatus.description === "A confirmar" &&
-                            order.paid === true ? (
+                          {order.orderStatus.description === "A confirmar" ? (
                             <Button
                               className="ACocina"
                               variant="warning"
@@ -335,7 +335,7 @@ const CahierTable = ({ orders }: myProps) => {
                                   id: 2,
                                   deleted: false,
                                   description: "En cocina",
-                                })
+                                }, true)
                                 console.log(order)
                                 setBackState(order.id)
                               }
@@ -355,7 +355,7 @@ const CahierTable = ({ orders }: myProps) => {
                                   id: 3,
                                   deleted: false,
                                   description: "En delivery",
-                                })
+                                }, true)
                                 setBackState(order.id)
                               }
                               }
@@ -375,7 +375,7 @@ const CahierTable = ({ orders }: myProps) => {
                                   id: 5,
                                   deleted: false,
                                   description: "Entregado",
-                                })
+                                }, true)
                                 setBackState(order.id)
                               }}
                             >
@@ -384,7 +384,7 @@ const CahierTable = ({ orders }: myProps) => {
                           ) : (
                             <></>
                           )}
-                          {order.paid === false ? (
+                          {order.paid === false && order.orderStatus.description !== "Cancelado" ? (
                             <Button
                               className="Pagado"
                               variant="Success"
@@ -420,25 +420,23 @@ const CahierTable = ({ orders }: myProps) => {
                                   id: 6,
                                   deleted: false,
                                   description: "Cancelado",
-                                })
-                                setBackState(order.id)
+                                }, true)
                               }
                               }
                             >
                               Anular
                             </Button>
-                          ) : (
+                          ) : order.paid ? (
                             <Button
                               className="Anular"
                               variant="warning"
-                              onClick={() => {
-                                setBackState(order.id)
-                              }
-                              }
+                              href={`${import.meta.env.VITE_BILL_DOWNLOAD
+                                }/api/credit-note/${order.id}`}
+                              target="_blank"
                             >
                               Ver Nota
                             </Button>
-                          )}
+                          ) : <></>}
                         </div>
                         {
                           order.change ? <i className="fa-solid fa-arrow-rotate-left goBack" onClick={() => {

@@ -16,8 +16,9 @@ import {
   Typography,
 } from "@mui/material";
 import { Button } from "react-bootstrap";
-import { DeliveryOrder } from 'types/types';
 import { Link } from 'react-router-dom';
+import Order from '@Models/order/Order';
+import Address from '@Models/Users/Address';
 
 
 
@@ -49,7 +50,7 @@ function getComparador(order: string, orderBy: string) {
     : (a: any, b: any) => -comparadorDescendiente(a, b, orderBy);
 }
 
-const stableSort = (array: DeliveryOrder[], comparator: any, orderBy: any) => {
+const stableSort = (array: Order[], comparator: any, orderBy: any) => {
   const stabilizedThis = array.map((producto: any, index: number) => [producto, index]);
   stabilizedThis.sort((a: any, b: any) => {
     const order = comparator(a[0], b[0]);
@@ -77,9 +78,9 @@ function CabeceraMejorada(props: any) {
           style={{ backgroundColor: "#C6C6C6" }}
         >
           <TableSortLabel
-            active={orderBy === "IdOrder"}
-            direction={orderBy === "IdOrder" ? order : "asc"}
-            onClick={crearSortHandler("IdOrder")}
+            active={orderBy === "id"}
+            direction={orderBy === "id" ? order : "asc"}
+            onClick={crearSortHandler("id")}
           >
             <Typography fontWeight="bold">
               Pedido
@@ -92,61 +93,35 @@ function CabeceraMejorada(props: any) {
           key="OrderDate"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <TableSortLabel
-            active={orderBy === "OrderDate"}
-            direction={orderBy === "OrderDate" ? order : "asc"}
-            onClick={crearSortHandler("OrderDate")}
-          >
-            <Typography fontWeight="bold">
-              Fecha/Hora
-            </Typography>
-          </TableSortLabel>
+
+          <Typography fontWeight="bold">
+            Fecha/Hora
+          </Typography>
+
         </TableCell>
 
         <TableCell
           className="tableCell" key="Client"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <TableSortLabel
-            active={orderBy === "Client"}
-            direction={orderBy === "Client" ? order : "asc"}
-            onClick={crearSortHandler("Client")}
-          >
-            <Typography fontWeight="bold">
-              Cliente
-            </Typography>
-          </TableSortLabel>
+
+          <Typography fontWeight="bold">
+            Cliente
+          </Typography>
+
         </TableCell>
 
         <TableCell
           className="tableCell" key="Adress"
           style={{ backgroundColor: "#C6C6C6" }}
         >
-          <TableSortLabel
-            active={orderBy === "Adress"}
-            direction={orderBy === "Adress" ? order : "asc"}
-            onClick={crearSortHandler("Adress")}
-          >
-            <Typography fontWeight="bold">
-              Dirección
-            </Typography>
-          </TableSortLabel>
+
+          <Typography fontWeight="bold">
+            Dirección
+          </Typography>
+
         </TableCell>
 
-        <TableCell
-          className="tableCell" key="Location"
-          style={{ backgroundColor: "#C6C6C6" }}
-        >
-          <TableSortLabel
-            active={orderBy === "Location"}
-            direction={orderBy === "Location" ? order : "asc"}
-            onClick={crearSortHandler("Location")}
-          >
-            <Typography fontWeight="bold">
-              Departamento
-            </Typography>
-          </TableSortLabel>
-        </TableCell>
         <TableCell
           className="tableCell" key="Phone"
           style={{ backgroundColor: "#C6C6C6" }}
@@ -177,11 +152,11 @@ function CabeceraMejorada(props: any) {
 }
 
 interface myProps {
-  orders: DeliveryOrder[]
+  orders: Order[]
 }
 
 function DeliveryTable({ orders }: myProps) {
-  const [order, setOrder] = React.useState("asc");
+  const [order, setOrder] = React.useState("desc");
   const [orderBy, setOrderBy] = React.useState("nombreObra");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -224,32 +199,32 @@ function DeliveryTable({ orders }: myProps) {
             <TableBody>
               {stableSort(orders, getComparador(order, orderBy), orderBy)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((order: DeliveryOrder, index: number) => {
+                .map((order: Order, index: number) => {
                   return (
                     <TableRow key={index} >
                       <TableCell
                         className="tableCell"
                       >
-                        {order.IdOrder}
+                        {order.id}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {order.OrderDate}
+                        {order.date?.toString().substring(0, 10) +
+                          " " +
+                          order.date?.toString().substring(11, 19)}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {order.Client}
+                        {order.user.name}
                       </TableCell>
                       <TableCell className="tableCell">
-                        {order.Adress}
+                        {order.address}
                       </TableCell>
+
                       <TableCell className="tableCell">
-                        {order.Location}
-                      </TableCell>
-                      <TableCell className="tableCell">
-                        {order.Phone}
+                        {order.phone}
                       </TableCell>
                       <TableCell className="tableCell_Detalle">
                         {
-                          <Link to={`/detail/${order.IdOrder}`}>
+                          <Link to={`/detail/${order.id}`}>
                             <Button
                               className=""
                               variant="warning"

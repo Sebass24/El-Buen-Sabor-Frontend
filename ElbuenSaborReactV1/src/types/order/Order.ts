@@ -18,7 +18,7 @@ export default interface Order extends Base {
   orderDetails: OrderDetail[];
   total: number;
   discount: number;
-  address: Address | string;
-  phone: Phone | string;
+  address: string;
+  phone: string;
   change?: boolean
 }

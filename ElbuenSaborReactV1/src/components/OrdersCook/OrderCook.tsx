@@ -5,6 +5,7 @@ import OrderCookTable from "./OrderCookTable/OrderCookTable";
 import { useAppDispatch, useAppSelector } from "@app/Hooks";
 import { setOrders } from "@features/Orders/OrderSlice";
 import { fetchOrdersCook } from "@features/OrderCook/OrderCookThunk";
+import { setOrdersCook } from "@features/OrderCook/OrderCookSlice";
 
 export default function OrderCook() {
   const dispatch = useAppDispatch();
@@ -18,9 +19,25 @@ export default function OrderCook() {
     getOrders();
   }, []);
 
-  setInterval(getOrders, 600000);
+  setInterval(getOrders, 60000);
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<number>(NaN as any);
+
+  async function getOrdersSearch(id: number) {
+    if (id) {
+      const data: Orders[] = await getData<Orders[]>(
+        `/api/order/byIDCook?id=${isNaN(id) ? 0 : id}`
+      );
+      dispatch(setOrdersCook(data));
+    } else {
+      dispatch(fetchOrdersCook() as any);
+    }
+  }
+
+
+  useEffect(() => {
+    getOrders();
+  }, []);
 
   return (
     <div>
@@ -30,21 +47,27 @@ export default function OrderCook() {
       >
         <div className="Container_input">
           <input
-            placeholder="Busqueda"
-            className="busqueda_comida"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
+            placeholder="Busqueda por id"
+            onChange={(event) => {
+              setSearch(parseInt(event.target.value));
+              if (event.target.value === "") {
+                getOrdersSearch(search);
+              }
             }}
+            type="number"
+            className="busqueda_comida"
             onKeyUp={(event) => {
               if (event.key === "Enter") {
-                // handleChange(event);
+                getOrdersSearch(search);
               }
             }}
           ></input>
           <i
             className="fa-solid fa-magnifying-glass"
-            style={{ color: "black" }}
+            onClick={() => {
+              getOrdersSearch(search);
+            }}
+            style={{ color: "black", cursor: "pointer" }}
           ></i>
         </div>
       </div>
