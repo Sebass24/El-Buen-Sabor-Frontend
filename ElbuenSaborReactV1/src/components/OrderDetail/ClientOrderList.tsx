@@ -3,7 +3,7 @@ import { useAppSelector } from "@app/Hooks";
 import { getUserOrders } from "@services/order";
 import HeaderEcommerce from "components/Ecommerce/HeaderEcommerce/HeaderEcommerce";
 import React, { useEffect, useState } from "react";
-import { Button, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,6 +15,7 @@ import TableRow from '@mui/material/TableRow';
 import { useNavigate } from "react-router-dom";
 import "./ClientOrderList.scss";
 import AlertMessage from "components/AlertMessage";
+import { HiOutlineDocumentDownload, HiOutlineEye } from "react-icons/hi";
 
 export default function ClientOrderList() {
 
@@ -122,35 +123,12 @@ export default function ClientOrderList() {
                               <TableCell>${order.total}</TableCell>
                               <TableCell>{order.orderStatus.description}</TableCell>
                               <TableCell style={{ textAlign: "center" }}>
-                                <Button
-                                  className="btn-order-list"
-                                  onClick={() => {
-                                    navigate(`/orderdetail/${order.id}`);
-                                  }}
-                                >
-                                  Ver detalle
-                                </Button>
+                                <HiOutlineEye size={20} onClick={() => { navigate(`/orderdetail/${order.id}`); }} style={{ cursor: "pointer", color: "black", margin: "1rem", textAlign: "left" }} />
                                 {order.paid ? (
                                   order.orderStatus.description === "Cancelado" ? (
-                                    <Button
-                                      className={"btn-order-list"}
-                                      style={{ width: "100%" }}
-                                      onClick={() => {
-                                        handleCreditNoteDownload(order.id as number);
-                                      }}
-                                    >
-                                      Ver nota de crédito
-                                    </Button>
+                                    <HiOutlineDocumentDownload size={26} onClick={() => { handleCreditNoteDownload(order.id as number); }} style={{ cursor: "pointer", color: "black", margin: "1rem", textAlign: "left" }} />
                                   ) : (
-                                    <Button
-                                      className={"btn-order-list"}
-                                      style={{ width: "100%" }}
-                                      onClick={() => {
-                                        handleBillDownload(order.id as number);
-                                      }}
-                                    >
-                                      Ver factura
-                                    </Button>
+                                    <HiOutlineDocumentDownload size={26} onClick={() => { handleBillDownload(order.id as number); }} style={{ cursor: "pointer", color: "black", margin: "1rem", textAlign: "left" }} />
                                   )
                                 ) : (
                                   <></>

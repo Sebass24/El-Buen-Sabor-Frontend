@@ -41,9 +41,9 @@ export default function NavigationBar() {
             <Nav style={{ position: 'relative' }}>
               {user.role?.id === 2 || !user.role || user.role?.id === 1 ?
                 <>
-                  <Link to="/contactUs" className="link-nav"><span className="nav-link">Contactanos</span></Link>
-                  <Link to="/" className="link-nav"><span className="nav-link">Catálogo</span></Link>
-                  <Link to="/aboutUs" className="link-nav"><span className="nav-link">Sobre nosotros</span></Link>
+                  <Link to="/contactUs" className="link-nav" onClick={() => setExpanded(false)}><span className="nav-link">Contactanos</span></Link>
+                  <Link to="/" className="link-nav" onClick={() => setExpanded(false)}><span className="nav-link">Catálogo</span></Link>
+                  <Link to="/aboutUs" className="link-nav" onClick={() => setExpanded(false)}><span className="nav-link">Sobre nosotros</span></Link>
                 </> : <></>}
               {isSmallScreen && <LoginButton onClick={handleCloseNavBar} />}
             </Nav>

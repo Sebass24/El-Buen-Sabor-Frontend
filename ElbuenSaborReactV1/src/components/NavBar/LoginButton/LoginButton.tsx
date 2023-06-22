@@ -69,11 +69,12 @@ export const LoginButton = ({ onClick }: Props) => {
             <>
               <hr />
               <Profile />
+              <hr />
               <label><strong>Menú</strong></label>
               <Dropdown.Item onClick={handlePersonalDataClick}><span>Mis datos personales</span></Dropdown.Item>
               {user.role?.description === "Administrador" ? (<>
                 <Dropdown.Item onClick={handleMyOrders}><span>Mis pedidos</span></Dropdown.Item>
-                <Dropdown.Item onClick={handleHome}><span>Home</span></Dropdown.Item>
+                <Dropdown.Item onClick={handleHome}><span>Catálogo</span></Dropdown.Item>
                 <Dropdown.Item onClick={() => { navigate("/cashier") }}><span>Cajero</span></Dropdown.Item>
                 <Dropdown.Item onClick={() => { navigate("/cook") }}><span>Cocinero</span></Dropdown.Item>
                 <Dropdown.Item onClick={() => { navigate("/delivery") }}><span>Delivery</span></Dropdown.Item>

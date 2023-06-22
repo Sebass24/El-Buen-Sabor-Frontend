@@ -115,7 +115,6 @@ export default function MyPersonalData() {
         navigate(-1);
     }
 
-
     return (
         <div>
             <Container className='personal-data-container-form'>

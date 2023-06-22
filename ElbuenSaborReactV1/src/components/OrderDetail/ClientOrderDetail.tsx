@@ -134,6 +134,9 @@ export default function ClientOrderDetail() {
         </div>
         <div className="button-container-1">
           <Button className="btn-cart" onClick={() => (navigate("/"))}>Volver al catálogo</Button>
+          <Button type="button" className="btn-cart" onClick={() => (navigate(-1))}>
+            Volver
+          </Button>
         </div>
         {showMessage ?
           <AlertMessage
