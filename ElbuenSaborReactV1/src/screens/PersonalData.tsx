@@ -1,5 +1,5 @@
 import HeaderEcommerce from 'components/Ecommerce/HeaderEcommerce/HeaderEcommerce'
-import MyPersonalData from 'components/Ecommerce/MyPersonalData/MyPersonalData'
+import MyPersonalData from 'components/Users/UsersPersonalData/MyPersonalData/MyPersonalData'
 import { Row } from 'react-bootstrap'
 
 export default function PersonalData() {
