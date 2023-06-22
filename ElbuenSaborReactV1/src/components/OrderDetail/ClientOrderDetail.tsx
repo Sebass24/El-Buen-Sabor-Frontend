@@ -76,6 +76,20 @@ export default function ClientOrderDetail() {
     }
   }, [])
 
+  function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+
+    const formatter = new Intl.DateTimeFormat('es-AR', options);
+    return formatter.format(date);
+  }
+
   return (
     <>
       <HeaderEcommerce />
@@ -97,6 +111,10 @@ export default function ClientOrderDetail() {
               <label className="title-order-id">Pedido nro:</label>
               <label className="title-order-id" style={{ textAlign: "right" }}>{order?.id}</label>
             </div >
+            <div className="separator">
+              <label className="title-order-id">Fecha:</label>
+              <label className="title-order-id">{formatDate(order?.date as string)}</label>
+            </div>
             <OrderOptionsReview order={order} />
             {order?.orderStatus.description === "Cancelado" && order?.paid ?
               <Button className={"btn-cart-review"}
