@@ -214,8 +214,8 @@ export default function BillingTable({ orders }: myProps) {
         <TableContainer>
           <Table
             className="table"
-          // aria-labelledby="tableTitle"
-          // aria-label="enhanced table"
+            // aria-labelledby="tableTitle"
+            // aria-label="enhanced table"
           >
             <CabeceraMejorada
               component="th"
@@ -270,8 +270,9 @@ export default function BillingTable({ orders }: myProps) {
                           <Button
                             className="ACocina"
                             variant="warning"
-                            href={`${import.meta.env.VITE_BILL_DOWNLOAD
-                              }/api/bill/download-bill/${order.id}`}
+                            href={`${
+                              import.meta.env.VITE_BILL_DOWNLOAD
+                            }/api/bill/download-bill/${order.id}`}
                             target="_blank"
                           >
                             Ver Factura
@@ -294,13 +295,12 @@ export default function BillingTable({ orders }: myProps) {
                             <Button
                               className="Anular"
                               variant="warning"
-                              onClick={() =>
-                                handleChangeState(order, {
-                                  id: 6,
-                                  deleted: false,
-                                  description: "Cancelado",
-                                })
-                              }
+                              href={`${
+                                import.meta.env.VITE_BILL_DOWNLOAD
+                              }/api/credit-note/download-credit-note/${
+                                order.id
+                              }`}
+                              target="_blank"
                             >
                               Ver Nota
                             </Button>
