@@ -68,7 +68,7 @@ export default function ProductDetail() {
         <>
           <div className="product-detail-container">
             <Card className='card2'>
-              <Card.Img variant="top" className="product-image2 img-fluid mx-auto d-block" src={`../Images/${product?.image?.path}`} />
+              <Card.Img variant="top" className="product-image2 img-fluid mx-auto d-block" src={`${import.meta.env.VITE_BILL_DOWNLOAD}/api/image/see/${product?.image?.path}`} />
               <Card.Body>
                 <Card.Title className="card-title2">{product?.name}</Card.Title>
                 <Card.Text>
