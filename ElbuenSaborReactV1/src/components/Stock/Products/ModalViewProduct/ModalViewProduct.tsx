@@ -44,7 +44,7 @@ export default function ModalViewProduct({ showModal, handleClose, product }: pr
             <div className='Container-Modal-description'>
               <span>Receta:</span>
               <p>
-                {product?.description}
+                {product?.recipe?.description}
               </p>
             </div>
           </div>
