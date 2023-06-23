@@ -146,7 +146,7 @@ export default function ModalBuyIngredient({ showModal, handleClose, handleClose
                         <label
                           style={{
                             color: "black",
-                            fontFamily: "sans-serif",
+                            fontFamily: "inter",
                             fontSize: "14px",
                             fontWeight: "bold",
                           }}

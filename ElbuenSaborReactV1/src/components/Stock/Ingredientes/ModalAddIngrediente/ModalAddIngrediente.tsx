@@ -164,7 +164,7 @@ const ModalAddIngrediente = ({
                         alignItems: "center",
                         padding: ".3rem 0"
                       }}>
-                        <label htmlFor={"ingredientCategory"} style={{ color: "black", fontFamily: "sans-serif", fontSize: "14px", fontWeight: 'bold' }}>
+                        <label htmlFor={"ingredientCategory"} style={{ color: "black", fontFamily: "inter", fontSize: "14px", fontWeight: 'bold' }}>
                           {"Rubro:"}
                         </label>
                       </div>

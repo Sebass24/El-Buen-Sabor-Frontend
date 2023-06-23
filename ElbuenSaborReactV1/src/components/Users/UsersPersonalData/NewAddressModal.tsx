@@ -121,7 +121,7 @@ export default function NewAddressModal({ address, onClose }: Props) {
                     />
                     <div className="mt-2" style={{ display: "flex", flexDirection: "column" }}>
                       <div className="title-container" style={{ marginTop: "0" }}>
-                        <label htmlFor={"locationLabel"} className="title-personal-data" style={{ fontFamily: "sans-serif" }}>
+                        <label htmlFor={"locationLabel"} className="title-personal-data" style={{ fontFamily: "inter" }}>
                           Localidades:
                         </label>
                       </div>

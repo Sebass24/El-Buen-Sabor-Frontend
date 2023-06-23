@@ -21,7 +21,7 @@ const TextFieldSelect = ({ label, options, name }: props) => {
           htmlFor={name}
           style={{
             color: "black",
-            fontFamily: "sans-serif",
+            fontFamily: "inter",
             fontSize: "14px",
             fontWeight: "bold",
           }}

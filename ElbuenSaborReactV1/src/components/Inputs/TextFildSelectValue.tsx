@@ -29,7 +29,7 @@ export default function TextFildSelectValue({
           htmlFor={name}
           style={{
             color: "black",
-            fontFamily: "sans-serif",
+            fontFamily: "inter",
             fontSize: "14px",
             fontWeight: "bold",
           }}

@@ -1,0 +1,31 @@
+.table-container-personal-data {
+    display: flex;
+    justify-content: center;
+}
+
+.personal-data-table {
+    font-size: 0.9rem;
+
+    th,
+    td {
+        padding: 8px;
+    }
+
+    td:nth-last-child(2),
+    td:last-child {
+        max-width: 13%;
+        min-width: 5%;
+        margin-right: 1rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 450px) {
+    .personal-data-container-form {
+        width: 90% !important;
+    }
+
+    .personal-data-table {
+        margin: 0 -1.5rem;
+    }
+}

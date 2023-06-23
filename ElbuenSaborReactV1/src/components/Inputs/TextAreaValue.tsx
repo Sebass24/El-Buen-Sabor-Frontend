@@ -16,7 +16,7 @@ export default function TextAreaValue({ label, name, placeholder, rows }: props)
         alignItems: "center",
         padding: ".3rem 0"
       }}>
-        <label htmlFor={name} style={{ color: "black", fontFamily: "sans-serif", fontSize: "14px", fontWeight: 'bold' }}>
+        <label htmlFor={name} style={{ color: "black", fontFamily: "inter", fontSize: "14px", fontWeight: 'bold' }}>
           {label}
         </label>
       </div>
