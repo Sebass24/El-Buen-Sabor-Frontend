@@ -76,6 +76,21 @@ export default function ClientOrderDetail() {
     }
   }, [])
 
+  function formatDate(dateString: string): string {
+    const timestamp = dateString;
+    if (timestamp) {
+      const date = new Date(timestamp);
+      const day = date.getDate();
+      const month = date.getMonth() + 1; // Months are zero-based
+      const year = date.getFullYear();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year} ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      return formattedDate;
+    }
+    return '';
+  }
+
   return (
     <>
       <HeaderEcommerce />
@@ -97,6 +112,10 @@ export default function ClientOrderDetail() {
               <label className="title-order-id">Pedido nro:</label>
               <label className="title-order-id" style={{ textAlign: "right" }}>{order?.id}</label>
             </div >
+            <div className="separator">
+              <label className="title-order-id">Fecha:</label>
+              <label className="title-order-id">{formatDate(order?.date.toString() as string)}</label>
+            </div>
             <OrderOptionsReview order={order} />
             {order?.orderStatus.description === "Cancelado" && order?.paid ?
               <Button className={"btn-cart-review"}

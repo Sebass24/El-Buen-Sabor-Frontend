@@ -35,7 +35,7 @@ const TextFieldValue = ({
           htmlFor={label}
           style={{
             color: "black",
-            fontFamily: "sans-serif",
+            fontFamily: "inter",
             fontSize: "14px",
             fontWeight: "bold",
           }}

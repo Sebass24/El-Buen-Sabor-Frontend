@@ -6,7 +6,7 @@
   margin-bottom: 1.5rem;
 
   .form_container_grid {
-    width: 70%;
+    width: 80%;
     display: grid;
     grid-template-columns: 45% 55%;
     gap: 2rem;
@@ -22,11 +22,10 @@
 
 
 .page-name {
-  margin: 1rem;
+  margin: 1rem 0;
   font-family: "Lato", sans-serif;
   font-weight: 600;
   font-size: 1.5rem;
-  width: 100%;
   text-align: center;
 }
 

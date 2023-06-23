@@ -6,22 +6,37 @@
 
 .card {
     max-width: 14rem;
+    display: grid;
 
     .product-image {
         width: auto;
         max-height: 8rem;
         border-radius: 7%;
-        margin: 0.5rem;
+        margin: 0.7rem;
     }
+}
+
+.card-body-product-catalogue {
+    padding-top: 0;
+    padding-bottom: 0.2;
 }
 
 .card-title {
     font-weight: 600;
     font-size: 1.1rem;
+    min-height: 3.2rem;
 }
 
 .short-description {
     font-size: .8rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 4.5em;
+    margin-bottom: .1rem;
+    min-height: 4.5em;
 }
 
 .label-container {
@@ -68,6 +83,11 @@
     .card-title {
         font-size: .8rem;
         grid-column: 2;
+        min-height: 0;
+    }
+
+    .card-body-product-catalogue {
+        padding-top: 1rem;
     }
 
     .short-description {

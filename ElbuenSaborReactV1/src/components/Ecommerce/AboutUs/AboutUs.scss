@@ -22,11 +22,15 @@
 .AboutUs {
   width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   color: black;
   padding: 2rem 0rem;
-  gap: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 1.5rem;
+  width: 70%;
 
   .wrapper {
     display: flex;
@@ -34,10 +38,10 @@
     align-items: center;
     justify-content: center;
     gap: 2rem;
+    margin-bottom: 2rem;
 
     article:has(p) {
       gap: 2rem;
-      width: 60%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -45,6 +49,11 @@
 
       h2 {
         text-decoration: underline;
+        font-family: "Lato";
+      }
+
+      h3 {
+        font-family: "Lato";
       }
 
       p {
@@ -77,6 +86,7 @@
 
       h2 {
         font-size: 1rem;
+        font-family: "Lato";
       }
 
       h3 {
@@ -103,6 +113,7 @@
         align-items: center;
         font-size: 1.2rem;
         background-color: rgba(0, 0, 0, 0.6);
+        padding: 2rem;
       }
     }
   }
@@ -114,10 +125,9 @@ article:not(:has(p)):not(:has(img)) {
 }
 
 .page-name {
-  margin: 1rem;
+  margin: 1rem 0;
   font-family: "Lato", sans-serif;
   font-weight: 600;
   font-size: 1.5rem;
-  width: 100%;
   text-align: center;
 }

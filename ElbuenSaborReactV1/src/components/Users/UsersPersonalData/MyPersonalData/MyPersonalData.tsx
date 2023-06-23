@@ -16,6 +16,7 @@ import NewAddressModal from 'components/Users/UsersPersonalData/NewAddressModal'
 import NewPhoneModal from 'components/Users/UsersPersonalData/NewPhoneModal';
 import AlertMessage from 'components/AlertMessage';
 import { AlertColor } from '@mui/material';
+import "./MyPersonalData.scss";
 
 interface Ticket {
     ticket: string;
@@ -177,7 +178,7 @@ export default function MyPersonalData() {
                                             {user.addresses.length === 0 ?
                                                 <tr>
                                                     <td colSpan={5}>
-                                                        No hay teléfonos cargados
+                                                        No hay direcciones cargadas
                                                     </td>
                                                 </tr>
                                                 : (
@@ -199,27 +200,29 @@ export default function MyPersonalData() {
                                             Nuevo teléfono
                                         </Button>
                                     </div>
-                                    <Table className="personal-data-table">
-                                        <tbody>
-                                            {user.phones.length === 0 ?
-                                                <tr>
-                                                    <td colSpan={5}>
-                                                        No hay teléfonos cargados
-                                                    </td>
-                                                </tr>
-                                                : (
-                                                    user.phones.map((p) => (
-                                                        <tr key={p.id}>
-                                                            <td>{p.number}</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td><BsPencilSquare size={20} onClick={() => handleSelectedOption(p)} style={{ cursor: "pointer", color: "black" }} /></td>
-                                                            <td><MdDelete size={20} onClick={() => { handleDelete(p) }} style={{ cursor: "pointer", color: "black" }} /></td>
-                                                        </tr>
-                                                    ))
-                                                )}
-                                        </tbody>
-                                    </Table>
+                                    <div className="table-container-personal-data">
+                                        <Table className="personal-data-table">
+                                            <tbody>
+                                                {user.phones.length === 0 ?
+                                                    <tr>
+                                                        <td colSpan={5}>
+                                                            No hay teléfonos cargados
+                                                        </td>
+                                                    </tr>
+                                                    : (
+                                                        user.phones.map((p) => (
+                                                            <tr key={p.id}>
+                                                                <td>{p.number}</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td><BsPencilSquare size={20} onClick={() => handleSelectedOption(p)} style={{ cursor: "pointer", color: "black" }} /></td>
+                                                                <td><MdDelete size={20} onClick={() => { handleDelete(p) }} style={{ cursor: "pointer", color: "black" }} /></td>
+                                                            </tr>
+                                                        ))
+                                                    )}
+                                            </tbody>
+                                        </Table>
+                                    </div>
                                 </div>
                                 <div className="modal-footer-personal-data">
                                     <Button type="button" className="btn-cart" onClick={handleGoBack}>

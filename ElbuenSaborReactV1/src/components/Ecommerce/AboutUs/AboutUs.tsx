@@ -9,12 +9,9 @@ const AboutUs = () => {
     <div>
       <HeaderEcommerce />
       <Row><label className="page-name">SOBRE NOSOTROS</label></Row>
-      {/* <div className="img">
-        <h1 className='Title_AboutUS'>{"Sobre Nosotros"}</h1>
-      </div> */}
       <div className="AboutUs">
         <article>
-          <h3>Trabajo Integrador El Buen Sabor</h3>
+          <h3 style={{ textAlign: "center" }}>Trabajo Integrador El Buen Sabor</h3>
         </article>
         <div className="wrapper">
           <article>
@@ -25,7 +22,7 @@ const AboutUs = () => {
           </article>
         </div>
         <article>
-          <h2>Integrantes</h2>
+          <h3>INTEGRANTES</h3>
         </article>
         <div className="integrantes-wrapper">
           <article>
@@ -35,10 +32,10 @@ const AboutUs = () => {
             <div className="habilities">
               <h1>Habilidades:</h1>
               <span> Java </span>
-              <span> JavaSript </span>
+              <span> JavaScript </span>
               <span> TypeScript </span>
               <span> NodeJs </span>
-              <span> C# </span>
+              <span> .NET C# </span>
               <span> HTML </span>
               <span> CSS </span>
             </div>
