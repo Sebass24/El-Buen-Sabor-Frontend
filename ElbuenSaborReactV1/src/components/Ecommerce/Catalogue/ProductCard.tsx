@@ -16,7 +16,7 @@ function ProductCard({ args }: props) {
         <Link to={`/productDetail/${args.id}`}>
           <Card.Img variant="top" className="product-image img-fluid mx-auto d-block" src={`${import.meta.env.VITE_BILL_DOWNLOAD}/api/image/see/${args.image?.path}`} />
         </Link>
-        <Card.Body style={{ paddingTop: "0", paddingBottom: "0.2" }}>
+        <Card.Body className='card-body-product-catalogue'>
           <Card.Title className="card-title">{args.name}</Card.Title>
           <Card.Text>
             <label className="short-description">{args.shortDescription}</label>

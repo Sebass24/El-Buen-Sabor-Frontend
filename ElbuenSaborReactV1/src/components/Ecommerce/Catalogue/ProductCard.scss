@@ -16,6 +16,11 @@
     }
 }
 
+.card-body-product-catalogue {
+    padding-top: 0;
+    padding-bottom: 0.2;
+}
+
 .card-title {
     font-weight: 600;
     font-size: 1.1rem;
@@ -78,6 +83,11 @@
     .card-title {
         font-size: .8rem;
         grid-column: 2;
+        min-height: 0;
+    }
+
+    .card-body-product-catalogue {
+        padding-top: 1rem;
     }
 
     .short-description {

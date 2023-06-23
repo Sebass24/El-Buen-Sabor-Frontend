@@ -24,3 +24,11 @@
     --bs-btn-hover-border-color: gray;
     height: 2.2rem;
 }
+
+@media (max-width: 450px) {
+    .add-to-cart-button-card {
+        margin-top: 0.4rem;
+        height: 1.9rem;
+        font-size: 0.7rem;
+    }
+}
