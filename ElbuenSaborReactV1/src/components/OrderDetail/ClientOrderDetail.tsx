@@ -10,11 +10,13 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./ClientOrderDetail.scss";
 import { useAppDispatch } from "@app/Hooks";
 import { resetOrderDetails } from "@features/ShoppingCart/CartProducts";
+import AlertMessage from "components/AlertMessage";
 
 export default function ClientOrderDetail() {
 
   const { idorder } = useParams();
   const [order, setOrder] = useState<Order | null>(null);
+  const [showMessage, setShowMessage] = useState(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -50,6 +52,7 @@ export default function ClientOrderDetail() {
       window.location.href = url;
     } catch (error) {
       console.log(error);
+      setShowMessage(true);
     }
   }
 
@@ -59,6 +62,7 @@ export default function ClientOrderDetail() {
       window.location.href = url;
     } catch (error) {
       console.log(error);
+      setShowMessage(true);
     }
   }
 
@@ -94,7 +98,7 @@ export default function ClientOrderDetail() {
               <label className="title-order-id" style={{ textAlign: "right" }}>{order?.id}</label>
             </div >
             <OrderOptionsReview order={order} />
-            {order?.orderStatus.description === "Cancelado" ?
+            {order?.orderStatus.description === "Cancelado" && order?.paid ?
               <Button className={"btn-cart-review"}
                 style={{ width: "100%" }}
                 onClick={handleCreditNoteDownload} >
@@ -116,6 +120,10 @@ export default function ClientOrderDetail() {
                   Tu pedido ya está listo {order.deliveryMethod.description === "Envío a domicilio" ?
                     "para enviarlo" : ""}
                 </Button>
+              ) : order?.orderStatus.description === "Cancelado" ? (
+                <Button className="time-button" disabled style={{ backgroundColor: "#EC5800", borderColor: "#EC5800" }}>
+                  Cancelado
+                </Button>
               ) : (
                 <Button className="time-button" disabled>
                   Hora estimada: {getEstimatedTime()}
@@ -126,13 +134,16 @@ export default function ClientOrderDetail() {
         </div>
         <div className="button-container-1">
           <Button className="btn-cart" onClick={() => (navigate("/"))}>Volver al catálogo</Button>
+          <Button type="button" className="btn-cart" onClick={() => (navigate(-1))}>
+            Volver
+          </Button>
         </div>
-        {/* {showMessage ?
-                    <AlertMessage
-                        severity="error"
-                        onClose={(() => { setShowMessage(false) })}
-                        label={"Error al descargar la factura"} />
-                    : ""} */}
+        {showMessage ?
+          <AlertMessage
+            severity="error"
+            onClose={(() => { setShowMessage(false) })}
+            label={"Error al descargar el archivo."} />
+          : ""}
       </div >
     </>
   )

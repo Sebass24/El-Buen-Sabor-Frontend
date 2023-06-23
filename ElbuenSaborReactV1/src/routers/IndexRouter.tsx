@@ -10,8 +10,8 @@ import DetailCook from "../screens/DetailCook";
 import UserRouter from "./UserRouter";
 import { useAppSelector } from "@app/Hooks";
 import { PrivateRoute } from "./PrivateRoute";
-import { useAuth0 } from "@auth0/auth0-react";
 import { PrivateRouteAll } from "./PrivateRouteAll";
+import PersonalData from "../screens/PersonalData";
 
 const IndexRouter = () => {
   const { user } = useAppSelector(state => state.users)
@@ -30,8 +30,7 @@ const IndexRouter = () => {
           </PrivateRouteAll>
         } />
 
-
-
+        <Route path="/myPersonalData" element={<PersonalData />} />
 
         <Route path="/admin" element={
           <PrivateRoute
@@ -41,7 +40,6 @@ const IndexRouter = () => {
             <Admin />
           </PrivateRoute>
         } />
-
 
         <Route path="/cashier" element={
           <PrivateRoute

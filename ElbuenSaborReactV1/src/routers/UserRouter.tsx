@@ -7,8 +7,12 @@ import AboutUs from "components/Ecommerce/AboutUs/AboutUs";
 import ContactUs from "components/Ecommerce/ContactUs/ContactUs";
 import ClientOrderDetail from "components/OrderDetail/ClientOrderDetail";
 import ClientOrderList from "components/OrderDetail/ClientOrderList";
+import { PrivateRoute } from "./PrivateRoute";
+import { useAppSelector } from "@app/Hooks";
 
 const UserRouter = () => {
+  const { user } = useAppSelector(state => state.users)
+
   return (
     <div>
       {<NavigationBar />}
@@ -20,10 +24,13 @@ const UserRouter = () => {
         <Route path="/orderDetail">
           <Route path=":idorder" element={<ClientOrderDetail />} />
         </Route>
-        <Route path="/payment">
-          <Route path=":prefId" element={<ClientOrderDetail />} />
-        </Route>
-        <Route path="/myOrders" element={<ClientOrderList />} />
+        <Route path="/myOrders" element={
+          <PrivateRoute
+            isRolPermited={user?.role?.id === 2 || user?.role?.id === 1}
+            path="/"
+          >
+            <ClientOrderList />
+          </PrivateRoute>} />
         <Route path="/cart" element={<ShoppingCart />} />
         <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/contactUs" element={<ContactUs />} />

@@ -10,17 +10,24 @@ import { setStoredInDB, setUserData, setUserId, setUserRole } from "@features/Us
 import TextFieldValue from "components/Inputs/TextFieldValue";
 import "./UserDataModal.scss";
 import Role from "types/Users/Role";
+import AlertMessage from "components/AlertMessage";
 
-export default function NewClientModal() {
+interface Props {
+  onClose: () => void;
+}
+
+export default function NewClientModal({ onClose }: Props) {
 
   const { userStoredInDB, user } = useAppSelector(state => state.users);
   const { isAuthenticated, user: userAuth0, logout } = useAuth0();
   const dispatch = useAppDispatch();
 
   const [showModal, setShowModal] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   const handleCloseModal = () => {
     setShowModal(false);
+    onClose();
   };
   const handleShowModal = () => {
     setShowModal(true);
@@ -49,11 +56,13 @@ export default function NewClientModal() {
     //post user to database. If successfull, set userStoredInDB as true and the modal will close
     try {
       const newUser = await postNewUser(user);
+      onClose();
       dispatch(setUserId(newUser.id as number));
       dispatch(setUserRole(newUser.role as Role));
       dispatch(setStoredInDB(true));
     } catch (error) {
       console.log(error);
+      setShowMessage(true);
     }
   }
 
@@ -128,6 +137,11 @@ export default function NewClientModal() {
             }
           </Formik>
         </Modal.Body>
+        {showMessage ?
+          <AlertMessage
+            onClose={() => { setShowMessage(false) }}
+            severity="error"
+            label={"Error al crear el usuario. Intente nuevamente."} /> : ""}
       </Modal>
     </div >
   );

@@ -35,6 +35,8 @@ const Ingredients = () => {
 
   async function getIngredientsSearch(name: string) {
     if (name !== "" || estado !== "") {
+      console.log(name)
+      console.log(estado)
       const data: Ingredient[] = await getData<Ingredient[]>(`/api/ingredient/nameAndState?name=${name}&state=${estado}`);
       dispatch(setIngredients(data))
     } else {

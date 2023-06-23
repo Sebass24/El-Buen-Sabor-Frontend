@@ -1,5 +1,5 @@
 export async function getDataNoToken<T>(path: string): Promise<T> {
-  const response = await fetch(path);
+  const response = await fetch(`${import.meta.env.VITE_BILL_DOWNLOAD}${path}`);
   if (!response.ok) {
     throw Error(response.statusText);
   }

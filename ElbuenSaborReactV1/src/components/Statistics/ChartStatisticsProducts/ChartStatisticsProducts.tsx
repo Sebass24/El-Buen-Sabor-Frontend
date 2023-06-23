@@ -105,13 +105,13 @@ export function ChartStatisticsProducts() {
     var arrayData = []
     for (var i = 0; i < labels.length; i++) {
       const data = {
-        label: labels[i],
-        orders: orders[i]
+        "Producto": labels[i],
+        "Cant.vendida": orders[i]
       }
       arrayData.push(data)
     }
 
-    exportFromJSON({ data: arrayData, exportType: "xls", fileName: "client-Data" });
+    exportFromJSON({ data: arrayData, exportType: "xls", fileName: "product-Data" });
   };
 
 

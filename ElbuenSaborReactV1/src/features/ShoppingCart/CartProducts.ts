@@ -72,6 +72,8 @@ export const cartSlice = createSlice({
       state.order.paymentMethod = { id: 0, description: "" };
       if (state.order.deliveryMethod.id === 2) {
         state.order.discount = state.order.total * 0.1;
+        state.order.address = "";
+        state.order.phone = "";
       } else if (state.order.deliveryMethod.id === 1) {
         state.order.discount = 0;
       }
@@ -92,21 +94,20 @@ export const cartSlice = createSlice({
       state.order.user = action.payload;
       state.order.orderStatus = { id: 1, description: "A confirmar" };
     },
-
     resetOrderDetails: (state) => {
+      state.order = initialCartState.order;
+    },
+    resetOrderOptions: (state) => {
       state.order.deliveryMethod = { id: 0, description: "none" };
       state.order.date = "";
       state.order.paymentMethod = { id: 0, description: "none" };
-      state.order.orderDetails = [];
-      state.order.total = 0;
-      state.order.discount = 0;
       state.order.address = "";
       state.order.phone = "";
     }
   },
 });
 
-export const { addProduct, deleteProduct, modifyProductQuantity, setDeliveryMethod, setPaymentMethod, setAddress, setPhone, setTotalPrice, setCartUser, resetOrderDetails } = cartSlice.actions;
+export const { addProduct, deleteProduct, modifyProductQuantity, setDeliveryMethod, setPaymentMethod, setAddress, setPhone, setTotalPrice, setCartUser, resetOrderDetails, resetOrderOptions } = cartSlice.actions;
 
 export default cartSlice.reducer;
 

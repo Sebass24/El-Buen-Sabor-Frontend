@@ -4,7 +4,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 3rem;
+    margin: 8rem;
+    margin-bottom: 3rem;
     margin-top: 0;
 
     .css-1ex1afd-MuiTableCell-root {
@@ -39,4 +40,17 @@
 
 p {
     margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+    .my-orders-container {
+        margin: 2rem;
+        margin-bottom: 2rem;
+        margin-top: 0;
+
+        .css-1ex1afd-MuiTableCell-root {
+            padding: .2rem .5rem;
+            min-width: 8rem;
+        }
+    }
 }

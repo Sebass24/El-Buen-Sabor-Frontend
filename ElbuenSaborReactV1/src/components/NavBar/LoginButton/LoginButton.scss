@@ -63,23 +63,13 @@
     .Container_RightNavBar {
         position: relative;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        top: 3%;
-        left: -15%;
+        flex-direction: column;
+        left: .5%;
+        right: .5%;
     }
 
-}
-
-@media (max-width: 450px) {
-
-    .Container_RightNavBar {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        top: 3%;
-        left: -8%;
+    .navbar-collapse {
+        min-width: 13.5rem;
     }
 
 }

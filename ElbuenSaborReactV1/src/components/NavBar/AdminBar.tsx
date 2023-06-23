@@ -1,7 +1,6 @@
 import React from 'react';
 import "./AdminBar.scss";
-import Logo from './Logo/Logo';
-import { LoginButton } from './LoginButton/LoginButton';
+import NavigationBar from './Navbar';
 interface title {
   title: String;
 }
@@ -9,13 +8,12 @@ interface title {
 const AdminBar: React.FC<title> = ({ title }) => {
 
   return (
-    <div className="navBar_Container_admin">
-      <Logo />
-      <div className="Container_RightNavBar_admin">
-        <LoginButton />
-      </div>
+    <div>
+      <NavigationBar />
+      <div className="image-container"></div>
       <h1 className='Title_admin'>{title}</h1>
     </div>
+
   );
 }
 

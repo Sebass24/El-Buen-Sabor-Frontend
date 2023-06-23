@@ -131,12 +131,33 @@ const ModalAddProducts = ({
                 };
                 console.log("values", valuesProduct);
                 if (editing) {
-                  dispatch(startLoading());
-                  postPutData(`/api/product`, "PUT", values).then((response) => {
+                  // dispatch(startLoading());
+                  // postPutData(`/api/product`, "PUT", values).then((response) => {
+                  //   console.log(response)
+                  //   dispatch(updateProduct(valuesProduct));
+                  // });
+                  // dispatch(finishLoading());
+
+                  const formData = new FormData();
+                  console.log(img)
+                  formData.append("Image", img)
+                  //formData.append("Image", new Blob([img], { type: 'multipart/form-data' }))
+                  formData.append("Product", new Blob([JSON.stringify(values)], { type: 'application/json' }))
+                  const token = sessionStorage.getItem("token")
+                  const response = await fetch(`http://localhost:8080/api/product/update`, {
+                    method: "PUT",
+                    credentials: 'include',
+                    headers: {
+                      //'Content-Type': 'multipart/form-data',
+                      "Authorization": `Bearer ${token}`
+                    },
+                    body: formData,
+                  }).then((response) => {
                     console.log(response)
-                    dispatch(updateProduct(valuesProduct));
-                  });
-                  dispatch(finishLoading());
+                    //  dispatch(addProduct(valuesProduct));
+                  }
+                  )
+
                 } else {
 
                   const formData = new FormData();

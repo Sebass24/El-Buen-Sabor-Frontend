@@ -2,31 +2,31 @@ import Product from "types/Product/Product";
 import { getDataNoToken } from "./generic";
 
 export async function getProducts() {
-  const url = `http://localhost:8080/api/product`;
+  const url = `/api/product`;
   const products = await getDataNoToken<Product[]>(url);
   return products;
 }
 
 export async function getProductById(id: number) {
-  const url = `http://localhost:8080/api/product/${id}`;
+  const url = `/api/product/${id}`;
   const products = await getDataNoToken<Product>(url);
   return products;
 }
 
 export async function getProductsByCategory(category: string): Promise<Product[]> {
-  const url = `http://localhost:8080/api/product/category/${category}`;
+  const url = `/api/product/category/${category}`;
   const products = await getDataNoToken<Product[]>(url);
   return products;
 }
 
 export async function getProductsByName(name: string): Promise<Product[]> {
-  const url = `http://localhost:8080/api/product/name/${name}`;
+  const url = `/api/product/name/${name}`;
   const products = await getDataNoToken<Product[]>(url);
   return products;
 }
 
 export async function getProductsRandom(quantity: number): Promise<Product[]> {
-  const url = `http://localhost:8080/api/product/random/${quantity}`;
+  const url = `/api/product/random/${quantity}`;
   const products = await getDataNoToken<Product[]>(url);
   return products;
 }

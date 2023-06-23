@@ -108,15 +108,15 @@ export function ChartStatisticsMonetary() {
     var arrayData = []
     for (var i = 0; i < labels.length; i++) {
       const data = {
-        label: labels[i],
-        costs: costs[i],
-        revenues: revenues[i],
-        profit: profits[i]
+        "Mes": labels[i],
+        "Costos": costs[i],
+        "Ingresos": revenues[i],
+        "Ganancias": profits[i]
       }
       arrayData.push(data)
     }
 
-    exportFromJSON({ data: arrayData, exportType: "xls", fileName: "client-Data" });
+    exportFromJSON({ data: arrayData, exportType: "xls", fileName: "monetary-statistics-Data" });
   };
 
 
