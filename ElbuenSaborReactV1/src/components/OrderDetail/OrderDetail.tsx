@@ -29,7 +29,7 @@ const OrderDetail = () => {
         <div className='Order_Data'>
           <li>Fecha: {Order?.date?.toLocaleString()}</li>
           <li>Estado: {Order?.orderStatus.description}</li>
-          <li>Nombre y Apellido: {Order?.user.name + " " + Order?.user.lastName}</li>
+          <li>Nombre y Apellido: {Order?.user?.name + " " + Order?.user?.lastName}</li>
           <li>Télefono: {Order?.phone}</li>
           <li>Dirección: {Order?.address}</li>
           <li>Forma de Entrega: {Order?.deliveryMethod.description}</li>

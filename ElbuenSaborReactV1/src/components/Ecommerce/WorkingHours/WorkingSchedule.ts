@@ -57,15 +57,15 @@ if (isWeekend(date)) {
 export const openRestaurant = (roleid: number): boolean => {
     const today = new Date();
     //if the loggedin user is an admin, set the time on a working day and hour to be allowed to buy
-    if (roleid && roleid === 1) {
-        //set day on saturday
-        today.setDate(today.getDate() + (6 - today.getDay()));
-        //set time at 12:00 PM (midday)
-        today.setHours(12);
-        today.setMinutes(0);
-        today.setSeconds(0);
-        today.setMilliseconds(0);
-    }
+    /*     if (roleid && roleid === 1) { */
+    //set day on saturday
+    today.setDate(today.getDate() + (6 - today.getDay()));
+    //set time at 12:00 PM (midday)
+    today.setHours(12);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    today.setMilliseconds(0);
+    /*     } */
     // Verificar si el horario actual está dentro del rango de apertura
     if (schedule === undefined) {
         return false;
