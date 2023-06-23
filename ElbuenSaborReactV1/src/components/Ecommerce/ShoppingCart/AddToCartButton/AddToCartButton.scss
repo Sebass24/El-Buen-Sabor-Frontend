@@ -1,0 +1,34 @@
+.add-to-cart-button-card {
+    align-items: center;
+    background-color: #A60202;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-color: #A60202;
+    width: 100%;
+    --bs-btn-hover-bg: #A60202;
+    --bs-btn-hover-border-color: #A60202;
+    --bs-btn-active-bg: #A60202;
+    --bs-btn-active-border-color: #A60202;
+    height: 2.2rem;
+    border-radius: 1rem;
+    margin-top: 1rem;
+}
+
+.btn.disabled {
+    background-color: gray;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-color: gray;
+    width: 10rem;
+    --bs-btn-hover-bg: gray;
+    --bs-btn-hover-border-color: gray;
+    height: 2.2rem;
+}
+
+@media (max-width: 450px) {
+    .add-to-cart-button-card {
+        margin-top: 0.4rem;
+        height: 1.9rem;
+        font-size: 0.7rem;
+    }
+}
