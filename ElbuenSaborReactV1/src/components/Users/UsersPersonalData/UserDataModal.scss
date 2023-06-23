@@ -5,9 +5,7 @@
 }
 
 .complete-data {
-    .modal-dialog {
-        max-width: 70% !important;
-    }
+    top: 2rem;
 
     .modal-body {
         padding: 8px 16px !important;
@@ -18,8 +16,6 @@
         font-weight: 600 !important;
     }
 }
-
-
 
 .form-user-personal-data {
     .form-group {

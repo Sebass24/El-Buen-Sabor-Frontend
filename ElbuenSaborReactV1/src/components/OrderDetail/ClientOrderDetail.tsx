@@ -77,17 +77,18 @@ export default function ClientOrderDetail() {
   }, [])
 
   function formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    const options: Intl.DateTimeFormatOptions = {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    };
-
-    const formatter = new Intl.DateTimeFormat('es-AR', options);
-    return formatter.format(date);
+    const timestamp = dateString;
+    if (timestamp) {
+      const date = new Date(timestamp);
+      const day = date.getDate();
+      const month = date.getMonth() + 1; // Months are zero-based
+      const year = date.getFullYear();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year} ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+      return formattedDate;
+    }
+    return '';
   }
 
   return (
@@ -113,7 +114,7 @@ export default function ClientOrderDetail() {
             </div >
             <div className="separator">
               <label className="title-order-id">Fecha:</label>
-              <label className="title-order-id">{formatDate(order?.date as string)}</label>
+              <label className="title-order-id">{formatDate(order?.date.toString() as string)}</label>
             </div>
             <OrderOptionsReview order={order} />
             {order?.orderStatus.description === "Cancelado" && order?.paid ?
