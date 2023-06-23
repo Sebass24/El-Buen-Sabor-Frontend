@@ -63,7 +63,6 @@ interface Props {
   product?: Product;
 }
 
-
 const ModalAddProducts = ({
   showModal,
   handleClose,
@@ -139,46 +138,58 @@ const ModalAddProducts = ({
                   // dispatch(finishLoading());
 
                   const formData = new FormData();
-                  console.log(img)
-                  formData.append("Image", img)
+                  console.log(img);
+                  formData.append("Image", img);
                   //formData.append("Image", new Blob([img], { type: 'multipart/form-data' }))
-                  formData.append("Product", new Blob([JSON.stringify(values)], { type: 'application/json' }))
-                  const token = sessionStorage.getItem("token")
-                  const response = await fetch(`http://localhost:8080/api/product/update`, {
-                    method: "PUT",
-                    credentials: 'include',
-                    headers: {
-                      //'Content-Type': 'multipart/form-data',
-                      "Authorization": `Bearer ${token}`
-                    },
-                    body: formData,
-                  }).then((response) => {
-                    console.log(response)
+                  formData.append(
+                    "Product",
+                    new Blob([JSON.stringify(values)], {
+                      type: "application/json",
+                    })
+                  );
+                  const token = sessionStorage.getItem("token");
+                  const response = await fetch(
+                    `${import.meta.env.VITE_BILL_DOWNLOAD}/api/product/update`,
+                    {
+                      method: "PUT",
+                      credentials: "include",
+                      headers: {
+                        //'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${token}`,
+                      },
+                      body: formData,
+                    }
+                  ).then((response) => {
+                    console.log(response);
                     //  dispatch(addProduct(valuesProduct));
-                  }
-                  )
-
+                  });
                 } else {
-
                   const formData = new FormData();
-                  console.log(img)
-                  formData.append("Image", img)
+                  console.log(img);
+                  formData.append("Image", img);
                   //formData.append("Image", new Blob([img], { type: 'multipart/form-data' }))
-                  formData.append("Product", new Blob([JSON.stringify(values)], { type: 'application/json' }))
-                  const token = sessionStorage.getItem("token")
-                  const response = await fetch(`http://localhost:8080/api/product/save`, {
-                    method: "POST",
-                    credentials: 'include',
-                    headers: {
-                      //'Content-Type': 'multipart/form-data',
-                      "Authorization": `Bearer ${token}`
-                    },
-                    body: formData,
-                  }).then((response) => {
-                    console.log(response)
+                  formData.append(
+                    "Product",
+                    new Blob([JSON.stringify(values)], {
+                      type: "application/json",
+                    })
+                  );
+                  const token = sessionStorage.getItem("token");
+                  const response = await fetch(
+                    `${import.meta.env.VITE_BILL_DOWNLOAD}/api/product/save`,
+                    {
+                      method: "POST",
+                      credentials: "include",
+                      headers: {
+                        //'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${token}`,
+                      },
+                      body: formData,
+                    }
+                  ).then((response) => {
+                    console.log(response);
                     //  dispatch(addProduct(valuesProduct));
-                  }
-                  )
+                  });
                   // postPutData(`/api/product/save`, "POST", formData).then((response) => {
                   //   console.log(response)
                   //   dispatch(addProduct(valuesProduct));
@@ -419,7 +430,6 @@ export function FormikStepper({ children, setImg, ...props }: PropsForm) {
               />
 
               <MyDropzone setImg={setImg} />
-
             </div>
           ) : (
             <></>
